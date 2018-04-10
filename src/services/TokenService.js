@@ -13,10 +13,12 @@ export default class TokenService {
 
     }
 
-    static setToken (token, expire) {
+    static setToken (token, expires) {
         CookieStorage.setItem('token', token, {
             path: '/',
-            domain: pro
+            domain: process.env.API_SERVER_HOST,
+            expires: expires,
+            secure: true
         });
     }
 }
