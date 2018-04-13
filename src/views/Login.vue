@@ -1,13 +1,299 @@
 <template>
-    <div>login page</div>
+    <div id="login">
+		<div class="login-container">
+			<div class="login-bg">
+				<img class="logo" src="../../src/assets/bg.png"/>
+			</div>
+			<transition name="fade">
+				<el-form :model="ruleForm2" v-if="login" key="login" :rules="rules2" ref="ruleForm2" label-width="0px" class="login-box">
+					<el-form-item prop="none">
+						<img class="logo" src="../../src/assets/logo.svg" alt="" style="width:50%;margin:0 auto;display:block"/>
+						<p style="text-align: center;font-size: 18px;font-weight: bold;">福年来早餐车管理系统</p>
+					</el-form-item>
+					<el-form-item prop="name">
+						<el-input type="text" v-model="ruleForm2.name" placeholder="请输入手机号码"></el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input type="password" @keyup.native.enter="handleSubmit2" v-model="ruleForm2.password" placeholder="请输入密码"></el-input>
+					</el-form-item>
+					<el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
+					<!--<span class="forpsd" @click="forpsd">忘记密码？</span>-->
+					<el-form-item>
+						<el-button type="primary" style="width:100%;" @click="handleSubmit2">登录</el-button>
+					</el-form-item>
+				</el-form>
+				<el-form :model="ruleForm3" v-else key="seek" :rules="rules3" ref="ruleForm3" label-width="0px" class="login-box">
+					<el-form-item prop="passport">
+						<el-input type="text" v-model="ruleForm3.passport" placeholder="请输入用户名"></el-input>
+					</el-form-item>
+					<el-form-item prop="phone">
+						<el-input v-model="ruleForm3.phone" placeholder="请输绑定的手机号"></el-input>
+					</el-form-item>
+					<el-form-item style="text-align: right;">
+						<span class="back-login" @click="login = true">返回登录</span>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" style="width:100%;" @click="seekpsd">找回密码</el-button>
+					</el-form-item>
+				</el-form>
+			</transition>
+		</div>
+		<div class="login-ft">
+			<!--<p class="title">粤ICP备 16001681号-1 © 2015~2017 COPYRIGHTS WIN-SKY.COM.CN</p>-->
+			<p class="subtitle">筋斗云网络技术有限公司 版权所有</p>
+		</div>
+	</div>
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
     export default {
-
+		name: 'login',
+		data() {
+			return {
+				ruleForm2: {
+					name: '',
+					password: ''
+				},
+				ruleForm3: {
+					passport: '',
+					phone: ''
+				},
+				rules2: {
+					name: [{
+						required: true,
+						message: '请输入用户名',
+						trigger: 'blur'
+					},{ validator: this.validateTel, trigger: 'blur' }],
+					password: [{
+						required: true,
+						message: '请输入密码',
+						trigger: 'blur'
+					}]
+				},
+				rules3: {
+					passport: [{
+						required: true,
+						message: '请输入用户名',
+						trigger: 'blur'
+					}],
+					phone: [{
+							required: true,
+							message: '请输绑定的手机号',
+							trigger: 'blur'
+						},
+						{
+							validator: this.validateTel,
+							trigger: 'blur'
+						}
+					]
+				},
+				checked: false,
+				login: true
+			}
+		},
+		computed: {
+		},
+		methods: {
+			validateTel(rule, value, callback) {
+				if(value === '') {
+					callback()
+					return
+				}
+				let regular = /^1[3|4|5|7|8]\d{9}$/;
+				if(!regular.test(value)) {
+					callback(new Error('请输入正确格式手机号'))
+				} else {
+					callback()
+				}
+			},
+			handleSubmit2() {
+//				this.$refs.ruleForm2.validate((valid) => {
+//					if(valid) {
+//						this.bLoading = true
+//						var para = JSON.stringify(this.ruleForm2);
+//						delete para.forcedLogin
+//						this.post('/xwmin/index.php/Bckome/index/adminLogin.html', para, (data) => {
+//							if(this.checked) {
+//								localStorage.setItem('user', para)
+//							} else {
+//								localStorage.removeItem('user')
+//							}
+//							sessionStorage.setItem('user', JSON.stringify(data.data))
+//							this.$router.push({
+//								path: '/main'
+//							})
+//						}, (data) => {
+//							if(data.requestCode == 2) {
+//								this.$confirm('该账户已登录是否强制登录?', '提示', {
+//									type: 'warning'
+//								}).then(() => {
+//									para.forcedLogin = true
+//									this.bLoading = true
+//									this.post('/admin/login.do', para, (data) => {
+//										if(this.checked) {
+//											localStorage.setItem('user', JSON.stringify(para))
+//										} else {
+//											localStorage.removeItem('user')
+//										}
+//										sessionStorage.setItem('user', JSON.stringify(data.data))
+										this.$router.push({
+											path: '/main'
+										})
+//									})
+//								}).catch(() => {
+//
+//								})
+//							}
+//						})
+//					}
+//				})
+			},
+			seekpsd() {
+				this.$refs.ruleForm3.validate((valid) => {
+					if(valid) {
+//						this.bLoading = true
+						var para = this.ruleForm3;
+//						this.post('/admin/pass/forgot.do', para, (data) => {
+//							this.$message({
+//								message: '密码已发送至你手机上，请查看',
+//								type: 'success'
+//							})
+//						})
+					}
+				})
+			},
+			forpsd() {
+				this.login = false
+				this.ruleForm3.passport = this.ruleForm2.name
+				this.ruleForm3.phone = ''
+			}
+		},
+		created() {
+			let user = JSON.parse(localStorage.getItem('user'));
+			if(user) {
+				this.ruleForm2.name = user.name
+				this.ruleForm2.password = user.password
+			}
+		}
     }
 </script>
 
-<style scoped>
-
+<style>
+	#login{
+		height: 100%;
+		position: relative;
+		background-color: #35424D;
+	}
+	#login .login-ft{
+		width: 100%;
+		height: 10%;
+		position: absolute;
+		bottom: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	#login .login-ft .title{
+		text-align: center;
+		color: #FFFFFF;
+		font-size: 10px;
+	}
+	#login .login-ft .subtitle{
+		text-align: center;
+		color: #FFFFFF;
+		font-size: 10px;
+	}
+	#login .el-input__inner{
+		border: none;
+		border-bottom: 1px solid #d1d1d1;
+		border-radius: 0 !important;
+	}
+	#login .login-bg{
+		width: 450px;
+			height: 500px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			position: absolute;
+			z-index: 999;
+			left: 0px;
+			/*top: 0px;*/
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+	}
+	#login .login-bg .logo{
+		/*width: 48%;*/
+	}
+	#login .login-bg .title{
+		text-align: center;
+		color: #fff;
+		font-size: 40px;
+		margin-top: 20px;
+	}
+	.login-container{
+		position: absolute;
+		top: 20%;
+		left: 50%;
+		margin-left: -455px;
+		width: 910px;
+		height: 440px;
+		background: #FFFFFF;
+		box-shadow: 0 0 24px 0 #161616;
+		border-radius: 10px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.login-box{
+		width: 400px;
+		padding: 0 70px 0 0;
+	}
+	.login-box .remember{
+		margin: 0px 0px 35px 0px;
+		color: #333;
+	}
+	.login-box .el-checkbox__input.is-checked .el-checkbox__inner{
+		background-color: #20a0ff;
+		border-color: #0190fe;
+	}
+	.login-box .el-checkbox__inner{
+		border-radius: 4px !important;
+	}
+	.login-box .forpsd{
+		float: right;
+		color: #333;
+		cursor: pointer;
+	}
+	.login-box .back-login{
+		color: orange;
+		cursor: pointer;
+	}
+	.login-box .el-form-item__content{
+		line-height: 36px;
+		position: relative;
+		font-size: 14px;
+	}
+	.login-box .el-button--primary{
+		color: #fff;
+		background-color: #20a0ff;
+		border-color: #20a0ff;
+	}
+	.login-box .el-button{
+		display: inline-block;
+		line-height: 1;
+		white-space: nowrap;
+		cursor: pointer;
+		margin: 0;
+		padding: 10px 15px;
+		border-radius: 4px;
+	}
+	.fade-enter-active,.fade-leave-active{
+		transition: opacity .6s
+	}
+	.fade-enter,.fade-leave-active{
+		opacity: 0
+	}
 </style>
