@@ -5,6 +5,8 @@ import Vue from 'vue';
 import router from "./routes";
 import App from './App';
 import '../static/css/font-awesome.min.css'
+import store from './models';
+
 Vue.config.productionTip = false;
 Vue.mixin({
 	data() {
@@ -528,5 +530,6 @@ Vue.use(ElementUI)
 import 'element-ui/lib/theme-chalk/index.css'
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app');

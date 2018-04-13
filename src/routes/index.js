@@ -10,6 +10,12 @@ import Reload from '../views/Reload'
 import Hygl from '../views/yhtj/Hygl'
 //早餐车
 import Ccgl from '../views/zcc/Ccgl'
+import Ddgl from '../views/404'
+import Plgl from '../views/404'
+import Tcgl from '../views/404'
+//首页管理
+import Fxy from '../views/404'
+import Jky from '../views/404'
 const routes = [
     {
         path: '/login',
@@ -54,6 +60,32 @@ const routes = [
 				path: 'ccgl',
 				component: Ccgl,
 				name: '餐车管理'
+			},{
+				path: 'ddgl',
+				component: Ddgl,
+				name: '订单管理'
+			},{
+				path: 'plgl',
+				component: Plgl,
+				name: '品类管理'
+			},{
+				path: 'tcgl',
+				component: Tcgl,
+				name: '套餐管理'
+			}]
+	},
+	{
+		path: '/',
+		component: Home,
+		name: '首页管理',
+		children: [{
+				path: 'fxy',
+				component: Fxy,
+				name: '分析页'
+			},{
+				path: 'jky',
+				component: Jky,
+				name: '监控页'
 			}]
 	}
 ];

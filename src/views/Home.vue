@@ -1,18 +1,23 @@
 <template>
 	<el-row class="container">
 		<div class="header">
-			<div class="left_nav">
+			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}">
 				<div class="logo">
-					<img src="../../src/assets/logo_white.svg"/>
+					<img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
+					<img src="../../src/assets/logo_white.svg" v-else/>
 				</div>
-				<aside :class="{ 'toogleNav': toogleMenu}">
-					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" theme="dark">
+				<aside>
+					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
 						<template v-for="(item,index) in menuList">
 							<el-submenu v-if="item.menu_name != '首页'" :index="index+''">
 								<template slot="title">
 									<el-tooltip effect="dark" :disabled="!toogleMenu" :content="item.menu_name" placement="right">
-										<div class="tipbox"></div>
-									</el-tooltip><span>{{item.menu_name}}</span></template>
+										<div class="tipbox">
+											<img :src="formatSrc('menu_' + item.id)" style="width:50%"/>
+										</div>
+									</el-tooltip>
+									<span>{{item.menu_name}}</span>
+								</template>
 								<el-menu-item @click="getRouter(child.href)" :class="{ 'is-active': checkActive('/' + child.href) }" v-for="(child,index) in item.childMenus" :index="'/' + child.href" :key="index">
 									<el-tooltip :disabled="!toogleMenu" effect="dark" :content="child.menu_name" placement="right">
 										<div class="tipbox">
@@ -26,11 +31,17 @@
 					</el-menu>
 				</aside>
 			</div>
-			<div class="right_content" :style="contentWight">
+			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]">
 				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" style="float:left;line-height: 60px;padding-left: 10px;">
-						<div @click="toogleMenu = !toogleMenu" class="tipbox"><i class="el-icon-tickets"></i></div>
+					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" style="float:left;line-height: 70px;padding-left: 10px;cursor: pointer;">
+						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
+							<img src="../../src/assets/icon_close.png" style="width:60%;opacity: 0.65;" v-if="toogleMenu"/>
+							<img src="../../src/assets/icon_open.png" style="width:60%;opacity: 0.65;" v-else/>
+						</div>
 					</div>
+					<img @click="" src="../../src/assets/icon_bell.png"/>
+					<img @click="" src="../../src/assets/icon_search.png"/>
+					
 					<span class="userinfo-inner">{{sysUserName}}</span>
 					<el-dropdown trigger="click">
 						<img class="el-dropdown-link" src="" width="15" height="15" />
@@ -38,9 +49,8 @@
 							<el-dropdown-item @click.native="handleForm()">修改密码</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
-					<img @click="logout" src="" width="15" height="15" />
 				</div>
-				<section :class="['content-container',{ 'toogleContent' : toogleMenu }]">
+				<section class="content-container">
 					<div class="grid-content bg-purple-light">
 						<!--<el-col :span="24" class="tabs-toogle">
 							<el-tabs v-model="editableTabsValue" @contextmenu.native.prevent="contextmenu" type="card" @tab-click="toogleTabs" @tab-remove="removeTab">
@@ -110,20 +120,20 @@
 				saveUrl: ['/admin/system/sysUser/modifyPwd.do'],
 				menuList: [
 					{childMenus:[
-						{href:"sy",id:"0",menu_name:"分析页",parent_id:"0"},
-						{href:"sy",id:"0",menu_name:"监控页",parent_id:"0"}
-					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
+						{href:"fxy",id:"0",menu_name:"分析页",parent_id:"0"},
+						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
+					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0",svg:"#icon-home"},
 					{childMenus:[
 						{href:"ccgl",id:"0",menu_name:"餐车管理",parent_id:"0"},
-						{href:"sy",id:"0",menu_name:"订单管理",parent_id:"0"},
-						{href:"sy",id:"0",menu_name:"品类管理",parent_id:"0"},
-						{href:"sy",id:"0",menu_name:"套餐管理",parent_id:"0"}
-					],href:"sy",id:"1",menu_name:"早餐车",parent_id:"1"},
-					{childMenus:[],href:"sy",id:"2",menu_name:"商城",parent_id:"2"},
-					{childMenus:[],href:"sy",id:"3",menu_name:"卡券系统",parent_id:"3"},
+						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"},
+						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"},
+						{href:"tcgl",id:"0",menu_name:"套餐管理",parent_id:"0"}
+					],href:"zcc",id:"1",menu_name:"早餐车",parent_id:"1",svg:"#icon-home"},
+					{childMenus:[],href:"sc",id:"2",menu_name:"商城",parent_id:"2",svg:"#icon-home"},
+					{childMenus:[],href:"kqxt",id:"3",menu_name:"卡券系统",parent_id:"3",svg:"#icon-home"},
 					{childMenus:[
 						{href:"hygl",id:"0",menu_name:"会员管理",parent_id:"0"}
-					],href:"sy",id:"4",menu_name:"用户统计",parent_id:"4"}
+					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4",svg:"#icon-home"}
 				],
 				imgList: [],
 				toogleMenu: false,
@@ -186,12 +196,11 @@
 //				return this.config.logo || require('../../src/assets/bg.png')
 //			}
 			contentWight(){
-				console.log("width:"+(document.documentElement.clientWidth - 180) + 'px')
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
 			}
 		},
 		watch: {
-			'$route': 'fetchData',
+//			'$route': 'fetchData',
 //			viewImgs(str) {
 //				if(!str) return
 //				this.viewVisible = true
@@ -384,7 +393,7 @@
 			},
 			formatSrc(name, type = 'png') {
 				try {
-					return require('src/assets/' + name + '.' + type)
+					return require('../../src/assets/' + name + '.' + type)
 				} catch(e) {
 //					console.log('缺少' + name + '.' + type)
 					return ''
@@ -420,14 +429,31 @@
 		background: #001529;
 		color: rgba(255,255,255,0.65);
 	}
+	.container .toogleContent {
+	    left: 40px !important;
+	}
+	.container .toogleNav {
+	    width: 40px !important;
+	}
 	.container .header .right_content{
-		float:right;
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		left: 180px;
+		overflow: hidden;
+	}
+	.container .header .right_content .contentHeader>img{
+		width:26px;float:right;margin:17px 5px;opacity: 0.65;
+	}
+	.container .header .right_content .contentHeader{
+		padding-right:24px
 	}
 	.container .header .logo {
 		height: 60px;
 		width:100%;
 		background: #00284d;
-		line-height: 60px;	
+		padding-top: 8px;
 	}
 	.container .header .left_nav .el-menu{
 		background: #000c17;
@@ -439,8 +465,12 @@
 	.container .header .left_nav .el-menu .el-submenu .el-menu-item{
 		padding:0;
 		min-width: 0px;
+		padding-left:10px !important;
 		color: rgba(255,255,255,0.65);
 	}
+	.el-submenu .el-menu-item {
+    height: 40px;
+    line-height: 40px;}
 	.container .header .left_nav .el-menu .el-submenu .is-active{
 		background:#409EFF;
 		color:rgba(255,255,255,1);
@@ -464,6 +494,9 @@
 		border-bottom: 1px solid #e9e9e9;
 		background-color: #fff;
 	}
+	.el-menu--collapse {
+	    width: 40px;
+	}
 	.container .header .right_content .el-breadcrumb {
 	    font-size: 14px;
 	    line-height: 1;
@@ -478,4 +511,15 @@
 		background: #fff;
 		border-radius: 6px;
 	}
+	.container .left_nav aside .tipbox {
+					width: 40px;
+					height: 40px;
+					line-height: 38px;
+					display: inline-block;
+					text-align: center;
+					cursor: pointer;
+				}
+				.el-submenu__title{
+					padding:0 !important
+				}
 </style>

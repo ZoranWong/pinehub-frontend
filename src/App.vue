@@ -3,15 +3,16 @@
     <router-view></router-view>
   </div>
 </template>
-
 <script>
-export default {
-  name: 'app'
-}
+    export default {
+      name: 'app',
+    }
 </script>
 
 <style>
+/*@import url("common/css/iconfont.css");*/
 @import url("common/css/custom.css");
+
 	#app {
 		position: absolute;
 		top: 0px;

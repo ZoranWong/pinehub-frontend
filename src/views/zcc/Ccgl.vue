@@ -23,8 +23,8 @@
 						<el-button size="small"  @click="handleExport()">导出</el-button>
 					</el-form-item>-->
 				</el-form>
-				<div id="">
-					<el-button size="small" type="primary" icon="el-icon-plus" @click="getSelectData()">新增</el-button>
+				<div>
+					<el-button size="small" type="primary" icon="el-icon-plus" @click.native="formVisible=true">新增</el-button>
 					<el-button size="small"  @click="handleExport()">导出</el-button>
 				</div>
 			</el-col>
@@ -40,7 +40,7 @@
 				<el-table-column prop="time" label="联系方式" min-width="150"></el-table-column>
 				<el-table-column label="操作" width="120">
 					<template scope="scope">
-						<el-button type="text" size="mini" icon="search" @click="handleDetail(scope.row)">查看</el-button>
+						<el-button type="text" size="mini" icon="search" @click="detailVisible=true">查看</el-button>
 						<el-button type="text" size="mini" icon="search" @click="handleDetail(scope.row)">编辑</el-button>
 					</template>
 				</el-table-column>
@@ -50,6 +50,38 @@
 			<div class="toolbar" style="text-align: right;">
 				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" :total="totalNum"></el-pagination>
 			</div>
+			<!--新增编辑界面-->
+			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="80%" :close-on-click-modal="false">
+				<el-tabs active-name="first">
+					<el-tab-pane :label="saveType ? '餐车管理编辑' : '餐车管理新增'" name="first"></el-tab-pane>
+				</el-tabs>
+				<div class="form-container">
+					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+						<el-form-item label="餐车编号：" prop="number">
+							<el-input v-model="formData.number"></el-input>
+						</el-form-item>
+						<el-form-item label="餐车位置：" prop="area">
+							<el-input v-model="formData.area"></el-input>
+						</el-form-item>
+						<el-form-item label="餐车描述：" prop="manager">
+							<el-input v-model="formData.manager"></el-input>
+						</el-form-item>
+						<el-form-item label="车主姓名：" prop="name">
+							<el-input v-model="formData.name"></el-input>
+						</el-form-item>
+						<el-form-item label="车主电话：" prop="phone">
+							<el-input v-model="formData.phone"></el-input>
+						</el-form-item>
+						<el-form-item label="描述：" prop="address">
+							<el-input v-model="formData.address"></el-input>
+						</el-form-item>
+					</el-form>
+				</div>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click.native="formVisible = false">取消</el-button>
+					<el-button type="primary" @click.native="formSubmit()" :loading="bLoading">提交</el-button>
+				</div>
+			</el-dialog>
 			<!--详情界面-->
 			<el-dialog v-model="detailVisible" @close="dialogClose" @open="dialogOpen" size="large" :modal="false" :top="scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
@@ -57,55 +89,10 @@
 				</el-tabs>
 				<div class="form-container">
 					<el-form v-loading="fLoading" label-width="120px">
-						<el-form-item label="商户名称：">
+						<!--<el-form-item label="商户名称：">
 							<span v-text="detailData.name"></span>
-						</el-form-item>
-						<el-form-item label="商户编码：">
-							<span v-text="detailData.code"></span>
-						</el-form-item>
-						<el-form-item label="负责人姓名：">
-							<span v-text="detailData.manager"></span>
-						</el-form-item>
-						<el-form-item label="联系电话：">
-							<span v-text="detailData.phone"></span>
-						</el-form-item>
-						<el-form-item label="备用电话：">
-							<span v-text="detailData.bphone"></span>
-						</el-form-item>
-						<el-form-item label="邮箱：">
-							<span v-text="detailData.email"></span>
-						</el-form-item>
-						<el-form-item label="地址：">
-							<span>{{detailData.provincename + ' ' + detailData.cityname + ' ' + detailData.areaname + ' ' + detailData.address}}</span>
-						</el-form-item>
-						<el-form-item label="账户名：">
-							<span v-text="detailData.passport"></span>
-						</el-form-item>
-						<el-form-item label="每月结算日：">
-							<span v-text="detailData.cashdate"></span>
-						</el-form-item>
-						<el-form-item label="结算方式：">
-							<span>{{ detailData.accounttype | formatSelect('accounttype') }}</span>
-						</el-form-item>
-						<el-form-item :label="cashuserName">
-							<span v-text="detailData.cashuser"></span>
-						</el-form-item>
-						<el-form-item :label="accountName">
-							<span v-text="detailData.account"></span>
-						</el-form-item>
-						<el-form-item v-show="detailData.accounttype == 0" label="开户行：">
-							<span v-text="detailData.openbank"></span>
-						</el-form-item>
-						<el-form-item label="短信通知手机：">
-							<span v-text="detailData.smsphone"></span>
-						</el-form-item>
-						<!--图片上传-->
-						<el-form-item label="附件上传：" @click.native="viewImg(detailData.merchantpic)">
-							<img v-for="(item, index) in formatImg(detailData.merchantpic)" :src="item" :key="index" alt="" width="50" height="50" />
-						</el-form-item>
-						<el-form-item label="状态：">
-							<span>{{ detailData.status | formatSelect('status') }}</span>
-						</el-form-item>
+						</el-form-item>-->
+						
 					</el-form>
 				</div>
 				<div slot="footer" class="dialog-footer">
@@ -117,7 +104,7 @@
 </template>
 
 <script>
-//	import { mapGetters } from 'vuex'
+	import { mapGetters } from 'vuex'
 	export default {
 		name: 'ccgl',
 		data() {
@@ -134,6 +121,42 @@
 					pageNum: 1,
 					pagesize: 10,
 					name: '',
+					area: ''
+				},
+				formRules: {
+					number: [{
+						required: true,
+						message: '请输入餐车编号',
+						trigger: 'blur'
+					}],
+					area: [{
+						required: true,
+						message: '请输入餐车位置',
+						trigger: 'blur'
+					}],
+					manager: [{
+						required: true,
+						message: '请输入餐车描述',
+						trigger: 'blur'
+					}],
+					name: [{
+						required: true,
+						message: '请输入餐主姓名',
+						trigger: 'blur'
+					}],
+					phone: [{
+						required: true,
+						message: '请输入联系方式',
+						trigger: 'blur'
+					}]
+				},
+				//新增编辑界面数据
+				formData: {
+					id: 0,
+					name: '',
+					number: '',
+					manager: '',
+					phone: '',
 					area: ''
 				},
 				selectData:[{
