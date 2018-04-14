@@ -14,12 +14,12 @@
 						<el-input type="text" v-model="ruleForm2.name" placeholder="请输入手机号码"></el-input>
 					</el-form-item>
 					<el-form-item prop="password">
-						<el-input type="password" @keyup.native.enter="handleSubmit2" v-model="ruleForm2.password" placeholder="请输入密码"></el-input>
+						<el-input type="password" @keyup.native.enter="handleSubmit2" v-model="ruleForm2.password" placeholder="请输入密码" :disabled="!Boolean(ruleForm2.name)"></el-input>
 					</el-form-item>
 					<el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
 					<!--<span class="forpsd" @click="forpsd">忘记密码？</span>-->
 					<el-form-item>
-						<el-button type="primary" style="width:100%;" @click="handleSubmit2">登录</el-button>
+						<el-button type="primary" style="width:100%;" @click="handleSubmit2" size="small">登录</el-button>
 					</el-form-item>
 				</el-form>
 				<el-form :model="ruleForm3" v-else key="seek" :rules="rules3" ref="ruleForm3" label-width="0px" class="login-box">
@@ -33,7 +33,7 @@
 						<span class="back-login" @click="login = true">返回登录</span>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" style="width:100%;" @click="seekpsd">找回密码</el-button>
+						<el-button type="primary" style="width:100%;" @click="seekpsd" size="small">找回密码</el-button>
 					</el-form-item>
 				</el-form>
 			</transition>
@@ -69,6 +69,10 @@
 						required: true,
 						message: '请输入密码',
 						trigger: 'blur'
+					},
+					{
+						validator: this.validatePsd,
+						trigger: 'blur'
 					}]
 				},
 				rules3: {
@@ -95,24 +99,17 @@
 		computed: {
 		},
 		methods: {
-			validateTel(rule, value, callback) {
-				if(value === '') {
-					callback()
-					return
-				}
-				let regular = /^1[3|4|5|7|8]\d{9}$/;
-				if(!regular.test(value)) {
-					callback(new Error('请输入正确格式手机号'))
-				} else {
-					callback()
-				}
-			},
 			handleSubmit2() {
-//				this.$refs.ruleForm2.validate((valid) => {
-//					if(valid) {
-//						this.bLoading = true
-//						var para = JSON.stringify(this.ruleForm2);
-//						delete para.forcedLogin
+				this.$refs.ruleForm2.validate((valid) => {
+					if(valid) {
+						this.bLoading = true
+						var para = JSON.stringify(this.ruleForm2);
+						delete para.forcedLogin
+						console.log(para)
+						sessionStorage.setItem('user', JSON.stringify(this.ruleForm2.name))
+						this.$router.push({
+											path: '/main'
+										})
 //						this.post('/xwmin/index.php/Bckome/index/adminLogin.html', para, (data) => {
 //							if(this.checked) {
 //								localStorage.setItem('user', para)
@@ -137,17 +134,17 @@
 //											localStorage.removeItem('user')
 //										}
 //										sessionStorage.setItem('user', JSON.stringify(data.data))
-										this.$router.push({
-											path: '/main'
-										})
+//										this.$router.push({
+//											path: '/main'
+//										})
 //									})
 //								}).catch(() => {
 //
 //								})
 //							}
 //						})
-//					}
-//				})
+					}
+				})
 			},
 			seekpsd() {
 				this.$refs.ruleForm3.validate((valid) => {
@@ -252,7 +249,7 @@
 		padding: 0 70px 0 0;
 	}
 	.login-box .remember{
-		margin: 0px 0px 35px 0px;
+		margin: 10px 0px 35px 0px;
 		color: #333;
 	}
 	.login-box .el-checkbox__input.is-checked .el-checkbox__inner{

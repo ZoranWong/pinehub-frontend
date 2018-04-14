@@ -92,18 +92,20 @@ const routes = [
 const router = new VueRouter({
 	routes
 })
-//router.beforeEach((to, from, next) => {
-//	if(to.path == '/login') {
-//		sessionStorage.removeItem('user')
-//	}
-//	let user = JSON.parse(sessionStorage.getItem('user'));
-//	let loaded = router.app.$options.store.getters.loaded;
-//	if(!user && to.path != '/login') {
-//		next('/login')
-//	} else if(to.path != '/main' && to.path != '/login') {
-//		next('/main')
-//	} else {
-//		next()
-//	}
-//})
+router.beforeEach((to, from, next) => {
+	if(to.path == '/login') {
+		sessionStorage.removeItem('user')
+	}
+	let user = JSON.parse(sessionStorage.getItem('user'));
+	let hasLogin = router.app.$options.store.state.hasLogin;
+	console.log(user)
+//	console.log(router.app.$options.store._mutations.LOGIN)
+	if(!user && to.path != '/login') {
+		next('/login')
+	} else if(hasLogin&&to.path != '/main' && to.path != '/login') {
+		next('/main')
+	} else {
+		next()
+	}
+})
 export default router

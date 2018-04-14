@@ -6,7 +6,8 @@ import router from "./routes";
 import App from './App';
 import '../static/css/font-awesome.min.css'
 import store from './models';
-
+//import { TMap } from 'TMap'
+//Vue.use(TMap)
 Vue.config.productionTip = false;
 Vue.mixin({
 	data() {
@@ -438,6 +439,19 @@ Vue.mixin({
 		handleCurrentChange(val, filters = this.filters, fun = this.getSelectData) {
 			filters.pageNum = val
 			fun()
+		},
+		//密码强度校验
+		validatePsd(rule, value, callback) {
+			if(value === '') {
+				callback()
+				return
+			}
+			let regular = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
+			if(!regular.test(value)) {
+				callback(new Error('请输入6位以上，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'))
+			} else {
+				callback()
+			}
 		},
 		//手机格式校验
 		validateTel(rule, value, callback) {

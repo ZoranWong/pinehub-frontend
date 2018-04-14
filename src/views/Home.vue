@@ -33,22 +33,22 @@
 			</div>
 			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]">
 				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" style="float:left;line-height: 70px;padding-left: 10px;cursor: pointer;">
+					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]">
 						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
-							<img src="../../src/assets/icon_close.png" style="width:60%;opacity: 0.65;" v-if="toogleMenu"/>
-							<img src="../../src/assets/icon_open.png" style="width:60%;opacity: 0.65;" v-else/>
+							<img src="../../src/assets/icon_close.png" v-if="toogleMenu"/>
+							<img src="../../src/assets/icon_open.png" v-else/>
 						</div>
 					</div>
-					<img @click="" src="../../src/assets/icon_bell.png"/>
-					<img @click="" src="../../src/assets/icon_search.png"/>
-					
-					<span class="userinfo-inner">{{sysUserName}}</span>
-					<el-dropdown trigger="click">
-						<img class="el-dropdown-link" src="" width="15" height="15" />
+					<img @click="logout" src="../../src/assets/icon_switch.png" class="fr"/>
+					<el-dropdown trigger="click" class="fr">
+						<img class="el-dropdown-link" src="../../src/assets/icon_setting.png"/>
 						<el-dropdown-menu slot="dropdown">
 							<el-dropdown-item @click.native="handleForm()">修改密码</el-dropdown-item>
 						</el-dropdown-menu>
 					</el-dropdown>
+					<img @click="" src="../../src/assets/icon_bell.png" class="fr"/>
+					<!--<img @click="" src="../../src/assets/icon_search.png" class="fr"/>-->
+					<span class="userinfo-inner">{{sysUserName}}</span>
 				</div>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
@@ -75,7 +75,7 @@
 				</section>
 			</div>
 		</div>
-		<el-dialog v-model="formVisible" :close-on-click-modal="false">
+		<el-dialog :visible.sync="formVisible" :close-on-click-modal="false">
 			<el-tabs active-name="first">
 				<el-tab-pane :label="sysUserName+'-修改密码'" name="first"></el-tab-pane>
 			</el-tabs>
@@ -91,11 +91,11 @@
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
-				<el-button @click="formVisible = false">取 消</el-button>
-				<el-button type="primary" @click="formSubmit()">确 定</el-button>
+				<el-button @click="formVisible = false" size="small">取 消</el-button>
+				<el-button type="primary" @click="formSubmit()" size="small">确 定</el-button>
 			</div>
 		</el-dialog>
-		<el-dialog v-model="viewVisible" @close="dialogClose">
+		<el-dialog :visible.sync="viewVisible" @close="dialogClose">
 			<el-tabs active-name="first">
 				<el-tab-pane label="图片预览" name="first"></el-tab-pane>
 			</el-tabs>
@@ -122,18 +122,18 @@
 					{childMenus:[
 						{href:"fxy",id:"0",menu_name:"分析页",parent_id:"0"},
 						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
-					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0",svg:"#icon-home"},
+					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
 					{childMenus:[
 						{href:"ccgl",id:"0",menu_name:"餐车管理",parent_id:"0"},
 						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"},
 						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"},
 						{href:"tcgl",id:"0",menu_name:"套餐管理",parent_id:"0"}
-					],href:"zcc",id:"1",menu_name:"早餐车",parent_id:"1",svg:"#icon-home"},
-					{childMenus:[],href:"sc",id:"2",menu_name:"商城",parent_id:"2",svg:"#icon-home"},
-					{childMenus:[],href:"kqxt",id:"3",menu_name:"卡券系统",parent_id:"3",svg:"#icon-home"},
+					],href:"zcc",id:"1",menu_name:"早餐车",parent_id:"1"},
+					{childMenus:[],href:"sc",id:"2",menu_name:"商城",parent_id:"2"},
+					{childMenus:[],href:"kqxt",id:"3",menu_name:"卡券系统",parent_id:"3"},
 					{childMenus:[
 						{href:"hygl",id:"0",menu_name:"会员管理",parent_id:"0"}
-					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4",svg:"#icon-home"}
+					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4"}
 				],
 				imgList: [],
 				toogleMenu: false,
@@ -338,13 +338,13 @@
 				this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
 				}).then(() => {
-					if(this.root == 'dl') {
+//					if(this.root == 'dl') {
 						this.$router.push('/login')
-					} else {
-						this.$http.get(this.root + '/admin/logout.do').then((data) => {
-							this.$router.push('/login')
-						})
-					}
+//					} else {
+//						this.$http.get(this.root + '/admin/logout.do').then((data) => {
+//							this.$router.push('/login')
+//						})
+//					}
 				}).catch(() => {
 
 				})
@@ -404,7 +404,7 @@
 			var user = sessionStorage.getItem('user');
 			if(user) {
 				user = JSON.parse(user)
-				this.sysUserName = user.list.ad_name || ''
+				this.sysUserName = user || ''
 //				this.getMenuList(user)
 			}
 		},
@@ -443,12 +443,23 @@
 		left: 180px;
 		overflow: hidden;
 	}
-	.container .header .right_content .contentHeader>img{
-		width:26px;float:right;margin:17px 5px;opacity: 0.65;
+	.container .header .right_content .contentHeader .menu-top{
+		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
+	}
+	.container .header .right_content .contentHeader img{
+		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
 	}
 	.container .header .right_content .contentHeader{
-		padding-right:24px
+		padding-right:20px;
+		padding-top:5px;
+		overflow: hidden;
 	}
+	.container .header .right_content .contentHeader .userinfo-inner{
+		 float: right;
+    	line-height: 47px;
+    	margin-right:10px;
+	}
+	   
 	.container .header .logo {
 		height: 60px;
 		width:100%;
@@ -521,5 +532,8 @@
 				}
 				.el-submenu__title{
 					padding:0 !important
+				}
+				.el-dropdown{
+					float:right
 				}
 </style>
