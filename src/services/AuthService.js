@@ -1,8 +1,17 @@
 import ApiService from './ApiService';
+import Vue from 'vue';
 export class AuthService extends ApiService{
-	static host = process.env.AUTH_SERVER_HOST;
-	
+	static host = Vue.AUTH_SERVER_HOST;
+
 	static async getPublicKey(){
-		return await ApiService.get('/public/key');
+		var response =  await ApiService.get('/public/key');
+		try {
+			var data = response.data;
+			return  data.public_key;
+		} catch (e) {
+
+		} finally {
+
+		}
 	}
 }
