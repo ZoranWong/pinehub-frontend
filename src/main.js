@@ -6,9 +6,11 @@ import router from "./routes";
 import App from './App';
 import '../static/css/font-awesome.min.css'
 import store from './models';
+import config from './config'
 //import { TMap } from 'TMap'
 //Vue.use(TMap)
-Vue.config.productionTip = false;
+Vue.config.productionTip = false;Vue.config.test =9; 
+
 Vue.mixin({
 	data() {
 		return {

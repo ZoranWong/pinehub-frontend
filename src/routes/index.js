@@ -10,8 +10,8 @@ import Reload from '../views/Reload'
 import Hygl from '../views/yhtj/Hygl'
 //早餐车
 import Ccgl from '../views/zcc/Ccgl'
-import Ddgl from '../views/404'
-import Plgl from '../views/404'
+import Ddgl from '../views/zcc/Ddgl'
+import Plgl from '../views/zcc/Plgl'
 import Tcgl from '../views/404'
 //首页管理
 import Fxy from '../views/404'
@@ -98,8 +98,6 @@ router.beforeEach((to, from, next) => {
 	}
 	let user = JSON.parse(sessionStorage.getItem('user'));
 	let hasLogin = router.app.$options.store.state.hasLogin;
-	console.log(user)
-//	console.log(router.app.$options.store._mutations.LOGIN)
 	if(!user && to.path != '/login') {
 		next('/login')
 	} else if(hasLogin&&to.path != '/main' && to.path != '/login') {

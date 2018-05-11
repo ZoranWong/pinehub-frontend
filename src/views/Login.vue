@@ -40,7 +40,7 @@
 		</div>
 		<div class="login-ft">
 			<!--<p class="title">粤ICP备 16001681号-1 © 2015~2017 COPYRIGHTS WIN-SKY.COM.CN</p>-->
-			<p class="subtitle">筋斗云网络技术有限公司 版权所有</p>
+			<p class="subtitle">京抖云网络技术有限公司 版权所有</p>
 		</div>
 	</div>
 </template>

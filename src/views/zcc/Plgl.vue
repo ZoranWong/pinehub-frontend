@@ -4,7 +4,7 @@
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
 				<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds">
-					<el-form-item prop="name">
+					<!--<el-form-item prop="name">
 						<el-input size="small" v-model="filters.name" placeholder="输入餐车编号"></el-input>
 					</el-form-item>
 					<el-form-item prop="area">
@@ -15,29 +15,29 @@
 					</el-form-item>
 					<el-form-item>
 						<el-button size="small" type="primary" @click="getSelectData()">查询</el-button>
-					</el-form-item>
-					<!--<el-form-item>
+					</el-form-item>-->
+					<el-form-item>
 						<el-button size="small" type="primary" icon="el-icon-plus" @click="getSelectData()">新增</el-button>
 					</el-form-item>
-					<el-form-item>
+					<!--<el-form-item>
 						<el-button size="small"  @click="handleExport()">导出</el-button>
 					</el-form-item>-->
 				</el-form>
-				<div>
-					<el-button size="small" type="primary" icon="el-icon-plus" @click.native="formVisible=true">新增</el-button>
-					<el-button size="small"  @click="handleExport()">导出</el-button>
-				</div>
 			</el-col>
 
 			<!--列表-->
 			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
-				<el-table-column prop="sIndex" label="序号" width="60"></el-table-column>
-				<el-table-column prop="name" label="编号" min-width="80"></el-table-column>
-				<el-table-column prop="phone" label="车主" min-width="100"></el-table-column>
-				<el-table-column prop="integral" label="地理位置" min-width="150"></el-table-column>
-				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
-				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
-				<el-table-column prop="time" label="联系方式" min-width="150"></el-table-column>
+				<el-table-column prop="childMenus" width="40">
+					<template slot-scope="scope">
+						<el-button size="mini" v-if="scope.row.childMenus && !scope.row.childMenus[0].name" @click="addChildMenus(scope.$index,scope.row.childMenus)" type="info" style="font-weight: bold;" round> + </el-button>
+						<el-button size="mini" v-if="scope.row.childMenus && scope.row.childMenus[0].name" @click="minusChildMenus(scope.$index,scope.row.childMenus)" type="info" style="font-weight: bold;" round> - </el-button>
+					</template>
+				</el-table-column>
+				<el-table-column prop="category" label="品类" min-width="100"></el-table-column>
+				<el-table-column prop="phone" label="套餐名称" min-width="100"></el-table-column>
+				<el-table-column prop="integral" label="价格" min-width="80"></el-table-column>
+				<el-table-column prop="num" label="套餐单品" min-width="150"></el-table-column>
+				<el-table-column prop="money" label="渠道" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="120">
 					<template scope="scope">
 						<el-button type="text" size="mini" icon="search" @click="handleDetail(scope.row)">查看</el-button>
@@ -140,50 +140,6 @@
 					<el-button @click.native="detailVisible = false" size="small">返回</el-button>
 				</div>
 			</el-dialog>
-			<!--地图界面-->
-			<el-dialog :visible.sync="mapVisible" @close="dialogClose" @open="dialogOpen" width="80%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
-				<el-row :gutter="20" class="mapSearchTips clearfix">
-					<!--<el-col :span="8" class="hot-search">
-						<div class="hd">
-							热门搜索：
-						</div>
-						<div class="bd clearfix">
-							<span v-for="item in mapSearchData" @click="mapSearch(item)">{{ item }}</span>
-						</div>
-					</el-col>
-					<el-col :span="6" class="mapSearch">
-						<div class="hd">
-							请输入搜索内容：
-						</div>
-						<div class="bd">
-							<el-amap-search-box class="search-box" v-if="" :search-option="searchOption" :on-search-result="onSearchResult" placeholder="输入关键字搜索" :events="sevents"></el-amap-search-box>
-						</div>
-					</el-col>-->
-					<el-col :span="10" class="map-result">
-						<div class="hd">
-							坐标获取结果：
-						</div>
-						<div class="bd">
-							<el-form :model="mapfilters" :inline="true" ref="mapPosition">
-								<el-form-item class="fr">
-									<el-button class="lnglatBtn" type="primary" size="small" @click="submitLnglat">确 定</el-button>
-								</el-form-item>
-								<el-form-item style="width:35%">
-									<el-input type="text" name="mapLng" placeholder="经度" v-model="mapfilters.lng"></el-input>
-								</el-form-item>
-								<el-form-item style="width:35%">
-									<el-input type="text" name="mapLat" placeholder="纬度" v-model="mapfilters.lat"></el-input>
-								</el-form-item>
-							</el-form>
-						</div>
-					</el-col>
-				</el-row>
-				<div id="mapContainer">
-				</div>
-				<div slot="footer" class="dialog-footer">
-					<el-button @click.native="mapVisible = false" size="small">返回</el-button>
-				</div>
-			</el-dialog>
 		</div>
 	</div>
 </template>
@@ -191,9 +147,8 @@
 <script>
 	
 	import { mapGetters } from 'vuex'
-	import { TMap } from '../../TMap'
 	export default {
-		name: 'ccgl',
+		name: 'plgl',
 		data() {
 			return {
 				selectUrl: '/charge/network/merchant/merchantSelect.do', //列表查询接口
@@ -209,10 +164,6 @@
 					pagesize: 10,
 					name: '',
 					area: ''
-				},
-				mapfilters:{
-					lng:'',
-					lat:''
 				},
 				formRules: {
 					number: [{
@@ -261,8 +212,7 @@
 				totalNum:1,
 				selectData:[{
 					id:0,
-					sIndex:1,
-					name:"一花一世界",
+					category:"精品套餐",
 					phone:"13623021023",
 					integral:"100",
 					label:"非会员",
@@ -281,27 +231,15 @@
 
 		},
 		methods: {
-			submitLnglat(){
-				this.mapVisible = false
+			addChildMenus(index,data){
+				data[0].name=true;
+				for(var i=0;i<data.length;i++){
+					this.selectData.splice(index+1+i,0,data[i])
+				}
 			},
-			getMap(){
-				var that=this;
-				TMap('3JFBZ-MHTWG-KSSQJ-IZJEJ-O4F4S-P2BNX').then(qq => {
-		            var map = new qq.maps.Map(document.getElementById("mapContainer"), {
-		                // 地图的中心地理坐标。
-		                center: new qq.maps.LatLng(31.866942, 117.282699),
-		                 zoom: 13
-		            });
-		            qq.maps.event.addListener(map,'click',function(event) {
-		            	var latLng = event.latLng ,lat = latLng.getLat().toFixed(6),lng = latLng.getLng().toFixed(6);
-		            	console.log(lat)
-		            	console.log(lng)
-				            that.mapfilters.lng = lng
-				            that.mapfilters.lat = lat
-				            that.formData.longitude=latLng.getLat().toFixed(6)
-				            that.formData.latitude= latLng.getLng().toFixed(6)
-				    });
-		        });
+			minusChildMenus(index,data){
+				data[0].name=false;
+				this.selectData.splice(index+1,data.length)
 			}
 		},
 		filters: {
