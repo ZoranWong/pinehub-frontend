@@ -9,7 +9,7 @@ export default class CardsService extends ApiService{
 		async createData(para){
 			var response =  await CardsService.post('/discount/ticket',para);
 			try {
-				CardsService.errorThrow(response.data);
+				CardsService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -22,7 +22,7 @@ export default class CardsService extends ApiService{
 		async getLists(para){
 			var response =  await CardsService.get('/tickets',para);
 			try {
-				CardsService.errorThrow(response.data);
+				CardsService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -35,7 +35,7 @@ export default class CardsService extends ApiService{
 		async deleteData (id) {
 			var response =  await CardsService.del('/ticket',id);
 			try {
-				CardsService.errorThrow(response.data);
+				CardsService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -48,7 +48,7 @@ export default class CardsService extends ApiService{
 		async updateData (id,para) {
 			var response =  await CardsService.put('/ticket', id,para);
 			try {
-				CardsService.errorThrow(response.data);
+				CardsService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -61,7 +61,7 @@ export default class CardsService extends ApiService{
 		async detailData (id) {
 			var response =  await CardsService.get(`/ticket/${id}`);
 			try {
-				CardsService.errorThrow(response.data);
+				CardsService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {

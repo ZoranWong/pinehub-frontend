@@ -6,7 +6,7 @@ export default class NoPublicService extends AdminApiService{
 	    static async getLists (para){
 			var response =  await NoPublicService.get('/wechat/configs', para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
 				NoPublicService.exception.throwError(response.data.message, response.data.status_code);
@@ -19,7 +19,7 @@ export default class NoPublicService extends AdminApiService{
 		static async deleteData (id) {
 			var response =  await NoPublicService.del('/wechat/config',id);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -33,7 +33,7 @@ export default class NoPublicService extends AdminApiService{
 		static async batchDelData (para) {
 			var response =  await NoPublicService.batchDel('/wechat/configs',para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -47,7 +47,7 @@ export default class NoPublicService extends AdminApiService{
 		static async detailData (id) {
 			var response =  await NoPublicService.get(`/wechat/config/${id}`);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -61,7 +61,7 @@ export default class NoPublicService extends AdminApiService{
 		static async updateData (id,para) {
 			var response =  await NoPublicService.put('/wechat/config', id,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -75,7 +75,7 @@ export default class NoPublicService extends AdminApiService{
 		static async createData (para) {
 			var response =  await NoPublicService.post(`/wechat/config`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -89,7 +89,7 @@ export default class NoPublicService extends AdminApiService{
 		static async addMenu (para) {
 			var response =  await NoPublicService.post(`/wechat/menu`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -103,7 +103,7 @@ export default class NoPublicService extends AdminApiService{
 		static async releaseMenu (id) {
 			var response =  await NoPublicService.get(`/wechat/menu/${id}/sync`);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -117,7 +117,7 @@ export default class NoPublicService extends AdminApiService{
 		static async getMenuLists () {
 			var response =  await NoPublicService.get(`/wechat/menus`);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -130,7 +130,7 @@ export default class NoPublicService extends AdminApiService{
 		static async getMenu (id) {
 			var response =  await NoPublicService.get(`/wechat/menu/${id}`);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -144,7 +144,7 @@ export default class NoPublicService extends AdminApiService{
 		static async getMaterialsLists (app_id,types) {
 			var response =  await NoPublicService.get(`/wechat/materials`,{app_id:app_id,type:types});
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -158,7 +158,7 @@ export default class NoPublicService extends AdminApiService{
 		static async getAssignMaterials (mediaId,app_id) {
 			var response =  await NoPublicService.get(`/wechat/material/${mediaId}`,{app_id:app_id});
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				return  response.data;
 			} catch (e) {
 				 NoPublicService.exception.throwError(response.data.message, response.data.status_code);
@@ -171,7 +171,7 @@ export default class NoPublicService extends AdminApiService{
 		static async addMaterials (type,app_id,para) {
 			var response =  await NoPublicService.post(`/wechat/${type}/material?app_id=${app_id}`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -185,7 +185,7 @@ export default class NoPublicService extends AdminApiService{
 		static async getReplyLists (app_id) {
 			var response =  await NoPublicService.get('/wechat/auto_reply_messages', {app_id:app_id});
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -199,7 +199,7 @@ export default class NoPublicService extends AdminApiService{
 		static async replyUpdateData (id,para) {
 			var response =  await NoPublicService.put(`/wechat/auto_reply_message/${id}`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -213,7 +213,7 @@ export default class NoPublicService extends AdminApiService{
 		static async replyCreateData (para) {
 			var response =  await NoPublicService.post(`/wechat/auto_reply_message`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -228,7 +228,7 @@ export default class NoPublicService extends AdminApiService{
 			para['app_id'] = appid;
 			var response =  await NoPublicService.post(`/wechat/material/article`,para);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -242,7 +242,7 @@ export default class NoPublicService extends AdminApiService{
 	static async polling(){
 		var response =  await NoPublicService.get(`/open-platform/auth/sure`);
 			try {
-				NoPublicService.errorThrow(response.data);
+				NoPublicService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
