@@ -1,8 +1,7 @@
 import _ from 'underscore';
 
 export default class UrlGenerator {
-    static create(path = '', queryParam = null) {
-        let host = process.env.API_SERVER_HOST;
+    static create(host, path = '', queryParam = null) {
         if (host.lastIndexOf('/') === host.length - 1) {
             host = host.substr(0, host.length - 1);
         }

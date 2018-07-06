@@ -6,253 +6,199 @@ import router from "./routes";
 import App from './App';
 import '../static/css/font-awesome.min.css'
 import store from './models';
-import config from './config'
+import config from './config';
+import authService from './services/AuthService';
+import AdminApiService from './services/AdminApiService';
+import tokenService from './services/TokenService';
+import exception from './exceptions/Exception'
 //import { TMap } from 'TMap'
 //Vue.use(TMap)
-Vue.config.productionTip = false;
 
+import VueDND from 'awe-dnd'
+
+Vue.use(VueDND)
+//富文本编辑器配置
+import VueHtml5Editor from 'vue-html5-editor'
+Vue.use(VueHtml5Editor, {
+    // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效 
+    // global component name
+    name: "vue-html5-editor",
+    // 是否显示模块名称，开启的话会在工具栏的图标后台直接显示名称
+    // if set true,will append module name to toolbar after icon
+    showModuleName: false,
+    // 自定义各个图标的class，默认使用的是font-awesome提供的图标
+    // custom icon class of built-in modules,default using font-awesome
+    icons: {
+        text: "fa fa-pencil",
+        color: "fa fa-paint-brush",
+        font: "fa fa-font",
+        align: "fa fa-align-justify",
+        list: "fa fa-list",
+        link: "fa fa-chain",
+        unlink: "fa fa-chain-broken",
+        tabulation: "fa fa-table",
+        image: "fa fa-file-image-o",
+        hr: "fa fa-minus",
+        eraser: "fa fa-eraser",
+        undo: "fa-undo fa",
+        "full-screen": "fa fa-arrows-alt",
+        info: "fa fa-info",
+    },
+    // 配置图片模块
+    // config image module
+    image: {
+        // 文件最大体积，单位字节  max file size
+        sizeLimit: 512 * 1024,
+        // 上传参数,默认把图片转为base64而不上传
+        // upload config,default null and convert image to base64
+        upload: {
+            url: null,
+            headers: {},
+            params: {},
+            fieldName: {}
+        },
+        // 压缩参数,默认使用localResizeIMG进行压缩,设置为null禁止压缩
+        // compression config,default resize image by localResizeIMG (https://github.com/think2011/localResizeIMG)
+        // set null to disable compression
+        compress: {
+            width: 1600,
+            height: 1600,
+            quality: 80
+        },
+        // 响应数据处理,最终返回图片链接
+        // handle response data，return image url
+        uploadHandler(responseText){
+            //default accept json data like  {ok:false,msg:"unexpected"} or {ok:true,data:"image url"}
+            var json = JSON.parse(responseText)
+            if (!json.ok) {
+                alert(json.msg)
+            } else {
+                return json.data
+            }
+        }
+    },
+    // 语言，内建的有英文（en-us）和中文（zh-cn）
+    //default en-us, en-us and zh-cn are built-in
+    language: "zh-cn",
+    // 自定义语言
+    i18n: {
+        //specify your language here
+        "zh-cn": {
+            "align": "对齐方式",
+            "image": "图片",
+            "list": "列表",
+            "link": "链接",
+            "unlink": "去除链接",
+            "table": "表格",
+            "font": "文字",
+            "full screen": "全屏",
+            "text": "排版",
+            "eraser": "格式清除",
+            "info": "关于",
+            "color": "颜色",
+            "please enter a url": "请输入地址",
+            "create link": "创建链接",
+            "bold": "加粗",
+            "italic": "倾斜",
+            "underline": "下划线",
+            "strike through": "删除线",
+            "subscript": "上标",
+            "superscript": "下标",
+            "heading": "标题",
+            "font name": "字体",
+            "font size": "文字大小",
+            "left justify": "左对齐",
+            "center justify": "居中",
+            "right justify": "右对齐",
+            "ordered list": "有序列表",
+            "unordered list": "无序列表",
+            "fore color": "前景色",
+            "background color": "背景色",
+            "row count": "行数",
+            "column count": "列数",
+            "save": "确定",
+            "upload": "上传",
+            "progress": "进度",
+            "unknown": "未知",
+            "please wait": "请稍等",
+            "error": "错误",
+            "abort": "中断",
+            "reset": "重置"
+        }
+    },
+    // 隐藏不想要显示出来的模块
+    // the modules you don't want
+    hiddenModules: [],
+    // 自定义要显示的模块，并控制顺序
+    // keep only the modules you want and customize the order.
+    // can be used with hiddenModules together
+    visibleModules: [
+        "text",
+        "color",
+        "font",
+        "align",
+        "list",
+        "link",
+        "unlink",
+        "tabulation",
+        "image",
+        "hr",
+        "eraser",
+        "undo",
+        "full-screen",
+        "info",
+    ],
+    // 扩展模块，具体可以参考examples或查看源码
+    // extended modules
+    modules: {
+        //omit,reference to source code of build-in modules
+    }
+})
+//Vue.use(VueHtml5Editor, {
+//	name: "vue-html5-editor",
+//	font: {
+//		fontNames: ['Microsoft YaHei','SimSun','SimHei','FangSong','KaiTi','NSimSun','MingLiU','YouYuan','STCaiyun','FZShuTi']
+//	},
+//  language: "zh-cn",
+//  // 自定义语言
+//  i18n: {
+//      "zh-cn": {
+//          "subscript": "下标",
+//          "superscript": "上标",
+//      }
+//  },
+//});
+
+Vue.config.productionTip = false;
 Vue.mixin({
 	data() {
 		return config
 	},
 	methods: {
-		//vue-resource
-		post(url, para, callback, errorback) {
-			this.$http.post(this.root + url, para, {
-				emulateJSON: true
-			}).then((res) => {
-				if(res.data.requestCode == 0) {
-					callback(res.data)
-				} else if(res.data.requestCode == -1) {
-					this.$router.push({
-						path: '/login'
-					})
-					this.$message({
-						message: res.data.msg,
-						type: 'warning'
-					})
-				} else if(!res.data.requestCode){
-					if(callback) {
-						callback(res.data)
-					}
-				}else if(res.data.requestCode == 2){
-						this.$message({
-							message: '暂无数据',
-							type: 'success'
-						})
-						if(callback) {
-							callback(res.data)
-						}
-				}else if(res.data.requestCode == 4){
-//						this.$message({
-//							message: '暂无数据',
-//							type: 'success'
-//						})
-						if(callback) {
-							callback(res.data)
-						}
-				}else{
-					this.$message({
-						message: res.data.msg,
-						type: 'warning'
-					})
-					if(errorback) {
-						errorback(res.data)
-					}
-				}
-				this.bLoading = false
-				this.tLoading = false
-				this.fLoading = false
-			}, (res) => {
-				this.$message.error('请求失败，请稍后再试')
-				this.bLoading = false
-				this.tLoading = false
-				this.fLoading = false
-			})
+		exceptionInit(){
+			return new exception(this.$message,this.$router);
 		},
-		//获取列表数据
-		getSelectData(filters = this.filters, selectUrl = this.selectUrl, selectData = 'selectData', totalNum = 'totalNum', fun,beforeFun) {
-			this.tLoading = true
-			if(beforeFun){
-				beforeFun(filters)
-			}
-			let para = filters ? Object.assign({}, filters) : {};
-			this.post(selectUrl, this.paraJson(para), (data) => {
-				if(data.data){
-					if(totalNum) {
-						this[totalNum] = parseInt(data.data.total)
-					}
-					this[selectData] = data.data.list
-					for(var i in data.data.list) {
-						this[selectData][i].sIndex = (data.data.pageNum - 1) * 10 + parseInt(i) + 1
-					}
-				}else{
-					this[totalNum] =0
-					this[selectData]=[]
-				}
-				if(fun) {
-					fun(data.data.list)
-				}
-			})
+		auth(publicKey){
+			authService.publicKey = publicKey;
+			authService.accept = this.API_ACCEPT;
+			authService.host = this.AUTH_SERVER_HOST;
+			authService.exception = this.exceptionInit();
+			return authService;
 		},
-		getSelectData1(filters = this.filters, selectUrl = this.selectUrl, selectData = 'selectData', totalNum = 'totalNum', fun) {
-				let para = filters ? Object.assign({}, filters) : {};
-				this.post(selectUrl, this.paraJson(para), (data) => {
-					if(totalNum) {
-						this[totalNum] = parseInt(data.data.total)
-					}
-					this[selectData] = data.data.list
-					for(var i in data.data.list) {
-						this[selectData][i].sIndex =  parseInt(i) +1
-					}
-					if(fun) {
-						fun(data.data.list)
-					}
-				})
-			},
+		adminApi(module){
+			module = !!module ? module :  adminApiServic2e;
+			module.accept = this.API_ACCEPT;
+			module.host = this.ADMIN_SERVER_HOST;
+			module.exception = this.exceptionInit();
+			return module;
+		},
+		token(){
+			return tokenService;
+		},
 		//查询列表重置
-		resetForm(name = 'selectFileds', fun = this.getSelectData) {
+		resetForm(name = 'selectFileds') {
 			this.$refs[name].resetFields()
-			if(fun) {
-				fun()
-			}
 		},
-		//显示详情界面
-		handleDetail(row, fun, para) {
-			this.scroll()
-			this.detailVisible = true
-			this.$nextTick(() => {
-				this.adapt()
-				this.fLoading = true
-				this.post(this.formUrl, this.paraJson(para) || {
-					id: row.id
-				}, (data) => {
-					this.detailData = Object.assign({}, data.data.list)
-					if(fun) {
-						fun(data.data.list)
-					}
-				})
-			})
-		},
-		//显示新增编辑界面
-		handleForm(type, row, para,fun) {
-			this.scroll()
-			this.formVisible = true
-			this.$nextTick(() => {
-				this.adapt()
-				this.$refs.formFileds.resetFields()
-				if(type) {
-					this.saveType = 1
-					if(this.exData) {
-						this.exData.affairId = row.id
-					}
-					this.fLoading = true
-					this.post(this.formUrl, this.paraJson(para), (data) => {
-						Utils.mergeData(this.formData, data.data.list)
-						if(fun) {
-							fun(data.data.list)
-						}
-					})
-				} else {
-					this.saveType = 0
-					if(this.exData) {
-						this.exData.affairId = ''
-					}
-					delete this.formData.id
-					if(fun) {
-						fun()
-					}
-				}
-			})
-		},
-		handleForm1(type, row, para,fun) {
-			this.scroll()
-			this.eformVisible = true
-			this.$nextTick(() => {
-				this.adapt()
-				this.$refs.eformFileds.resetFields()
-				if(type) {
-					this.eformType = 1
-					this.fLoading = true
-					this.post(this.ygAddSelectUrl, {}, (data) => {
-						this.eSelectData=data.data.list
-						if(fun) {
-							fun(data.data.list)
-						}
-					})
-				} else {
-					this.eformType = 0
-					if(this.exData) {
-						this.exData.affairId = ''
-					}
-					delete this.eformData.id
-					if(fun) {
-						fun()
-					}
-				}
-			})
-		},
-		//新增编辑保存
-		formSubmit(beforeSave, afterSave) {
-			if(beforeSave) {
-				beforeSave()
-			}
-			this.$refs.formFileds.validate((valid) => {
-				if(valid) {
-					this.$confirm('确认提交吗？', '提示', {}).then(() => {
-						let para = Object.assign({}, this.formData);
-						this.bLoading = true
-						this.post(this.saveUrl.length == 2 ? this.saveUrl[this.saveType] : this.saveUrl[0], this.paraJson(para), (data) => {
-							this.$message({
-								message: data.msg,
-								type: 'success'
-							})
-							if(afterSave) {
-								afterSave(data.data)
-							}
-							this.getSelectData()
-							this.formVisible = false
-						})
-					}).catch(() => {
-
-					})
-				}
-			})
-		},
-		eformSubmit(beforeSave, afterSave,type) {
-				if(beforeSave) {
-					beforeSave()
-				}
-				this.$refs.eformFileds.validate((valid) => {
-					if(valid) {
-						this.$confirm('确认提交吗？', '提示', {}).then(() => {
-							let para = Object.assign({},this.staffsId);
-							this.bLoading = true
-							if(type){
-								this.post(this.dmygSaveUrl[0], this.paraJson(para), (data) => {
-									this.$message({ message: data.msg, type: 'success'})
-									if(afterSave) {
-										afterSave(data.data.list)
-									}
-									this.getSelectData(this.employeefilters,this.dmygSelectUrl,this.employeeData,'totalNum1',this.getInformation)
-									this.eformVisible = false
-								})
-							}else{
-								this.post(this.ygSaveUrl[0], this.paraJson(para), (data) => {
-									this.$message({message: data.msg,type: 'success'})
-									if(afterSave) {
-										afterSave(data.data.list)
-									}
-									this.getSelectData(this.employeefilters,this.ygSelectUrl,this.employeeData,'totalNum1',this.getInformation)
-									this.eformVisible = false
-								})
-							}
-						}).catch(() => {
-	
-						})
-					}
-				})
-			},
 		//删除
 		handleDel(row, para,url = this.deleteUrl, fun= this.getSelectData) {
 				this.$confirm('确认删除该记录吗?', '提示', {
@@ -307,27 +253,24 @@ Vue.mixin({
 			this[item] = sels.map(item => item[xId]).toString()
 		},
 		//下拉框联动
-		linkageChange(val, item, url = this.codeUrl, para) {
+		async linkageChange(val, item, para) {
 			if(!val) {
 				this[item] = []
 				return
 			}
-			this.post(url, this.paraJson(para) || this.paraJson({
-				id: val
-			}), (data) => {
-				this[item] = data.data.list
-				if(data.data==''){
-					this[item] = []
-				}
-			})
+			if(para=='city'){
+				let cities = await this.adminApi(AdminApiService).Areas.getCities(val);
+				this[item]=cities
+			}else if(para=='area'){
+				let county = await this.adminApi(AdminApiService).Areas.getCounty(val);
+				this[item]=county
+			}
 		},
 		//获取远程下拉菜单数据
-		getListData(url = this.codeUrl, name = 'provinceData', para = {
-			id: '101001'
-		}) {
-			this.post(url, para ? para : {}, (data) => {
-				this[name] = data.data.list
-			})
+		async getListData(name = 'provinceData'){
+			let countries = await this.adminApi(AdminApiService).Areas.getCountries();
+			let provinces = await this.adminApi(AdminApiService).Areas.getProvinces(countries[0].id);
+			this[name] = provinces
 		},
 		//导出
 		handleExport(url = this.exportUrl, filter = this.filters) {
@@ -423,13 +366,65 @@ Vue.mixin({
 				callback()
 				return
 			}
-			let regular = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
-			if(!regular.test(value)) {
-				callback(new Error('请输入6位以上，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'))
-			} else {
+//			let regular = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
+//			if(!regular.test(value)) {
+//				callback(new Error('请输入6位以上，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符'))
+//			} else {
 				callback()
-			}
+//			}
 		},
+		//数字是整数验证
+		validateDis(rule, value, callback) {
+				if(value === '') {
+					callback()
+					return
+				}
+				let regular = /[\d]?(\.[\d]{0,2})?/;
+				if(!regular.test(value)) {
+					callback(new Error('折扣必须大于0并且小于10，且小于2位小数'))
+				} else {
+					callback()
+				}
+			},
+		//数字是整数验证
+		validateInt(rule, value, callback) {
+				if(value === '') {
+					callback()
+					return
+				}
+				let regular = /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/;
+				if(!regular.test(value)) {
+					callback(new Error('请输入整数数值'))
+				} else {
+					callback()
+				}
+			},
+			//数字大于0的整数验证
+		validateZero(rule, value, callback) {
+				if(value === '') {
+					callback()
+					return
+				}
+				let regular = /^([1-9][0-9]*)$/;
+				if(!regular.test(value)) {
+					callback(new Error('请输入大于0的整数数值'))
+				} else {
+					callback()
+				}
+			},
+			//数字大于0有两位小数的验证
+		validateTwo(rule, value, callback) {
+				if(value === '') {
+					callback()
+					return
+				}
+				let regular = /^[0-9]+([.]{1}[0-9]{1,2})?$/;
+				if(!regular.test(value)) {
+					callback(new Error('请输入最多为两位小数的正数数值'))
+				} else {
+					callback()
+				}
+			},
 		//手机格式校验
 		validateTel(rule, value, callback) {
 			if(value === '') {
@@ -519,8 +514,9 @@ Vue.use(Vuex);
 import ElementUI from 'element-ui'
 Vue.use(ElementUI)
 import 'element-ui/lib/theme-chalk/index.css'
-new Vue({
+let vm = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app');
+

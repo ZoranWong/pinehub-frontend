@@ -1,6 +1,10 @@
 export default {
 	API_SERVER_HOST: "",
-	AUTH_SERVER_HOST: "",
+	AUTH_ISERVER_HOST: "",
+	ADMIN_SERVER_HOST: "http://api.web.pinehub",
+	API_ACCEPT: 'application/vnd.pinehub.v0.0.1+json',
+	IMAGE_SERVER_HOST:'http://image.pinehub',
+	WEB_HOST: 'http://site.pinehub',
 	root: '',
 	selectData: [],
 	curPage: 1, //1列表页 2新增编辑页 3详情页

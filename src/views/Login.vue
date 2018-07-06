@@ -46,7 +46,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+//	import { mapGetters } from 'vuex';
     export default {
 		name: 'login',
 		data() {
@@ -93,58 +93,30 @@
 					]
 				},
 				checked: false,
-				login: true
+				login: true,
+				publicKey : ''
 			}
 		},
 		computed: {
 		},
 		methods: {
-			handleSubmit2() {
-				this.$refs.ruleForm2.validate((valid) => {
-					if(valid) {
-						this.bLoading = true
-						var para = JSON.stringify(this.ruleForm2);
-						delete para.forcedLogin
-						console.log(para)
-						sessionStorage.setItem('user', JSON.stringify(this.ruleForm2.name))
+			async handleSubmit2() {
+				let self = this;
+				let valid = await this.$refs.ruleForm2.validate();
+				if(valid){
+					let data = await this.auth(self.publicKey).login(this.ruleForm2.name, this.ruleForm2.password);
+					//登录后页面逻辑
+					if(data){
+						console.log(data.token)
+						this.token().setToken(data.token)
+						
+//						this.exceptionInit().throwError(data.meta.msg,data.meta.statusCode)
+						sessionStorage.setItem('user', data.user.mobile)
 						this.$router.push({
-											path: '/main'
-										})
-//						this.post('/xwmin/index.php/Bckome/index/adminLogin.html', para, (data) => {
-//							if(this.checked) {
-//								localStorage.setItem('user', para)
-//							} else {
-//								localStorage.removeItem('user')
-//							}
-//							sessionStorage.setItem('user', JSON.stringify(data.data))
-//							this.$router.push({
-//								path: '/main'
-//							})
-//						}, (data) => {
-//							if(data.requestCode == 2) {
-//								this.$confirm('该账户已登录是否强制登录?', '提示', {
-//									type: 'warning'
-//								}).then(() => {
-//									para.forcedLogin = true
-//									this.bLoading = true
-//									this.post('/admin/login.do', para, (data) => {
-//										if(this.checked) {
-//											localStorage.setItem('user', JSON.stringify(para))
-//										} else {
-//											localStorage.removeItem('user')
-//										}
-//										sessionStorage.setItem('user', JSON.stringify(data.data))
-//										this.$router.push({
-//											path: '/main'
-//										})
-//									})
-//								}).catch(() => {
-//
-//								})
-//							}
-//						})
+								path: '/mains'
+						})
 					}
-				})
+				}
 			},
 			seekpsd() {
 				this.$refs.ruleForm3.validate((valid) => {
@@ -164,14 +136,20 @@
 				this.login = false
 				this.ruleForm3.passport = this.ruleForm2.name
 				this.ruleForm3.phone = ''
+			},
+			async getkey(){
+				this.publicKey = await this.auth().getPublicKey();
+				console.log(this.publicKey)
 			}
 		},
 		created() {
+			this.getkey();
 			let user = JSON.parse(localStorage.getItem('user'));
 			if(user) {
 				this.ruleForm2.name = user.name
 				this.ruleForm2.password = user.password
 			}
+			this.auth(this.publicKey).useAppId=false
 		}
     }
 </script>

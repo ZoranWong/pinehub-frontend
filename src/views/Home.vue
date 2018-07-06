@@ -1,8 +1,8 @@
 <template>
 	<el-row class="container">
 		<div class="header">
-			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}">
-				<div class="logo">
+			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="shops">
+				<div class="logo" >
 					<img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
 					<img src="../../src/assets/logo_white.svg" v-else/>
 				</div>
@@ -31,13 +31,16 @@
 					</el-menu>
 				</aside>
 			</div>
-			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]">
+			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="shops?'left: 180px;':'left: 0px;'">
 				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]">
+					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="shops">
 						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
 							<img src="../../src/assets/icon_close.png" v-if="toogleMenu"/>
 							<img src="../../src/assets/icon_open.png" v-else/>
 						</div>
+					</div>
+					<div class="logos fl" v-else>
+						<img src="../../src/assets/f-logo.png"style="width:120px;opacity: 1;margin: 0px 20px;display: inline-block;margin-top: 4px;cursor: pointer;" />
 					</div>
 					<img @click="logout" src="../../src/assets/icon_switch.png" class="fr"/>
 					<el-dropdown trigger="click" class="fr">
@@ -60,7 +63,7 @@
 						</el-col>-->
 						<el-col :span="24" class="breadcrumb-container">
 							<!--<img src="" @click="refresh" alt="refresh" width="24" height="24" class="refresh" />-->
-							<el-breadcrumb separator="/" class="breadcrumb-inner">
+							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="shops">
 								<el-breadcrumb-item v-for="(item,index) in $route.matched" :key="index">
 									{{ item.name }}
 								</el-breadcrumb-item>
@@ -110,6 +113,7 @@
 
 <script>
 	import { mapGetters } from 'vuex'
+	
 	export default {
 		data() {
 			return {
@@ -119,20 +123,27 @@
 				menuListUrl: '/xwmin/index.php/Bckome/index.html',
 				saveUrl: ['/admin/system/sysUser/modifyPwd.do'],
 				menuList: [
+//					{childMenus:[
+//						{href:"fxy",id:"0",menu_name:"分析页",parent_id:"0"},
+//						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
+//					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
 					{childMenus:[
-						{href:"fxy",id:"0",menu_name:"分析页",parent_id:"0"},
-						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
-					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
+						{href:"gzhlb",id:"0",menu_name:"公众号列表",parent_id:"0"}
+					],href:"gzhgl",id:"1",menu_name:"公众号管理",parent_id:"1"},
 					{childMenus:[
 						{href:"ccgl",id:"0",menu_name:"餐车管理",parent_id:"0"},
 						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"},
-						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"},
-						{href:"tcgl",id:"0",menu_name:"套餐管理",parent_id:"0"}
-					],href:"zcc",id:"1",menu_name:"早餐车",parent_id:"1"},
-					{childMenus:[],href:"sc",id:"2",menu_name:"商城",parent_id:"2"},
-					{childMenus:[],href:"kqxt",id:"3",menu_name:"卡券系统",parent_id:"3"},
+						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"}
+					],href:"zcc",id:"1",menu_name:"店铺管理",parent_id:"1"},
+					{childMenus:[],href:"sc",id:"2",menu_name:"商品管理",parent_id:"2"},
 					{childMenus:[
-						{href:"hygl",id:"0",menu_name:"会员管理",parent_id:"0"}
+						{href:"yhq",id:"0",menu_name:"优惠券",parent_id:"0"}
+					],href:"kqxt",id:"3",menu_name:"卡券管理",parent_id:"3"},
+					{childMenus:[
+						{href:"hygl",id:"0",menu_name:"会员管理",parent_id:"0"},
+						{href:"khgl",id:"0",menu_name:"客户管理",parent_id:"0"},
+						{href:"jfgl",id:"0",menu_name:"积分管理",parent_id:"0"},
+						{href:"hyk",id:"0",menu_name:"会员卡",parent_id:"0"}
 					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4"}
 				],
 				imgList: [],
@@ -195,6 +206,11 @@
 //			handleLogo() {
 //				return this.config.logo || require('../../src/assets/bg.png')
 //			}
+			shops(){
+				if(this.$route.path){
+					return sessionStorage.getItem('shop') || ''
+				}
+			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
 			}
@@ -334,20 +350,16 @@
 				this.$store.commit('setPermissions', obj)
 			},
 			//退出登录
-			logout() {
-				this.$confirm('确认退出吗?', '提示', {
+			async logout() {
+			    let self = this;
+				await this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
-				}).then(() => {
-//					if(this.root == 'dl') {
-						this.$router.push('/login')
-//					} else {
-//						this.$http.get(this.root + '/admin/logout.do').then((data) => {
-//							this.$router.push('/login')
-//						})
-//					}
-				}).catch(() => {
-
-				})
+				});
+				
+				let result = await this.auth().logout();
+				if(result){
+					this.$router.push('/login')
+				}
 			},
 			refresh() {
 				let name = this.$route.path;
@@ -403,7 +415,7 @@
 		created() {
 			var user = sessionStorage.getItem('user');
 			if(user) {
-				user = JSON.parse(user)
+//				user = JSON.parse(user)
 				this.sysUserName = user || ''
 //				this.getMenuList(user)
 			}
@@ -440,7 +452,7 @@
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
-		left: 180px;
+		
 		overflow: hidden;
 	}
 	.container .header .right_content .contentHeader .menu-top{

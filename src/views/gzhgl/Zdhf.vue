@@ -14,8 +14,14 @@
 						<el-button size="small" @click="resetForm()">重置</el-button>
 					</el-form-item>
 					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+						<el-button size="small" type="primary" @click="getShops()">查询</el-button>
 					</el-form-item>
+					<!--<el-form-item>
+						<el-button size="small" type="primary" icon="el-icon-plus" @click="getSelectData()">新增</el-button>
+					</el-form-item>
+					<el-form-item>
+						<el-button size="small"  @click="handleExport()">导出</el-button>
+					</el-form-item>-->
 				</el-form>
 				<div>
 					<el-button size="small" type="primary" icon="el-icon-plus" @click.native="getUpdate(false)">新增</el-button>
@@ -24,8 +30,8 @@
 			</el-col>
 
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
-				<el-table-column prop="index" label="序号" width="50"></el-table-column>
+			<el-table :data="currentPageList" highlight-current-row v-loading="tLoading">
+				<!--<el-table-column prop="index" label="序号" width="60">{{1}}</el-table-column>-->
 				<el-table-column prop="number" label="编号" min-width="80"></el-table-column>
 				<el-table-column prop="manager.user_name" label="车主" min-width="100"></el-table-column>
 				<el-table-column prop="" label="地理位置" min-width="180">
@@ -36,15 +42,10 @@
 				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
 				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
 				<el-table-column prop="manager.mobile" label="联系方式" min-width="150"></el-table-column>
-				<el-table-column label="操作" width="150">
+				<el-table-column label="操作" width="120">
 					<template slot-scope="scope">
-						<el-button type="success" size="mini" @click="getDetail(scope.row)">查看</el-button>
-						<el-button type="primary" size="mini" @click="getUpdate(true, scope.row)">编辑</el-button>
-						<el-popover placement="top">
-							<el-button type="success" size="mini" @click="payCode(true, scope.row)">支付二维码</el-button>
-							<el-button type="success" size="mini" @click="paraCode(true, scope.row)">微信参数二维码</el-button>
-							<el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
-						</el-popover>
+						<el-button type="text" size="mini" icon="search" @click="getDetail(scope.row)">查看</el-button>
+						<el-button type="text" size="mini" icon="search" @click="getUpdate(true, scope.row)">编辑</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -64,13 +65,13 @@
 							<el-input v-model="formData.code" style="width:30%"></el-input>
 						</el-form-item>
 						<el-form-item label="餐车地址：" prop="province_id" style="display: inline-block;">
-							<el-select v-model="formData.province_id" @change="linkageChange(formData.province_id,'cityData','city')">
+							<el-select v-model="formData.province_id">
 								<el-option label="请选择省" value="" @click.native="formData.city_id = '';formData.city_id = ''"></el-option>
 								<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="formData.city_id = '';formData.county_id = ''"></el-option>
 							</el-select>
 						</el-form-item>
 						<el-form-item prop="city_id" label-width="10px" style="display: inline-block;">
-							<el-select v-model="formData.city_id" @change="linkageChange(formData.city_id,'areaData','area')">
+							<el-select v-model="formData.city_id">
 								<el-option label="请选择市" value="" @click.native="formData.county_id = ''"></el-option>
 								<el-option v-for="(item,index) in cityData" :label="item.name" :value="item.id" :key="index" @click.native="formData.county_id = ''"></el-option>
 							</el-select>
@@ -90,7 +91,7 @@
 							<el-input v-model.number="formData.lat" placeholder="请输入纬度" :disabled="true"></el-input>
 						</el-form-item>
 						<el-form-item label="" label-width="10px" style="display:inline-block;">
-							<el-button type="success" size="mini" @click="mapVisible = true;submitLnglat(false)">设置地图坐标</el-button>
+							<el-button type="success" size="mini" @click="mapVisible = true;getMap()">设置地图坐标</el-button>
 						</el-form-item>
 						<!--<el-form-item label="餐车位置：" prop="area">
 							<el-input v-model="formData.area" style="width:30%"></el-input>
@@ -114,7 +115,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">提交</el-button>
+					<el-button type="primary" @click.native="shopsSubmit()" :loading="bLoading" size="small">提交</el-button>
 				</div>
 			</el-dialog>
 			<!--详情界面-->
@@ -189,7 +190,7 @@
 						<div class="bd">
 							<el-form :model="mapfilters" :inline="true" ref="mapPosition">
 								<el-form-item class="fr">
-									<el-button class="lnglatBtn" type="primary" size="small" @click="submitLnglat(true)">确 定</el-button>
+									<el-button class="lnglatBtn" type="primary" size="small" @click="submitLnglat">确 定</el-button>
 								</el-form-item>
 								<el-form-item style="width:35%">
 									<el-input type="text" name="mapLng" placeholder="经度" v-model="mapfilters.lng"></el-input>
@@ -231,11 +232,31 @@
 					lat:''
 				},
 				formRules: {
-					address: [{ required: true, message: '请输入餐车位置', trigger: 'blur' }],
-					manager_name: [{ required: true, message: '请输入餐主姓名', trigger: 'blur' }],
-					manager_mobile: [{ required: true, message: '请输入联系方式', trigger: 'blur' }],
-					lng: [{ required: true, message: '请选择经度', trigger: 'blur' }],
-					lat: [{ required: true, message: '请选择纬度', trigger: 'blur' }]
+					address: [{
+						required: true,
+						message: '请输入餐车位置',
+						trigger: 'blur'
+					}],
+					manager_name: [{
+						required: true,
+						message: '请输入餐主姓名',
+						trigger: 'blur'
+					}],
+					manager_mobile: [{
+						required: true,
+						message: '请输入联系方式',
+						trigger: 'blur'
+					}],
+					lng: [{
+						required: true,
+						message: '请选择经度',
+						trigger: 'blur'
+					}],
+					lat: [{
+						required: true,
+						message: '请选择纬度',
+						trigger: 'blur'
+					}]
 				},
 				//新增编辑界面数据
 				formData: {
@@ -255,10 +276,18 @@
 				shops:[],
 				meta:{},
 				detailData: {
-					country:{ name: '' },
-					province: { name: '' },
-					city: { name: '' },
-					county: { name: '' },
+					country:{
+						name: ''
+					},
+					province: {
+						name: ''
+					},
+					city: {
+						name: ''
+					},
+					county: {
+						name: ''
+					},
 					manager: {
 						mobile: '',
 						user_name: '',
@@ -269,32 +298,34 @@
 			};
 		},
 		mounted() {
+			this.getShops(1); 
 		},
 		computed: {
-			
+			currentPageList(){
+				console.log(this.shops)
+				return this.shops.length > 0 ? this.shops: [];
+			}
 		},
 		watch: {
 
 		},
 		methods: {
-			payCode(){
-				
-			},
-			paraCode(){
-				
-			},
 			async getUpdate(type, row, para,fun) {
+//				this.scroll()
 				this.formVisible = true
-				let result = await this.$nextTick();
-				if( result ) {
-				    this.$refs.formFileds.resetFields();
-			    	if(type) {
+//				this.$nextTick(() => {
+//					this.adapt()
+//					let valid = await this.$refs.ruleForm2.validate();
+//					this.$refs.formFileds.resetFields()
+					if(type) {
 						this.saveType = 1
 						if(this.exData) {
 							this.exData.affairId = row.id
 						}
-						let list = await this.adminApi(AdminApiService).Shops.detailData(row.id);
-						this.formData=Object.assign(this.formData, list)
+						this.fLoading = true
+						let list =await this.adminApi().Shops.updateShop(row.id);
+						this.formData=list
+						console.log(list)
 					} else {
 						this.saveType = 0
 						if(this.exData) {
@@ -305,48 +336,48 @@
 							fun()
 						}
 					}
-				}
+//				})
 			},
 			async getDetail(row){
-				let list = await this.adminApi(AdminApiService).Shops.detailData(row.id);
+				let list = await this.adminApi().Shops.detailShop(row.id);
 				this.detailData=list
+				console.log(this.detailData)
+//				this.scroll()
 				this.detailVisible = true
-				this.$nextTick(() => {
-					this.adapt()
-				})
+//				this.$nextTick(() => {
+//					this.adapt()
+//					this.fLoading = true
+//				})
 			},
-			async createSubmit(beforeSave,afterSave) {
+			getMap(){
+				this.mapVisible = false
+			},
+			async shopsSubmit(beforeSave,afterSave) {
 				if(beforeSave) {
 					beforeSave()
 				}
 				let self = this;
-				let valid = await this.$refs.formFileds.validate();
+				let valid = this.$refs.formFileds.validate();
 				if(valid){
-					let result = await this.$confirm('确认提交吗？', '提示', {})
-					if(result) {
-						if(this.saveType){
-							let para = Object.assign({}, this.formData);
-							let data = await self.adminApi(AdminApiService).updateData(this.formData.id,para);
-							console.log(data)
-							if(data) {
-								this.$message({message:"修改成功",type: 'success'})
-							}
-						}else{
-							let para = Object.assign({}, this.formData);
-							let data=this.adminApi(AdminApiService).Shops.createShop(para);
-							if(data) {
-								this.$message({message:"新增成功",type: 'success'})
-							}
-						}
-						this.getList(this.filters)
+					this.$confirm('确认提交吗？', '提示', {}).then(() => {
+						let para = Object.assign({}, this.formData);
+						this.bLoading = true
+						let data=this.adminApi().Shops.createShop(para);
+						this.$message({message:"店铺创建成功",type: 'success'})
+						this.getShops(1); 
 						this.formVisible = false
-					}
+					}).catch(() => {
+	
+					})
 				}
 			},
-			getMap(){
-//				this.mapVisible = false
+			async getShops(page, fliters, search){
+				let [list, meta] = await this.adminApi().Shops.getShops(page, fliters, search);
+				this.meta = meta;
+				this.shops= list;
+				this.totalNum=this.meta.total
 			},
-			submitLnglat(value){
+			submitLnglat(){
 				var that=this;
 				TMap('3JFBZ-MHTWG-KSSQJ-IZJEJ-O4F4S-P2BNX').then(qq => {
 		            var map = new qq.maps.Map(document.getElementById("mapContainer"), {
@@ -362,43 +393,27 @@
 				            that.formData.lat= latLng.getLng().toFixed(6)
 				    });
 		        });
-		        if(value){
-		        	this.mapVisible = false
-		        }
-			},
-			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(AdminApiService).Shops.getLists(fliters, search);
-				this.meta = meta;
-				this.selectData= list;
-				for(var i in this.selectData){
-					this.selectData[i].index=parseInt(i)+1
-				}
-				this.totalNum=this.meta.total
 			}
 		},
 		filters: {
 		},
 		created() {
-//			let self = this;
-//			(async function ($this){
-//				let countries = await $this.adminApi(AdminApiService).Areas.getCountries();
-//				let provinces = await $this.adminApi(AdminApiService).Areas.getProvinces(countries[0].id);
-//				self.provinceData=provinces 
-//				let province = await $this.adminApi(AdminApiService).Areas.getProvince(1);
-//				console.log(province)
-//				let cities = await $this.adminApi(AdminApiService).Areas.getCities(1,1);
-//				self.cityData=cities
-//				let county = await $this.adminApi(AdminApiService).Areas.getCounty(1,1,1);
-//				self.areaData=county
-//			})(self);
-			
-			this.getList(this.filters)
-			this.getListData()
+			let self = this;
+			(async function ($this){
+				let countries = await $this.adminApi().Areas.getCountries();
+				let provinces = await $this.adminApi().Areas.getProvinces(1);
+				self.provinceData=provinces
+				let province = await $this.adminApi().Areas.getProvince(1);
+				let cities = await $this.adminApi().Areas.getCities(1,1);
+				self.cityData=cities
+				let county = await $this.adminApi().Areas.getCounty(1,1,1);
+				self.areaData=county
+			})(self);
 		}
 	}
 </script>
 
-<style scoped>
+<style>
 	#mapContainer{
 	    min-width:500px;
 	    min-height:500px;

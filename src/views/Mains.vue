@@ -1,50 +1,70 @@
 <template>
 	<div class="content-scroll" style="overflow-y: hidden;">
 		<div class="content-box">
-			
-			<el-col :span="24" class="toolbar">
-				<el-form v-loading="fLoading" label-width="180px">
-					<el-form-item label="应用名称：">
-						<span v-text="detailData.app_name"></span>
+			<div class="headSearch">
+				<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds" style="float:right;margin-bottom: 0;">
+					<el-form-item prop="name">
+						<el-input size="mini" v-model="filters.name" placeholder="搜索店铺"></el-input>
 					</el-form-item>
-					<el-form-item label="应用编号：">
-						<span v-text="detailData.app_id"></span>
+					<el-form-item>
+						<el-button size="mini" type="primary" @click="">搜索</el-button>
 					</el-form-item>
-					<el-form-item label="主体信息：">
-						<span v-text="detailData.app_secret"></span>
-					</el-form-item>
-					<el-form-item label="店铺认证：">
-						<span v-if="detailData.mode=='editor'">编辑者模式</span>
-						<span v-if="detailData.mode=='developer'">开发者模式</span>
-					</el-form-item>
-					<el-form-item label="主营类目：">
-						<span v-if="detailData.type=='wechat_mini_program'">小程序</span>
-						<span v-if="detailData.type=='wechat_official_account'">公众号</span>
-						<span v-if="detailData.type=='wechat_open_platform'">微信三方应用</span>
-					</el-form-item>
-					<el-form-item label="创建日期：" v-if='detailData.mode=="developer"'>
-						<span v-text="detailData.token"></span>
-					</el-form-item>
-					<el-form-item label="有效期至：" v-if='detailData.mode=="developer"'>
-						<span v-text="detailData.aes_key"></span>
-					</el-form-item>
-					<el-form-item label="店铺logo：">
-						<span v-text="detailData.wechat_bind_app"></span>
-					</el-form-item>
-					<el-form-item label="店铺简介：">
-						<span v-text="detailData.wechat_bind_app"></span>
-					</el-form-item>
-					<el-form-item label="店长姓名：">
-						<span v-text="detailData.wechat_bind_app"></span>
-					</el-form-item>
-					<el-form-item label="店长QQ：">
-						<span v-text="detailData.wechat_bind_app"></span>
-					</el-form-item>
-					<el-form-item label="店长手机号：">
-						<span v-text="detailData.wechat_bind_app"></span>
+					<el-form-item>
+						<el-button size="mini" type="success" @click="getUpdate();logoUrl=''">创建店铺</el-button>
 					</el-form-item>
 				</el-form>
-			</el-col>	
+				<el-form label-width="10px" style="float:left;margin-bottom: 0;">
+					<el-form-item>
+						选择店铺
+					</el-form-item>
+				</el-form>
+			</div>
+			<div class="cardContent">
+				<div class="card" v-for="(item , index) in selectData" :key="index" v-on:click="pathTo(item.id)">
+					<p class="cardName">{{item.name}}</p>
+					<p>主体信息：李从鸥</p>
+					<p>有效期至：{{item.updated_at.date.substr(0,19)}}</p>
+					<img :src="item.logo" alt="" class="cardLabel"/>
+					<div class="operatCard">
+						<el-button size="mini" type="text" @click.stop="getUpdate(true,item.id)">修改</el-button>
+						<el-button size="mini" type="text" @click.stop="delData(item.id)">删除</el-button>
+					</div>
+				</div>
+			</div>
+			<div class="cardFooter" v-if="totalNum">
+				<p>共{{totalNum}}条，每页48条</p>
+			</div>
+			<!--创建店铺界面-->
+			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="50%" :close-on-click-modal="false">
+				<el-tabs active-name="first">
+					<el-tab-pane :label="saveType ? '修改店铺' : '创建店铺'" name="first"></el-tab-pane>
+				</el-tabs>
+				<div class="form-container">
+					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+						<el-form-item label="应用名称：" prop="name">
+							<el-input v-model="formData.name"></el-input>
+						</el-form-item>
+						<!--图片上传-->
+						<el-form-item label="logo上传：" prop="merchantpic">
+							<div v-if="logoUrl" style="padding:2px;width:155px;height:155px;border:1px dashed #ddd">
+								<img :src="logoUrl" alt="" style="width:148px;"/>
+							</div>
+							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/app/logo/cloud?token='+tokens" :data="exData" :on-success="handleSuccess" :on-remove="handleRemove" :on-error="handleError" :beforeUpload="beforeUpload" :show-file-list="false">
+								<el-button size="small" type="primary" v-if="logoUrl">重新上传</el-button>
+								<el-button size="small" type="primary" v-else>点击上传</el-button>
+								<div slot="tip" class="el-upload__tip">只能上传png文件,且大小不超过2MB的正方形图片</div>
+							</el-upload>
+						</el-form-item>
+					</el-form>
+				</div>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click.native="formVisible = false" size="small">取消</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">保存</el-button>
+				</div>
+			</el-dialog>
+			<!--<div class="dialogQrcide" v-show="qrcodeVisible">
+				<div id="qrcode"></div>
+			</div>	-->
 		</div>
 	</div>
 </template>
@@ -91,6 +111,11 @@
 			
 		},
 		methods:{
+			pathTo(id){
+				console.log(id)
+				sessionStorage.setItem('shop', id)
+				this.$router.push({ path: '/main' })
+			},
 			async createSubmit(beforeSave,afterSave) {
 				if(beforeSave) {
 					beforeSave()
@@ -203,19 +228,21 @@
 		created(){
 			this.getList(this.fliters)
 			this.tokens= TokenService.getToken();
-			this.useAppId=true
+			this.useAppId=false;
 		}
 	}
 
 </script>
 
 <style scoped>
-	.headSearch {padding-top:10px;overflow: hidden;} 
+	.content-box{padding:0}
+    .headSearch .el-form-item{margin-bottom: 12px;}
+	.headSearch {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;} 
 	.headSearch .el-form-item__content{line-height: '';}
-	.cardContent{clear: both;}
+	.cardContent{clear: both;padding:20px}
 	.cardContent .card:hover >.operatCard{visibility:visible;}
 	.cardContent .card .operatCard{visibility:hidden;height: 12px;}
-	.cardFooter{float:right;}
+	.cardFooter{float:right;padding:20px}
 	.cardFooter p{font-size: 12px;line-height: 16px;}
 	.cardContent .card{position:relative;display:inline-block;margin-right:10px;width: 260px;height: 120px;padding: 0 20px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;border-top: 3px solid #ff6e6e;background: #fff;cursor: pointer;color: #999;}
 	.cardContent .card p{height: 22px;line-height: 22px;font-size: 12px;}

@@ -33,6 +33,11 @@ module.exports = {
 	      new FrontEnvConfigSettingPlug()
 	    ]
 	},
+//	 resolve:{
+//      alias:{
+//          'vue$':'vue/dist/vue.js'
+//      }
+//  }
 //  configureWebpack: config => {
 //  	console.log("dd")
 //      if (process.env.NODE_ENV === 'production') {

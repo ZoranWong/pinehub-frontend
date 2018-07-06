@@ -9,16 +9,22 @@
     "test": "karma start"
   },
   "dependencies": {
+    "awe-dnd": "^0.3.1",
     "axios": "^0.18.0",
+    "blueimp-md5": "^2.10.0",
     "cookie-storage": "^3.1.0",
     "element-ui": "^2.3.3",
     "es6-promise": "^4.2.4",
+    "js-md5": "^0.7.3",
     "karma": "^2.0.0",
+    "object-hash": "^1.3.0",
+    "qrcodejs2": "0.0.2",
     "storage-helper": "^1.4.1",
     "underscore": "^1.8.3",
     "vue": "^2.5.13",
     "vue-axios": "^2.1.1",
     "vue-router": "^3.0.1",
+    "vue-ueditor": "^0.1.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -26,7 +32,8 @@
     "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
     "node-sass": "^4.8.3",
-    "sass-loader": "^6.0.7"
+    "sass-loader": "^6.0.7",
+    "vue-html5-editor": "^1.1.1"
   },
   "babel": {
     "presets": [

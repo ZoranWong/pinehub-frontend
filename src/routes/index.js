@@ -4,10 +4,15 @@ Vue.use(VueRouter);
 import Login from '../views/Login'
 import Home from '../views/Home'
 import Main from '../views/Main'
+import Mains from '../views/Mains'
 import notFound from '../views/404'
 import Reload from '../views/Reload'
+import Wechat from '../views/Wechat'
 //用户统计
 import Hygl from '../views/yhtj/Hygl'
+import Khgl from '../views/yhtj/Khgl'
+import Jfgl from '../views/yhtj/Jfgl'
+import Hyk from '../views/yhtj/Hyk'
 //早餐车
 import Ccgl from '../views/zcc/Ccgl'
 import Ddgl from '../views/zcc/Ddgl'
@@ -16,6 +21,10 @@ import Tcgl from '../views/404'
 //首页管理
 import Fxy from '../views/404'
 import Jky from '../views/404'
+//公众号管理
+import Gzhlb from '../views/gzhgl/Gzhlb'
+//卡券管理
+import Yhq from '../views/kqgl/Yhq'
 const routes = [
     {
         path: '/login',
@@ -39,6 +48,38 @@ const routes = [
 				path: 'reload',
 				component: Reload,
 				name: 'reload'
+			},
+			{
+		        path: '/mains',
+				component: Mains,
+				name: '选择店铺'
+		    },
+			{
+				path: 'wechat',
+				component: Wechat,
+				name: '微信'
+			}
+		]
+	},
+	{
+		path: '/',
+		component: Home,
+		name: '公众号管理',
+		children: [{
+				path: 'gzhlb',
+				component: Gzhlb,
+				name: '公众号列表'
+			}
+		]
+	},
+	{
+		path: '/',
+		component: Home,
+		name: '卡券管理',
+		children: [{
+				path: 'Yhq',
+				component: Yhq,
+				name: '优惠券'
 			}
 		]
 	},
@@ -50,6 +91,18 @@ const routes = [
 				path: 'hygl',
 				component: Hygl,
 				name: '会员管理'
+			},{
+				path: 'khgl',
+				component: Khgl,
+				name: '客户管理'
+			},{
+				path: 'jfgl',
+				component: Jfgl,
+				name: '积分管理'
+			},{
+				path: 'hyk',
+				component: Hyk,
+				name: '会员卡'
 			}]
 	},
 	{
@@ -95,15 +148,18 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if(to.path == '/login') {
 		sessionStorage.removeItem('user')
+		sessionStorage.removeItem('shop')
+		sessionStorage.removeItem('token')
 	}
-	let user = JSON.parse(sessionStorage.getItem('user'));
+	let user = sessionStorage.getItem('user');
+	let shop = sessionStorage.getItem('shop');
 	let hasLogin = router.app.$options.store.state.hasLogin;
-	if(!user && to.path != '/login') {
-		next('/login')
-	} else if(hasLogin&&to.path != '/main' && to.path != '/login') {
-		next('/main')
-	} else {
-		next()
-	}
+		if(!user && to.path != '/login') {
+			next('/login')
+		} else if(hasLogin && to.path != '/main' && to.path != '/login') {
+			next('/main')
+		} else {
+			next()
+		}
 })
 export default router
