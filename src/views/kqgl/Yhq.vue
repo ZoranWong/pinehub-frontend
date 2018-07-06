@@ -178,10 +178,10 @@
 							    </div>
 							 </el-radio-group>
 						</el-form-item>
-						<el-form-item label="使用门槛：" prop="advanced_info.use_condition">
-							<el-radio-group v-model="formData.advanced_info.use_condition">
+						<el-form-item label="使用门槛：" prop="least_cost">
+							<el-radio-group v-model="formData.least_cost">
 							    <div><el-radio label="">不限制 </el-radio>
-							    	<el-form-item label="" label-width="10px" prop="money" v-if="formData.advanced_info.use_condition==''">
+							    	<el-form-item label="" label-width="10px" prop="money" v-if="formData.least_cost==''">
 										<span style="color:red;font-size: 12px;">请谨慎设置无门槛优惠券，避免资金损失</span>
 									</el-form-item>
 							    </div>
@@ -261,9 +261,9 @@
 						</el-form-item> 
 						<el-form-item label="适用范围：" prop="garden">
 							<el-radio-group v-model="formData.garden">
-							    <el-radio label="click">全店商品</el-radio>
-							    <el-radio label="view">指定商品</el-radio>
-							    <el-radio label="views">指定商品不可用</el-radio>
+							    <el-radio label="click" disabled>全店商品</el-radio>
+							    <el-radio label="view" disabled>指定商品</el-radio>
+							    <el-radio label="views" disabled>指定商品不可用</el-radio>
 							 </el-radio-group>
 						</el-form-item>
 						<el-form-item label="" prop="checked">
@@ -364,9 +364,11 @@
 		            },
 		            "discount":'',
 					"sync":true,
+					"card_type":'',
 					
+					least_cost:'',
 					cover:'',
-					type:'click',
+					garden:'click',
 					gardens:''
 				},
 				formRules:{
@@ -378,8 +380,8 @@
 					'base_info.brand_name': [{ required: true, message: '卡券标题不能为空', trigger: 'blur' }],
 					titles: [{ required: true, message: '卡券副标题不能为空', trigger: 'blur' }],
 					chooseColor: [{ required: true, message: '请选择卡券颜色', trigger: 'blur' }],
-					type: [{ required: true, message: '请选择优惠形式', trigger: 'blur' }],
-					types: [{ required: true, message: '请选择使用门槛', trigger: 'blur' }],
+					'card_type': [{ required: true, message: '请选择优惠形式', trigger: 'blur' }],
+					'advanced_info.use_condition': [{ required: true, message: '请选择使用门槛', trigger: 'blur' }],
 					'base_info.get_limit': [{ required: true, message: '请选择每人限领', trigger: 'blur' }],
 					gardens: [{ required: true, message: '请选择有效期', trigger: 'blur' }],
 					garden: [{ required: true, message: '请选择适用范围', trigger: 'blur' }]
