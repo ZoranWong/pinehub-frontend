@@ -25,7 +25,7 @@ export default class UserService extends ApiService{
 		async createData(para){
 			var response =  await UserService.post('/app',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -38,7 +38,7 @@ export default class UserService extends ApiService{
 		async getLists(para){
 			var response =  await UserService.get('/customers',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -51,7 +51,7 @@ export default class UserService extends ApiService{
 		async setMember(para){
 			var response =  await UserService.post('/app',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -64,7 +64,7 @@ export default class UserService extends ApiService{
 		async deleteData (id) {
 			var response =  await UserService.del('/app',id);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -77,7 +77,7 @@ export default class UserService extends ApiService{
 		async updateData (id,para) {
 			var response =  await UserService.put('/app', id,para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -90,7 +90,7 @@ export default class UserService extends ApiService{
 		async detailData (id) {
 			var response =  await UserService.get(`/app/${id}`);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -106,7 +106,7 @@ export default class UserService extends ApiService{
 		async setMember(para){
 			var response =  await UserService.post('/app',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -119,7 +119,7 @@ export default class UserService extends ApiService{
 		async getLists(para){
 			var response =  await UserService.get('/members',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -135,7 +135,7 @@ export default class UserService extends ApiService{
 		async createData(para){
 			var response =  await UserService.post('/score-rule',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -148,7 +148,7 @@ export default class UserService extends ApiService{
 		async getListT(para){
 			var response =  await UserService.get(`/general/score-rules`,para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -161,7 +161,7 @@ export default class UserService extends ApiService{
 		async getLists(para){
 			var response =  await UserService.get(`/special/score-rules`,para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -174,7 +174,7 @@ export default class UserService extends ApiService{
 		async deleteData (id) {
 			var response =  await UserService.del('/score-rule',id);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -187,7 +187,7 @@ export default class UserService extends ApiService{
 		async updateData (id,para) {
 			var response =  await UserService.put('/app', id,para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -200,7 +200,7 @@ export default class UserService extends ApiService{
 		async detailData (id) {
 			var response =  await UserService.get(`/score-rule/${id}`);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -216,7 +216,7 @@ export default class UserService extends ApiService{
 		async createData(para){
 			var response =  await UserService.post('/member/card',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -229,7 +229,7 @@ export default class UserService extends ApiService{
 		async getLists(para){
 			var response =  await UserService.get('/member/cards',para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  [response.data.data, response.data.meta.pagination];
 			} catch (e) {
@@ -242,7 +242,7 @@ export default class UserService extends ApiService{
 		async deleteData (id) {
 			var response =  await UserService.del('/app',id);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -255,7 +255,7 @@ export default class UserService extends ApiService{
 		async updateData (id,para) {
 			var response =  await UserService.put('/member/card', id,para);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -268,7 +268,7 @@ export default class UserService extends ApiService{
 		async detailData (id) {
 			var response =  await UserService.get(`/member/card/${id}`);
 			try {
-				UserService.errorThrow(response.data);
+				UserService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {

@@ -7,7 +7,7 @@ export default class AdminApiService extends ApiService{
 		async getLists (para){
 			var response =  await AdminApiService.get('/shops', para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data;
 				return  [data.data, data.meta.pagination];
 			} catch (e) {
@@ -20,7 +20,7 @@ export default class AdminApiService extends ApiService{
 		async deleteShop (id) {
 			var response =  await AdminApiService.post('/shop',para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -33,7 +33,7 @@ export default class AdminApiService extends ApiService{
 		async detailData (id) {
 			var response =  await AdminApiService.get(`/shop/${id}`);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -46,7 +46,7 @@ export default class AdminApiService extends ApiService{
 		async updateShop (id) {
 			var response =  await AdminApiService.put('/shop', id);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -59,7 +59,7 @@ export default class AdminApiService extends ApiService{
 		async createShop (para) {
 			var response =  await AdminApiService.post(`/shop`,para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -74,7 +74,7 @@ export default class AdminApiService extends ApiService{
 		async getCountries (){
 			var response =  await AdminApiService.get('/countries', {});
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -87,7 +87,7 @@ export default class AdminApiService extends ApiService{
 		async getProvinces (countryId){
 			var response =  await AdminApiService.get(`/country/${countryId}/provinces`, {});
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -100,7 +100,7 @@ export default class AdminApiService extends ApiService{
 		async getProvince (id){
 			var response =  await AdminApiService.get(`/province/${id}`, {});
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data;
 				return  data;
 			} catch (e) {
@@ -113,7 +113,7 @@ export default class AdminApiService extends ApiService{
 		async getCities (provinceId){
 			var response =  await AdminApiService.get(`/province/${provinceId}/cities`, {});
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -126,7 +126,7 @@ export default class AdminApiService extends ApiService{
 		async getCounty (cityId){
 			var response =  await AdminApiService.get(`city/${cityId}/counties`, {});
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -146,7 +146,7 @@ export default class AdminApiService extends ApiService{
 		async getLists (para){
 			var response =  await AdminApiService.get('/orders', para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data;
 				return  [data.data, data.meta.pagination];
 			} catch (e) {
@@ -159,7 +159,7 @@ export default class AdminApiService extends ApiService{
 		async shipOrder (id,para) {
 			var response =  await AdminApiService.put(`/order/${id}/sent`,para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -172,7 +172,7 @@ export default class AdminApiService extends ApiService{
 		async deleteShop (id) {
 			var response =  await AdminApiService.post('/shop',para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -185,7 +185,7 @@ export default class AdminApiService extends ApiService{
 		async detailData (id) {
 			var response =  await AdminApiService.get(`/shop/${id}`);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -198,7 +198,7 @@ export default class AdminApiService extends ApiService{
 		async updateShop (id) {
 			var response =  await AdminApiService.put('/shop', id);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {
@@ -211,7 +211,7 @@ export default class AdminApiService extends ApiService{
 		async createShop (para) {
 			var response =  await AdminApiService.post(`/shop`,para);
 			try {
-				AdminApiService.errorThrow(response.data);
+				AdminApiService.validate(response.data);
 				var data = response.data.data;
 				return  data;
 			} catch (e) {

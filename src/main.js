@@ -183,6 +183,7 @@ Vue.mixin({
 			authService.accept = this.API_ACCEPT;
 			authService.host = this.AUTH_SERVER_HOST;
 			authService.exception = this.exceptionInit();
+			authService.tokenService = tokenService;
 			return authService;
 		},
 		adminApi(module){
@@ -190,6 +191,7 @@ Vue.mixin({
 			module.accept = this.API_ACCEPT;
 			module.host = this.ADMIN_SERVER_HOST;
 			module.exception = this.exceptionInit();
+			module.tokenService = tokenService;
 			return module;
 		},
 		token(){

@@ -107,6 +107,7 @@
 					let data = await this.auth(self.publicKey).login(this.ruleForm2.name, this.ruleForm2.password);
 					//登录后页面逻辑
 					if(data){
+					    console.log(data)
 						this.token().setToken(data.token)
 						sessionStorage.setItem('user', data.user.data.mobile)
 						this.$router.push({
