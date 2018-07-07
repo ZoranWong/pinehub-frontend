@@ -1,6 +1,6 @@
 <template>
-	<div class="content-scroll" style="overflow: hidden;">
-		<div class="content-box">
+	<div class="content-scroll">
+		<div class="content-box" style="padding:0">
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
 				<el-tabs v-model="activeName">
@@ -20,9 +20,9 @@
 								     	 无门槛会员卡
 								     	 <i class="el-icon-question"></i>
 								    </template>
-								    <div class="showCard">
+								    <div class="showCard" v-for="(item,index) in selectData" :key="index">
 								    	<div class="header">
-									        <h3 class="pull-left">青松E购</h3>
+									        <h3 class="pull-left">{{item.title}}</h3>
 									        <h4 class="pull-right">无门槛领卡</h4>
 									    </div>
 									    <div class="detail js-rights-area">
@@ -64,7 +64,7 @@
 							<el-table-column prop="num" label="售价（元）" min-width="100"></el-table-column>
 							<el-table-column prop="num" label="状态" min-width="100"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="" type="text">-</el-button>
 								</template>
 							</el-table-column>
@@ -90,14 +90,14 @@
 							<el-table-column prop="phone" label="会员卡号" min-width="120"></el-table-column>
 							<el-table-column prop="integral" label="会员" min-width="100"></el-table-column>
 							<el-table-column prop="num" label="会员卡|类型" min-width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<p>{{}}</p>
 								</template>
 							</el-table-column>
 							<el-table-column prop="num" label="售价（元）" min-width="100"></el-table-column>
 							<el-table-column prop="num" label="状态" min-width="100"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="" type="text">-</el-button>
 								</template>
 							</el-table-column>
@@ -157,14 +157,16 @@
 							    	<el-radio label="color" style="float: left;margin-top: 10px;">背景色</el-radio>
 							    	<el-popover placement="bottom" width="185" trigger="hover">
 							    		<div class="colorLayout">
-							    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item"></span>
+							    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
 							    		</div>
 									  <div class="showColor" slot="reference" size="small"><p :style="chooseColor"></p></div>
 									</el-popover>
 							    	<p><span></span></p>
 							    </div>
 							    <div style="clear: both;margin-top: 10px;"><el-radio label="background_pic_url">封面图片</el-radio>
-							    	<el-button size="small" @click.active="" type="text">选择图片</el-button>
+							    	<img :src="formData.background_pic_url" v-if="formData.background_pic_url" alt="" style="width:100px"/>
+							    	<el-button size="small" @click.native="getImgMaterials()" type="text" v-if="formData.background_pic_url">重新选择图片</el-button>
+							    	<el-button size="small" @click.native="getImgMaterials()" type="text" v-else>选择图片</el-button>
 							    </div>
 							 </el-radio-group>
 						</el-form-item>
@@ -175,7 +177,7 @@
 						 <el-form-item label="会员权益：" prop="quanyi">
 						    <el-checkbox-group v-model="formData.quanyi">
 						      <div><el-checkbox label="包邮">包邮</el-checkbox></div>
-						      <div><el-checkbox label="会员折扣 "></el-checkbox>
+						      <div><el-checkbox label="会员折扣"></el-checkbox>
 						      	<el-form-item label="" label-width="10px" prop="discount" style="display: inline-block;">
 						      		<el-input size="small" v-model="formData.discount" style="width:30%;margin:0 10px;"></el-input>  折
 						      	</el-form-item>
@@ -211,15 +213,15 @@
 								<div><el-radio label="DATE_TYPE_PERMANENT"> 无限期</el-radio> </div>
 							    <div style="margin:10px 0;">
 							    	<el-radio label="DATE_TYPE_FIX_TERM">
-								    	<el-form-item label="" label-width="0px" prop="names" style="display: inline-block;">
+								    	<el-form-item label="" label-width="0px" prop="base_info.date_info.fixed_term" style="display: inline-block;">
 								    		<el-input v-model="formData.base_info.date_info.fixed_term" style="width:30%"></el-input>  天
 								    	</el-form-item>
 							    	</el-radio>
 							    </div>
 							    <div>
 							    	<el-radio label="DATE_TYPE_FIX_TIME_RANGE">
-								    	<el-date-picker v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:30%;margin-right:10px"></el-date-picker>
-								    	<el-date-picker v-model="formData.base_info.date_info.end_timestamp" type="date" :editable="false" placeholder="结束时间" style="width:30%"></el-date-picker>
+								    	<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:30%;margin-right:10px"></el-date-picker>
+								    	<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.end_timestamp" type="date" :editable="false" placeholder="结束时间" style="width:30%"></el-date-picker>
 							    	</el-radio>
 							    </div>
 							 </el-radio-group>
@@ -264,44 +266,87 @@
 					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
+			<!--选择图片-->
+			<el-dialog :visible.sync="imgVisible" title="选择图片" @close="dialogClose" @open="dialogOpen" width="80%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+				<div class="form-container" style="position: relative;">
+					<div class="imgLayoutRight">
+						<div class="upload">
+							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/wechat/image/material?app_id='+appId" :on-remove="handleRemove" :data="exImportData" :on-success="handleSuccess" :on-error="handleError" list-type="picture-card">
+							  <el-button plain size="small">点击上传 <i class="el-icon-edit el-icon--right"></i> </el-button>
+							  <div slot="tip" class="el-upload__tip">仅支持jpg、gif、png三种格式, 大小不超过1 MB </div>
+							</el-upload>
+						</div>
+						<div class="downContent" v-if="groupImgShow">
+							<div v-for="(item, index) in groupImgList" :key="index" v-on:click="chooseImg(index,item)">
+								<div v-if="item.className==1" class="active">
+									<p></p>
+								</div>
+								<img :src="IMAGE_SERVER_HOST+'/material/view?material_src='+item.url" alt="" />
+							</div>
+						</div>
+					</div>
+					<div slot="footer" class="dialog-footer" style="text-align: center;margin-top:50px;">
+						<el-button @click.native="imgSubmit()" size="small" type="success">确定</el-button>
+						<el-button @click.native="imgVisible = false" size="small">取消</el-button>
+					</div>
+				</div>	
+			</el-dialog>
 		</div>
 	</div>
 </template>
 
 <script>
+/* eslint-disable */
 	import UserService from '../../services/UserService';
 	import TokenService from '../../services/TokenService';
-	import { mapGetters } from 'vuex'
+	import NoPublicService from '../../services/NoPublicService';
 	export default {
 		name: 'hyk',
 		data() {
 			return {
+				appId:'',
+				groupImgShow:false,
+				groupImgList:[],
+				imgVisible:false,
 				formData:{
-					"base_info":{
-						"brand_name":'',
-						"title":'',//会员卡名称
-						"color":'',
-						"logo_url":'',
-						"service_phone":'',//客服电话
-						"description":'',//使用说明
-						 "date_info": {
-		                    "type": "",
-		                    "begin_timestamp": "",
-		                   	"end_timestamp": "",
-		                   	"fixed_term": ""
+					prerogative:'使用卡券买单可以享受消费积分。',//会员卡特权说明,限制1024汉字
+					supply_bonus:'false',//会员卡特权说明,限制1024汉字
+					supply_balance:'false',//会员卡特权说明,限制1024汉字
+					name:'青松会员卡',//入口名称。
+					tips:'青松会员卡',//入口右侧提示语，6个汉字内。
+					url:'https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283',//入口跳转链接。
+					//以上固定字段
+					background_pic_url:'',
+					base_info:{
+						code_type:'CODE_TYPE_QRCODE',//二维码
+						notice:'付款使用',//卡券使用提醒，字数上限为16个汉字
+						sku:'青松食品',//商品信息。
+						quantity:'10000',//卡券库存的数量，不支持填写0，上限为100000000。
+					//以上固定字段
+						brand_name:'',
+						title:'',//会员卡名称
+						color:'',
+						logo_url:'',
+						service_phone:'',//客服电话
+						description:'',//使用说明
+						date_info: {
+		                    type: "",
+		                    begin_timestamp: "",
+		                   	end_timestamp: "",
+		                   	fixed_term: ""
 		                },
-						"can_share":'true'//卡券领取页面是否可分享，默认为true
+						can_share:'true'//卡券领取页面是否可分享，默认为true
 					},
 //					 "advanced_info": {
 //					 	"time_limit":[
 //					 	],//时间选择范围
 //					 },
-					"activate_url":'',//激活会员卡的url
-					"bonus_rule": {//积分规则
-                		"init_increase_bonus": ""
+					activate_url:'',//激活会员卡的url
+					bonus_rule: {//积分规则
+                		init_increase_bonus: ""
 		            },
-		            "discount":'',
-					"sync":true,
+		            discount:'',
+					sync:true,
 					
 					cover:'',
 					quanyi:[]
@@ -322,7 +367,7 @@
 		           }
 		        },	
 				chooseColor:'background-color:#2c9f67',
-				colorOptions:["#63b359","#2c9f67","#509fc9","#5885cf","#9062c0","#d09a45","#e4b138","#ee903c","#f08500","#a9d92d","#dd6549","#cc463d","#cf3e36","#5E6671"],
+				colorOptions:[{color:"#63b359",baseColor:"Color010"},{color:"#2c9f67",baseColor:"Color020"},{color:"#509fc9",baseColor:"Color030"},{color:"#5885cf",baseColor:"Color040"},{color:"#9062c0",baseColor:"Color050"},{color:"#d09a45",baseColor:"Color060"},{color:"#e4b138",baseColor:"Color070"},{color:"#ee903c",baseColor:"Color080"},{color:"#dd6549",baseColor:"Color090"},{color:"#cc463d",baseColor:"Color100"}],
 				activeName:'first',
 				activeNames:['1'],
 				checkOutData:[],
@@ -330,11 +375,7 @@
 				importVisible:false,
 				importData:{},
 				importRules:{},
-				cardVisible:false,
-				cardData:{
-					c1:'',
-					c2:'',
-				},
+				
 				checkOutFilters: {
 					name: ''
 				},
@@ -354,8 +395,7 @@
 					sync: [{ required: true, message: '授权异常！请确认已将“微信卡券权限”授权给有赞', trigger: 'blur' }]
 				},
 				cardRules:{},
-				options:[[]],
-				selectData:[{}]
+				options:[[]]
 			}
 		},
 		computed: {
@@ -365,12 +405,36 @@
 
 		},
 		methods: {
+			chooseImg(index,item){
+				for(var i in this.groupImgList){
+					this.groupImgList[i].className=0
+				}
+				this.formData.background_pic_url=item.url
+				this.groupImgList[index].className=1
+			},
+			imgSubmit(){
+				
+				this.imgVisible=false
+			},
+			async getImgMaterials(value){
+				this.submitType=value
+				this.imgVisible=true
+				let list = await this.adminApi(NoPublicService).getMaterialsLists(this.appId,"image")
+				if(list){
+					for(var i in list.item){
+						list.item[i].className=0
+					}
+					this.groupImgList=list.item
+					this.groupImgShow=true
+				}
+			},
 			handleSuccess(response, file, fileList) {
 				if(response.status_code){
-					this.$message({ message: '文件类型错误', type: 'warning' })
+					this.$message({ message: '上传失败', type: 'warning' })
 				}else{
-					this.logoUrl=response.data.src
+					this.groupImgList.push({url:response.data.url});
 				}
+				this.groupImgShow=true
 			},
 			handleRemove(file, fileList) {
 				if(!file) return
@@ -390,10 +454,10 @@
         		return isJPG && isLt2M;
 			},
 			eidtColor(color){
-				this.chooseColor="background-color:"+color
-				this.formData.base_info.color=color
+				this.chooseColor="background-color:"+color.color
+				this.formData.base_info.color=color.baseColor
 			},
-			async getUpdate(type, row, para,fun) {
+			async getUpdate(type, id, para,fun) {
 				this.formVisible = true
 				let result = await this.$nextTick();
 				if( result ) {
@@ -401,10 +465,11 @@
 			    	if(type) {
 						this.saveType = 1
 						if(this.exData) {
-							this.exData.affairId = row.id
+							this.exData.affairId = id
 						}
-						let list = await this.adminApi(UserService).MemberCards.detailData(row.id);
-						this.formData=Object.assign(this.formData, list)
+						let list = await this.adminApi(UserService).MemberCards.detailData(id);
+						this.formData=Object.assign(this.formData, list,list.member_info)
+						this.formData.quanyi=["包邮","会员折扣","送积分"]
 						console.log(list)
 					} else {
 						this.saveType = 0
@@ -435,10 +500,12 @@
 								this.$message({message:"修改成功",type: 'success'})
 							}
 						}else{
+							delete this.formData.cover
+							delete this.formData.quanyi
 							console.log(this.formData)
 							let para = {
 									sync:this.formData.sync,
-									member_info:[this.formData]
+									member_info:this.formData
 								}
 							let data = await self.adminApi(UserService).MemberCards.createData(para);
 							if(data) {
@@ -454,10 +521,6 @@
 				let [list, meta] = await this.adminApi(UserService).MemberCards.getLists(fliters, search);
 				this.meta = meta;
 				this.selectData= list;
-				for(var i in this.selectData){
-					this.selectData[i].index=parseInt(i)+1
-				}
-				this.totalNum=this.meta.total
 			}
 		},
 		filters: {
@@ -469,7 +532,7 @@
 				this.formData.base_info.logo_url=shopInfo.logo
 				this.formData.base_info.brand_name=shopInfo.name
 			}
-//			this.tokens= UserService.getToken();
+			this.appId= sessionStorage.getItem('shop') || '';
 		},
 		mounted() {
 
@@ -500,4 +563,62 @@
 	
 	.discountAfter:after{content:"   开卡赠送";margin-left:15px}
 	.discountsAfter:after{content:"   开卡赠送";margin-left:40px}
+	
+	.imgLayoutRight{
+		
+	}
+	.imgLayoutRight .upload{
+		padding:20px 15px 15px 0;
+		border-bottom: 1px solid #dfe6ec;
+	}
+	.imgLayoutRight .downContent{
+		padding:10px;
+		height: 500px;
+		overflow-y: scroll;
+	}
+	.imgLayoutRight .downContent>div{
+		width:148px;
+		height:148px;
+		cursor: pointer;
+		display: inline-block;
+		position: relative;
+	}
+	.imgLayoutRight .downContent img,.imgTextContent img{
+		width:148px;
+		height:148px;
+		cursor: pointer;
+	}
+	.imgLayoutRight .downContent .active{
+		width:148px;
+		height:148px;
+		position: absolute;
+		top:0;
+		left:0;
+		background: rgba(0,0,0,0.7);
+	}
+	.imgLayoutRight .downContent .active p,.imgTextContent .active p{
+		width:46px;
+		height:46px;
+		background: url(../../assets/WeChat.png) 0 -2355px no-repeat;
+		position: absolute;
+	    top: 35%;
+	    left: 35%;
+	}
+	
+</style>
+<style>
+.el-upload--picture-card{
+    	background-color:none !important;
+		border:none !important;
+		width: auto !important;
+		height: auto !important;
+		line-height: 0px !important;
+		vertical-align: bottom;
+    }
+    .el-upload--picture-card i {
+	    font-size: 12px !important;
+	}
+.imgLayoutRight .upload .el-upload-list--picture-card{
+		display: none !important;
+	}
 </style>

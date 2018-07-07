@@ -39,7 +39,7 @@
 				<el-table-column prop="num" label="套餐单品" min-width="150"></el-table-column>
 				<el-table-column prop="money" label="渠道" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="120">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<el-button type="text" size="mini" icon="search" @click="handleDetail(scope.row)">查看</el-button>
 						<el-button type="text" size="mini" icon="search" @click="handleForm(true, scope.row)">编辑</el-button>
 					</template>
@@ -145,7 +145,7 @@
 </template>
 
 <script>
-	
+/* eslint-disable */	
 	import { mapGetters } from 'vuex'
 	export default {
 		name: 'plgl',

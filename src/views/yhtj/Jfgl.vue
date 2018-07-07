@@ -33,7 +33,7 @@
 			<!--列表-->
 			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
 				<el-table-column prop="type" label="奖励条件" min-width="180">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<span v-if="scope.row.type == '10'">每购买金额{{scope.row.rule.order_amount}}元全部商品参加</span>
 						<span v-if="scope.row.type == '11'">每成功交易{{scope.row.rule.order_count}}笔</span>
 						<span v-if="scope.row.type == '9'">关注我的微信</span>
@@ -41,13 +41,13 @@
 				</el-table-column>
 				<el-table-column prop="score" label="单笔奖励积分" min-width="100"></el-table-column>
 				<el-table-column prop="updated_at" label="规则更新时间" min-width="180">
-					<template scope="scope">
-						<span>{{scope.row.updated_at.date.substr(0,19)}}</span>
+					<template slot-scope="scope">
+						<span>{{scope.row.updated_at?scope.row.updated_at.date.substr(0,19):''}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="num" label="已奖励总积分" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="100">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button>
 						|<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
 					</template>
@@ -154,6 +154,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import UserService from '../../services/UserService';
 	import { mapGetters } from 'vuex'
 	export default {

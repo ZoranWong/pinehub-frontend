@@ -5,7 +5,7 @@
 			<el-col :span="24" class="toolbar">
 				<el-form v-loading="fLoading" label-width="180px">
 					<el-form-item label="应用名称：">
-						<span v-text="detailData.app_name"></span>
+						<span v-text="detailData.name"></span>
 					</el-form-item>
 					<el-form-item label="应用编号：">
 						<span v-text="detailData.app_id"></span>
@@ -29,7 +29,7 @@
 						<span v-text="detailData.aes_key"></span>
 					</el-form-item>
 					<el-form-item label="店铺logo：">
-						<span v-text="detailData.wechat_bind_app"></span>
+						<img :src="detailData.logo" alt="" style="width:100px"/>
 					</el-form-item>
 					<el-form-item label="店铺简介：">
 						<span v-text="detailData.wechat_bind_app"></span>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import QRCode from 'qrcodejs2'
 	import MainService from '../services/MainService';
 	import TokenService from '../services/TokenService';
@@ -196,7 +197,7 @@
 			async getList(fliters, search){
 				let [list, meta] = await this.adminApi(MainService).getLists(fliters, search);
 				this.meta = meta;
-				this.selectData= list;
+				this.detailData= list[0];
 				this.totalNum=this.meta.total
 			}
 		},

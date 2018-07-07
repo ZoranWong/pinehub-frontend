@@ -1001,6 +1001,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import NoPublicService from '../../services/NoPublicService';
 	import tokenService from '../../services/TokenService';
 	import { mapGetters } from 'vuex'
@@ -2364,16 +2365,16 @@
 			},
 			polling(){
 				let that=this;
-//				this.interval=setInterval(function(){
-//					that.getPollimg()
-//				},3000)
+				this.interval=setInterval(function(){
+					that.getPollimg()
+				},3000)
 			}
 		},
 		filters: {
 		
 		},
 		 created() {
-			this.getList(this.filters)
+//			this.getList(this.filters)
 			this.getPollimg()
 		}
 	}

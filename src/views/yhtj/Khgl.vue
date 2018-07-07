@@ -62,7 +62,7 @@
 				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
 				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
 				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<p>{{scope.row.mobile}}</p>
 						<p>{{scope.row.nickname}}</p>
 					</template>
@@ -72,7 +72,7 @@
 				<el-table-column prop="register_channel" label="来源方式" min-width="150"></el-table-column>
 				<el-table-column prop="is_member" label="客户身份"></el-table-column>
 				<el-table-column label="操作" width="250">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<el-popover placement="left-start" width="280" v-model="news">
 						  <p>剩余短信数量不足，请先进行短信充值</p>
 						  <!--<div style="text-align: right; margin: 0">
@@ -193,8 +193,8 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import UserService from '../../services/UserService';
-	import { mapGetters } from 'vuex'
 	export default {
 		name: 'khgl',
 		data() {

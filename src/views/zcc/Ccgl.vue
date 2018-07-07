@@ -125,6 +125,10 @@
 						<el-form-item label="描述：" prop="address">
 							<el-input v-model="formData.address" type="textarea" style="width:80%" :rows="4"></el-input>
 						</el-form-item>
+						<el-form-item label="描述2：" prop="content">
+							<vue-html5-editor :content="formData.content" @change="formData.content = $event" :height="500"></vue-html5-editor>
+						</el-form-item>
+						
 					</el-form>
 				</div>
 				<div slot="footer" class="dialog-footer">
@@ -227,6 +231,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import AdminApiService from '../../services/AdminApiService';
 	import { mapGetters } from 'vuex'
 	import { TMap } from '../../TMap'
@@ -266,7 +271,8 @@
 					city_id: '',
 					country_id: '1',
 					province_id: '',
-					county_id: ''
+					county_id: '',
+					content: ''
 				},
 				mapVisible:false,
 				shops:[],

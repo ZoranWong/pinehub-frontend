@@ -65,7 +65,7 @@
 				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
 				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
 				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<p>{{scope.row.mobile}}</p>
 						<p>{{scope.row.nickname}}</p>
 					</template>
@@ -74,7 +74,7 @@
 				<el-table-column prop="card" label="会员卡" min-width="150"></el-table-column>
 				<el-table-column prop="score" label="积分" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="120">
-					<template scope="scope">
+					<template slot-scope="scope">
 						<el-button type="text" size="mini" @click="cardVisible=true">设置会员卡</el-button>
 					</template>
 				</el-table-column>

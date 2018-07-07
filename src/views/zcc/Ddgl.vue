@@ -27,8 +27,8 @@
 				<el-form-item prop="name" label="商品名称">
 					<el-input size="small" v-model="filters.name" placeholder=""></el-input>
 				</el-form-item>
-				<el-form-item prop="label" label="订单类型：">
-					<el-select size="small" v-model="filters.label">
+				<el-form-item prop="type" label="订单类型：">
+					<el-select size="small" v-model="filters.type">
 						<el-option label="全部" value=""></el-option>
 						<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
 					</el-select>
@@ -39,8 +39,8 @@
 						<el-option v-for="(item,index) in options[2]" :label="item.label" :value="item.value" :key="index"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item prop="payType" label="付款方式：">
-					<el-select size="small" v-model="filters.payType">
+				<el-form-item prop="pay_type" label="付款方式：">
+					<el-select size="small" v-model="filters.pay_type">
 						<el-option label="全部" value=""></el-option>
 						<el-option v-for="(item,index) in options[3]" :label="item.label" :value="item.value" :key="index"></el-option>
 					</el-select>
@@ -49,7 +49,7 @@
 					<el-button size="small" @click="resetForm()">重置</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button size="small" type="primary" @click="">查询</el-button>
+					<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button size="small"  @click="">导出</el-button>
@@ -85,38 +85,38 @@
 									</el-row>
 							    </template>
 							</el-table-column>
-							<el-table-column prop="carNumber" label="单价/数量" min-width="80">
-								<template scope="scope">
+							<el-table-column prop="carNumber" label="单价/数量" min-width="80" align="center">
+								<template slot-scope="scope">
 									<p>{{scope.row.sell_price}}</p>
 									<p>{{scope.row.quality}}</p>
 								</template>
 							</el-table-column>
-							<el-table-column prop="orderMoney" label="售后" min-width="80">
-								<template scope="scope">
+							<el-table-column prop="orderMoney" label="售后" min-width="80" align="center">
+								<template slot-scope="scope">
 									<!--<p>{{scope.row.sell_price}}</p>
 									<el-button size="small" @click="">钱款去向</el-button>-->
 								</template>
 							</el-table-column>
-							<el-table-column prop="orderMoney" label="买家" min-width="80">
-								<template scope="scope">
+							<el-table-column prop="orderMoney" label="买家" min-width="80" align="center">
+								<template slot-scope="scope">
 									<p>{{scope.row.sell_price}}</p>
 									<p>{{scope.row.quality}}</p>
 									<p>{{scope.row.quality}}</p>
 								</template>
 							</el-table-column>
-							<el-table-column prop="orderTime" label="下单时间" min-width="80">
-								<template scope="scope">
+							<el-table-column prop="orderTime" label="下单时间" min-width="80" align="center">
+								<template slot-scope="scope">
 									<p>{{scope.row.sell_price}}</p>
 									<p>{{scope.row.quality}}</p>
 								</template>
 							</el-table-column>
-							<el-table-column prop="orderContent" label="订单状态" min-width="80">
-								<template scope="scope">
+							<el-table-column prop="orderContent" label="订单状态" min-width="80" align="center">
+								<template slot-scope="scope">
 									<p>{{scope.row.sell_price}}</p>
 									<el-button size="small" @click="shipVisible=true,shipData.id=scope.row.id">发货</el-button>
 								</template>
 							</el-table-column>
-							<el-table-column prop="total_amount" label="实付金额" min-width="80"></el-table-column>
+							<el-table-column prop="total_amount" label="实付金额" min-width="80" align="center"></el-table-column>
 						</el-table>
 					</div>
 					<!--工具条-->
@@ -204,6 +204,8 @@
 					page: 1,
 					limit: 10,
 					orderNum:'0',
+					type: '',
+					pay_type: '',
 					begin_at: '',
 					end_at: ''
 				},
@@ -249,7 +251,133 @@
 	                       "status": 10,
 	                       "shop":{"id": 1, "name": "sdfa"}
 					}]
-				}]
+				},{
+					"code": "132123",
+					 "order_items":[{
+						 "name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					}]
+				},{
+					"code": "132123",
+					 "order_items":[{
+						 "name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					}]
+				},{
+					"code": "132123",
+					 "order_items":[{
+						 "name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					},{
+						"name": "收拾收拾",
+	                       "merchandise_id": 1,
+	                       "sku_product_id": 1,
+	                       "main_image": "23123",
+	                       "sell_price": 9,
+	                       "quality": 1,
+	                       "code": "123123",
+	                       "total_amount": 10,
+	                       "payment_amount": 10,
+	                       "discount_amount": 0,
+	                       "status": 10,
+	                       "shop":{"id": 1, "name": "sdfa"}
+					}]
+				},{},{}]
 			}
 		},
 		mounted() {
@@ -302,18 +430,11 @@
 </script>
 
 <style scoped>
-   .tableContent{overflow: hidden;background: #fafafa;border: 1px solid #f2f2f2;margin:10px 0;padding:5px;font-size:12px ;line-height: 20px;}
-	#mapContainer{
-	    min-width:500px;
-	    min-height:500px;
-	}
-	.form-container .el-table td,.form-container .el-table th{
-		padding:0 !important
-	}
+   .tableContent{overflow: hidden;background: #fafafa;border:1px solid #ebeef5;margin-top:10px;border-bottom:none;padding:5px;font-size:12px ;line-height: 20px;}
+	#mapContainer{min-width:500px;min-height:500px;}
+	.form-container .el-table td,.form-container .el-table th{padding:0 !important}
 </style>
 <style>
-	.el-table--enable-row-hover .el-table__body tr:hover>td {
-     background-color: #fff !important; 
-}
+	.el-table--enable-row-hover .el-table__body tr:hover>td {background-color: #fff !important; }
 	.showHeader .el-table__empty-block{display: none;}
 </style>

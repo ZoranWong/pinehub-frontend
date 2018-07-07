@@ -6,8 +6,8 @@
 				<el-tabs v-model="activeName" type="card">
 					<el-tab-pane label="所以优惠券" name="first">
 						<el-form :inline="true" :model="couponsFilters" label-width="10px" ref="couponsFileds" style="float:right">
-							<el-form-item prop="name" label="">
-								<el-input size="small" v-model="couponsFilters.name" placeholder="搜索"></el-input>
+							<el-form-item prop="ticket_type" label="">
+								<el-input size="small" v-model="couponsFilters.ticket_type" placeholder="搜索"></el-input>
 							</el-form-item>
 							<el-form-item>
 								<el-button size="small" type="primary" @click="getList(couponsFilters)">搜索</el-button>
@@ -19,15 +19,38 @@
 							</el-form-item>
 						</el-form>
 						<el-table :data="couponsData" highlight-current-row v-loading="tLoading">
-							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
-							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
-							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="120"></el-table-column>
+							<el-table-column prop="title" label="优惠券名称" min-width="120"></el-table-column>
+							<el-table-column prop="phone" label="价值" min-width="100">
+								<template slot-scope="scope">
+									<div v-if="scope.row.card_type=='DISCOUNT'" class="couponsType">
+										<p>{{scope.row.discount}} 折</p>
+										<p>最低消费:</p>
+										<p>￥{{scope.row.least_cost}}</p>
+									</div>
+									<div v-if="scope.row.card_type=='CASH'" class="couponsType">
+										<p>{{scope.row.reduce_cost}}</p>
+										<p>最低消费:</p>
+										<p>￥{{scope.row.least_cost}}</p>
+									</div>
+								</template>
+							</el-table-column>
+							<el-table-column prop="get_limit" label="领取限制" min-width="100">
+								<template slot-scope="scope" class="couponsType">
+									<p v-if="scope.row.get_limit">一人 {{scope.row.get_limit}} 张</p>
+									<p v-else>不限张数</p>
+								</template>
+							</el-table-column>
+							<el-table-column prop="num" label="有效期" min-width="140">
+								<template slot-scope="scope">
+									<p>{{scope.row.begin_at?scope.row.begin_at.date.substr(0,19):''}} 至</p>
+									<p>{{scope.row.end_at?scope.row.end_at.date.substr(0,19):''}}</p>
+								</template>
+							</el-table-column>
 							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
 							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
 							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
 									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
 								</template>
@@ -35,14 +58,14 @@
 						</el-table>
 						<!--工具条-->
 						<div class="toolbar" style="text-align: right;">
-							<p>共1条，每页20条</p>
+							<p>共{{totalNum}}条，每页20条</p>
 							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
 						</div>
 					</el-tab-pane>
 					<el-tab-pane label="未开始"  name="second">
 						<el-form :inline="true" :model="nostartFilters" label-width="10px" ref="nostartFileds" style="float:right">
-							<el-form-item prop="name" label="">
-								<el-input size="small" v-model="nostartFilters.name" placeholder="搜索"></el-input>
+							<el-form-item prop="ticket_type" label="">
+								<el-input size="small" v-model="nostartFilters.ticket_type" placeholder="搜索"></el-input>
 							</el-form-item>
 							<el-form-item>
 								<el-button size="small" type="primary" @click="getList(nostartFilters)">搜索</el-button>
@@ -58,12 +81,14 @@
 							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
 							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="120"></el-table-column>
+							<el-table-column prop="num" label="有效期" min-width="120">
+								
+							</el-table-column>
 							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
 							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
 							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
 									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
 								</template>
@@ -77,8 +102,8 @@
 					</el-tab-pane>
 					<el-tab-pane label="进行中"  name="third">
 						<el-form :inline="true" :model="processFilters" label-width="10px" ref="processFileds" style="float:right">
-							<el-form-item prop="name" label="">
-								<el-input size="small" v-model="processFilters.name" placeholder="搜索"></el-input>
+							<el-form-item prop="ticket_type" label="">
+								<el-input size="small" v-model="processFilters.ticket_type" placeholder="搜索"></el-input>
 							</el-form-item>
 							<el-form-item>
 								<el-button size="small" type="primary" @click="getList(processFilters)">搜索</el-button>
@@ -99,7 +124,7 @@
 							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
 							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
 									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
 								</template>
@@ -113,8 +138,8 @@
 					</el-tab-pane>
 					<el-tab-pane label="已结束"  name="forth">
 						<el-form :inline="true" :model="endFilters" label-width="10px" ref="endFileds" style="float:right">
-							<el-form-item prop="name" label="">
-								<el-input size="small" v-model="endFilters.name" placeholder="搜索"></el-input>
+							<el-form-item prop="ticket_type" label="">
+								<el-input size="small" v-model="endFilters.ticket_type" placeholder="搜索"></el-input>
 							</el-form-item>
 							<el-form-item>
 								<el-button size="small" type="primary" @click="getSelectData()">搜索</el-button>
@@ -135,7 +160,7 @@
 							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
 							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
 							<el-table-column label="操作" width="100">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
 									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
 								</template>
@@ -192,14 +217,14 @@
 							  	</div>
 							 </el-radio-group>
 						</el-form-item>
-						<el-form-item label="同步发布至：" prop="deww" style="display: inline-block;margin-bottom: 0;">
-							<el-checkbox v-model="formData.deww">微信卡券（包）</el-checkbox>
+						<el-form-item label="同步发布至：" prop="sync" style="display: inline-block;margin-bottom: 0;">
+							<el-checkbox v-model="formData.sync">微信卡券（包）</el-checkbox>
 						</el-form-item>
 						<p style="color:gray;font-size: 12px;margin-left: 120px;">如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</p>
 						<el-form-item label="卡券颜色：" prop="color">
 							<el-popover placement="bottom" width="185" trigger="hover">
 					    		<div class="colorLayout">
-					    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item"></span>
+					    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
 					    		</div>
 							  <div class="showColor" slot="reference" size="small"><p :style="chooseColor"></p></div>
 							</el-popover>
@@ -208,9 +233,9 @@
 							<el-input v-model="formData.base_info.brand_name" :maxlength='9' placeholder="最多可输入9个字"></el-input>
 						</el-form-item>
 						<p style="color:gray;font-size: 12px;margin-left: 120px;">建议填写代金券“减免金额”及自定义内容，描述卡券提供的具体优惠。例如：贝塔咖啡5元代金券</p>
-						<el-form-item label="卡券副标题：" prop="brand_name" >
+						<!--<el-form-item label="卡券副标题：" prop="brand_name" >
 							<el-input v-model="formData.brand_name" :maxlength='18' placeholder="最多可输入18个字"></el-input>
-						</el-form-item>
+						</el-form-item>-->
 						<h4>基本规则</h4>
 						<el-form-item label="会员等级：">
 							<span>所以用户领取</span>
@@ -231,10 +256,10 @@
 								<div><el-radio label="DATE_TYPE_FIX_TIME_RANGE">固定日期</el-radio> 
 									<div v-if="formData.base_info.date_info.type=='DATE_TYPE_FIX_TIME_RANGE'">
 										<el-form-item label="" prop="base_info.date_info.begin_timestamp" label-width="10px">
-								    		生效时间：<el-date-picker v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
+								    		生效时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
 								    	</el-form-item>
 								    	<el-form-item label="" prop="base_info.date_info.end_timestamp" label-width="10px">
-								    		过期时间：<el-date-picker v-model="formData.base_info.date_info.end_timestamp" type="date" :picker-options="pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
+								    		过期时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.end_timestamp" type="date" :picker-options="pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
 								    	</el-form-item>
 									</div>
 								</div>
@@ -252,9 +277,9 @@
 							    </div>-->
 							 </el-radio-group>
 						</el-form-item> 
-						<el-form-item label="到期提醒：" prop="checkeds" style="margin-bottom: 0;">
+						<!--<el-form-item label="到期提醒：" prop="checkeds" style="margin-bottom: 0;">
 							<el-checkbox v-model="formData.checkeds">到期前4天提醒一次</el-checkbox>
-						</el-form-item>
+						</el-form-item>-->
 						<p style="color:gray;font-size: 12px;margin-left: 120px;">过期提醒需授权公众号到有赞，未授权商家将无法推送消息。</p>
 						<el-form-item label="分享设置：" prop="base_info.can_share" style="margin-bottom: 0;">
 							<el-checkbox v-model="formData.base_info.can_share">允许分享优惠券</el-checkbox>
@@ -266,9 +291,9 @@
 							    <el-radio label="views" disabled>指定商品不可用</el-radio>
 							 </el-radio-group>
 						</el-form-item>
-						<el-form-item label="" prop="checked">
+						<!--<el-form-item label="" prop="checked">
 							<el-checkbox v-model="formData.checked">仅原价购买商品时可用</el-checkbox>
-						</el-form-item> 
+						</el-form-item> -->
 						
 						<el-form-item label="使用说明：" prop="base_info.description">
 							<el-input v-model="formData.base_info.description" type="textarea" :rows="3" :maxlength='300' placeholder="填写活动的详细说明，支持换行；"></el-input>
@@ -288,6 +313,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 	import CardsService from '../../services/CardsService';
 	import { mapGetters } from 'vuex'
 	export default {
@@ -318,61 +344,75 @@
 		           	}
 		        },			
 				chooseColor:'background-color:#2c9f67',
-				colorOptions:["#63b359","#2c9f67","#509fc9","#5885cf","#9062c0","#d09a45","#e4b138","#ee903c","#f08500","#a9d92d","#dd6549","#cc463d","#cf3e36","#5E6671"],
+				colorOptions:[{color:"#63b359",baseColor:"Color010"},{color:"#2c9f67",baseColor:"Color020"},{color:"#509fc9",baseColor:"Color030"},{color:"#5885cf",baseColor:"Color040"},{color:"#9062c0",baseColor:"Color050"},{color:"#d09a45",baseColor:"Color060"},{color:"#e4b138",baseColor:"Color070"},{color:"#ee903c",baseColor:"Color080"},{color:"#dd6549",baseColor:"Color090"},{color:"#cc463d",baseColor:"Color100"}],
 				activeName:'first',
 				activeNames:['1'],
-				nostartData:[{}],
-				couponsData:[{}],
-				processData:[{}],
-				endData:[{}],
+				nostartData:[],
+				couponsData:[],
+				processData:[],
+				endData:[],
 				cardVisible:false,
 				cardData:{
 					c1:'',
 					c2:'',
 				},
 				processFilters: {
-					name: ''
+					ticket_type: '',
+					begin_at: '',
+					end_at: ''
 				},
 				endFilters: {
-					name: ''
+					ticket_type: '',
+					begin_at: '',
+					end_at: ''
 				},
 				nostartFilters: {
-					name: ''
+					ticket_type: '',
+					begin_at: '',
+					end_at: ''
 				},
 				//列表查询字段
 				couponsFilters: {
-					name: ''
+					ticket_type: '',
+					begin_at: '',
+					end_at: ''
 				},
 				formData:{
-					"base_info":{
-						"title":'',//会员卡名称
-						"brand_name":'',
-						"color":'',
-						"service_phone":'',//客服电话
-						"description":'',//使用说明
-						"get_limit":'',
-						 "date_info": {
-		                    "type": "",
-		                    "begin_timestamp": "",
-		                   	"end_timestamp": "",
-		                   	"fixed_term": ""
+					base_info:{
+						code_type:'CODE_TYPE_QRCODE',//二维码
+						notice:'请出示二维码',//卡券使用提醒，字数上限为16个汉字
+						sku: {
+			                quantity: 500000
+			            },//商品信息。
+						quantity:'',//卡券库存的数量，不支持填写0，上限为100000000。
+					//以上固定字段
+						title:'',//会员卡名称
+						brand_name:'',
+						color:'',
+						service_phone:'',//客服电话
+						description:'',//使用说明
+						get_limit:'',
+						date_info: {
+		                    type: "",
+		                    begin_timestamp: "",
+		                   	end_timestamp: "",
+		                   	fixed_term: ""
 		                },
-						"can_share":'true'//卡券领取页面是否可分享，默认为true
+						can_share:'true'//卡券领取页面是否可分享，默认为true
 					},
-					 "advanced_info": {
-					 	"use_condition":{
-					 		"least_cost":''
+					advanced_info: {
+					 	use_condition:{
+					 		least_cost:''
 					 	},//满减
 					 },
-					"activate_url":'',//激活会员卡的url
-		            "discount":'',
-					"sync":true,
-					"card_type":'',
+					activate_url:'',//激活会员卡的url
+		            discount:'',
+					sync:false,
+					card_type:'',
+					
 					
 					least_cost:'',
-					cover:'',
-					garden:'click',
-					gardens:''
+					garden:'click'
 				},
 				formRules:{
 					'base_info.title': [{ required: true, message: '优惠券名称必须在 1-10 个字内', trigger: 'blur' }],
@@ -403,8 +443,8 @@
 		},
 		methods: {
 			eidtColor(color){
-				this.chooseColor="background-color:"+color
-				this.formData.base_info.color=color
+				this.chooseColor="background-color:"+color.color
+				this.formData.base_info.color=color.baseColor
 			},
 			async delData(row){
 		    	let result = await this.$confirm('确认删除该条数据吗？', '提示', {})
@@ -427,7 +467,8 @@
 							this.exData.affairId = row.id
 						}
 						let list = await this.adminApi(CardsService).Coupons.detailData(row.id);
-						this.formData=Object.assign(this.formData, list)
+						this.formData=Object.assign(this.formData, list,list.ticket_info)
+						this.formData.card_type=this.formData.ticket_type
 						console.log(list)
 					} else {
 						this.saveType = 0
@@ -451,19 +492,31 @@
 					let result = await this.$confirm('确认提交吗？', '提示', {})
 					if(result) {
 						if(this.saveType){
+							this.formData.end_at=(this.formData.end_at?this.formData.end_at.date.substr(0,19):'')
+							this.formData.begin_at=(this.formData.begin_at?this.formData.begin_at.date.substr(0,19):'')
+							this.formData.base_info.date_info.begin_timestamp=this.formData.begin_at
+							this.formData.base_info.date_info.end_timestamp=this.formData.end_at
 							let para = Object.assign({}, this.formData);
-							let data = await self.adminApi(NoPublicService).updateData(this.formData.id,para);
+							let data = await self.adminApi(CardsService).Coupons.updateData(this.formData.id,para);
 							console.log(data)
 							if(data) {
 								this.$message({message:"修改成功",type: 'success'})
 							}
 						}else{
+							if(this.formData.card_type=='DISCOUNT'){
+								delete this.formData.least_cost
+							}
+							delete this.formData.garden
 							let para = {
 									sync:this.formData.sync,
-									ticket_info:[this.formData],
-									end_at:'',
-									begin_at:''
+									ticket_info:'',
+									ticket_type:this.formData.card_type,
+									end_at:this.formData.base_info.date_info.begin_timestamp,
+									begin_at:this.formData.base_info.date_info.end_timestamp
 								}
+							delete this.formData.sync
+							delete this.formData.card_type
+							para.ticket_info=this.formData
 							console.log(para)
 							let data = await self.adminApi(CardsService).Coupons.createData(para);
 							if(data) {
@@ -478,17 +531,17 @@
 			async getList(fliters, search){
 				let [list, meta] = await this.adminApi(CardsService).Coupons.getLists(fliters, search);
 				this.meta = meta;
-				this.selectData= list;
-				for(var i in this.selectData){
-					this.selectData[i].index=parseInt(i)+1
-				}
+				this.couponsData= list;
+//				for(var i in this.couponsData){
+//					this.couponsData[i].index=parseInt(i)+1
+//				}
 				this.totalNum=this.meta.total
 			}
 		},
 		filters: {
 		},
 		created() {
-			this.getList(this.filters)
+			this.getList(this.couponsFilters)
 		},
 		mounted() {
 
@@ -519,4 +572,6 @@
 	
 	.discountAfter:after{content:"   开卡赠送";margin-left:15px}
 	.discountsAfter:after{content:"   开卡赠送";margin-left:40px}
+	.couponsType{text-align: center;}
+	.couponsType p:not(:first-child){color:#aaa;}
 </style>
