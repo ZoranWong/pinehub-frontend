@@ -1,6 +1,5 @@
 import ApiService from './ApiService';
 import tokenService from "./TokenService";
-import AdminApiService from './AdminApiService';
 import Vue from 'vue';
 //const md5 = require("./md5");
 const md5 = require('js-md5')

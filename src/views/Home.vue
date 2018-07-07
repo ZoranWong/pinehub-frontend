@@ -1,10 +1,12 @@
 <template>
 	<el-row class="container">
 		<div class="header">
-			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="shops">
+			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="selectedApp">
 				<div class="logo" >
-					<img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
-					<img src="../../src/assets/logo_white.svg" v-else/>
+					<a :href="index">
+						<img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
+						<img src="../../src/assets/logo_white.svg" v-else/>
+					</a>
 				</div>
 				<aside>
 					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
@@ -31,9 +33,9 @@
 					</el-menu>
 				</aside>
 			</div>
-			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="shops?'left: 180px;':'left: 0px;'">
+			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="selectedApp?'left: 180px;':'left: 0px;'">
 				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="shops">
+					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="selectedApp">
 						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
 							<img src="../../src/assets/icon_close.png" v-if="toogleMenu"/>
 							<img src="../../src/assets/icon_open.png" v-else/>
@@ -63,7 +65,7 @@
 						</el-col>-->
 						<el-col :span="24" class="breadcrumb-container">
 							<!--<img src="" @click="refresh" alt="refresh" width="24" height="24" class="refresh" />-->
-							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="shops">
+							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="selectedApp">
 								<el-breadcrumb-item v-for="(item,index) in $route.matched" :key="index">
 									{{ item.name }}
 								</el-breadcrumb-item>
@@ -117,6 +119,7 @@
 	export default {
 		data() {
 			return {
+			    index: '#/index',
 				sysUserName: '',
 				sysUserAvatar: '',
 				formVisible:false,
@@ -128,10 +131,10 @@
 //						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
 //					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
 					{childMenus:[
-						{href:"gzhlb",id:"0",menu_name:"公众号列表",parent_id:"0"}
-					],href:"gzhgl",id:"1",menu_name:"公众号管理",parent_id:"1"},
+						{href:"gzhlb",id:"0",menu_name:"公众号信息",parent_id:"0"}
+					],href:"gzhgl",id:"1",menu_name:"微信管理",parent_id:"1"},
 					{childMenus:[
-						{href:"ccgl",id:"0",menu_name:"餐车管理",parent_id:"0"},
+						{href:"ccgl",id:"0",menu_name:"店铺管理",parent_id:"0"},
 						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"},
 						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"}
 					],href:"zcc",id:"1",menu_name:"店铺管理",parent_id:"1"},
@@ -193,12 +196,12 @@
 						}
 					]
 				},
-				editableTabsValue: '/main',
+				editableTabsValue: '/index',
 				editableTabs: [{
 					title: '首页',
-					name: '/main'
+					name: '/index'
 				}],
-				includedComponents: 'main'
+				includedComponents: 'Index'
 			}
 		},
 		computed: {
@@ -206,9 +209,9 @@
 //			handleLogo() {
 //				return this.config.logo || require('../../src/assets/bg.png')
 //			}
-			shops(){
+            selectedApp(){
 				if(this.$route.path){
-					return sessionStorage.getItem('shop') || ''
+					return !!sessionStorage.getItem('appId') ;
 				}
 			},
 			contentWight(){
@@ -227,6 +230,9 @@
 			}
 		},
 		methods: {
+            goToIndex() {
+                this.$router.push('/index');
+			},
 			contextmenu(name) {
 				//				if(this.editableTabs.length < 3) return
 				//				this.$confirm('确认关闭其它标签吗？', '提示', {}).then(() => {
@@ -338,7 +344,7 @@
 				for(var i = 0; i < list.length; i++) {
 					if(list[i].childMenus) {
 						if(list[i].name == '首页') {
-							obj['main'] = list[i].childMenus
+							obj['index'] = list[i].childMenus
 						} else {
 							let child = list[i].childMenus;
 							for(var m = 0; m < child.length; m++) {

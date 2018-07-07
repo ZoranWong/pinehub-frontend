@@ -15,15 +15,13 @@
 				</el-form>
 				<el-form label-width="10px" style="float:left;margin-bottom: 0;">
 					<el-form-item>
-						选择店铺
+						选择应用
 					</el-form-item>
 				</el-form>
 			</div>
 			<div class="cardContent">
 				<div class="card" v-for="(item , index) in selectData" :key="index" v-on:click="pathTo(item)">
 					<p class="cardName">{{item.name}}</p>
-					<p>主体信息：李从鸥</p>
-					<p>有效期至：{{item.updated_at.date.substr(0,19)}}</p>
 					<img :src="item.logo" alt="" class="cardLabel"/>
 					<div class="operatCard">
 						<el-button size="mini" type="text" @click.stop="getUpdate(true,item.id)">修改</el-button>
@@ -37,7 +35,7 @@
 			<!--创建店铺界面-->
 			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="50%" :close-on-click-modal="false">
 				<el-tabs active-name="first">
-					<el-tab-pane :label="saveType ? '修改店铺' : '创建店铺'" name="first"></el-tab-pane>
+					<el-tab-pane :label="saveType ? '修改应用' : '创建应用'" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
 					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
@@ -112,9 +110,9 @@
 		},
 		methods:{
 			pathTo(data){
-				sessionStorage.setItem('shop', data.id)
-				sessionStorage.setItem('shopInfo', JSON.stringify(data))
-				this.$router.push({ path: '/main' })
+				sessionStorage.setItem('appId', data.id);
+				sessionStorage.setItem('appInfo', JSON.stringify(data));
+				this.$router.push({ path: '/index' });
 			},
 			async createSubmit(beforeSave,afterSave) {
 				if(beforeSave) {
@@ -240,13 +238,12 @@
 	.headSearch {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;} 
 	.headSearch .el-form-item__content{line-height: '';}
 	.cardContent{clear: both;padding:20px}
-	.cardContent .card:hover >.operatCard{visibility:visible;}
-	.cardContent .card .operatCard{visibility:hidden;height: 12px;}
+	.cardContent .card .operatCard{position: relative;top: 42px;height: 12px;float: right;}
 	.cardFooter{float:right;padding:20px}
 	.cardFooter p{font-size: 12px;line-height: 16px;}
 	.cardContent .card{position:relative;display:inline-block;margin-right:10px;width: 260px;height: 120px;padding: 0 20px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;border-top: 3px solid #ff6e6e;background: #fff;cursor: pointer;color: #999;}
 	.cardContent .card p{height: 22px;line-height: 22px;font-size: 12px;}
-	.cardContent .card .cardLabel{border: 1px solid #ff6e6e;color: #ff6e6e;position: absolute;top: 10px;right: 10px;border-radius: 2px;width:40px;height: 40px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}	
+	.cardContent .card .cardLabel{border: 1px solid #ff6e6e;color: #ff6e6e;position: absolute;top: 10px;right: 10px;border-radius: 2px;width:64px;height: 64px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
 	.cardContent .card p.cardName{margin-top: 18px;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
 	
 	

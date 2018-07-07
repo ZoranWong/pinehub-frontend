@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 import Login from '../views/Login'
 import Home from '../views/Home'
-import Main from '../views/Main'
-import Mains from '../views/Mains'
+import Index from '../views/Index'
+import Apps from '../views/Apps'
 import notFound from '../views/404'
 import Reload from '../views/Reload'
 import Wechat from '../views/Wechat'
@@ -13,7 +13,7 @@ import Hygl from '../views/yhtj/Hygl'
 import Khgl from '../views/yhtj/Khgl'
 import Jfgl from '../views/yhtj/Jfgl'
 import Hyk from '../views/yhtj/Hyk'
-//早餐车
+//早店铺
 import Ccgl from '../views/zcc/Ccgl'
 import Ddgl from '../views/zcc/Ddgl'
 import Plgl from '../views/zcc/Plgl'
@@ -26,6 +26,11 @@ import Gzhlb from '../views/gzhgl/Gzhlb'
 //卡券管理
 import Yhq from '../views/kqgl/Yhq'
 const routes = [
+	{
+		path:'/',
+		component: Apps,
+		name: '首页'
+	},
     {
         path: '/login',
 		component: Login,
@@ -35,8 +40,8 @@ const routes = [
 		path: '/',
 		component: Home,
 		children: [{
-				path: 'main',
-				component: Main,
+				path: 'index',
+				component: Index,
 				name: '首页'
 			},
 			{
@@ -50,8 +55,8 @@ const routes = [
 				name: 'reload'
 			},
 			{
-		        path: '/mains',
-				component: Mains,
+		        path: '/apps',
+				component: Apps,
 				name: '选择店铺'
 		    },
 			{
@@ -64,11 +69,11 @@ const routes = [
 	{
 		path: '/',
 		component: Home,
-		name: '公众号管理',
+		name: '微信管理',
 		children: [{
 				path: 'gzhlb',
 				component: Gzhlb,
-				name: '公众号列表'
+				name: '公众号信息'
 			}
 		]
 	},
@@ -108,11 +113,11 @@ const routes = [
 	{
 		path: '/',
 		component: Home,
-		name: '早餐车',
+		name: '店铺',
 		children: [{
 				path: 'ccgl',
 				component: Ccgl,
-				name: '餐车管理'
+				name: '店铺管理'
 			},{
 				path: 'ddgl',
 				component: Ddgl,

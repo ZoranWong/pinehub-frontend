@@ -7,9 +7,9 @@ import App from './App';
 import '../static/css/font-awesome.min.css'
 import store from './models';
 import config from './config';
+import tokenService from './services/TokenService';
 import authService from './services/AuthService';
 import AdminApiService from './services/AdminApiService';
-import tokenService from './services/TokenService';
 import exception from './exceptions/Exception'
 //import { TMap } from 'TMap'
 //Vue.use(TMap)
