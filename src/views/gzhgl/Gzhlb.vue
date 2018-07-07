@@ -1,7 +1,7 @@
 <template>
 	<div class="content-scroll">
 		<div class="content-box" style="padding:20px 30px">
-			<div v-if="detailData.name">
+			<div v-if="verify">
 				<p class="titleLabel">公众号授权信息</p>
 				<el-row :gutter="20" class="toolbar gzhinfo">
 					<el-col :span="12">
@@ -1008,6 +1008,7 @@
 		name: 'gzhlb',
 		data() {
 			return {
+			    verify: false,
 				interval:'',
 				viwShow:'',
 				releaseId:'',
@@ -1137,11 +1138,8 @@
 				filters: {
 					page: 1,
 					limit: 15,
-//					app_name: '',
-					mode:'',
-					type:'',
-					wechat_bind_app:'',
-					app_id: ''
+					selected_appid: this.selectedAppid,
+					wechat_app_id: this.wechatAppId
 				},
 				addImgTextFilters: {
 					title: '',
@@ -1264,6 +1262,15 @@
 			authUrl(){
 				let app_id=sessionStorage.getItem('shop') || '',token=tokenService.getToken();
 				return this.WEB_HOST+'/open-platform/auth?app_id='+app_id+'&token='+token
+			},
+			appInfo() {
+			    return JSON.parse(sessionStorage.getItem('appInfo'));
+			},
+			selectedAppid() {
+			    return this.appInfo? this.appInfo.id : null;
+			},
+			wechatAppId() {
+			    return this.appInfo? this.appInfo.wechat_app_id : null;
 			}
 		},
 		watch: {
@@ -2345,6 +2352,7 @@
 				console.log(list)
 			},
 			async getList(fliters, search){
+			    console.log(fliters);
 				let [list, meta] = await this.adminApi(NoPublicService).getLists(fliters, search);
 				this.meta = meta;
 				this.selectData= list;
@@ -2352,15 +2360,17 @@
 					this.selectData[i].index=parseInt(i)+1
 				}
 				this.totalNum=this.meta.total
+				if(this.totalNum > 0)
+				    this.verify = true;
 			},
 			async getPollimg(){
-				let list = await this.adminApi(NoPublicService).polling();
-				if(list) {
-					clearInterval(this.interval);
-					this.$message({message:"已验证",type: 'success'})
-					this.detailData=list
-				}
-				console.log(list)
+				// let list = await this.adminApi(NoPublicService).polling();
+				// if(list) {
+				// 	clearInterval(this.interval);
+				// 	this.$message({message:"已验证",type: 'success'})
+				// 	this.detailData=list
+				// }
+				// console.log(list)
 			},
 			polling(){
 				let that=this;
@@ -2373,7 +2383,13 @@
 		
 		},
 		 created() {
-			this.getList(this.filters)
+		    this.filters['selected_appid'] = this.appInfo.id;
+			this.getList({
+				search: 'app_id:'+this.appInfo.wechat_app_id+";",
+				searchField:'app_id',
+				limit:1,
+				page:1
+			})
 			this.getPollimg()
 		}
 	}

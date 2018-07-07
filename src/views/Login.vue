@@ -8,7 +8,7 @@
 				<el-form :model="ruleForm2" v-if="login" key="login" :rules="rules2" ref="ruleForm2" label-width="0px" class="login-box">
 					<el-form-item prop="none">
 						<img class="logo" src="../../src/assets/logo.svg" alt="" style="width:50%;margin:0 auto;display:block"/>
-						<p style="text-align: center;font-size: 18px;font-weight: bold;">福年来早餐车管理系统</p>
+						<p style="text-align: center;font-size: 18px;font-weight: bold;">PINEHUB管理系统</p>
 					</el-form-item>
 					<el-form-item prop="name">
 						<el-input type="text" v-model="ruleForm2.name" placeholder="请输入手机号码"></el-input>
@@ -111,7 +111,7 @@
 						this.token().setToken(data.token)
 						sessionStorage.setItem('user', data.user.data.mobile)
 						this.$router.push({
-								path: '/mains'
+								path: '/'
 						})
 					}
 				}

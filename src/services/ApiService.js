@@ -1,6 +1,5 @@
 import Vue from "vue";
 import UrlGenerator from './UrlGenerator';
-const $http = Vue.axios;
 export default class ApiService {
 	static host = "";
 	static accept = '';
@@ -11,7 +10,7 @@ export default class ApiService {
     static post(route, data) {
     	this.createHttpInstance();
     	let token = this.tokenService.getToken();
-    	let selectedAppId = sessionStorage.getItem('shop') || '';
+    	let selectedAppId = sessionStorage.getItem('appId') || '';
     	let $query = '?';
     	if(token) {
     		$query += 'token='+token;
@@ -31,7 +30,7 @@ export default class ApiService {
     static get(route, data) {
     	this.createHttpInstance();
     	let token = this.tokenService.getToken();
-    	let selectedAppId = sessionStorage.getItem('shop') || '';
+    	let selectedAppId = sessionStorage.getItem('appId') || '';
     	if(!data){
     		data = {};
     	}
@@ -46,7 +45,7 @@ export default class ApiService {
 
     static del(route, id){
     	let token = this.tokenService.getToken();
-    	let selectedAppId = sessionStorage.getItem('shop') || '';
+    	let selectedAppId = sessionStorage.getItem('appId') || '';
     	if(this.useAppId){
     		return this.$http.delete(this.host+route+'/'+id+ '?token='+token +'&selected_appid='+ selectedAppId);
     	}else{
@@ -62,7 +61,7 @@ export default class ApiService {
     static put(route, id, data){
     	this.createHttpInstance();
     	let token = this.tokenService.getToken();
-    	let selectedAppId = sessionStorage.getItem('shop') || '';
+    	let selectedAppId = sessionStorage.getItem('appId') || '';
     	let $query = '?';
     	if(token){
     		$query += 'token='+token;

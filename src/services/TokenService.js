@@ -1,10 +1,10 @@
 import ApiService from './AuthService';
-
 export default class TokenService extends ApiService {
     static getToken () {
       	let token = sessionStorage.getItem('token');
-      	if(token){
-      		token = JSON.parse(token);
+        token = JSON.parse(token);
+
+      	if(!!token){
       		let now = Date.now();
       		let ttl = new Date(token['ttl']['date']);
       		let refreshTTL = new Date(token['refresh_ttl']['date']);

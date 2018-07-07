@@ -1,7 +1,4 @@
-import ApiService from './ApiService';
-import Exception from '../exceptions/Exception';
 import AdminApiService from './AdminApiService';
-import Vue from 'vue';
 export default class MainService extends AdminApiService{
 	//主页服务
 	//创建应用

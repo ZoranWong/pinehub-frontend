@@ -5,7 +5,7 @@
 			<el-col :span="24" class="toolbar">
 				<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds">
 					<el-form-item prop="number">
-						<el-input size="small" v-model="filters.number" placeholder="输入餐车编号"></el-input>
+						<el-input size="small" v-model="filters.number" placeholder="输入店铺编号"></el-input>
 					</el-form-item>
 					<el-form-item prop="province">
 						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
@@ -71,14 +71,14 @@
 			<!--新增编辑界面-->
 			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="100%" :fullscreen="true" :close-on-click-modal="false">
 				<el-tabs active-name="first">
-					<el-tab-pane :label="saveType ? '餐车管理编辑' : '餐车管理新增'" name="first"></el-tab-pane>
+					<el-tab-pane :label="saveType ? '店铺管理编辑' : '店铺管理新增'" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
 					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
-						<el-form-item label="餐车编号：" prop="code">
+						<el-form-item label="店铺编号：" prop="code">
 							<el-input v-model="formData.code" style="width:30%"></el-input>
 						</el-form-item>
-						<el-form-item label="餐车地址：" prop="province_id" style="display: inline-block;">
+						<el-form-item label="店铺地址：" prop="province_id" style="display: inline-block;">
 							<el-select v-model="formData.province_id" @change="linkageChange(formData.province_id,'cityData','city')">
 								<el-option label="请选择省" value="" @click.native="formData.city_id = '';formData.city_id = ''"></el-option>
 								<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="formData.city_id = '';formData.county_id = ''"></el-option>
@@ -98,7 +98,7 @@
 						</el-form-item>
 						<el-form-item label="" prop="" label-width="130px">
 						</el-form-item>
-						<el-form-item label="餐车位置：  经度" prop="lng" label-width="130px" style="display:inline-block;">
+						<el-form-item label="店铺位置：  经度" prop="lng" label-width="130px" style="display:inline-block;">
 							<el-input v-model.number="formData.lng" placeholder="请输入经度" :disabled="true"></el-input>
 						</el-form-item>
 						<el-form-item label="纬度" prop="lat" style="display:inline-block;">
@@ -107,11 +107,11 @@
 						<el-form-item label="" label-width="10px" style="display:inline-block;">
 							<el-button type="success" size="mini" @click="mapVisible = true;submitLnglat(false)">设置地图坐标</el-button>
 						</el-form-item>
-						<!--<el-form-item label="餐车位置：" prop="area">
+						<!--<el-form-item label="店铺位置：" prop="area">
 							<el-input v-model="formData.area" style="width:30%"></el-input>
 							<el-button type="success" size="mini" icon="search" @click="mapVisible = true;getMap()">添加位置</el-button>
 						</el-form-item>-->
-						<el-form-item label="餐车描述：" prop="description">
+						<el-form-item label="店铺描述：" prop="description">
 							<el-input v-model="formData.description" type="textarea" style="width:80%" :rows="4"></el-input>
 						</el-form-item>
 						<el-form-item label="车主姓名：" prop="manager_name">
@@ -135,20 +135,20 @@
 			<!--详情界面-->
 			<el-dialog :visible.sync="detailVisible" @close="dialogClose" @open="dialogOpen" width="100%" :fullscreen="true" :modal="false" :top="scrollTop" :close-on-click-modal="false">
 				<!--<el-tabs active-name="first">
-					<el-tab-pane label="餐车管理详情" name="first"></el-tab-pane>
+					<el-tab-pane label="店铺管理详情" name="first"></el-tab-pane>
 				</el-tabs>-->
 				<el-tabs active-name="first">
-					<el-tab-pane label="餐车信息" name="first"></el-tab-pane>
+					<el-tab-pane label="店铺信息" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
 					<el-form v-loading="fLoading" label-width="120px">
-						<el-form-item label="餐车编号：">
+						<el-form-item label="店铺编号：">
 							<span v-text="detailData.number"></span>
 						</el-form-item>
-						<el-form-item label="餐车地址：">
+						<el-form-item label="店铺地址：">
 							<span v-text="detailData.address"></span>
 						</el-form-item>
-						<el-form-item label="餐车车主：">
+						<el-form-item label="店铺车主：">
 							<span v-text="detailData.manager.user_name"></span>
 						</el-form-item>
 						<el-form-item label="联系电话：">
@@ -157,7 +157,7 @@
 					</el-form>
 				</div>
 				<el-tabs active-name="first">
-					<el-tab-pane label="餐车订单：(78单)" name="first"></el-tab-pane>
+					<el-tab-pane label="店铺订单：(78单)" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
 					<el-form v-loading="fLoading" label-width="120px">
@@ -248,7 +248,7 @@
 					lat:''
 				},
 				formRules: {
-					address: [{ required: true, message: '请输入餐车位置', trigger: 'blur' }],
+					address: [{ required: true, message: '请输入店铺位置', trigger: 'blur' }],
 					manager_name: [{ required: true, message: '请输入餐主姓名', trigger: 'blur' }],
 					manager_mobile: [{ required: true, message: '请输入联系方式', trigger: 'blur' }],
 					lng: [{ required: true, message: '请选择经度', trigger: 'blur' }],
