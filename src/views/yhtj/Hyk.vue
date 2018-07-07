@@ -145,10 +145,10 @@
 					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<h4>会员卡基本信息</h4>
 						<el-form-item label="店铺名称：">
-							<span v-text="detailData.name"></span>
+							<span v-text="formData.base_info.brand_name"></span>
 						</el-form-item>
 						<el-form-item label="店铺logo：">
-							<img :src="detailData.logo" alt="" style="width:50px"/>
+							<img :src="formData.base_info.logo_url" alt="" style="width:50px"/>
 							<p style="color:gray;font-size: 12px;">如需修改店铺信息，请在店铺设置中更新。</p>
 						</el-form-item>
 						<el-form-item label="卡片封面：" prop="cover">
@@ -278,8 +278,10 @@
 			return {
 				formData:{
 					"base_info":{
+						"brand_name":'',
 						"title":'',//会员卡名称
 						"color":'',
+						"logo_url":'',
 						"service_phone":'',//客服电话
 						"description":'',//使用说明
 						 "date_info": {
@@ -462,6 +464,11 @@
 		},
 		created() {
 			this.getList(this.filters)
+			let shopInfo=JSON.parse(sessionStorage.getItem('shopInfo'))
+			if(shopInfo){
+				this.formData.base_info.logo_url=shopInfo.logo
+				this.formData.base_info.brand_name=shopInfo.name
+			}
 //			this.tokens= UserService.getToken();
 		},
 		mounted() {

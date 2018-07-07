@@ -16,30 +16,42 @@
 							<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="gouci" label="购次：">
-						<el-select size="small" v-model="filters.gouci">
+					<el-form-item prop="orders_count" label="购次：">
+						<el-select size="small" v-model="filters.orders_count">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[1]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="cards" label="会员卡：">
-						<el-select size="small" v-model="filters.cards">
+					<el-form-item prop="card" label="会员卡：">
+						<el-select size="small" v-model="filters.card">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in cardsData" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="type" label="来源方式：">
-						<el-select size="small" v-model="filters.type">
+					<el-form-item prop="register_channel" label="来源方式：">
+						<el-select size="small" v-model="filters.register_channel">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[3]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="areas" label="地域：">
-						<el-select size="small" v-model="filters.areas">
-							<el-option label="全部" value=""></el-option>
-							<el-option label="合肥市" value="合肥市"></el-option>
+					<el-form-item prop="province">
+						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
+							<el-option label="请选择省" value="" @click.native="filters.city = '';filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
 						</el-select>
 					</el-form-item>
+					<el-form-item prop="city">
+						<el-select size="small" v-model="filters.city" @change="linkageChange($event,'cxAreaData','area')">
+							<el-option label="请选择市" value="" @click.native="filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
+						</el-select>
+					</el-form-item>
+					<!--<el-form-item prop="area">
+						<el-select size="small" v-model="filters.area">
+							<el-option label="请选择区" value=""></el-option>
+							<el-option v-for="(item,index) in cxAreaData" :label="item.name" :value="item.id" :key="index"></el-option>
+						</el-select>
+					</el-form-item>-->
 					<el-form-item>
 						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
 					</el-form-item>
@@ -54,13 +66,13 @@
 				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
 				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
 					<template scope="scope">
-						<p>{{scope.row.avatar}}</p>
+						<p>{{scope.row.mobile}}</p>
 						<p>{{scope.row.nickname}}</p>
 					</template>
 				</el-table-column>
-				<el-table-column prop="num" label="购次" min-width="80"></el-table-column>
-				<el-table-column prop="time" label="会员卡" min-width="150"></el-table-column>
-				<el-table-column prop="money" label="积分" min-width="100"></el-table-column>
+				<el-table-column prop="orders_count" label="购次" min-width="80"></el-table-column>
+				<el-table-column prop="card" label="会员卡" min-width="150"></el-table-column>
+				<el-table-column prop="score" label="积分" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="120">
 					<template scope="scope">
 						<el-button type="text" size="mini" @click="cardVisible=true">设置会员卡</el-button>
@@ -123,12 +135,15 @@
 				filters: {
 					page: 1,
 					limit: 10,
+					province: '',
+					city: '',
+//					area: '',
 					mobile: '',
 					nickname: '',
-					areas: '',
+					card: '',
 					channel: '',
-					cards: '',
-					gouci: ''
+					register_channel: '',
+					orders_count: ''
 				},
 				options:[
 					[{label:"微信",value:"微信"},{label:"微信公众号",value:"微信公众号"},{label:"微信小程序",value:"微信小程序"},{label:"支付宝",value:"支付宝"},{label:"微博",value:"微博"},{label:"QQ",value:"QQ"},{label:"今日头条",value:"今日头条"},{label:"浏览器",value:"浏览器"},{label:"其他APP",value:"其他APP"},{label:"其他",value:"其他"}],
@@ -165,6 +180,7 @@
 		},
 		created() {
 			this.getList(this.filters)
+			this.getListData()
 		},
 		mounted() {
 

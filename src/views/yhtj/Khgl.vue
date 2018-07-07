@@ -4,41 +4,41 @@
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
 				<el-form :inline="true" :model="filters" label-width="100px" ref="selectFileds">
-					<el-form-item prop="name" label="关键词：">
-						<el-input size="small" v-model="filters.name" placeholder="手机号/微信昵称/姓名"></el-input>
+					<el-form-item prop="mobile" label="关键词：">
+						<el-input size="small" v-model="filters.mobile" placeholder="手机号/微信昵称/姓名"></el-input>
 					</el-form-item>
-					<el-form-item prop="name" label="来源渠道：">
-						<el-select size="small" v-model="filters.qudao">
+					<el-form-item prop="channel" label="来源渠道：">
+						<el-select size="small" v-model="filters.channel">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="name" label="购次：">
-						<el-select size="small" v-model="filters.gouci">
+					<el-form-item prop="order_count" label="购次：">
+						<el-select size="small" v-model="filters.order_count">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[1]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="name" label="客户身份：">
-						<el-select size="small" v-model="filters.shenfen">
+					<el-form-item prop="is_member" label="客户身份：">
+						<el-select size="small" v-model="filters.is_member">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[2]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="name" label="来源方式：">
-						<el-select size="small" v-model="filters.type">
+					<el-form-item prop="register_channel" label="来源方式：">
+						<el-select size="small" v-model="filters.register_channel">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[3]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item prop="name" label="标签：">
+					<!--<el-form-item prop="name" label="标签：">
 						<el-select size="small" v-model="filters.accountstatus" disabled>
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
-					</el-form-item>
-					<el-form-item prop="name" label="会员卡：">
-						<el-select size="small" v-model="filters.accountstatus">
+					</el-form-item>-->
+					<el-form-item prop="card" label="会员卡：">
+						<el-select size="small" v-model="filters.card">
 							<el-option label="全部" value=""></el-option>
 							<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
 						</el-select>
@@ -59,13 +59,18 @@
 			<!--列表-->
 			<el-table :data="selectData" highlight-current-row v-loading="tLoading" @selection-change="handleSelectionChange">
 				<el-table-column type="selection" width="50"></el-table-column>
-				<el-table-column prop="name" label="姓名" min-width="120"></el-table-column>
-				<el-table-column prop="phone" label="手机号码" min-width="120"></el-table-column>
-				<el-table-column prop="integral" label="微信号/微信昵称" min-width="140"></el-table-column>
-				<el-table-column prop="num" label="购次" min-width="80"></el-table-column>
-				<el-table-column prop="money" label="积分" min-width="100"></el-table-column>
-				<el-table-column prop="time" label="来源方式" min-width="150"></el-table-column>
-				<el-table-column prop="label" label="客户身份"></el-table-column>
+				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
+				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
+				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
+					<template scope="scope">
+						<p>{{scope.row.mobile}}</p>
+						<p>{{scope.row.nickname}}</p>
+					</template>
+				</el-table-column>
+				<el-table-column prop="orders_count" label="购次" min-width="80"></el-table-column>
+				<el-table-column prop="score" label="积分" min-width="100"></el-table-column>
+				<el-table-column prop="register_channel" label="来源方式" min-width="150"></el-table-column>
+				<el-table-column prop="is_member" label="客户身份"></el-table-column>
 				<el-table-column label="操作" width="250">
 					<template scope="scope">
 						<el-popover placement="left-start" width="280" v-model="news">
@@ -209,13 +214,13 @@
 				},
 				//列表查询字段
 				filters: {
-					pageNum: 1,
-					pagesize: 10,
-					name: '',
-					shenfen: '',
-					type: '',
-					qudao: '',
-					gouci: ''
+					page: 1,
+					limit: 10,
+					mobile: '',
+					is_member: '',
+					channel: '',
+					register_channel: '',
+					order_count: ''
 				},
 				formData:{},
 				formRules:{

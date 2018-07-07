@@ -7,8 +7,23 @@
 					<el-form-item prop="number">
 						<el-input size="small" v-model="filters.number" placeholder="输入餐车编号"></el-input>
 					</el-form-item>
+					<el-form-item prop="province">
+						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
+							<el-option label="请选择省" value="" @click.native="filters.city = '';filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item prop="city">
+						<el-select size="small" v-model="filters.city" @change="linkageChange($event,'cxAreaData','area')">
+							<el-option label="请选择市" value="" @click.native="filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
+						</el-select>
+					</el-form-item>
 					<el-form-item prop="area">
-						<el-input size="small" v-model="filters.area" placeholder="区域"></el-input>
+						<el-select size="small" v-model="filters.area">
+							<el-option label="请选择区" value=""></el-option>
+							<el-option v-for="(item,index) in cxAreaData" :label="item.name" :value="item.id" :key="index"></el-option>
+						</el-select>
 					</el-form-item>
 					<el-form-item>
 						<el-button size="small" @click="resetForm()">重置</el-button>
@@ -36,7 +51,7 @@
 				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
 				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
 				<el-table-column prop="manager.mobile" label="联系方式" min-width="150"></el-table-column>
-				<el-table-column label="操作" width="150">
+				<el-table-column label="操作" width="200">
 					<template slot-scope="scope">
 						<el-button type="success" size="mini" @click="getDetail(scope.row)">查看</el-button>
 						<el-button type="primary" size="mini" @click="getUpdate(true, scope.row)">编辑</el-button>
@@ -224,6 +239,8 @@
 					pageNum: 1,
 					pagesize: 10,
 					name: '',
+					province: '',
+					city: '',
 					area: ''
 				},
 				mapfilters:{

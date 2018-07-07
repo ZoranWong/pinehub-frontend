@@ -234,7 +234,7 @@
 								    		生效时间：<el-date-picker v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
 								    	</el-form-item>
 								    	<el-form-item label="" prop="base_info.date_info.end_timestamp" label-width="10px">
-								    		过期时间：<el-date-picker v-model="formData.base_info.date_info.end_timestamp" type="date" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
+								    		过期时间：<el-date-picker v-model="formData.base_info.date_info.end_timestamp" type="date" :picker-options="pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
 								    	</el-form-item>
 									</div>
 								</div>
@@ -252,8 +252,8 @@
 							    </div>-->
 							 </el-radio-group>
 						</el-form-item> 
-						<el-form-item label="到期提醒：" prop="checked" style="margin-bottom: 0;">
-							<el-checkbox v-model="formData.checked">到期前4天提醒一次</el-checkbox>
+						<el-form-item label="到期提醒：" prop="checkeds" style="margin-bottom: 0;">
+							<el-checkbox v-model="formData.checkeds">到期前4天提醒一次</el-checkbox>
 						</el-form-item>
 						<p style="color:gray;font-size: 12px;margin-left: 120px;">过期提醒需授权公众号到有赞，未授权商家将无法推送消息。</p>
 						<el-form-item label="分享设置：" prop="base_info.can_share" style="margin-bottom: 0;">
@@ -306,10 +306,16 @@
 //						return time.getTime() > Date.now() - 8.64e7 || time.getTime() < d - 8.64e7;
 //					}
 //				},
+				pickerOptions2:{
+		          	disabledDate(time) {
+			          	const d = self.formData.base_info.date_info.begin_timestamp?Date.parse(self.formData.base_info.date_info.begin_timestamp) + 24 * 60 * 60 * 1000:''
+			            return time.getTime() < (d?d:Date.now()) - 8.64e7;
+		           	}
+		        },		
 				pickerOptions1:{
-		          disabledDate(time) {
-		            return time.getTime() < Date.now() - 8.64e7;
-		           }
+		          	disabledDate(time) {
+		            	return time.getTime() < Date.now() - 8.64e7;
+		           	}
 		        },			
 				chooseColor:'background-color:#2c9f67',
 				colorOptions:["#63b359","#2c9f67","#509fc9","#5885cf","#9062c0","#d09a45","#e4b138","#ee903c","#f08500","#a9d92d","#dd6549","#cc463d","#cf3e36","#5E6671"],
@@ -359,9 +365,6 @@
 					 	},//满减
 					 },
 					"activate_url":'',//激活会员卡的url
-					"bonus_rule": {//积分规则
-                		"init_increase_bonus": ""
-		            },
 		            "discount":'',
 					"sync":true,
 					"card_type":'',

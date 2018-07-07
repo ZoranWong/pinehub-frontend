@@ -20,7 +20,7 @@
 				</el-form>
 			</div>
 			<div class="cardContent">
-				<div class="card" v-for="(item , index) in selectData" :key="index" v-on:click="pathTo(item.id)">
+				<div class="card" v-for="(item , index) in selectData" :key="index" v-on:click="pathTo(item)">
 					<p class="cardName">{{item.name}}</p>
 					<p>主体信息：李从鸥</p>
 					<p>有效期至：{{item.updated_at.date.substr(0,19)}}</p>
@@ -111,9 +111,9 @@
 			
 		},
 		methods:{
-			pathTo(id){
-				console.log(id)
-				sessionStorage.setItem('shop', id)
+			pathTo(data){
+				sessionStorage.setItem('shop', data.id)
+				sessionStorage.setItem('shopInfo', JSON.stringify(data))
 				this.$router.push({ path: '/main' })
 			},
 			async createSubmit(beforeSave,afterSave) {

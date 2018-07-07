@@ -105,7 +105,7 @@
 								</template>
 							</el-table-column>
 							<el-table-column prop="orderTime" label="下单时间" min-width="80">
-							<template scope="scope">
+								<template scope="scope">
 									<p>{{scope.row.sell_price}}</p>
 									<p>{{scope.row.quality}}</p>
 								</template>
@@ -134,7 +134,7 @@
 					
 				</el-tab-pane>
 			</el-tabs>
-			<!--详情界面-->
+			<!--发货界面-->
 			<el-dialog :visible.sync="shipVisible" @close="dialogClose" @open="dialogOpen" width="60%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="商品发货" name="first"></el-tab-pane>

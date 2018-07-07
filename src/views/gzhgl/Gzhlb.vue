@@ -2357,16 +2357,16 @@
 				let list = await this.adminApi(NoPublicService).polling();
 				if(list) {
 					clearInterval(this.interval);
-					this.$message({message:"验证成功",type: 'success'})
+					this.$message({message:"已验证",type: 'success'})
 					this.detailData=list
 				}
 				console.log(list)
 			},
 			polling(){
 				let that=this;
-				this.interval=setInterval(function(){
-					that.getPollimg()
-				},3000)
+//				this.interval=setInterval(function(){
+//					that.getPollimg()
+//				},3000)
 			}
 		},
 		filters: {
@@ -2374,6 +2374,7 @@
 		},
 		 created() {
 			this.getList(this.filters)
+			this.getPollimg()
 		}
 	}
 </script>

@@ -107,11 +107,8 @@
 					let data = await this.auth(self.publicKey).login(this.ruleForm2.name, this.ruleForm2.password);
 					//登录后页面逻辑
 					if(data){
-						console.log(data.token)
 						this.token().setToken(data.token)
-						
-//						this.exceptionInit().throwError(data.meta.msg,data.meta.statusCode)
-						sessionStorage.setItem('user', data.user.mobile)
+						sessionStorage.setItem('user', data.user.data.mobile)
 						this.$router.push({
 								path: '/mains'
 						})
