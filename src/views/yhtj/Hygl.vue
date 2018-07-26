@@ -53,7 +53,7 @@
 						</el-select>
 					</el-form-item>-->
 					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+						<el-button size="small" type="primary" @click="getList(getInquire(filters))">查询</el-button>
 					</el-form-item>
 					<el-form-item>
 						<el-button size="small" @click="resetForm()">重置</el-button>
@@ -133,8 +133,6 @@
 				cardVisible:false,
 				//列表查询字段
 				filters: {
-					page: 1,
-					limit: 10,
 					province: '',
 					city: '',
 //					area: '',
@@ -169,8 +167,8 @@
 					this.cardVisible=false
 				}
 			},
-			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(UserService).Members.getLists(fliters, search);
+			async getList(fliters){
+				let [list, meta] = await this.adminApi(UserService).Members.getLists(fliters);
 				this.selectData= list;
 				this.totalNum=meta.total
 			}
@@ -179,7 +177,7 @@
 			
 		},
 		created() {
-			this.getList(this.filters)
+			this.getList(this.paginator)
 			this.getListData()
 		},
 		mounted() {

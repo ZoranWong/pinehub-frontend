@@ -7,19 +7,20 @@
 					<el-col :span="12">
 						<el-form v-loading="fLoading" label-width="120px">
 							<el-form-item label="公众号名称：">
-								<span v-text="detailData.name"></span>
+								<span v-text="detailData.nickname"></span>
 							</el-form-item>
 							<el-form-item label="公众号类型：">
-								<span v-text="detailData.code"></span>
+								<span v-text="detailData.type"></span>
 							</el-form-item>
 							<el-form-item label="认证信息：">
-								<span v-text="detailData.managers"></span>
+								<span v-text="detailData.principal_name"></span>
 							</el-form-item>
 							<el-form-item label="APPID：">
-								<span v-text="detailData.phone"></span>
+								<span v-text="detailData.app_id"></span>
 							</el-form-item>
 							<el-form-item label="授权状态：">
-								<span v-text="detailData.bphone"></span>
+								<el-button size="mini" @click="">已授权</el-button>
+								<el-button type="info" size="mini" @click="againWarrant()">重新授权</el-button>
 							</el-form-item>
 							<el-form-item label="">
 								<span>您的商城已获得该公众号的所有接口权限，可以正常对接微信。 如果使用中发现接口有异常，请重新授权</span>
@@ -28,11 +29,11 @@
 					</el-col>
 				  	<el-col :span="11">
 				  		<div class="gzhPic">
-							<img src="../../../src/assets/logo_scale.png" style="height:144px;width:144px" alt="" />
+							<img :src="detailData.head_img" style="height:144px;width:144px" alt="" />
 							<p>公众号logo</p>
 						</div>
 						<div class="gzhPic">
-							<img src="../../../src/assets/logo_scale.png" style="height:144px;width:144px" alt="" />
+							<img :src="detailData.qr_code" style="height:144px;width:144px" alt="" />
 							<p>公众号二维码</p>
 						</div>
 				  	</el-col>
@@ -40,8 +41,8 @@
 				<p class="titleLabel">公众号设置</p>
 				<el-row :gutter="20">
 					<div class="gzhCaozuo">
-						<el-button type="success" size="mini" @click="getReply(true, 1)">自动回复</el-button>
-						<el-button type="success" size="mini" @click="getMenu(true, 1)">自定义菜单</el-button>
+						<el-button type="success" size="mini" @click="getReply(true, detailData)">自动回复</el-button>
+						<el-button type="success" size="mini" @click="getMenu(true, detailData)">自定义菜单</el-button>
 					</div>
 				</el-row>
 			</div>
@@ -57,40 +58,39 @@
 					<p><span></span>为保证系统功能正常使用，授权时请保持默认选择，勾选所有权限，且小程序账号没有授权给其他系统使用。</p>
 				</div>
 			</div>
-				<!--<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds">
-					<el-form-item prop="app_id">
-						<el-input size="small" v-model="filters.app_id" placeholder="公众号appid"></el-input>
-					</el-form-item>
-					<el-form-item prop="mode">
-						<el-select size="small" v-model="filters.mode">
-							<el-option label="请选择公众号模式" value=""></el-option>
-							<el-option label="编辑者模式" value="editor"></el-option>
-							<el-option label="开发者模式" value="developer"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item prop="type">
-						<el-select size="small" v-model="filters.type">
-							<el-option label="请选择公众号类型" value=""></el-option>
-							<el-option label="小程序" value="wechat_mini_program"></el-option>
-							<el-option label="公众号" value="wechat_official_account"></el-option>
-							<el-option label="微信三方应用" value="wechat_open_platform"></el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item prop="wechat_bind_app">
-						<el-input size="small" v-model="filters.wechat_bind_app" placeholder="公众号绑定应用"></el-input>
-					</el-form-item>
-					<el-form-item>
-						<el-button size="small" @click="resetForm()">重置</el-button>
-					</el-form-item>
-					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
-					</el-form-item>
-				</el-form>
-				<div>
-					<el-button size="small" type="primary" icon="el-icon-plus" @click.native="getUpdate(false)">新增</el-button>
-					<el-button size="small" type="danger" icon="el-icon-delete" @click.native="batchDelData()">批量删除</el-button>
-				</div>-->
-			
+			<!--<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds">
+				<el-form-item prop="app_id">
+					<el-input size="small" v-model="filters.app_id" placeholder="公众号appid"></el-input>
+				</el-form-item>
+				<el-form-item prop="mode">
+					<el-select size="small" v-model="filters.mode">
+						<el-option label="请选择公众号模式" value=""></el-option>
+						<el-option label="编辑者模式" value="editor"></el-option>
+						<el-option label="开发者模式" value="developer"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item prop="type">
+					<el-select size="small" v-model="filters.type">
+						<el-option label="请选择公众号类型" value=""></el-option>
+						<el-option label="小程序" value="wechat_mini_program"></el-option>
+						<el-option label="公众号" value="wechat_official_account"></el-option>
+						<el-option label="微信三方应用" value="wechat_open_platform"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item prop="wechat_bind_app">
+					<el-input size="small" v-model="filters.wechat_bind_app" placeholder="公众号绑定应用"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-button size="small" @click="resetForm()">重置</el-button>
+				</el-form-item>
+				<el-form-item>
+					<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+				</el-form-item>
+			</el-form>
+			<div>
+				<el-button size="small" type="primary" icon="el-icon-plus" @click.native="getUpdate(false)">新增</el-button>
+				<el-button size="small" type="danger" icon="el-icon-delete" @click.native="batchDelData()">批量删除</el-button>
+			</div>-->
 			<!--列表-->
 			<!--<el-table :data="selectData" highlight-current-row v-loading="tLoading" @selection-change="handleSelectionChange">
 				<el-table-column type="selection" width="50"></el-table-column>
@@ -370,7 +370,7 @@
 							<div class="stopLayoutText" v-if="stopAddData.type=='text'">
 								<el-form :model="stopAddData" v-loading="fLoading">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请输入文字', trigger: 'blur'}">
-										<el-input v-model="stopAddData.content" type="textarea" autosize :maxlength="600"></el-input>
+										<el-input v-model="stopAddData.content" type="textarea" autosize autofocus :maxlength="600"></el-input>
 									</el-form-item>
 								</el-form>
 							</div>
@@ -458,7 +458,7 @@
 							<div class="stopLayoutText" v-if="followAddData.type=='text'">
 								<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请输入文字', trigger: 'blur'}">
-										<el-input v-model="followAddData.content" type="textarea" autosize :maxlength="600"></el-input>
+										<el-input v-model="followAddData.content" type="textarea" autofocus autosize :maxlength="600"></el-input>
 									</el-form-item>
 								</el-form>
 							</div>
@@ -574,7 +574,7 @@
 									<span class="grayText" v-else>字数不超过8个汉字或16个字母</span>
 								</el-form-item>
 								<el-form-item :label="menuType?'菜单内容：':'子菜单内容：'" prop="type" v-if="!submenuType">
-									<el-radio-group v-model="menuAddData.type" @change="synchronizeMenuType()">
+									<el-radio-group v-model="menuAddData.type" @change="synchronizeMenuType">
 									    <el-radio label="click">发送消息</el-radio>
 									    <el-radio label="view">跳转网页</el-radio>
 									    <el-radio label="miniprogram">跳转小程序</el-radio>
@@ -735,7 +735,7 @@
 									<el-input size="small" v-model="addImgTextFilters.author" placeholder="请输入作者" @change="addImgTextValue('author')" :maxlength="8"></el-input>
 								</el-form-item>
 								<el-form-item prop="content" :rules="{required: true, message: '内容不能为空', trigger: 'blur'}">
-									<el-input size="small" v-model="addImgTextFilters.content" type="textarea" :rows="3" placeholder="从这里开始写正文" @change="addImgTextValue('content')"></el-input>
+									<el-input size="small" v-model="addImgTextFilters.content" autofocus type="textarea" :rows="3" placeholder="从这里开始写正文" @change="addImgTextValue('content')"></el-input>
 									<!--<vue-html5-editor @change="addImgTextFilters.content = $event" :content="addImgTextFilters.content" :height="250"></vue-html5-editor>-->
 								</el-form-item>
 								<el-form-item prop="type">
@@ -803,7 +803,7 @@
 				<div class="form-container" style="margin-top:50px;">
 					<el-form :model="textData" v-loading="fLoading" label-width="120px" :rules="textRules" ref="textFileds">
 						<el-form-item label="回复内容：" prop="content">
-							<el-input v-model="textData.content" type="textarea" :rows="6"></el-input>
+							<el-input v-model="textData.content" type="textarea" autofocus :rows="6"></el-input>
 						</el-form-item>
 					</el-form>
 					<div slot="footer" class="dialog-footer" style="text-align: center;margin-top:50px;">
@@ -968,7 +968,6 @@
 					</div>
 					<div class="viewContent" v-html="viwShow">
 						{{viwShow}}
-						
 					</div>
 					<div class="viewFooter">
 						<el-popover placement="top" :disabled="!button[index].sub_button.length" :width="popoverMenu.width-12" v-for="(popoverMenu, index) in button" :key="index">
@@ -1121,11 +1120,12 @@
 				menuDragg:false,
 				submenuType:'',
 				menuFormType:'',
-				menuType:'',
+				menuType:true,
 				button:[{
 					width:273,
 					sub_button:[],
 					type:'click',
+					key:'click',
 					name:'添加菜单'
 				}],
 				stopTextValue:1,
@@ -1229,27 +1229,7 @@
 					app_secret: '',
 					app_id: ''
 				},
-				meta:{},
-				detailData: {
-					country:{
-						name: ''
-					},
-					province: {
-						name: ''
-					},
-					city: {
-						name: ''
-					},
-					county: {
-						name: ''
-					},
-					manager: {
-						mobile: '',
-						user_name: '',
-						nickname: '',
-						realname: ''
-					}
-				}
+				meta:{}
 			};
 		},
 		mounted() {
@@ -1261,7 +1241,7 @@
 		},
 		computed: {
 			authUrl(){
-				let app_id=sessionStorage.getItem('shop') || '',token=tokenService.getToken();
+				let app_id=JSON.parse(sessionStorage.getItem('appInfo')).id || '',token=tokenService.getToken();
 				return this.WEB_HOST+'/open-platform/auth?app_id='+app_id+'&token='+token
 			},
 			appInfo() {
@@ -1279,6 +1259,7 @@
 		},
 		methods: {
 			viewMenuShow(data){
+				console.log(this.button)
 				if(!data.sub_button.length){
 					if(data.types=='image'){
 						this.viwShow+='<div><img src="'+data.imgUrl+'" alt="" style="width:100%"/></div>'
@@ -1373,7 +1354,7 @@
 					this.showImgTextData(this.addImgTextList.length-1,true)
 				}
 			},
-			 keyListEdit(type,index){
+			keyListEdit(type,index){
 				this.addRule=true;
 				if(type){
 					var newArr=[]
@@ -1517,8 +1498,7 @@
 				
 			},
 			updateHandleSuccess(response, file, fileList) {
-					this.groupImgList.push({url:response.data.url});
-				
+				this.groupImgList.push({url:response.data.url});
 				this.groupImgShow=true;
 			},
 			updateHandleRemove(file, fileList) {
@@ -1560,10 +1540,12 @@
 					this.menuImgTextUrl=this.imgTextSaveTo
 					if(this.subMenuNum || this.subMenuNum===0){
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].types='news'
+		    			this.button[this.menuNum].sub_button[this.subMenuNum].key='NEWS_'+this.imgTextSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].media_id=this.imgTextSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].imgTextUrl=this.imgTextSaveTo
 		    		}else{
 		    			this.button[this.menuNum].types='news'
+		    			this.button[this.menuNum].key='NEWS_'+this.imgTextSaveTo.media_id
 		    			this.button[this.menuNum].media_id=this.imgTextSaveTo.media_id
 		    			this.button[this.menuNum].imgTextUrl=this.imgTextSaveTo
 		    		}
@@ -1581,10 +1563,12 @@
 					this.menuImgUrl=this.IMAGE_SERVER_HOST+'/material/view?material_src='+this.imgSaveTo.url
 		    		if(this.subMenuNum || this.subMenuNum===0){
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].types='image'
+		    			this.button[this.menuNum].sub_button[this.subMenuNum].key='IMG_'+this.imgSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].media_id=this.imgSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].imgUrl=this.IMAGE_SERVER_HOST+'/material/view?material_src='+this.imgSaveTo.url
 		    		}else{
 		    			this.button[this.menuNum].types='image'
+		    			this.button[this.menuNum].key='IMG_'+this.imgSaveTo.media_id
 		    			this.button[this.menuNum].media_id=this.imgSaveTo.media_id
 		    			this.button[this.menuNum].imgUrl=this.IMAGE_SERVER_HOST+'/material/view?material_src='+this.imgSaveTo.url
 		    		}
@@ -1625,10 +1609,12 @@
 					this.menuVoiceName=this.voiceSaveTo.name
 					if(this.subMenuNum || this.subMenuNum===0){
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].types='voice'
+		    			this.button[this.menuNum].sub_button[this.subMenuNum].Key='VOICE_'+this.voiceSaveTo.media_id
 //		    			this.button[this.menuNum].sub_button[this.subMenuNum].media_id=this.voiceSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].voiceName=this.voiceSaveTo.name
 		    		}else{
 		    			this.button[this.menuNum].types='voice'
+		    			this.button[this.menuNum].key='VOICE_'+this.voiceSaveTo.media_id
 //		    			this.button[this.menuNum].media_id=this.voiceSaveTo.media_id
 		    			this.button[this.menuNum].voiceName=this.voiceSaveTo.name
 		    		}
@@ -1653,10 +1639,12 @@
 					this.menuVideoName=this.videoSaveTo.name
 					if(this.subMenuNum || this.subMenuNum===0){
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].types='video'
+		    			this.button[this.menuNum].sub_button[this.subMenuNum].key='VIDEO_'+this.videoSaveTo.media_id
 //		    			this.button[this.menuNum].sub_button[this.subMenuNum].media_id=this.videoSaveTo.media_id
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].videoName=this.videoSaveTo.name
 		    		}else{
 		    			this.button[this.menuNum].types='video'
+		    			this.button[this.menuNum].key='VIDEO_'+this.videoSaveTo.media_id
 //		    			this.button[this.menuNum].media_id=this.videoSaveTo.media_id
 		    			this.button[this.menuNum].videoName=this.videoSaveTo.name
 		    		}
@@ -1894,9 +1882,17 @@
 				console.log(list)
 			},						
 			async saveMenu(){
+				if(this.button.length){
+					var buttons=[]
+					for(var i in this.button){
+						if(this.button[i].name){
+							buttons.push(this.button[i])
+						}
+					}
+				}
 				let para={
 					app_id:this.appId,
-					menus:{button:this.button}
+					menus:{button:buttons}
 				}
 				let list = await this.adminApi(NoPublicService).addMenu(para);
 				if(list){
@@ -1925,14 +1921,38 @@
 				let result = await this.$nextTick();
 				if( result ) {
 					let list = await this.adminApi(NoPublicService).getMenuLists();
-					if(list.data){
-						this.releaseId=list.data[0].id
-						this.button=list.data[0].menus.button
+					console.log(list)
+					if(list){
+						this.releaseId=list.id
+						this.button=list[0].menus.button
 						this.menuFormType=true
 						this.menuBinding(0)
 					}
+					if(this.button.length==1){
+						this.button[0].width=135
+						this.button.push({
+			    			width:135,
+							name:"",
+							type:"click",
+							key:'click',
+							sub_button:[]
+						})
+					}else if(this.button.length==2){
+						this.button[0].width=90
+						this.button[1].width=90
+						this.button.push({
+			    			width:90,
+							name:"",
+							type:"click",
+							key:'click',
+							sub_button:[]
+			    		})
+					}else{
+						this.button[0].width=90
+						this.button[1].width=90
+						this.button[3].width=90
+					}
 					console.log(this.button)
-					console.log(list.data)
 				}
 			},
 			addKeyMain(){
@@ -1968,11 +1988,12 @@
 				          dangerouslyUseHTMLString: true,
 				          type: 'warning'
 				        }).then(() => {
-				        	delete this.button[num].type
+//				        	delete this.button[num].type
 				        	this.submenuType=true;
 				          	this.button[num].sub_button.push({
 				    			name:"子菜单名称",
-				    			type:"click"
+				    			type:"click",
+				    			key:'click',
 				    		})
 				        }).catch(() => {
 				                 
@@ -1980,7 +2001,8 @@
 		    		}else{
 		    			this.button[num].sub_button.push({
 			    			name:"子菜单名称",
-			    			type:"click"
+			    			type:"click",
+			    			key:'click',
 			    		})
 		    		}
 		    	}
@@ -2008,7 +2030,7 @@
 		    	}
 				console.log(this.button)
 			},
-		    synchronizeMenuType(){
+		    synchronizeMenuType(value){
 		    	if(this.menuAddData.type){
 		    		if(this.subMenuNum || this.subMenuNum===0){
 		    			this.button[this.menuNum].sub_button[this.subMenuNum].type=this.menuAddData.type
@@ -2154,6 +2176,7 @@
 					this.button.push({
 		    			width:135,
 						name:"",
+						key:'click',
 						type:"click",
 						sub_button:[]
 					})
@@ -2169,6 +2192,7 @@
 								this.button.push({
 					    			width:90,
 									name:"",
+									key:'click',
 									type:"click",
 									sub_button:[]
 					    		})
@@ -2186,6 +2210,7 @@
 		    		 case 2:
 		    		 	if(!value){
 		    		 		this.button[2].type="click"
+		    		 		this.button[2].key="click"
 			    		  	this.button[2].name="菜单名称"
 				    		this.button[2].sub_button=[]
 				    		this.addMenuDisabled=false
@@ -2353,25 +2378,31 @@
 				console.log(list)
 			},
 			async getList(fliters, search){
-			    console.log(fliters);
 				let [list, meta] = await this.adminApi(NoPublicService).getLists(fliters, search);
 				this.meta = meta;
-				this.selectData= list;
-				for(var i in this.selectData){
-					this.selectData[i].index=parseInt(i)+1
-				}
+				this.detailData= list[0];
+//				this.selectData= list;
+//				for(var i in this.selectData){
+//					this.selectData[i].index=parseInt(i)+1
+//				}
+//				this.detailData.app_name= JSON.parse(sessionStorage.getItem('appInfo')).name || '';
+//				this.detailData.logo= JSON.parse(sessionStorage.getItem('appInfo')).logo || '';
+console.log(this.detailData)
 				this.totalNum=this.meta.total
 				if(this.totalNum > 0)
 				    this.verify = true;
 			},
+			againWarrant(){
+				this.verify = false;
+			},
 			async getPollimg(){
-				// let list = await this.adminApi(NoPublicService).polling();
-				// if(list) {
-				// 	clearInterval(this.interval);
-				// 	this.$message({message:"已验证",type: 'success'})
-				// 	this.detailData=list
-				// }
-				// console.log(list)
+				 let list = await this.adminApi(NoPublicService).polling();
+				 if(list) {
+				 	clearInterval(this.interval);
+				 	this.$message({message:"已验证",type: 'success'})
+				 	this.detailData=list
+				 	this.verify = true;
+				 }
 			},
 			polling(){
 				let that=this;

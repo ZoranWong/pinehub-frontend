@@ -7,9 +7,13 @@ export default class ApiService {
 	static excetion = null;
 	static useAppId = true;
 	static tokenService = null;
-    static post(route, data) {
+    static async post(route, data) {
     	this.createHttpInstance();
-    	let token = this.tokenService.getToken();
+    	let token = data &&  typeof data['token'] === 'undefined' ? data['token'] : null;
+    	if(!token){
+    		token =  await this.tokenService.getToken()
+    	}
+    	
     	let selectedAppId = sessionStorage.getItem('appId') || '';
     	let $query = '?';
     	if(token) {
@@ -27,9 +31,12 @@ export default class ApiService {
     	}
     }
 
-    static get(route, data) {
+    static async get(route, data) {
     	this.createHttpInstance();
-    	let token = this.tokenService.getToken();
+    	let token = data && typeof(data['token']) !== 'undefined' ? data['token'] : null;
+    	if(!token){
+    		token =  await this.tokenService.getToken()
+    	}
     	let selectedAppId = sessionStorage.getItem('appId') || '';
     	if(!data){
     		data = {};
@@ -43,8 +50,8 @@ export default class ApiService {
         return this.$http.get(UrlGenerator.create(this.host, route, data));
     }
 
-    static del(route, id){
-    	let token = this.tokenService.getToken();
+    static async del(route, id){
+    	let token =await this.tokenService.getToken();
     	let selectedAppId = sessionStorage.getItem('appId') || '';
     	if(this.useAppId){
     		return this.$http.delete(this.host+route+'/'+id+ '?token='+token +'&selected_appid='+ selectedAppId);
@@ -53,14 +60,20 @@ export default class ApiService {
     	}
     }
 
-    static batchDel(route, data){
-    	let token = this.tokenService.getToken();
+    static async batchDel(route, data){
+    	let token = data &&  typeof data['token'] === 'undefined' ? data['token'] : null;
+    	if(!token){ 
+    		token = await this.tokenService.getToken();
+    	}
     	return this.$http.delete(UrlGenerator.create(this.host, route, data));
     }
 
-    static put(route, id, data){
+    static async put(route, id, data){
     	this.createHttpInstance();
-    	let token = this.tokenService.getToken();
+    	let token = data &&  typeof data['token'] === 'undefined' ? data['token'] : null;
+    	if(!token){
+    		token =await this.tokenService.getToken();
+    	}
     	let selectedAppId = sessionStorage.getItem('appId') || '';
     	let $query = '?';
     	if(token){

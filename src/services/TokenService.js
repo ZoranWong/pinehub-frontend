@@ -1,16 +1,16 @@
 import ApiService from './AuthService';
 export default class TokenService extends ApiService {
-    static getToken () {
-      	let token = sessionStorage.getItem('token');
-        token = JSON.parse(token);
-
+    static async getToken () {
+      	let token = await this.asyncToken();
       	if(!!token){
       		let now = Date.now();
       		let ttl = new Date(token['ttl']['date']);
       		let refreshTTL = new Date(token['refresh_ttl']['date']);
       		if(ttl.getTime() < now && refreshTTL.getTime() > now) {
-      		    token = this.refreshToken(token['token']);
+      			console.log('before refresh', token);
+      		    token = await this.refreshToken(token['token']);
       		    this.setToken(token);
+      		    console.log('after refresh', token);
       		    return  token['token'];
       		}else if(now > refreshTTL.getTime()){
                 return false;
@@ -21,15 +21,24 @@ export default class TokenService extends ApiService {
       	}
       	return token['token'];
     }
+    static asyncToken(){
+    	
+    	let token = sessionStorage.getItem('token');
+        token = JSON.parse(token);
+        return Promise.resolve(token);
+    }
     static setToken (token) {
+    	console.log('set token', token);
         sessionStorage.setItem('token', JSON.stringify(token))
     }
 
     static async refreshToken(token) {
+    	console.log(ApiService)
         let response = await this.get('/token-refresh',{'token' : token});
         try {
             TokenService.validate(response.data);
             var data = response.data.data;
+            console.log(data);
             return  data;
         } catch (e) {
             TokenService.exception.throwError(response.data.message, response.data['status_code']);

@@ -4,8 +4,8 @@
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
 				<el-form :inline="true" :model="filters" label-width="10px" ref="selectFileds">
-					<el-form-item prop="number">
-						<el-input size="small" v-model="filters.number" placeholder="输入店铺编号"></el-input>
+					<el-form-item prop="code">
+						<el-input size="small" v-model="filters.code" placeholder="输入店铺编号"></el-input>
 					</el-form-item>
 					<el-form-item prop="province">
 						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
@@ -29,7 +29,7 @@
 						<el-button size="small" @click="resetForm()">重置</el-button>
 					</el-form-item>
 					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+						<el-button size="small" type="primary" @click="getList(getInquire(filters))">查询</el-button>
 					</el-form-item>
 				</el-form>
 				<div>
@@ -41,7 +41,7 @@
 			<!--列表-->
 			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
 				<el-table-column prop="index" label="序号" width="50"></el-table-column>
-				<el-table-column prop="number" label="编号" min-width="80"></el-table-column>
+				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
 				<el-table-column prop="manager.user_name" label="车主" min-width="100"></el-table-column>
 				<el-table-column prop="" label="地理位置" min-width="180">
 					<template slot-scope="scope">
@@ -56,8 +56,8 @@
 						<el-button type="success" size="mini" @click="getDetail(scope.row)">查看</el-button>
 						<el-button type="primary" size="mini" @click="getUpdate(true, scope.row)">编辑</el-button>
 						<el-popover placement="top">
-							<el-button type="success" size="mini" @click="payCode(true, scope.row)">支付二维码</el-button>
-							<el-button type="success" size="mini" @click="paraCode(true, scope.row)">微信参数二维码</el-button>
+							<el-button type="success" size="mini" @click="payCode(false,scope.row)">支付二维码</el-button>
+							<el-button type="success" size="mini" @click="payCode(true,scope.row)">微信参数二维码</el-button>
 							<el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
 						</el-popover>
 					</template>
@@ -105,12 +105,8 @@
 							<el-input v-model.number="formData.lat" placeholder="请输入纬度" :disabled="true"></el-input>
 						</el-form-item>
 						<el-form-item label="" label-width="10px" style="display:inline-block;">
-							<el-button type="success" size="mini" @click="mapVisible = true;submitLnglat(false)">设置地图坐标</el-button>
+							<el-button type="success" size="mini" @click="mapVisible = true;mapfilter.address='';submitLnglat(false)">设置地图坐标</el-button>
 						</el-form-item>
-						<!--<el-form-item label="店铺位置：" prop="area">
-							<el-input v-model="formData.area" style="width:30%"></el-input>
-							<el-button type="success" size="mini" icon="search" @click="mapVisible = true;getMap()">添加位置</el-button>
-						</el-form-item>-->
 						<el-form-item label="店铺描述：" prop="description">
 							<el-input v-model="formData.description" type="textarea" style="width:80%" :rows="4"></el-input>
 						</el-form-item>
@@ -125,10 +121,9 @@
 						<el-form-item label="描述：" prop="address">
 							<el-input v-model="formData.address" type="textarea" style="width:80%" :rows="4"></el-input>
 						</el-form-item>
-						<el-form-item label="描述2：" prop="content">
+						<!--<el-form-item label="描述2：" prop="content">
 							<vue-html5-editor :content="formData.content" @change="formData.content = $event" :height="500"></vue-html5-editor>
-						</el-form-item>
-						
+						</el-form-item>-->
 					</el-form>
 				</div>
 				<div slot="footer" class="dialog-footer">
@@ -138,9 +133,6 @@
 			</el-dialog>
 			<!--详情界面-->
 			<el-dialog :visible.sync="detailVisible" @close="dialogClose" @open="dialogOpen" width="100%" :fullscreen="true" :modal="false" :top="scrollTop" :close-on-click-modal="false">
-				<!--<el-tabs active-name="first">
-					<el-tab-pane label="店铺管理详情" name="first"></el-tab-pane>
-				</el-tabs>-->
 				<el-tabs active-name="first">
 					<el-tab-pane label="店铺信息" name="first"></el-tab-pane>
 				</el-tabs>
@@ -192,16 +184,24 @@
 						<div class="bd clearfix">
 							<span v-for="item in mapSearchData" @click="mapSearch(item)">{{ item }}</span>
 						</div>
-					</el-col>
-					<el-col :span="6" class="mapSearch">
+					</el-col>-->
+					<el-col :span="11" class="mapSearch">
 						<div class="hd">
 							请输入搜索内容：
 						</div>
 						<div class="bd">
-							<el-amap-search-box class="search-box" v-if="" :search-option="searchOption" :on-search-result="onSearchResult" placeholder="输入关键字搜索" :events="sevents"></el-amap-search-box>
+							<el-form :model="mapfilter" :inline="true" ref="mapPositions">
+								<el-form-item  class="fl">
+									<el-input type="text" style="width:103%;margin-right:15px" name="mapLat" placeholder="输入地址，如“合肥，青松集团”" v-model="mapfilter.address"></el-input>
+								</el-form-item>
+								<el-form-item class="fl">
+									<el-button class="lnglatBtn" type="primary" size="small" @click="addressSearch()">搜 索</el-button>
+								</el-form-item>
+							</el-form>
+							<!--<el-amap-search-box class="search-box" v-if="" :search-option="searchOption" :on-search-result="onSearchResult" placeholder="输入关键字搜索" :events="sevents"></el-amap-search-box>-->
 						</div>
-					</el-col>-->
-					<el-col :span="10" class="map-result">
+					</el-col>
+					<el-col :span="13" class="map-result">
 						<div class="hd">
 							坐标获取结果：
 						</div>
@@ -226,6 +226,19 @@
 					<el-button @click.native="mapVisible = false" size="small">返回</el-button>
 				</div>
 			</el-dialog>
+			<!--二维码图片界面-->
+			<el-dialog :visible.sync="imgCodeVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+				<el-tabs active-name="first">
+					<el-tab-pane :label="imgInfo" name="first"></el-tab-pane>
+				</el-tabs>
+				<div class="form-container" >
+					<img :src="imgCodeUrl" alt="" style="width:200px;height:200px;display:block;margin:0 auto"/>
+				</div>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click.native="upload()" size="small" type="primary">下载</el-button>
+					<el-button @click.native="imgCodeVisible = false" size="small">返回</el-button>
+				</div>
+			</el-dialog>
 		</div>
 	</div>
 </template>
@@ -241,12 +254,13 @@
 			return {
 				//列表查询字段
 				filters: {
-					pageNum: 1,
-					pagesize: 10,
 					name: '',
 					province: '',
 					city: '',
 					area: ''
+				},
+				mapfilter:{
+					address:''
 				},
 				mapfilters:{
 					lng:'',
@@ -274,6 +288,10 @@
 					county_id: '',
 					content: ''
 				},
+				geocoder:'',
+				imgCodeUrl:'',
+				imgInfo:'',
+				imgCodeVisible:false,
 				mapVisible:false,
 				shops:[],
 				meta:{},
@@ -300,11 +318,25 @@
 
 		},
 		methods: {
-			payCode(){
-				
+			upload(){
+				window.open(this.imgCodeUrl)
 			},
-			paraCode(){
-				
+			addressSearch(){
+				if(this.mapfilter.address){
+					this.geocoder.getLocation(this.mapfilter.address)
+				}else{
+					this.$message({message:"请先输入有效地址再搜索",type: 'warning'})
+				}
+			},
+			payCode(type,row){
+				this.imgCodeVisible=true
+				if(type){
+					this.imgInfo='微信参数二维码'
+					this.imgCodeUrl=this.IMAGE_SERVER_HOST+'/shop/'+row.id+'/official-account-qrcode'
+				}else{
+					this.imgInfo='支付二维码'
+					this.imgCodeUrl=this.IMAGE_SERVER_HOST+'/shop/'+row.id+'/payment-qrcode'
+				}
 			},
 			async getUpdate(type, row, para,fun) {
 				this.formVisible = true
@@ -328,6 +360,7 @@
 							fun()
 						}
 					}
+					this.mapfilters={lng:'',lat:''}
 				}
 			},
 			async getDetail(row){
@@ -350,47 +383,61 @@
 						if(this.saveType){
 							let para = Object.assign({}, this.formData);
 							let data = await self.adminApi(AdminApiService).updateData(this.formData.id,para);
-							console.log(data)
 							if(data) {
 								this.$message({message:"修改成功",type: 'success'})
 							}
 						}else{
 							let para = Object.assign({}, this.formData);
-							let data=this.adminApi(AdminApiService).Shops.createShop(para);
+							let data=await self.adminApi(AdminApiService).Shops.createShop(para);
 							if(data) {
 								this.$message({message:"新增成功",type: 'success'})
 							}
 						}
-						this.getList(this.filters)
 						this.formVisible = false
+						this.getList(this.paginato)
 					}
 				}
-			},
-			getMap(){
-//				this.mapVisible = false
 			},
 			submitLnglat(value){
 				var that=this;
 				TMap('3JFBZ-MHTWG-KSSQJ-IZJEJ-O4F4S-P2BNX').then(qq => {
+					var center=new qq.maps.LatLng(that.formData.lat?that.formData.lat:31.866942, that.formData.lng?that.formData.lng:117.282699);
 		            var map = new qq.maps.Map(document.getElementById("mapContainer"), {
 		                // 地图的中心地理坐标。
-		                center: new qq.maps.LatLng(31.866942, 117.282699),
-		                 zoom: 13
+		                center: center,
+		                zoom: 13
 		            });
+		             var marker = new qq.maps.Marker({
+				        position: center,
+				        map: map
+				    });
 		            qq.maps.event.addListener(map,'click',function(event) {
 		            	var latLng = event.latLng ,lat = latLng.getLat().toFixed(6),lng = latLng.getLng().toFixed(6);
-				            that.mapfilters.lng = lng
-				            that.mapfilters.lat = lat
-				            that.formData.lng=latLng.getLat().toFixed(6)
-				            that.formData.lat= latLng.getLng().toFixed(6)
+			            that.mapfilters.lng = lng
+			            that.mapfilters.lat = lat
+			            marker.setPosition(event.latLng);
+				    });
+				    this.geocoder = new qq.maps.Geocoder({
+				        complete : function(result){
+				            map.setCenter(result.detail.location);
+				            marker.setPosition(result.detail.location);
+				            that.mapfilters.lng = result.detail.location.lng
+			            	that.mapfilters.lat = result.detail.location.lat
+				        }
 				    });
 		        });
 		        if(value){
-		        	this.mapVisible = false
+		        	if(this.mapfilters.lng){
+		        		this.mapVisible = false
+			        	this.formData.lng=this.mapfilters.lng
+				        this.formData.lat=this.mapfilters.lat
+		        	}else{
+		        		this.$message({message:"请先选择地址再提交",type: 'warning'})
+		        	}
 		        }
 			},
-			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(AdminApiService).Shops.getLists(fliters, search);
+			async getList(fliter){
+				let [list, meta] = await this.adminApi(AdminApiService).Shops.getLists(fliter);
 				this.meta = meta;
 				this.selectData= list;
 				for(var i in this.selectData){
@@ -400,30 +447,15 @@
 			}
 		},
 		filters: {
+			
 		},
 		created() {
-//			let self = this;
-//			(async function ($this){
-//				let countries = await $this.adminApi(AdminApiService).Areas.getCountries();
-//				let provinces = await $this.adminApi(AdminApiService).Areas.getProvinces(countries[0].id);
-//				self.provinceData=provinces 
-//				let province = await $this.adminApi(AdminApiService).Areas.getProvince(1);
-//				console.log(province)
-//				let cities = await $this.adminApi(AdminApiService).Areas.getCities(1,1);
-//				self.cityData=cities
-//				let county = await $this.adminApi(AdminApiService).Areas.getCounty(1,1,1);
-//				self.areaData=county
-//			})(self);
-			
-			this.getList(this.filters)
+			this.getList(this.paginator)
 			this.getListData()
 		}
 	}
 </script>
 
 <style scoped>
-	#mapContainer{
-	    min-width:500px;
-	    min-height:500px;
-	}
+	#mapContainer{min-width:500px;min-height:500px;}
 </style>

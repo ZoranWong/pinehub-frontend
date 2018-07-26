@@ -20,6 +20,10 @@ export default {
 	advanced: false, //是否显示高级查询
 	detailData: {},
 	box: '',
+	paginator{
+		page:1,
+		limit:10
+	},
 	container: '',
 	containerTop: '',
 	scrollTop: '20px',

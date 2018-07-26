@@ -4,15 +4,15 @@
 			<el-row :gutter="0" type="flex" align="middle" class="integralHeader">
 			  <el-col :span="8">
 			  	<p>可用积分</p>
-			  	<p class="integralNum">5622</p>
+			  	<p class="integralNum">8888</p>
 			  </el-col>
 			  <el-col :span="8">
 			  	<p>已消耗积分</p>
-			  	<p class="integralNum">5622</p>
+			  	<p class="integralNum">8888</p>
 			  </el-col>
 			  <el-col :span="8">
 			  	<p>保护内积分</p>
-			  	<p class="integralNum">0</p>
+			  	<p class="integralNum">8888</p>
 			  </el-col>
 			</el-row>
 			<div class="integralMenu">

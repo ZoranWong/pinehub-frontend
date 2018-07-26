@@ -1,7 +1,8 @@
 import ApiService from './ApiService';
+import Exception from '../exceptions/Exception';
 import Vue from 'vue';
 export default class AdminApiService extends ApiService{
-	static host = '';
+//	static host = '';
 	static modules = [];
 	static Shops = {
 		async getLists (para){
@@ -69,6 +70,9 @@ export default class AdminApiService extends ApiService{
 				
 			}
 		}
+		//支付二维码
+		
+		//参数二维码
 	}
 	static Areas = {
 		async getCountries (){

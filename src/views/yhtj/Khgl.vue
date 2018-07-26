@@ -44,7 +44,7 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+						<el-button size="small" type="primary" @click="getList(getInquire(filters))">查询</el-button>
 					</el-form-item>
 					<el-form-item>
 						<el-button size="small" @click="resetForm()">重置</el-button>
@@ -214,8 +214,6 @@
 				},
 				//列表查询字段
 				filters: {
-					page: 1,
-					limit: 10,
 					mobile: '',
 					is_member: '',
 					channel: '',
@@ -317,8 +315,8 @@
 //					}
 				}
 			},
-			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(UserService).Clients.getLists(fliters, search);
+			async getList(fliters){
+				let [list, meta] = await this.adminApi(UserService).Clients.getLists(fliters);
 				this.meta = meta;
 				this.selectData= list;
 				for(var i in this.selectData){
@@ -331,7 +329,7 @@
 			
 		},
 		created() {
-//			this.getList(this.filters)
+			this.getList(this.paginator)
 		},
 		mounted() {
 
