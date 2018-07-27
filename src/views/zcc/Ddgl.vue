@@ -69,13 +69,16 @@
 					<div v-for="(item,index) in allOrderData" :key="index">
 						<div class="tableContent">
 							<div style="float:left">
-								<p>订单号: {{item.code}} <span style="color:gray"> {{item.pay_type=='WECHAT_PAY'?'微信安全支付':'支付宝支付'}}</span></p>
+								<p>
+									订单号: {{item.code}}
+									<el-tag v-if="item.pay_type=='WECHAT_PAY'" size="small" style="color:#19ff1b;">微信支付</el-tag>
+									<el-tag v-else-if="item.pay_type=='ALI_PAY'" size="small" style="color:#19c4ff;">支付宝支付</el-tag>
 								<p> 支付流水号: <span style="color:gray">{{item.transaction_id}}</span></p>
 							</div>
 							<div style="float:right">备注</div>
 						</div>
 						<el-table :data="[item]" v-loading="tLoading" :show-header="false" border>
-							<el-table-column prop="name" label="商品" min-width="330">
+							<el-table-column prop="name" label="商品" min-width="330" header-align="center">
 								<template slot-scope="scope">
 									<el-row :gutter="20" type="flex" align="middle" v-for="(item,indexs) in scope.row.order_items" :key="indexs" v-if="item.merchandise_id">
 									  	<el-col :span="6"><img class="x-img" :src="item.main_image" width="100%" alt=""/></el-col>
@@ -93,7 +96,7 @@
 									</el-row>
 							    </template>
 							</el-table-column>
-							<el-table-column prop="orderMoney" label="售后" min-width="80" align="center">
+							<el-table-column prop="orderMoney" label="售后" min-width="80" label-class-name="sell-service">
 								<template slot-scope="scope">
 									<!--<p>{{item.created_at?item.created_at.date.substr(0,19):''}}</p>-->
 									<!--<el-button size="small" @click="">钱款去向</el-button>-->
@@ -170,13 +173,13 @@
 					</div>
 				</el-tab-pane>
 				<el-tab-pane label="待付款"  name="second">
-					
+
 				</el-tab-pane>
 				<el-tab-pane label="已完成"  name="third">
-					
+
 				</el-tab-pane>
 				<el-tab-pane label="已关闭"  name="forth">
-					
+
 				</el-tab-pane>
 			</el-tabs>
 			<!--发货界面-->
@@ -246,7 +249,7 @@
 				],
 				//列表查询字段
 				filters: {
-					orderNum:'0',
+					orderNum:'',
 					type: '',
 					status: '',
 					pay_type: '',
@@ -257,7 +260,7 @@
 			}
 		},
 		mounted() {
-			 
+
 		},
 		computed: {
 		},
@@ -289,7 +292,7 @@
 				}
 			},
 			shipSelectionChange(data){
-			
+
 			},
 			spanMethod({ row, column, rowIndex, columnIndex }) {
 		        if (rowIndex === 0) {
@@ -303,7 +306,7 @@
 		    }
 		},
 		filters: {
-			
+
 		},
 		created() {
 			this.getList(this.paginator)
@@ -312,12 +315,13 @@
 </script>
 
 <style scoped>
-	.is-align-middle:not(:last-child){border-bottom:1px solid #ebeef5;} 
-	.is-align-middle:not(:first-child){padding-top:10px} 
+	.is-align-middle:not(:last-child){border-bottom:1px solid #ebeef5;}
+	.is-align-middle:not(:first-child){padding-top:10px}
    .tableContent{overflow: hidden;background: #fafafa;border:1px solid #ebeef5;margin-top:10px;border-bottom:none;padding:5px;font-size:12px ;line-height: 20px;}
    .footContent{background: #FDEEEE;color: #ED5050;padding: 0 10px;height:25px;line-height: 25px;border:1px solid #f2f2f2;border-top:none}
 	#mapContainer{min-width:500px;min-height:500px;}
 	.form-container .el-table td,.form-container .el-table th{padding:0 !important}
+	.sell-service{text-align: center;}
 </style>
 <style>
 	/*.el-table__row td:first-child{padding:12px 0 !important}*/

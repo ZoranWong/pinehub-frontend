@@ -202,11 +202,15 @@ Vue.mixin({
 			this.$refs[name].resetFields()
 		},
 		getInquire(obj){
-			let searchStr=''
+			let searchStr='';
+      let searchFields = '';
 			for(var key in obj) {
-        searchStr+=key+':'+obj[key]+';';
+        if(!!obj[key]) {
+          searchStr+=key+':'+obj[key]+';';
+          searchFields += key + ';';
+        }
       }
-      return {'search':searchStr, 'searchJion': 'and'};
+      return {'search': encodeURI(searchStr), searchFields: searchFields, 'searchJoin': 'and'};
 		},
 		//删除
 		handleDel(row, para,url = this.deleteUrl, fun= this.getSelectData) {
