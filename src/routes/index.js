@@ -25,17 +25,22 @@ import Jky from '../views/404'
 import Gzhlb from '../views/gzhgl/Gzhlb'
 //卡券管理
 import Yhq from '../views/kqgl/Yhq'
+//商品管理
+import Spgl from '../views/sp/Spgl'
+//营销
+import Zfyl from '../views/yx/Zfyl'
+import Mjs from '../views/yx/Mjs'
 const routes = [
-	{
-		path:'/',
-		component: Apps,
-		name: '首页'
-	},
-    {
-        path: '/login',
+//	{
+//		path:'/',
+//		component: Apps,
+//		name: '首页'
+//	},
+  {
+    path: '/login',
 		component: Login,
 		name: ''
-    },
+  },
 	{
 		path: '/',
 		component: Home,
@@ -55,10 +60,10 @@ const routes = [
 				name: 'reload'
 			},
 			{
-		        path: '/apps',
+        path: '/apps',
 				component: Apps,
 				name: '选择店铺'
-		    },
+		  },
 			{
 				path: 'wechat',
 				component: Wechat,
@@ -85,6 +90,32 @@ const routes = [
 				path: 'Yhq',
 				component: Yhq,
 				name: '优惠券'
+			}
+		]
+	},
+	{
+		path: '/',
+		component: Home,
+		name: '商品管理',
+		children: [{
+				path: 'Spgl',
+				component: Spgl,
+				name: '商品管理'
+			}
+		]
+	},
+	{
+		path: '/',
+		component: Home,
+		name: '营销',
+		children: [{
+				path: 'Zfyl',
+				component: Zfyl,
+				name: '支付有礼'
+			},{
+				path: 'Mjs',
+				component: Mjs,
+				name: '满减/送'
 			}
 		]
 	},
@@ -153,11 +184,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if(to.path == '/login') {
 		sessionStorage.removeItem('user')
-		sessionStorage.removeItem('shop')
-		sessionStorage.removeItem('token')
+		sessionStorage.removeItem('appId')
+//		sessionStorage.removeItem('token')
 	}
 	let user = sessionStorage.getItem('user');
-	let shop = sessionStorage.getItem('shop');
+	let shop = sessionStorage.getItem('appId');
 	let hasLogin = router.app.$options.store.state.hasLogin;
 		if(!user && to.path != '/login') {
 			next('/login')

@@ -4,7 +4,7 @@
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
 				<el-tabs v-model="activeName" type="card">
-					<el-tab-pane label="所以优惠券" name="first">
+					<el-tab-pane label="所有优惠券" name="first">
 						<el-form :inline="true" :model="couponsFilters" label-width="10px" ref="couponsFileds" style="float:right">
 							<el-form-item prop="ticket_type" label="">
 								<el-input size="small" v-model="couponsFilters.ticket_type" placeholder="搜索"></el-input>
@@ -22,12 +22,12 @@
 							<el-table-column prop="title" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100">
 								<template slot-scope="scope">
-									<div v-if="scope.row.card_type=='DISCOUNT'" class="couponsType">
+									<div v-if="scope.row.card_type=='discount'" class="couponsType">
 										<p>{{scope.row.discount}} 折</p>
 										<p>最低消费:</p>
 										<p>￥{{scope.row.least_cost}}</p>
 									</div>
-									<div v-if="scope.row.card_type=='CASH'" class="couponsType">
+									<div v-if="scope.row.card_type=='cash'" class="couponsType">
 										<p>{{scope.row.reduce_cost}}</p>
 										<p>最低消费:</p>
 										<p>￥{{scope.row.least_cost}}</p>
@@ -42,7 +42,7 @@
 							</el-table-column>
 							<el-table-column prop="num" label="有效期" min-width="140">
 								<template slot-scope="scope">
-									<p>{{scope.row.begin_at?scope.row.begin_at.date.substr(0,19):''}} 至</p>
+									<p>{{scope.row.begin_at?scope.row.created_at.date.substr(0,19):''}} 至</p>
 									<p>{{scope.row.end_at?scope.row.end_at.date.substr(0,19):''}}</p>
 								</template>
 							</el-table-column>
@@ -136,7 +136,7 @@
 							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
 						</div>
 					</el-tab-pane>
-					<el-tab-pane label="已结束"  name="forth">
+					<el-tab-pane label="已结束" name="forth">
 						<el-form :inline="true" :model="endFilters" label-width="10px" ref="endFileds" style="float:right">
 							<el-form-item prop="ticket_type" label="">
 								<el-input size="small" v-model="endFilters.ticket_type" placeholder="搜索"></el-input>
@@ -185,34 +185,34 @@
 						<el-form-item label="优惠券名称：" prop="base_info.title">
 							<el-input v-model="formData.base_info.title" :maxlength='10' placeholder="最多支持10个字"></el-input>
 						</el-form-item>
-						<el-form-item label="发放总量：" prop="base_info.quantity">
-							<el-input v-model.number="formData.base_info.quantity" style="width:50%"><template slot="append">张</template></el-input>
+						<el-form-item label="发放总量：" prop="base_info.sku.quantity">
+							<el-input v-model.number="formData.base_info.sku.quantity" style="width:50%"><template slot="append">张</template></el-input>
 						</el-form-item>
 						<el-form-item label="优惠形式：" prop="card_type">
-							<el-radio-group v-model="formData.card_type">
-							    <div><el-radio label="CASH">指定金额 </el-radio>
-							    	<el-form-item label="" label-width="10px" prop="reduce_cost" v-if="formData.card_type=='CASH'">
-										面值：<el-input v-model="formData.reduce_cost" style="width:30%"></el-input> 
+							<el-radio-group v-model="formData.card_type" @change="clearOffer">
+							    <div><el-radio label="cash">指定金额 </el-radio>
+							    	<el-form-item label="" label-width="10px" prop="reduce_cost" v-if="formData.card_type=='cash'">
+										面值：<el-input v-model.number="formData.reduce_cost" style="width:30%" :disabled="formData.card_type!='cash'"></el-input> 
 										<p style="color:gray;font-size: 12px;">同步至微信卡包,不支持金额随机</p>
 									</el-form-item>
 							    </div>
-							    <div><el-radio label="DISCOUNT">折扣</el-radio>
-							    	<el-form-item label="" label-width="10px" prop="discount" style="display:inline-block" v-if="formData.card_type=='DISCOUNT'">
-										：<el-input v-model="formData.discount" style="width:30%"></el-input> 折
+							    <div><el-radio label="discount">折扣</el-radio>
+							    	<el-form-item label="" label-width="10px" prop="discount" style="display:inline-block" v-if="formData.card_type=='discount'">
+										：<el-input v-model.number="formData.discount" style="width:30%" :disabled="formData.card_type!='discount'"></el-input> 折
 									</el-form-item>
 							    </div>
 							 </el-radio-group>
 						</el-form-item>
 						<el-form-item label="使用门槛：" prop="least_cost">
-							<el-radio-group v-model="formData.least_cost">
+							<el-radio-group v-model="formData.least_cost" @change="clearSill">
 							    <div><el-radio label="">不限制 </el-radio>
-							    	<el-form-item label="" label-width="10px" prop="money" v-if="formData.least_cost==''">
+							    	<el-form-item label="" label-width="10px" v-if="formData.least_cost==''">
 										<span style="color:red;font-size: 12px;">请谨慎设置无门槛优惠券，避免资金损失</span>
 									</el-form-item>
 							    </div>
 							  	<div><el-radio label="least_cost">满</el-radio>
 								  	<el-form-item label="" label-width="10px" prop="advanced_info.use_condition.least_cost" style="display:inline-block">
-										<el-input v-model="formData.advanced_info.use_condition.least_cost" style="width:30%"></el-input> 元可使用
+										<el-input v-model.number="formData.advanced_info.use_condition.least_cost" style="width:30%"></el-input> 元可使用
 									</el-form-item>
 							  	</div>
 							 </el-radio-group>
@@ -221,12 +221,12 @@
 							<el-checkbox v-model="formData.sync">微信卡券（包）</el-checkbox>
 						</el-form-item>
 						<p style="color:gray;font-size: 12px;margin-left: 120px;">如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</p>
-						<el-form-item label="卡券颜色：" prop="color">
+						<el-form-item label="卡券颜色：" prop="base_info.color">
 							<el-popover placement="bottom" width="185" trigger="hover">
 					    		<div class="colorLayout">
 					    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
 					    		</div>
-							  <div class="showColor" slot="reference" size="small"><p :style="chooseColor"></p></div>
+							  <div class="showColor" slot="reference" size="small"><p :style="saveType?('background-color:'+formatSelect(formData.base_info.color)):chooseColor"></p></div>
 							</el-popover>
 						</el-form-item>
 						<el-form-item label="卡券标题：" prop="base_info.brand_name" :style="formData.base_info.brand_name?'margin-bottom: 0px;':'margin-bottom: 20px;'">
@@ -244,7 +244,7 @@
 							 <el-select size="small" v-model="formData.base_info.get_limit">
 							 	<el-option label="不限张" value="" ></el-option>
 								<el-option v-for="(item,index) in options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
-							  </el-select>
+							</el-select>
 						</el-form-item>
 						<!--<el-form-item label="同步打标签：" prop="set">
 							<el-input v-model="formData.phone" placeholder="选择要同步的标签" style="width:50%"></el-input>
@@ -252,14 +252,14 @@
 							<el-button size="small" @click.active="" type="text">新建</el-button>
 						</el-form-item>-->
 						<el-form-item label="有效期：" prop="base_info.date_info.type">
-							<el-radio-group v-model="formData.base_info.date_info.type">
+							<el-radio-group v-model="formData.base_info.date_info.type" @change="clearDataInfo">
 								<div><el-radio label="DATE_TYPE_FIX_TIME_RANGE">固定日期</el-radio> 
 									<div v-if="formData.base_info.date_info.type=='DATE_TYPE_FIX_TIME_RANGE'">
 										<el-form-item label="" prop="base_info.date_info.begin_timestamp" label-width="10px">
-								    		生效时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.begin_timestamp" type="date" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
+								    		生效时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.begin_timestamp" type="datetime" :picker-options="pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
 								    	</el-form-item>
 								    	<el-form-item label="" prop="base_info.date_info.end_timestamp" label-width="10px">
-								    		过期时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.end_timestamp" type="date" :picker-options="pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
+								    		过期时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="formData.base_info.date_info.end_timestamp" type="datetime" :picker-options="pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
 								    	</el-form-item>
 									</div>
 								</div>
@@ -321,11 +321,6 @@
 		data() {
 			let self = this;
 			return {
-//				pickerOptions: {
-//					disabledDate(time) {
-//						return time.getTime() > Date.now() - 8.64e7;
-//					}
-//				},
 //				pickerOptions1: {
 //					disabledDate(time) {
 //						const d = Date.parse(self.str) + 24 * 60 * 60 * 1000
@@ -334,7 +329,7 @@
 //				},
 				pickerOptions2:{
 		          	disabledDate(time) {
-			          	const d = self.formData.base_info.date_info.begin_timestamp?Date.parse(self.formData.base_info.date_info.begin_timestamp) + 24 * 60 * 60 * 1000:''
+			          	const d = self.formData.base_info.date_info.begin_timestamp?Date.parse(self.formData.base_info.date_info.begin_timestamp) + 48 * 60 * 60 * 1000:''
 			            return time.getTime() < (d?d:Date.now()) - 8.64e7;
 		           	}
 		        },		
@@ -379,16 +374,16 @@
 				},
 				formData:{
 					base_info:{
+						logo_url:'',
 						code_type:'CODE_TYPE_QRCODE',//二维码
 						notice:'请出示二维码',//卡券使用提醒，字数上限为16个汉字
 						sku: {
-			                quantity: 500000
+			                quantity: ''
 			            },//商品信息。
-						quantity:'',//卡券库存的数量，不支持填写0，上限为100000000。
 					//以上固定字段
 						title:'',//会员卡名称
 						brand_name:'',
-						color:'',
+						color:'Color010',
 						service_phone:'',//客服电话
 						description:'',//使用说明
 						get_limit:'',
@@ -405,26 +400,23 @@
 					 		least_cost:''
 					 	},//满减
 					 },
-					activate_url:'',//激活会员卡的url
 		            discount:'',
 					sync:false,
 					card_type:'',
-					
 					
 					least_cost:'',
 					garden:'click'
 				},
 				formRules:{
 					'base_info.title': [{ required: true, message: '优惠券名称必须在 1-10 个字内', trigger: 'blur' }],
-					
 //					money: [{ required: true, message: '请输入优惠面值', trigger: 'blur' },{ type: 'number', message: '优惠券面值必须大于等于 0.01 元'}],
-					'base_info.quantity': [{ required: true, message: '请输入发放总量', trigger: 'blur' },{ type: 'number', message: '发放总量必须是一个整数数字值'}],
+					'base_info.sku.quantity': [{ required: true, message: '请输入发放总量', trigger: 'blur' },{ type: 'number', message: '发放总量必须是一个整数数字值'}],
 					'base_info.description': [{ required: true, message: '使用说明不能为空', trigger: 'blur' }],
 					'base_info.brand_name': [{ required: true, message: '卡券标题不能为空', trigger: 'blur' }],
 					titles: [{ required: true, message: '卡券副标题不能为空', trigger: 'blur' }],
-					chooseColor: [{ required: true, message: '请选择卡券颜色', trigger: 'blur' }],
+					'base_info.color': [{ required: true, message: '请选择卡券颜色', trigger: 'blur' }],
 					'card_type': [{ required: true, message: '请选择优惠形式', trigger: 'blur' }],
-					'advanced_info.use_condition': [{ required: true, message: '请选择使用门槛', trigger: 'blur' }],
+					'advanced_info.use_condition.least_cost': [{ required: true, message: '请选择使用门槛', trigger: 'blur' }],
 					'base_info.get_limit': [{ required: true, message: '请选择每人限领', trigger: 'blur' }],
 					gardens: [{ required: true, message: '请选择有效期', trigger: 'blur' }],
 					garden: [{ required: true, message: '请选择适用范围', trigger: 'blur' }]
@@ -432,7 +424,8 @@
 				cardRules:{},
 				options:[
 					[{label:"1张",value:"1"},{label:"2张",value:"2"},{label:"3张",value:"3"},{label:"4张",value:"4"},{label:"5张",value:"5"},{label:"10张",value:"10"}]
-				]
+				],
+				copyFormData:''
 			}
 		},
 		computed: {
@@ -442,6 +435,47 @@
 
 		},
 		methods: {
+			clearSill(val){
+				if(!val){
+					this.formData.advanced_info.use_condition.least_cost=''
+				}
+			},
+			clearOffer(val){
+				if(val== "cash"){
+					this.formData.discount=''
+				}else if(val== "discount"){
+					this.formData.reduce_cost=''
+				}
+			},
+			clearDataInfo(val){
+				if(val=='DATE_TYPE_PERMANENT'){
+					this.formData.base_info.date_info.fixed_term=''
+					this.formData.base_info.date_info.begin_timestamp=''
+					this.formData.base_info.date_info.end_timestamp=''
+				}else if(val=='DATE_TYPE_FIX_TERM'){
+					this.formData.base_info.date_info.begin_timestamp=''
+					this.formData.base_info.date_info.end_timestamp=''
+				}else{
+					this.formData.base_info.date_info.fixed_term=''
+				}
+			},
+			timestampToTime(timestamp) {
+		        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+		        Y = date.getFullYear() + '-';
+		        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		        D = date.getDate() + ' ';
+		        h = date.getHours() + ':';
+		        m = date.getMinutes() + ':';
+		        s = date.getSeconds();
+		        return Y+M+D+h+m+s;
+		    },
+			formatSelect(value) {
+				for(var i in this.colorOptions){
+					if(this.colorOptions[i].baseColor==value){
+						return this.colorOptions[i].color
+					}
+				}
+			},
 			eidtColor(color){
 				this.chooseColor="background-color:"+color.color
 				this.formData.base_info.color=color.baseColor
@@ -467,11 +501,24 @@
 							this.exData.affairId = row.id
 						}
 						let list = await this.adminApi(CardsService).Coupons.detailData(row.id);
-						this.formData=Object.assign(this.formData, list,list.ticket_info)
-						this.formData.card_type=this.formData.ticket_type
-						console.log(list)
+						this.formData=Object.assign(this.formData,list.ticket_info)
+						this.formData.least_cost=list.ticket_info.advanced_info.use_condition.least_cost?'least_cost':''
+						this.formData.card_type=list.ticket_type
+						this.formData.sync=list.sync=='0'?false:true
+						this.formData.base_info.date_info.begin_timestamp=this.formData.base_info.date_info.begin_timestamp?new Date(this.formData.base_info.date_info.begin_timestamp*1000):''
+						this.formData.base_info.date_info.end_timestamp=this.formData.base_info.date_info.end_timestamp?new Date(this.formData.base_info.date_info.end_timestamp*1000):''
+						this.formData.id=list.id
+						this.formData.begin_at=list.begin_at?list.begin_at.date.substr(0,19):''
+						this.formData.end_at=list.begin_at?list.end_at.date.substr(0,19):''
+						console.log(this.formData)
 					} else {
 						this.saveType = 0
+						this.formData.base_info.date_info={
+		                    type: "",
+		                    begin_timestamp: "",
+		                   	end_timestamp: "",
+		                   	fixed_term: ""
+		                }
 						if(this.exData) {
 							this.exData.affairId = ''
 						}
@@ -487,43 +534,46 @@
 					beforeSave()
 				}
 				let self = this;
+				this.copyFormData=JSON.parse(JSON.stringify(this.formData))
 				let valid = await this.$refs.formFileds.validate();
 				if(valid){
 					let result = await this.$confirm('确认提交吗？', '提示', {})
 					if(result) {
+						if(this.formData.card_type=='discount'){
+							delete this.copyFormData.least_cost
+							delete this.copyFormData.reduce_cost
+						}else if(this.formData.card_type=='cash'){
+							delete this.copyFormData.discount
+							this.copyFormData.least_cost=this.formData.advanced_info.use_condition.least_cost
+						}
+						delete this.copyFormData.garden
+						delete this.copyFormData.sync
+						delete this.copyFormData.card_type
+						let para = {
+								sync:this.formData.sync,
+								ticket_info:'',
+								ticket_type:this.formData.card_type,
+								end_at:this.formData.end_at?this.formData.end_at:this.formData.base_info.date_info.end_timestamp?this.formData.base_info.date_info.end_timestamp:'',
+								begin_at:this.formData.begin_at?this.formData.begin_at:this.formData.base_info.date_info.begin_timestamp?this.formData.base_info.date_info.begin_timestamp:''
+							}
+						this.copyFormData.base_info.date_info.begin_timestamp=this.formData.base_info.date_info.begin_timestamp?Date.parse(this.formData.base_info.date_info.begin_timestamp)/1000:''
+						this.copyFormData.base_info.date_info.end_timestamp=this.formData.base_info.date_info.end_timestamp?Date.parse(this.formData.base_info.date_info.end_timestamp)/1000:''
 						if(this.saveType){
-							this.formData.end_at=(this.formData.end_at?this.formData.end_at.date.substr(0,19):'')
-							this.formData.begin_at=(this.formData.begin_at?this.formData.begin_at.date.substr(0,19):'')
-							this.formData.base_info.date_info.begin_timestamp=this.formData.begin_at
-							this.formData.base_info.date_info.end_timestamp=this.formData.end_at
-							let para = Object.assign({}, this.formData);
+							delete this.copyFormData.id
+							para.ticket_info=this.copyFormData
 							let data = await self.adminApi(CardsService).Coupons.updateData(this.formData.id,para);
-							console.log(data)
 							if(data) {
 								this.$message({message:"修改成功",type: 'success'})
+								this.getList(this.filters)
 							}
 						}else{
-							if(this.formData.card_type=='DISCOUNT'){
-								delete this.formData.least_cost
-							}
-							delete this.formData.garden
-							let para = {
-									sync:this.formData.sync,
-									ticket_info:'',
-									ticket_type:this.formData.card_type,
-									end_at:this.formData.base_info.date_info.begin_timestamp,
-									begin_at:this.formData.base_info.date_info.end_timestamp
-								}
-							delete this.formData.sync
-							delete this.formData.card_type
-							para.ticket_info=this.formData
-							console.log(para)
+							para.ticket_info=this.copyFormData
 							let data = await self.adminApi(CardsService).Coupons.createData(para);
 							if(data) {
 								this.$message({message:"新增成功",type: 'success'})
+								this.getList(this.filters)
 							}
 						}
-						this.getList(this.filters)
 						this.formVisible = false
 					}
 				}
@@ -542,6 +592,10 @@
 		},
 		created() {
 			this.getList(this.couponsFilters)
+			let shopInfo=JSON.parse(sessionStorage.getItem('shopInfo'))
+			if(shopInfo){
+				this.formData.base_info.logo_url=shopInfo.logo
+			}
 		},
 		mounted() {
 

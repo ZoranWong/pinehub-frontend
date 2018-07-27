@@ -44,7 +44,7 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item>
-						<el-button size="small" type="primary" @click="getList(filters)">查询</el-button>
+						<el-button size="small" type="primary" @click="getList(getInquire(filters))">查询</el-button>
 					</el-form-item>
 					<el-form-item>
 						<el-button size="small" @click="resetForm()">重置</el-button>
@@ -91,22 +91,22 @@
 						    <el-button size="mini" plain @click="labels = false">取消</el-button>
 						    <el-button type="primary" size="mini" @click="giveLabel()">确定</el-button>
 						  </div>
-						  <el-button slot="reference"size="small" type="text">加标签</el-button>
-						</el-popover>
-						|<el-popover placement="left-start" width="300" v-model="integrals">
-						 <p style="border-bottom: 1px solid #dfe6ec;">给积分</p>
-						  <div style="">
-						  	<el-form :inline="true" :model="operateData" label-width="0px" ref="operateFileds">
-							  	<el-form-item label="" prop="integral" style="margin-bottom:0;" :rules="[{ required: true, message: '积分不能为空'},{ validator: validateInt, trigger: 'blur' }]">
-							  		<el-input size="small" v-model="operateData.integral" placeholder="请输入要加/减的积分值（-1代表减1积分）" style="margin:15px 0;width:130%"></el-input>
-							    </el-form-item>
-							</el-form>
-						    <el-button size="mini" plain @click="integrals = false" style="float: right;">取消</el-button>
-						    <el-button type="primary" size="mini" @click="giveIntegral()" style="float: right;">确定</el-button>
-						  </div>
-						  <el-button slot="reference"size="small" type="text" @click="resetForm('operateFileds')">给积分</el-button>
-						</el-popover>
-						|<el-button size="small" @click.active="cardVisible=true" type="text">设置会员卡</el-button>
+						  <el-button slot="reference" size="small" type="text">加标签</el-button>
+						</el-popover>|
+						<el-popover placement="left-start" width="300" v-model="integrals">
+							<p style="border-bottom: 1px solid #dfe6ec;">给积分</p>
+							<div>
+								<el-form :inline="true" :model="operateData" label-width="0px" ref="operateFileds">
+									<el-form-item label="" prop="integral" style="margin-bottom:0;" :rules="[{ required: true, message: '积分不能为空'},{ validator: validateInt, trigger: 'blur' }]">
+										<el-input size="small" v-model="operateData.integral" placeholder="请输入要加/减的积分值（-1代表减1积分）" style="margin:15px 0;width:130%"></el-input>
+									</el-form-item>
+								</el-form>
+								<el-button size="mini" plain @click="integrals = false" style="float: right;">取消</el-button>
+								<el-button type="primary" size="mini" @click="giveIntegral()" style="float: right;">确定</el-button>
+							</div>
+							<el-button slot="reference" size="small" type="text" @click="resetForm('operateFileds')">给积分</el-button>
+						</el-popover>|
+						<el-button size="small" @click.active = "cardVisible=true" type="text">设置会员卡</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -153,9 +153,9 @@
 					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<el-form-item label="客户身份：" prop="type">
 							<el-radio-group v-model="formData.type">
-							    <el-radio label="click">非会员</el-radio>
-							    <el-radio label="view">会员</el-radio>
-							 </el-radio-group>
+								<el-radio label="click">非会员</el-radio>
+								<el-radio label="view">会员</el-radio>
+							</el-radio-group>
 						</el-form-item>
 						<el-form-item label="手机号：" prop="phone">
 							<el-input v-model="formData.phone"></el-input>
@@ -171,9 +171,9 @@
 						</el-form-item>-->
 						<el-form-item label="性别：" prop="garden">
 							<el-radio-group v-model="formData.garden">
-							    <el-radio label="click">男</el-radio>
-							    <el-radio label="view">女</el-radio>
-							 </el-radio-group>
+								<el-radio label="click">男</el-radio>
+								<el-radio label="view">女</el-radio>
+							</el-radio-group>
 						</el-form-item>
 						<el-form-item label="生日：" prop="bir">
 							<el-input v-model="formData.bir"></el-input>
@@ -214,8 +214,6 @@
 				},
 				//列表查询字段
 				filters: {
-					page: 1,
-					limit: 10,
 					mobile: '',
 					is_member: '',
 					channel: '',
@@ -262,7 +260,7 @@
 				}
 			},
 			handleSelectionChange(){
-				
+
 			},
 			async getUpdate(type, row, para,fun) {
 				this.formVisible = true
@@ -317,8 +315,8 @@
 //					}
 				}
 			},
-			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(UserService).Clients.getLists(fliters, search);
+			async getList(fliters){
+				let [list, meta] = await this.adminApi(UserService).Clients.getLists(fliters);
 				this.meta = meta;
 				this.selectData= list;
 				for(var i in this.selectData){
@@ -328,10 +326,10 @@
 			}
 		},
 		filters: {
-			
+
 		},
 		created() {
-//			this.getList(this.filters)
+			this.getList(this.paginator)
 		},
 		mounted() {
 
@@ -340,5 +338,5 @@
 </script>
 
 <style>
-	
+
 </style>

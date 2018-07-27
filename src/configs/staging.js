@@ -20,7 +20,7 @@ export default {
 	advanced: false, //是否显示高级查询
 	detailData: {},
 	box: '',
-	paginator : {
+	paginator{
 		page:1,
 		limit:10
 	},

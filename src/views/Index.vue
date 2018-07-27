@@ -1,9 +1,8 @@
 <template>
 	<div class="content-scroll" style="overflow-y: hidden;">
 		<div class="content-box">
-
 			<el-row class="el-row--flex" style="margin: 12px;padding-top: 8px;">
-				<el-col span="10" style="max-width: 128px;">
+				<el-col :span="10" style="max-width: 128px;">
 					<img height="auto" width="100%" style="margin: auto" :src="appInfo.logo"/>
 				</el-col>
 				<el-col style="padding: 8px;">

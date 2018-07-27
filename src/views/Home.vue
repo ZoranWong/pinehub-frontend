@@ -1,12 +1,12 @@
 <template>
 	<el-row class="container">
 		<div class="header">
-			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="selectedApp">
+			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="showLeftSide">
 				<div class="logo" >
-					<a :href="index">
+					<router-link to="/apps">
 						<img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
 						<img src="../../src/assets/logo_white.svg" v-else/>
-					</a>
+					</router-link>
 				</div>
 				<aside>
 					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
@@ -33,7 +33,7 @@
 					</el-menu>
 				</aside>
 			</div>
-			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="selectedApp?'left: 180px;':'left: 0px;'">
+			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
 				<div class="contentHeader">
 					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="selectedApp">
 						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
@@ -135,10 +135,12 @@
 					],href:"gzhgl",id:"1",menu_name:"微信管理",parent_id:"1"},
 					{childMenus:[
 						{href:"ccgl",id:"0",menu_name:"店铺管理",parent_id:"0"},
-						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"},
-						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"}
+						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"}
 					],href:"zcc",id:"1",menu_name:"店铺管理",parent_id:"1"},
-					{childMenus:[],href:"sc",id:"2",menu_name:"商品管理",parent_id:"2"},
+					{childMenus:[
+						{href:"spgl",id:"0",menu_name:"商品管理",parent_id:"0"},
+						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"}
+					],href:"sc",id:"2",menu_name:"商品管理",parent_id:"2"},
 					{childMenus:[
 						{href:"yhq",id:"0",menu_name:"优惠券",parent_id:"0"}
 					],href:"kqxt",id:"3",menu_name:"卡券管理",parent_id:"3"},
@@ -147,7 +149,11 @@
 						{href:"khgl",id:"0",menu_name:"客户管理",parent_id:"0"},
 						{href:"jfgl",id:"0",menu_name:"积分管理",parent_id:"0"},
 						{href:"hyk",id:"0",menu_name:"会员卡",parent_id:"0"}
-					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4"}
+					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4"},
+					{childMenus:[
+						{href:"zfyl",id:"0",menu_name:"支付有礼",parent_id:"0"},
+						{href:"mjs",id:"0",menu_name:"满减/送",parent_id:"0"}
+					],href:"yhtj",id:"4",menu_name:"营销",parent_id:"5"}
 				],
 				imgList: [],
 				toogleMenu: false,
@@ -209,14 +215,17 @@
 //			handleLogo() {
 //				return this.config.logo || require('../../src/assets/bg.png')
 //			}
-            selectedApp(){
-				if(this.$route.path){
+		 showLeftSide() {
+			 return this.$route.path !== '/apps' && !!sessionStorage.getItem('appId');
+		 },
+     selectedApp(){
+				if( this.$route.path  ){
 					return !!sessionStorage.getItem('appId') ;
 				}
 			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
-			}
+			},
 		},
 		watch: {
 //			'$route': 'fetchData',
@@ -242,7 +251,7 @@
 				//					this.editableTabsValue = curName
 				//					this.$router.push(curName)
 				//				}).catch(()=>{
-				//					
+				//
 				//				})
 			},
 			handleForm() {
@@ -361,7 +370,7 @@
 				await this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
 				});
-				
+
 				let result = await this.auth().logout();
 				if(result){
 					this.$router.push('/login')
@@ -458,7 +467,7 @@
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
-		
+
 		overflow: hidden;
 	}
 	.container .header .right_content .contentHeader .menu-top{
@@ -477,7 +486,7 @@
     	line-height: 47px;
     	margin-right:10px;
 	}
-	   
+
 	.container .header .logo {
 		height: 60px;
 		width:100%;

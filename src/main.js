@@ -20,7 +20,7 @@ Vue.use(VueDND)
 //富文本编辑器配置
 import VueHtml5Editor from 'vue-html5-editor'
 Vue.use(VueHtml5Editor, {
-    // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效 
+    // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
     // global component name
     name: "vue-html5-editor",
     // 是否显示模块名称，开启的话会在工具栏的图标后台直接显示名称
@@ -179,18 +179,18 @@ Vue.mixin({
 			return new exception(this.$message,this.$router);
 		},
 		auth(publicKey){
-			authService.publicKey = publicKey;
-			authService.accept = this.API_ACCEPT;
-			authService.host = this.AUTH_SERVER_HOST;
-			authService.exception = this.exceptionInit();
+			tokenService.publicKey = authService.publicKey = publicKey;
+			tokenService.accept = authService.accept = this.API_ACCEPT;
+			tokenService.host = authService.host = this.AUTH_SERVER_HOST;
+			tokenService.exception = authService.exception = this.exceptionInit();
 			authService.tokenService = tokenService;
 			return authService;
 		},
-		adminApi(module){
-			module = !!module ? module :  adminApiServic2e;
-			module.accept = this.API_ACCEPT;
-			module.host = this.ADMIN_SERVER_HOST;
-			module.exception = this.exceptionInit();
+		adminApi(module = null){
+			module = module ? module :  AdminApiService;
+			tokenService.accept = module.accept = this.API_ACCEPT;
+			tokenService.host = module.host = this.ADMIN_SERVER_HOST;
+			tokenService.exception = module.exception = this.exceptionInit();
 			module.tokenService = tokenService;
 			return module;
 		},
@@ -200,6 +200,13 @@ Vue.mixin({
 		//查询列表重置
 		resetForm(name = 'selectFileds') {
 			this.$refs[name].resetFields()
+		},
+		getInquire(obj){
+			let searchStr=''
+			for(var key in obj) {
+        searchStr+=key+':'+obj[key]+';';
+      }
+      return {'search':searchStr, 'searchJion': 'and'};
 		},
 		//删除
 		handleDel(row, para,url = this.deleteUrl, fun= this.getSelectData) {
@@ -213,7 +220,7 @@ Vue.mixin({
 						fun()
 					})
 				}).catch(() => {
-	
+
 				})
 			},
 		//批量删除
@@ -251,7 +258,7 @@ Vue.mixin({
 
 			})
 		},
-		selsChange: function(sels, item, xId = id) {
+		selsChange: function(sels, item, xId = 'id') {
 			this[item] = sels.map(item => item[xId]).toString()
 		},
 		//下拉框联动
@@ -268,26 +275,26 @@ Vue.mixin({
 				this[item]=county
 			}
 		},
-		//获取远程下拉菜单数据
+		//获取省，市，区下拉菜单数据
 		async getListData(name = 'provinceData'){
 			let countries = await this.adminApi(AdminApiService).Areas.getCountries();
 			let provinces = await this.adminApi(AdminApiService).Areas.getProvinces(countries[0].id);
 			this[name] = provinces
 		},
+		//获取远程下拉菜单数据
+		async getLists(module,moduleType,name){
+			console.log(module)
+			console.log(moduleType)
+			console.log(name)
+			let [list, ] = await this.adminApi(module).moduleType.getLists(this.paginator);
+			this[name]=list
+		},
 		//导出
 		handleExport(url = this.exportUrl, filter = this.filters) {
 			let para = Object.assign({}, filter);
-			this.post(url, this.paraJson(para), (data) => {
+			this.post(url, this.paraJson(para), () => {
 				this.$message({ message: 'success', type: 'success' })
-			})
-//			delete para.pageNum
-//			delete para.pagesize
-//			let str = '';
-//			for(var i in para) {
-//				let v = para[i];
-//				str += i + '=' + v + '&'
-//			}
-//			window.open(this.root + url + '?' + str)
+			});
 		},
 		//图片处理逻辑-下面三个方法所有上传组件通用
 		handleSuccess(response, file, fileList) {
@@ -302,24 +309,19 @@ Vue.mixin({
 			this.formData[name] = urlArray.join(",")
 			console.log(this.formData[name])
 		},
-		handleRemove(file, fileList) {
-			if(!file) return
-			console.log(file)
-			console.log(fileList)
-			var image_namess= file.response.split(',')
-			var image_names= image_namess[1].split(':')
-			let para = {
-				image_name: file.url
-			};
+		handleRemove(file) {
+      if(!file) return ;
+      //let image_namess = file.response.split(',');
+      //let image_names = image_namess[1].split(':');
+      let para = { image_name: file.url };
 			let nameArray = file.url.split('/');
 			let num = nameArray.length - 2;
 			let name = nameArray[num];
-			this.post('/xwmin/index.php/Bckome/goods/goodsImageDelete.html', this.paraJson(para), (data) => {
-				console.log(data.data)
+			this.post('/xwmin/index.php/Bckome/goods/goodsImageDelete.html', this.paraJson(para), () => {
 				this.$message({
 					message: "删除成功",
 					type: 'success'
-				})
+				});
 				var fileArray = this.formData[name].split(',');
 				var _url = file.url;
 				fileArray = fileArray.filter(item => item != _url)
@@ -327,17 +329,17 @@ Vue.mixin({
 			})
 		},
 		formatImg(str) {
-			return str ? str.split(',') : []
+			return str ? str.split(',') : [];
 		},
 		customerImg(str) {
-			var picture=[]
-			 str=str ? str.split(',') : []
-			 if(str.length){
-			 	for(var i in str){
-			 		picture.push('http://huilong-xw.oss-cn-hangzhou.aliyuncs.com/customer_eng/'+str[i])
-			 	}
-			 }
-			 return picture
+      var picture = [];
+      str = str ? str.split(',') : [];
+      if(str.length) {
+        for(var i in str) {
+          picture.push('http://huilong-xw.oss-cn-hangzhou.aliyuncs.com/customer_eng/'+str[i]);
+        }
+      }
+      return picture;
 		},
 		handleError() {
 			this.$notify.error({
@@ -358,9 +360,9 @@ Vue.mixin({
 			fun()
 		},
 		//分页查询
-		handleCurrentChange(val, filters = this.filters, fun = this.getSelectData) {
-			filters.pageNum = val
-			fun()
+		handleCurrentChange(val, filters = this.paginator, fun = this.getList) {
+			filters.page = val
+			fun(filters)
 		},
 		//密码强度校验
 		validatePsd(rule, value, callback) {
@@ -489,7 +491,7 @@ Vue.mixin({
 			this[o[0]][o[1]] = value ? value : ''
 		},
 		paraJson(para){
-			return JSON.stringify(para)	
+			return JSON.stringify(para)
 		}
 	},
 	beforeRouteLeave(to, from, next) {
@@ -513,12 +515,12 @@ Vue.mixin({
 //注册通用性组件
 Vue.use(VueAxios, axios);
 Vue.use(Vuex);
-import ElementUI from 'element-ui'
-Vue.use(ElementUI)
-import 'element-ui/lib/theme-chalk/index.css'
-let vm = new Vue({
+import ElementUI from 'element-ui';
+Vue.use(ElementUI);
+import 'element-ui/lib/theme-chalk/index.css';
+const vm = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app');
-
+console.log(vm);

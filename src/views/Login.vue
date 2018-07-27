@@ -111,7 +111,7 @@
 						this.token().setToken(data.token)
 						sessionStorage.setItem('user', data.user.data.mobile)
 						this.$router.push({
-								path: '/'
+								path: '/Apps'
 						})
 					}
 				}

@@ -81,7 +81,7 @@
 						</el-form-item>
 						<el-form-item label="车主电话：" prop="phone">
 							<el-input v-model="formData.phone" style="width:30%">
-								 <template slot="prepend">+86</template>
+								<template slot="prepend">+86</template>
 							</el-input>
 						</el-form-item>
 						<el-form-item label="描述：" prop="address">
@@ -145,7 +145,7 @@
 </template>
 
 <script>
-/* eslint-disable */	
+/* eslint-disable */
 	import { mapGetters } from 'vuex'
 	export default {
 		name: 'plgl',
@@ -223,7 +223,7 @@
 			}
 		},
 		mounted() {
-			 
+
 		},
 		computed: {
 		},
@@ -245,7 +245,7 @@
 		filters: {
 		},
 		created() {
-			
+
 //			this.getSelectData()
 //			this.getListData()
 		}
