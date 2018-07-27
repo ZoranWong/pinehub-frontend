@@ -103,10 +103,10 @@
 			}
 		},
 		mounted () {
-			
+
 		},
 		computed:{
-			
+
 		},
 		methods:{
 			pathTo(data){
@@ -179,14 +179,13 @@
 				}
 			},
 			handleRemove(file, fileList) {
-				if(!file) return
-				
+				if(!file) return;
 			},
 			//图片上传组件 before-upload 所对应的方法 可限制图片的格式大小数量等
 			beforeUpload(file) {
 				const isJPG = file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
-		
+
 		        if (!isJPG) {
 		          this.$message.error('上传logo图片只能是 PNG格式!');
 		        }
@@ -198,7 +197,7 @@
 			qrcode (id) {
 			    let qrcode = new QRCode('qrcode', {
 			        width: 300,
-			        height: 300, 
+			        height: 300,
 			        text: this.WEB_HOST+'/open-platform/auth?app_id='+id+'&token='+this.token // 二维码内容
 			        // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
 			        // background: '#f0f'
@@ -235,7 +234,7 @@
 <style scoped>
 	.content-box{padding:0}
     .headSearch .el-form-item{margin-bottom: 12px;}
-	.headSearch {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;} 
+	.headSearch {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;}
 	.headSearch .el-form-item__content{line-height: '';}
 	.cardContent{clear: both;padding:20px}
 	.cardContent .card .operatCard{position: relative;top: 42px;height: 12px;float: right;}
@@ -245,13 +244,13 @@
 	.cardContent .card p{height: 22px;line-height: 22px;font-size: 12px;}
 	.cardContent .card .cardLabel{border: 1px solid #ff6e6e;color: #ff6e6e;position: absolute;top: 10px;right: 10px;border-radius: 2px;width:64px;height: 64px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
 	.cardContent .card p.cardName{margin-top: 18px;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
-	
-	
+
+
 	.boxItem { margin-top:15px; }
 	.box { background:#fff; box-shadow:0 0 7px #ccc; border-radius:5px; }
 	.box .hd { padding:20px 10px; line-height:30px; border-bottom:#ddd 1px solid; overflow: hidden;}
 	.box .hd span { color:#000; font-weight:bold;font-size:25px;float:right}
-	
+
 	.box .hd .el-button { margin-top:2px; }
 	.box .bd { padding:10px; }
 	.czxx dl { float:left; width:48%; height:130px; margin:1%; padding:15px; border-radius:5px; color:#fff; }
@@ -271,7 +270,7 @@
 	.charging dt { padding:0 15px; background:#54D7BF; line-height:60px; color:#fff; font-size:20px; }
 	.charging dd { padding:15px; line-height:40px; font-size:16px; }
 	.charging dd p { display:block; padding:15px 2px 0; border-bottom:#ddd 1px solid; }
-	
+
 	.zxgj .bd { min-height:330px; max-height:330px; overflow:hidden; }
 	.zxgj ul { position:relative; }
 	.zxgj ul:before { position:absolute; left:150px; display:block; content:''; width:2px; height:100%; background:#3E4547; }

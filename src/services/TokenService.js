@@ -26,7 +26,7 @@ export default class TokenService extends ApiService {
     }
 
     static async refreshToken(token) {
-        let response = await this.get('/token-refresh',{'token' : token});
+        let response = await ApiService.get('/token-refresh',{'token' : token});
         try {
             TokenService.validate(response.data);
             var data = response.data.data;
