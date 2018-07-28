@@ -3,18 +3,17 @@
 import ServiceProvider from './ServiceProvider';
 import TokenService from '../services/TokenService';
 import SessionService from '../services/cache/SessionService';
-import App from '../App';
+import Base64Service from '../services/encrypt/Base64Service';
 export default class AppServiceProvider extends ServiceProvider{
-  constructor() {
-    super();
+  constructor(vm) {
+    super(vm);
   }
   register() {
     this.$vm.register('session', SessionService);
     this.$vm.register('token', TokenService);
+    this.$vm.register('base64', Base64Service);
   }
   boot() {
-    this.app = new Vue({
-      render: h => h(App)
-    }).$mount('#app');
+
   }
 }

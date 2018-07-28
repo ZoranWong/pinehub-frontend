@@ -1,7 +1,6 @@
-import Vue from 'vue';
 export default class ServiceProvider {
-  constructor() {
-    this.$vm = Vue;
+  constructor(vm) {
+    this.$vm = vm;
     this.$vm.register = function(name, service = null) {
       if(!service) {
 

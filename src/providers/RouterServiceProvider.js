@@ -2,11 +2,11 @@ import ServiceProvider from './ServiceProvider';
 import VueRouter from 'vue-router';
 import Route from '../routes/Route';
 export default class RouteServiceProvider extends ServiceProvider {
-  constructor() {
-    super();
+  constructor(vm) {
+    super(vm);
   }
   register() {
-    this.app.use(VueRouter);
+    this.$vm.use(VueRouter);
     this.route = new Route();
   }
 }
