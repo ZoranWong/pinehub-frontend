@@ -18,6 +18,13 @@ export default class Application {
       }
     };
   }
+  json(str) {
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      return str;
+    }
+  }
   register(name, instance) {
     this.$vm[name] = this.instanceRegister(instance);
     return this.$vm[name];
@@ -54,6 +61,9 @@ export default class Application {
     Vue.use(Vuex);
     Vue.use(ElementUI);
     let self = this;
+    _.prototype.json = function(str) {
+      return self.json(str);
+    }
     self.vueApp = new Vue({
       data: {
         a: 0

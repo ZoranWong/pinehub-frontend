@@ -16,7 +16,10 @@ export default {
   },
   created() {
     console.log(this);
-    console.log(this.account.httpGet());
+    (async () => {
+      console.log(await this.account.httpGet('', '', true));
+    })();
+
   }
 }
 </script>

@@ -1,4 +1,5 @@
 import Service from '../Service';
+/* eslint-disable */
 export default class ApiService extends Service{
   constructor(app) {
     super(app);
@@ -8,11 +9,13 @@ export default class ApiService extends Service{
     });
   }
   // eslint-disable-next-line
-  async httpGet(route, params = [], auth = false) {
+  async httpGet(route, params = [], auth = false, self = this) {
     if(auth) {
-      let token = await this.$vm.token.getToken();
-      this.axios.defaults.headers.get['Authorization'] = 'bearer ' + token;
+      console.log(self);
+      let token = await self.$vm.token.getToken();
+      self.axios.defaults.headers.get['Authorization'] = 'bearer ' + token;
     }
+    console.log(this);
     return null;
   }
 
