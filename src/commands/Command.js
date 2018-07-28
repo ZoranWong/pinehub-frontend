@@ -4,6 +4,6 @@ export default class Command {
   }
 
   handle(params) {
-    
+    console.log(params);
   }
 }

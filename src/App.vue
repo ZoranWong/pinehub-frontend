@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
@@ -12,8 +11,12 @@ export default {
   components: {
     HelloWorld
   },
+  mounted() {
+    console.log('mounted');
+  },
   created() {
-    console.log(this.md5.encrypt('token, ddasss'));
+    console.log(this);
+    console.log(this.account.httpGet());
   }
 }
 </script>

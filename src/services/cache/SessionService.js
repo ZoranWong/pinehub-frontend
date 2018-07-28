@@ -1,9 +1,10 @@
-export default class SessionService {
-  constructor() {
-
+import Service from '../Service';
+export default class SessionService extends Service {
+  constructor(application) {
+    super(application);
   }
-  get() {
-
+  get(key) {
+    return key;
   }
 
   put() {
@@ -15,6 +16,6 @@ export default class SessionService {
   }
 
   delete() {
-    
+
   }
 }

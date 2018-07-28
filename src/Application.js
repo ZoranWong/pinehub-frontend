@@ -2,11 +2,21 @@ import Vue from 'vue';
 import ServiceProviders from './providers';
 import _ from 'underscore';
 import App from './App';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import Vuex from 'vuex';
+import ElementUI from 'element-ui';
 export default class Application {
   constructor() {
-    this.$vm = Vue;
     Vue.config.productionTip = false;
+    this.version = '1.0.1';
     this.serviceProviders = [];
+    this.config = {
+      httpHeaders: {
+        'Accept': 'json',
+        'Content-type': 'application/json'
+      }
+    };
   }
   register(name, instance) {
     this.$vm[name] = this.instanceRegister(instance);
@@ -34,12 +44,33 @@ export default class Application {
     });
   }
 
+  afterBoot() {
+
+  }
+
   run() {
-    this.beforeBoot();
-    this.registerServiceProviders();
-    this.boot();
-    this.app = new Vue({
-      render: h => h(App)
+    this.$vm = Vue;
+    Vue.use(VueAxios, axios);
+    Vue.use(Vuex);
+    Vue.use(ElementUI);
+    let self = this;
+    self.vueApp = new Vue({
+      data: {
+        a: 0
+      },
+      render: h => h(App),
+      beforeCreate: function() {
+        self.registerServiceProviders();
+      },
+      created:() => {
+        self.beforeBoot();
+      },
+      beforeMount:() => {
+        self.boot();
+      },
+      mounted: () => {
+        self.afterBoot();
+      }
     }).$mount('#app');
   }
 }
