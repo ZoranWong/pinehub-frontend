@@ -13,7 +13,7 @@ export default {
     HelloWorld
   },
   created() {
-    console.log(this.token);
+    console.log(this.md5.encrypt('token, ddasss'));
   }
 }
 </script>

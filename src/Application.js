@@ -14,7 +14,7 @@ export default class Application {
   }
   instanceRegister(instance) {
     if(_.isFunction(instance)) {
-      instance = new instance(this.$vm);
+      instance = new instance(this);
     }
     return instance;
   }

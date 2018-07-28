@@ -1,5 +1,18 @@
 export default class TokenService {
-  constructor() {
+  constructor($application) {
+    this.token = null;
+    this.$application = $application;
+  }
+  getToken() {
+
+  }
+  getRefreshToken() {
+
+  }
+  refresh() {
+
+  }
+  setToken() {
 
   }
 }
