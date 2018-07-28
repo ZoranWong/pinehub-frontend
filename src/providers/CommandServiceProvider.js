@@ -7,7 +7,7 @@ export default class CommandServiceProvider extends ServiceProvider {
   register() {
     this.$vm.register('account:sign-in', SignInCommand);
     this.$vm.prototype['command'] = (command, params) => {
-      this[command].handle(params);
+      return this[command].handle(params);
     }
   }
 }
