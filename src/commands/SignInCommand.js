@@ -8,4 +8,7 @@ export default class SignInCommand extends Command {
   handle(params) {
     console.log(params);
   }
+  static commandName() {
+    return 'account:sign-in';
+  }
 }

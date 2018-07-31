@@ -8,4 +8,7 @@ export default class ReportCommand extends Command {
   handle(params) {
     console.log('report front-end running status', params);
   }
+  static commandName() {
+    return 'report';
+  }
 }
