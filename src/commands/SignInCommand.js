@@ -6,9 +6,6 @@ export default class SignInCommand extends Command {
     super(app);
   }
   handle(params) {
-    (async () => {
-      let result = await this.$application.vueApp.account.signIn(params['username'], params['password']);
-      console.log(result);
-    })();
+    console.log(params);
   }
 }
