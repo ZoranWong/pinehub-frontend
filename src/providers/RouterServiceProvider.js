@@ -10,10 +10,10 @@ export default class RouteServiceProvider extends ServiceProvider {
     this.$vm.use(VueRouter);
     let routerArray = [];
     _.each(routes, function(route) {
-      routerArray.push(route.getRoutes());
+      routerArray.push(route.getRoute());
     });
     this.router = this.app['router'] = new VueRouter({
-      routerArray
+      routes: routerArray
     });
     let self = this;
     this.router.beforeEach((to, from, next) => {
