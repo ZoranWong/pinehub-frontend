@@ -1,27 +1,12 @@
 <template>
   <div id="app">
-    <!--<router-view></router-view>-->
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  },
-  mounted() {
-    console.log('mounted');
-  },
-  created() {
-    console.log(this);
-    (async () => {
-      console.log(await this.account.httpGet('', '', true));
-    })();
-
-  }
-}
+    export default {
+      name: 'app',
+    }
 </script>
 
 <style>

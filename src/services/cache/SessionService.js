@@ -1,5 +1,5 @@
 import Service from '../Service';
-import _ from 'underscore';
+//import _ from 'underscore';
 export default class SessionService extends Service {
   constructor(application) {
     super(application);

@@ -4,7 +4,7 @@ export default class Route {
     this.routes = [];
   }
   addRoute(route, component = [], name = null) {
-    if(_.isArray(component)) {
+    if(_.isArray(component) || _.isObject(component)) {
       route = _.extend(component, {path: route});
     }else if(_.isString(component)) {
       route = {

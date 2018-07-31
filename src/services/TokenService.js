@@ -11,14 +11,14 @@ export default class TokenService extends Service {
   }
 
   asyncToken() {
-    	let token = this.$vm.session.get('token');
-      console.log(token);
-      return new Promise(function(resolve) {
-        return resolve(token);
-      }).then(function (token) {
-        return  token;
-      });
- }
+    let token = this.$vm.session.get('token');
+    console.log(token);
+    return new Promise(function(resolve) {
+      return resolve(token);
+    }).then(function (token) {
+      return  token;
+    });
+  }
 
   getRefreshToken() {
 
