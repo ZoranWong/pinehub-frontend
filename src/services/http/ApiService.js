@@ -9,13 +9,12 @@ export default class ApiService extends Service{
     });
   }
   // eslint-disable-next-line
-  async httpGet(route, params = [], auth = false, self = this) {
+  async httpGet (route, params = [], auth = false) {
     if(auth) {
-      console.log(self);
-      let token = await self.$vm.token.getToken();
-      self.axios.defaults.headers.get['Authorization'] = 'bearer ' + token;
+      let token = await this.$vm.token.getToken();
+      this.axios.defaults.headers.get['Authorization'] = 'bearer ' + token;
     }
-    console.log(this);
+    //let result = await this.axios.get();
     return null;
   }
 

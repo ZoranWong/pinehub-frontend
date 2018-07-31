@@ -6,6 +6,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
+import env from './env';
 export default class Application {
   constructor() {
     Vue.config.productionTip = false;
@@ -17,6 +18,7 @@ export default class Application {
         'Content-type': 'application/json'
       }
     };
+    this.env = env;
   }
   json(str) {
     try {
@@ -64,13 +66,16 @@ export default class Application {
     _.prototype.json = function(str) {
       return self.json(str);
     }
+    self.registerServiceProviders();
+    let store = this.store;
+    let router = this.router;
+    console.log(store);
     self.vueApp = new Vue({
-      data: {
-        a: 0
-      },
+      router,
+      store,
       render: h => h(App),
       beforeCreate: function() {
-        self.registerServiceProviders();
+
       },
       created:() => {
         self.beforeBoot();
