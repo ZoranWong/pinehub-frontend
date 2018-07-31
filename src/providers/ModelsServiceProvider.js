@@ -4,8 +4,7 @@ import Models from '../models'
 export default class ModelServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
-    this.app.$vm.use(Vuex);
-    console.log(Vuex);
+    this.app.use(Vuex);
   }
   register() {
     this.app.register('store', new Vuex.Store(new Models(this.$application)));

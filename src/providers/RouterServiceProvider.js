@@ -7,21 +7,21 @@ export default class RouteServiceProvider extends ServiceProvider {
     super(app);
   }
   register() {
-    this.app.$vm.use(VueRouter);
+    this.app.use(VueRouter);
     let routerArray = [];
     _.each(routes, function(route) {
       routerArray.push(route.getRoute());
     });
-    this.router = this. app.register('router',  new VueRouter({
+    let router = this. app.register('router',  new VueRouter({
       routes: routerArray
     }));
     let self = this;
-    this.router.beforeEach((to, from, next) => {
+    router.beforeEach((to, from, next) => {
       self.beforeEach(to, from, next);
     });
   }
   beforeEach(to, from, next) {
-    console.log(to.path, from.path, next);
+    console.log(to.path, from.path);
     next();
   }
 }

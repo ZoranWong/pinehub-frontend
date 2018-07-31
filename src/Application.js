@@ -29,6 +29,9 @@ export default class Application {
       return str;
     }
   }
+  use($class) {
+    this.$vm.use($class);
+  }
   registerCommand(name, command) {
     return (this.commands[name] = this.$vm.prototype[name] = new command(this));
   }
