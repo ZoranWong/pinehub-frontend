@@ -1,5 +1,6 @@
 import ServiceProvider from './ServiceProvider';
 import SignInCommand from '../commands/SignInCommand';
+import ReportCommand from '../commands/ReportCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -7,7 +8,8 @@ export default class CommandServiceProvider extends ServiceProvider {
   }
   register() {
     let commands = {
-      'account:sign-in': SignInCommand
+      'account:sign-in': SignInCommand,
+      'report': ReportCommand
     };
     for (let key in commands) {
       this.commands[key] = this.$vm.register(key, commands[key]);

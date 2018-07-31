@@ -35,6 +35,7 @@
 		created() {
       console.log('signIn page created');
       this.command('account:sign-in', {username: 'Json', password: '123456'});
+      this.command('report', {'speed': 100});
     }
   }
 </script>
