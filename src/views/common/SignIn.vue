@@ -1,13 +1,13 @@
 <template>
-    <div id="login">
-		<div class="login-container">
+    <div id="signIn">
+		<div class="sign-in-container">
 			<transition name="fade">
         <sign-in v-if="signIn" key="signIn" ></sign-in>
         <seek-password v-else-if="seekPassword" key = "seekPassword" ></seek-password>
 			</transition>
 		</div>
-		<div class="login-ft">
-			<p class="subtitle">京抖云网络技术有限公司 版权所有</p>
+		<div class="sign-in-footer">
+			<p class="company">京抖云网络技术有限公司 版权所有</p>
 		</div>
 	</div>
 </template>
@@ -22,6 +22,12 @@
       'sign-in': SignInComponent
     },
 		computed: {
+      signIn () {
+        return true;
+      },
+      seekPassword() {
+        return false;
+      }
 		},
 		methods: {
 

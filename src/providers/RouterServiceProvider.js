@@ -21,6 +21,7 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    console.log(to, from, next);
+    console.log(to.path, from.path, next);
+    next();
   }
 }
