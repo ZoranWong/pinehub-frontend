@@ -27,6 +27,7 @@
 
 		},
 		created() {
+      console.log('signIn page created');
     }
   }
 </script>
