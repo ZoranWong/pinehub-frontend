@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import env from './env';
 export default class Application {
   constructor() {
+    this.applicationBootStartTime = Date.now();
     Vue.config.productionTip = false;
     this.version = '1.0.1';
     this.instances = {};
@@ -61,7 +62,7 @@ export default class Application {
   }
 
   afterBoot() {
-
+    this.applicationBootEndTime = Date.now();
   }
 
   register(name, service = null) {
@@ -105,6 +106,7 @@ export default class Application {
       },
       mounted: () => {
         self.afterBoot();
+        console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
       }
     }).$mount('#app');
   }

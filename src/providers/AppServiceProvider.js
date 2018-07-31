@@ -16,6 +16,6 @@ export default class AppServiceProvider extends ServiceProvider{
     this.app.register('token', TokenService);
   }
   boot() {
-
+    
   }
 }
