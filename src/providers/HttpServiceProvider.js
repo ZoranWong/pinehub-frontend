@@ -5,6 +5,6 @@ export default class HttpServiceProvider extends ServiceProvider {
     super(vm);
   }
   register() {
-      this.$vm.register('account', AccountService);
+      this.app.register('account', AccountService);
   }
 }

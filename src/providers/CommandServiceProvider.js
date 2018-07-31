@@ -9,11 +9,7 @@ export default class CommandServiceProvider extends ServiceProvider {
   register() {
     let commands = [SignInCommand, ReportCommand];
     for (let key in commands) {
-      this.commands[commands[key].commandName()] = this.$vm.register(commands[key].commandName(), commands[key]);
-    }
-    //this.commands['account:sign-in'] = this.$vm.register('account:sign-in', SignInCommand);
-    this.$vm.prototype['command'] = (command, params) => {
-      return this.commands[command].handle(params);
+      this.app.registerCommand(commands[key].commandName(), commands[key]);
     }
   }
 }

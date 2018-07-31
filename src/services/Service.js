@@ -3,4 +3,8 @@ export default class Service {
     this.$application = $application;
     this.$vm = this.$application.$vm.prototype;
   }
+
+  services() {
+    return this.$application.instances;
+  }
 }

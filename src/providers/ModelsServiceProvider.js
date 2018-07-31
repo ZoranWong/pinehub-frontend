@@ -8,7 +8,7 @@ export default class ModelServiceProvider extends ServiceProvider {
     console.log(Vuex);
   }
   register() {
-    this.app['store'] = new Vuex.Store(new Models(this.$application));
+    this.app.register('store', new Vuex.Store(new Models(this.$application)));
   }
   boot() {
 
