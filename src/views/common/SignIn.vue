@@ -33,7 +33,7 @@
 
 		},
 		created() {
-      console.log('signIn page created');
+      console.log('signIn page created',this.$store.state.order);
     }
   }
 </script>
