@@ -80,6 +80,9 @@ export default class Application {
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
+    this.axios = this.$vm.axios.create({
+      headers: this.config['httpHeaders']
+    });
     let self = this;
     this.$vm.prototype['command'] = function(command, params) {
       self.command(command, params);

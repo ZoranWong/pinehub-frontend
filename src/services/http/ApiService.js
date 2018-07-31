@@ -4,9 +4,7 @@ export default class ApiService extends Service{
   constructor(app) {
     super(app);
     this.headers = {};
-    this.axios = this.$application.$vm.axios.create({
-      headers: this.$application.config['httpHeaders']
-    });
+    this.axios = this.$application.axios;
   }
   // eslint-disable-next-line
   async httpGet (route, params = [], auth = false) {
