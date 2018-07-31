@@ -71,8 +71,8 @@ export default class Application {
     let router = this.router;
     console.log(store);
     self.vueApp = new Vue({
-      router,
-      store,
+      router: router,
+      store: store,
       render: h => h(App),
       beforeCreate: function() {
 

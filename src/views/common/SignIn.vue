@@ -22,6 +22,12 @@
       'sign-in': SignInComponent
     },
 		computed: {
+      signIn () {
+        return true;
+      },
+      seekPassword() {
+        return false;
+      }
 		},
 		methods: {
 
