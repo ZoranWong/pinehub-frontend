@@ -1,6 +1,8 @@
 import {base64} from 'js-base64';
-export default class Base64Service {
-  constructor() {
+import Service from '../Service';
+export default class Base64Service extends Service{
+  constructor(application) {
+    super(application);
   }
   encode(data) {
     return base64.encode(data);

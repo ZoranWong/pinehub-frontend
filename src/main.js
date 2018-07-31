@@ -1,5 +1,6 @@
 import Application from './Application';
-
-const app = new Application();
-app.run();
-console.log(app);
+import Vue from 'vue';
+import App from './App';
+const application = new Application();
+application.run();
+console.log(application);

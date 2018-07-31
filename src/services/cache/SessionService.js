@@ -1,9 +1,12 @@
-export default class SessionService {
-  constructor() {
-
+import Service from '../Service';
+import _ from 'underscore';
+export default class SessionService extends Service {
+  constructor(application) {
+    super(application);
   }
-  get() {
-
+  get(key) {
+    let data = sessionStorage.getItem(key);
+    return this.$application.json(data);
   }
 
   put() {
@@ -15,6 +18,6 @@ export default class SessionService {
   }
 
   delete() {
-    
+
   }
 }
