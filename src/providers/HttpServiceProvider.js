@@ -6,6 +6,9 @@ export default class HttpServiceProvider extends ServiceProvider {
     super(app);
   }
   register() {
+      this.app.axios = this.app.$vm.axios.create({
+        headers: this.app.config['http']['headers']
+      });
       this.app.register('account', AccountService);
       this.app.register('uri', UriService);
   }
