@@ -3,18 +3,18 @@ import VueRouter from 'vue-router';
 import routes from '../routes';
 import _ from 'underscore';
 export default class RouteServiceProvider extends ServiceProvider {
-  constructor(vm) {
-    super(vm);
+  constructor(app) {
+    super(app);
   }
   register() {
-    this.$vm.use(VueRouter);
+    this.app.$vm.use(VueRouter);
     let routerArray = [];
     _.each(routes, function(route) {
       routerArray.push(route.getRoute());
     });
-    this.router = this.app['router'] = new VueRouter({
+    this.router = this. app.register('router',  new VueRouter({
       routes: routerArray
-    });
+    }));
     let self = this;
     this.router.beforeEach((to, from, next) => {
       self.beforeEach(to, from, next);

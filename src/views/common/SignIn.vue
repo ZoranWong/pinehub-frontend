@@ -16,7 +16,7 @@
   import SeekPasswordComponent from '../../components/SeekPasswordComponent.vue';
   import SignInComponent from '../../components/SignInComponent.vue';
   export default {
-		name: 'signIn',
+    name: 'signIn',
     components: {
       'seek-password': SeekPasswordComponent,
       'sign-in': SignInComponent
@@ -33,7 +33,9 @@
 
 		},
 		created() {
-      console.log('signIn page created',this.$store.state.order);
+      console.log('signIn page created', (this.account.httpGet('', '', true)));
+      this.command('account:sign-in', {username: 'Json', password: '123456'});
+      this.command('report', {'speed': 100});
     }
   }
 </script>

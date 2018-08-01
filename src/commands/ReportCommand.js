@@ -1,14 +1,14 @@
-//登陆命令
+//汇报命令
 /* eslint-disable */
 import Command from './Command';
-export default class SignInCommand extends Command {
+export default class ReportCommand extends Command {
   constructor(app) {
     super(app);
   }
   handle(params) {
-    console.log(params);
+    console.log('report front-end running status', params);
   }
   static commandName() {
-    return 'account:sign-in';
+    return 'report';
   }
 }

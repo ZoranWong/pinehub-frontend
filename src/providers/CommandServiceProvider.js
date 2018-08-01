@@ -1,13 +1,15 @@
 import ServiceProvider from './ServiceProvider';
 import SignInCommand from '../commands/SignInCommand';
+import ReportCommand from '../commands/ReportCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
+    this.commands = [];
   }
   register() {
-    this.$vm.register('account:sign-in', SignInCommand);
-    this.$vm.prototype['command'] = (command, params) => {
-      return this[command].handle(params);
+    let commands = [SignInCommand, ReportCommand];
+    for (let key in commands) {
+      this.app.registerCommand(commands[key].commandName(), commands[key]);
     }
   }
 }
