@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import env from './env';
 export default class Application {
   constructor() {
+    this.applicationBootStartTime = Date.now();
     Vue.config.productionTip = false;
     this.version = '1.0.1';
     this.instances = {};
@@ -28,6 +29,9 @@ export default class Application {
     } catch (e) {
       return str;
     }
+  }
+  use($class) {
+    this.$vm.use($class);
   }
   registerCommand(name, command) {
     return (this.commands[name] = this.$vm.prototype[name] = new command(this));
@@ -58,7 +62,7 @@ export default class Application {
   }
 
   afterBoot() {
-
+    this.applicationBootEndTime = Date.now();
   }
 
   register(name, service = null) {
@@ -76,6 +80,9 @@ export default class Application {
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
+    this.axios = this.$vm.axios.create({
+      headers: this.config['httpHeaders']
+    });
     let self = this;
     this.$vm.prototype['command'] = function(command, params) {
       self.command(command, params);
@@ -102,6 +109,7 @@ export default class Application {
       },
       mounted: () => {
         self.afterBoot();
+        console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
       }
     }).$mount('#app');
   }

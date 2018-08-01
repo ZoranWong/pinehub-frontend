@@ -4,9 +4,8 @@ export default class ApiService extends Service{
   constructor(app) {
     super(app);
     this.headers = {};
-    this.axios = this.$application.$vm.axios.create({
-      headers: this.$application.config['httpHeaders']
-    });
+    this.axios = this.$application.axios;
+    this.gateway = '';
   }
   // eslint-disable-next-line
   async httpGet (route, params = [], auth = false) {
@@ -14,8 +13,8 @@ export default class ApiService extends Service{
       let token = await this.services().token.getToken();
       this.axios.defaults.headers.get['Authorization'] = 'bearer ' + token;
     }
-    //let result = await this.axios.get();
-    return null;
+    let result = await this.axios.get(this.gateway + this.services().uri.query(params));
+    return result;
   }
 
   async httpPost(route, params = [], auth = false) {
