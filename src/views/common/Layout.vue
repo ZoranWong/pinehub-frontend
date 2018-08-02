@@ -132,7 +132,7 @@
 //					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
 					{childMenus:[
 						{href:"wechatManage",id:"0",menu_name:"公众号信息",parent_id:"0"}
-					],href:"gzhgl",id:"1",menu_name:"微信管理",parent_id:"1"},
+					],href:"wechat",id:"1",menu_name:"微信管理",parent_id:"1"},
 					{childMenus:[
 						{href:"ccgl",id:"0",menu_name:"店铺管理",parent_id:"0"},
 						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"}
