@@ -68,7 +68,7 @@ export default class Application {
   }
 
   registerException(name, exception) {
-    this.exceptionHandlers[name] = new exception(this);
+    this.exceptionHandlers[name] = exception;
   }
 
   register(name, service = null) {
@@ -80,9 +80,21 @@ export default class Application {
       return  this.instances[name] = this.$vm.prototype[name] = service;
     }
   }
+  $on(event, callback) {
+    this.vueApp.$on(event, callback);
+  }
+  $off(event) {
 
+  }
+  $emit(event, params = null) {
+    this.vueApp.$emit(event, params);
+  }
+  $error(exception, params = null) {
+    this.$emit(exception, params);
+  }
   run() {
     this.$vm = Vue;
+    this.$vm.prototype.$application = this;
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
@@ -103,7 +115,14 @@ export default class Application {
       store: store,
       render: h => h(App),
       beforeCreate: function() {
-
+        self.vueApp = this;
+        _.each(self.exceptionHandlers, function(exception, key) {
+          self.$on(key, function(message) {
+            let handler = new exception(self, self.vueApp.$message);
+            handler.handle(message);
+            console.log('error');
+          });
+        });
       },
       created:() => {
         self.beforeBoot();

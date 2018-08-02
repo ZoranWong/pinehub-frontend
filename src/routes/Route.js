@@ -37,12 +37,10 @@ export default class Route {
     if(typeof group['component'] !== 'undefined') {
       $route['component'] = group['component'];
     }
-    console.log(this.route);
     this.route.push( $route );
   }
 
   getRoute() {
-  	console.log(this.route);
     return this.route.length > 1 ? this.route : this.route[0];
   }
 }

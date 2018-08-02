@@ -3,7 +3,9 @@ export default class ExceptionHandler {
     this.$application = app;
     this.exceptionHandler = exceptionHandler;
   }
-  throwError( message, type) {
+  handle( message, type) {
+    message = !!message ? message : this.message;
+    type = !!type ? type : this.type;
     this.exceptionHandler({message: message,type: type});
   }
 }

@@ -1,4 +1,5 @@
 import Service from '../Service';
+import _ from 'underscore';
 /* eslint-disable */
 export default class ApiService extends Service{
   constructor(app) {
@@ -16,7 +17,7 @@ export default class ApiService extends Service{
       let token = await this.services().token.getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    let result = await this.axios.get(this.gateway + this.services().uri.query(params));
+    let result = await this.axios.get(this.gateway + route + this.services().uri.query(params));
     return result;
   }
 
@@ -25,15 +26,17 @@ export default class ApiService extends Service{
       let token = await this.services().token.getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    return null;
+    let result = await this.axios.post(this.gateway + route, params);
+    return result;
   }
 
-  async httpPut(route, params = [], auth = false) {
+  async httpPut(route, id, params = [], auth = false) {
     if(auth) {
       let token = await this.services().token.getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    return null;
+    let result = await this.axios.put(this.gateway + route + id , params);
+    return result;
   }
 
   async httpDelete(route, params = [], auth = false) {
@@ -41,6 +44,8 @@ export default class ApiService extends Service{
       let token = await this.services().token.getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
+    let id = _.isString(params) || _.isNumber(params) ? params : this.$application.json(params);
+    let result = await this.axios.delete(this.gateway + route + id);
     return null;
   }
 }
