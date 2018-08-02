@@ -1,0 +1,6 @@
+export default {
+  headers: {
+    'Accept': 'json',
+    'Content-type': 'application/json'
+  }
+}

@@ -18,12 +18,8 @@ export default class Application {
     this.instances = {};
     this.commands = {};
     this.serviceProviders = [];
-    this.config = {
-      httpHeaders: {
-        'Accept': 'json',
-        'Content-type': 'application/json'
-      }
-    };
+    this.config = {};
+    this.exceptionHandlers = {};
     this.env = env;
   }
   json(str) {
@@ -48,6 +44,9 @@ export default class Application {
     }
     return instance;
   }
+  registerConfig(name, config) {
+    this.config[name] = config;
+  }
   registerServiceProviders() {
     let app = this;
     _.each(ServiceProviders, function(value, key) {
@@ -68,6 +67,10 @@ export default class Application {
     this.applicationBootEndTime = Date.now();
   }
 
+  registerException(name, exception) {
+    this.exceptionHandlers[name] = new exception(this);
+  }
+
   register(name, service = null) {
     if(!service && _.isFunction(name)) {
       return this.instances[name] = this.$vm.prototype[name] = new name(this);
@@ -83,9 +86,7 @@ export default class Application {
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
-    this.axios = this.$vm.axios.create({
-      headers: this.config['httpHeaders']
-    });
+
     let self = this;
     this.$vm.prototype['command'] = function(command, params) {
       self.command(command, params);
