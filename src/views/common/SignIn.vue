@@ -139,7 +139,7 @@
 			}
 		},
 		created() {
-      this.$application.$error('notFound');
+      		this.$application.$error('notFound','暂无数据');
 		}
     }
 </script>
