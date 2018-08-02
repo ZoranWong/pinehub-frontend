@@ -21,7 +21,7 @@
 					<el-form-item>
 						<el-button type="primary" style="width:100%;" @click="handleSubmit2" size="small">登录</el-button>
 					</el-form-item>
-				</el-form> 
+				</el-form>
 				<el-form :model="ruleForm3" v-else key="seek" :rules="rules3" ref="ruleForm3" label-width="0px" class="login-box">
 					<el-form-item prop="passport">
 						<el-input type="text" v-model="ruleForm3.passport" placeholder="请输入用户名"></el-input>
@@ -139,7 +139,7 @@
 			}
 		},
 		created() {
-			console.log(this.command('report', {'count': 100}));
+      this.$application.$error('notFound');
 		}
     }
 </script>
