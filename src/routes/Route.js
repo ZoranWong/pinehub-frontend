@@ -1,7 +1,7 @@
 import _ from 'underscore';
 export default class Route {
   constructor() {
-    this.route = {};
+    this.route = [];
   }
   addRoute(route, component = [], name = null) {
     if(_.isArray(component) || _.isObject(component)) {
@@ -15,7 +15,7 @@ export default class Route {
         route['name'] = name;
       }
     }
-    this.route = route;
+    this.route.push(route);
   }
 
   group(route, callback) {
@@ -25,9 +25,11 @@ export default class Route {
       callback = group['uses'];
     }
     callback(children);
+    let list = children.getRoute();
+    list = list.length > 1 ? list : [list];
     let $route = {
       path: route,
-      children: children.getRoutes()
+      children: list
     };
     if(typeof group['name'] !== 'undefined') {
       $route['name'] = group['name'];
@@ -35,10 +37,12 @@ export default class Route {
     if(typeof group['component'] !== 'undefined') {
       $route['component'] = group['component'];
     }
-    this.route = $route;
+    console.log(this.route);
+    this.route.push( $route );
   }
 
   getRoute() {
-    return this.route;
+  	console.log(this.route);
+    return this.route.length > 1 ? this.route : this.route[0];
   }
 }

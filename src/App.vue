@@ -10,7 +10,7 @@
 </script>
 
 <style>
-@import url("assets/css/custom.css");
+@import url("./assets/css/custom.css");
 	#app {
 		position: absolute;
 		top: 0px;

@@ -2,10 +2,13 @@ import Vue from 'vue';
 import ServiceProviders from './providers';
 import _ from 'underscore';
 import App from './App';
+import '../static/css/font-awesome.min.css'
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Vuex from 'vuex';
 import ElementUI from 'element-ui';
+Vue.use(ElementUI);
+import 'element-ui/lib/theme-chalk/index.css';
 import env from './env';
 export default class Application {
   constructor() {
