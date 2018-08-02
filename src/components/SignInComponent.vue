@@ -1,6 +1,5 @@
 <template>
-  <div class="sign-in-from">
-  </div>
+  <div class="sign-in-from"></div>
 </template>
 <script>
 export default {
