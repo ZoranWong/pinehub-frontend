@@ -37,7 +37,7 @@ export default {
       console.log('change page');
       console.log(this.$store.state.order.currentPage);
 		}
-    }
+}
 </script>
 <style>
 	#login{

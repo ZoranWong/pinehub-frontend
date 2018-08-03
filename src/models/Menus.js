@@ -7,6 +7,7 @@ export default class Menus extends Model {
     return {
       list:[
         {
+<<<<<<< HEAD
         	toogleMenu: false,
 					menuList: [
 						{childMenus:[
@@ -34,8 +35,24 @@ export default class Menus extends Model {
 							{href:"mjs",id:"0",menu_name:"满减/送",parent_id:"0"}
 						],href:"yhtj",id:"4",menu_name:"营销",parent_id:"5"}
 					]
+=======
+          title: '',
+          icon: '',
+          path: '',
+          children: [
+            {
+              title: '',
+              icon: '',
+              path: '',
+            }
+          ]
+>>>>>>> ad95c99e6db9fe9030466a96436c0018e1bdd038
         }
       ]
+    };
+  }
+  computed() {
+    return {
     };
   }
 }

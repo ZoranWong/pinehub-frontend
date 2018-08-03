@@ -1,73 +1,16 @@
 <template>
 	<el-row class="container">
-		<div class="header">
-			<div class="left_nav" :class="{ 'toogleNav': $store.state.menus.list[0].toogleMenu}" v-if="showLeftSide">
-				<div class="logo" >
-					<router-link to="/apps">
-						<img src="../../../src/assets/logo_scale.png" v-if="$store.state.menus.list[0].toogleMenu" style="width:70%;margin-top:5px"/>
-						<img src="../../../src/assets/logo_white.svg" v-else/>
-					</router-link>
-				</div>
-				<aside>
-					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="$store.state.menus.list[0].toogleMenu">
-						<template v-for="(item,index) in $store.state.menus.list[0].menuList">
-							<el-submenu v-if="item.menu_name != '首页'" :index="index+''">
-								<template slot="title">
-									<el-tooltip effect="dark" :disabled="!$store.state.menus.list[0].toogleMenu" :content="item.menu_name" placement="right">
-										<div class="tipbox">
-											<img :src="formatSrc('menu_' + item.id)" style="width:50%"/>
-										</div>
-									</el-tooltip>
-									<span>{{item.menu_name}}</span>
-								</template>
-								<el-menu-item @click="getRouter(child.href)" :class="{ 'is-active': checkActive('/' + child.href) }" v-for="(child,index) in item.childMenus" :index="'/' + child.href" :key="index">
-									<el-tooltip :disabled="!$store.state.menus.list[0].toogleMenu" effect="dark" :content="child.menu_name" placement="right">
-										<div class="tipbox">
-											<!--<img :src="formatSrc('menu_' + child.id)" />-->
-										</div>
-									</el-tooltip>
-									<span>{{child.menu_name}}</span>
-								</el-menu-item>
-							</el-submenu>
-						</template>
-					</el-menu>
-				</aside>
-			</div>
-			<div :class="['right_content',{ 'toogleContent' : $store.state.menus.list[0].toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
-				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !$store.state.menus.list[0].toogleMenu }]" v-if="selectedApp">
-						<div @click.active="$store.state.menus.list[0].toogleMenu = !$store.state.menus.list[0].toogleMenu;" class="tipbox">
-							<img src="../../../src/assets/icon_close.png" v-if="$store.state.menus.list[0].toogleMenu"/>
-							<img src="../../../src/assets/icon_open.png" v-else/>
-						</div>
-					</div>
-					<div class="logos fl" v-else>
-						<img src="../../../src/assets/f-logo.png"style="width:120px;opacity: 1;margin: 0px 20px;display: inline-block;margin-top: 4px;cursor: pointer;" />
-					</div>
-					<img @click="logout" src="../../../src/assets/icon_switch.png" class="fr"/>
-					<el-dropdown trigger="click" class="fr">
-						<img class="el-dropdown-link" src="../../../src/assets/icon_setting.png"/>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item @click.native="handleForm()">修改密码</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
-					<img @click="" src="../../../src/assets/icon_bell.png" class="fr"/>
-					<!--<img @click="" src="../../src/assets/icon_search.png" class="fr"/>-->
-					<span class="userinfo-inner">{{$store.state.account.username}}</span>
-				</div>
+
+		<div class="layout-content">
+			<nav :toogleMenu="toogleMenu" :show="showLeftSide"></nav>
+			<div :class="['right_content',{ 'toogle-content' : toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
+				<c-header :selected = "selectedApp" :toogleMenu = "toogleMenu"></c-header>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
-						<!--<el-col :span="24" class="tabs-toogle">
-							<el-tabs v-model="editableTabsValue" @contextmenu.native.prevent="contextmenu" type="card" @tab-click="toogleTabs" @tab-remove="removeTab">
-								<el-tab-pane v-for="(item, index) in editableTabs" :closable="item.title !== '首页'" :key="index" :label="item.title" :name="item.name">
-								</el-tab-pane>
-							</el-tabs>
-						</el-col>-->
 						<el-col :span="24" class="breadcrumb-container">
-							<!--<img src="" @click="refresh" alt="refresh" width="24" height="24" class="refresh" />-->
 							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="selectedApp">
-								<el-breadcrumb-item v-for="(item,index) in $route.matched" :key="index">
-									{{ item.name }}
+								<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
+									{{ item.tag }}
 								</el-breadcrumb-item>
 							</el-breadcrumb>
 						</el-col>
@@ -110,10 +53,14 @@
 				</el-carousel-item>
 			</el-carousel>
 		</el-dialog>
+		<reset-password></reset-password>
 	</el-row>
 </template>
 <script>
 /* eslint-disable */
+  import NavComponent from '../../components/NavComponent';
+	import HeaderComponent from '../../components/HeaderComponent';
+	import ResetPasswordComponent from '../../components/ResetPasswordComponent';
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
@@ -137,23 +84,27 @@
 					doPsd: [{required: true,message: '请输入确认密码',trigger: 'blur'},{validator: this.confirmPass,trigger: 'blur'}]
 				}
 			}
+				toogleMenu: false,
+			};
+		},
+		components: {
+			'nav': NavComponent,
+			'reset-password': ResetPasswordComponent,
+			'c-header': HeaderComponent
 		},
 		computed: {
-//			...mapGetters(['viewImgs', 'config']),
-//			handleLogo() {
-//				return this.config.logo || require('../../src/assets/bg.png')
-//			}
-		 showLeftSide() {
-			 return this.$route.path !== '/apps' && !!sessionStorage.getItem('appId');
-		 },
+			showLeftSide() {
+				return this.$route.path !== '/apps' && !!sessionStorage.getItem('appId');
+			},
      	selectedApp(){
-				if( this.$route.path  ){
-					return !!sessionStorage.getItem('appId') ;
-				}
+				return true;
 			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
 			},
+			includedComponents() {
+				return '';
+			}
 		},
 		watch: {
 //			'$route': 'fetchData',
@@ -167,195 +118,6 @@
 //			}
 		},
 		methods: {
-            goToIndex() {
-                this.$router.push('/index');
-			},
-			contextmenu(name) {
-				//				if(this.editableTabs.length < 3) return
-				//				this.$confirm('确认关闭其它标签吗？', '提示', {}).then(() => {
-				//					let title = name.target.innerText;
-				//					this.editableTabs = this.editableTabs.filter(tab => tab.title == title || tab.title == '首页')
-				//					let curName = this.editableTabs[1].name;
-				//					this.editableTabsValue = curName
-				//					this.$router.push(curName)
-				//				}).catch(()=>{
-				//
-				//				})
-			},
-			handleForm() {
-				this.formVisible = true
-				this.$nextTick(() => {
-					this.$refs.formFileds.resetFields()
-				})
-			},
-			getRouter(href) {
-				if(this.$route.path.substring(1).split('/')[0] == href) return
-				this.$router.push('/' + href)
-			},
-			formSubmit() {
-				this.$refs.formFileds.validate((valid) => {
-					if(valid) {
-						this.$confirm('确认提交吗？', '提示', {}).then(() => {
-							let para = Object.assign({}, this.formData);
-							this.bLoading = true
-							this.post(this.saveUrl.length == 2 ? this.saveUrl[this.saveType] : this.saveUrl[0], para, (data) => {
-								this.$message({
-									message: data.msg,
-									type: 'success'
-								})
-								this.formVisible = false
-							})
-						}).catch(() => {
-
-						})
-					}
-				})
-			},
-			removeTab(targetName) {
-				let tabs = this.editableTabs;
-				let activeName = this.editableTabsValue;
-				if(activeName === targetName) {
-					tabs.forEach((tab, index) => {
-						if(tab.name === targetName) {
-							let nextTab = tabs[index + 1] || tabs[index - 1];
-							if(nextTab) {
-								activeName = nextTab.name;
-								this.$router.push(activeName)
-							}
-						}
-					})
-				}
-				this.editableTabsValue = activeName
-				this.editableTabs = tabs.filter(tab => tab.name !== targetName)
-			},
-			checkActive(name) {
-				return this.editableTabs.some(item => item.name == name)
-			},
-			fetchData() {
-				var title = this.$route.name
-				var name = this.$route.path
-				if(name == '/reload') {
-					this.$router.go(-1)
-					return
-				}
-				if(name == '/largeScreen/html/index.html') {
-					window.open(this.root + '/largeScreen/html/index.html')
-					this.$router.go(-1)
-				} else {
-					let o = this.$route.path.substring(1).split('/');
-					this.$store.commit('setOA', o[0])
-					if(o.length > 1) {
-						title = this.$route.matched[1].name
-						name = this.$route.matched[1].path
-					}
-					this.editableTabsValue = name
-					let ar = this.includedComponents.split(',');
-					if(this.includedComponents.indexOf(name.substr(1)) == -1) {
-						ar.push(name.substr(1))
-						this.includedComponents = ar.toString()
-					}
-					if(!this.editableTabs.some(item => item.name == name)) {
-						this.editableTabs.push({
-							title: title,
-							name: name
-						})
-					}
-				}
-			},
-			toogleTabs(item) {
-				if('/' + this.$route.path.substring(1).split('/')[0] == item.name) return
-				this.$router.push(item.name)
-			},
-			getMenuList(user) {
-				let para = {
-					parent_id: 0
-				};
-				para=JSON.stringify(para)
-				this.post(this.menuListUrl, para, (data) => {
-					this.menuList = data.data.list
-					this.formatPermissions(data.data)
-				})
-			},
-			formatPermissions(list) {
-				var obj = new Object();
-				for(var i = 0; i < list.length; i++) {
-					if(list[i].childMenus) {
-						if(list[i].name == '首页') {
-							obj['index'] = list[i].childMenus
-						} else {
-							let child = list[i].childMenus;
-							for(var m = 0; m < child.length; m++) {
-								obj[child[m].href] = child[m].childMenus
-							}
-						}
-					}
-				}
-				this.$store.commit('setPermissions', obj)
-			},
-			//退出登录
-			async logout() {
-			    let self = this;
-				await this.$confirm('确认退出吗?', '提示', {
-					type: 'warning'
-				});
-
-				let result = await this.auth().logout();
-				if(result){
-					this.$router.push('/login')
-					sessionStorage.clear();
-					this.$message({ message: result.data.data, type: 'success' })
-				}
-			},
-			refresh() {
-				let name = this.$route.path;
-				let str = this.includedComponents;
-				if(name.split('/').length == 3) {
-					name = name.split('/')[2]
-					let time = new Date();
-					this.$store.commit('setRefresh', {
-						name: name,
-						time: time.getTime()
-					})
-
-				} else {
-					this.includedComponents = str.split(',').filter(item => item !== name.substr(1)).toString()
-					this.$router.push('/reload')
-				}
-			},
-			limitPsd(rule, value, callback) {
-				if(value === '') {
-					callback()
-					return
-				}
-				let regular = /^[a-zA-Z0-9]+$/;
-				if(!regular.test(value)) {
-					callback(new Error('只允许数字和字母'))
-				} else {
-					callback()
-				}
-			},
-			confirmPass(rule, value, callback) {
-				if(value === '') {
-					callback()
-					return
-				}
-				if(value !== this.formData.newPassword) {
-					callback(new Error('两次输入密码不一致'))
-				} else {
-					callback()
-				}
-			},
-			dialogClose() {
-				this.$store.commit('setViewImgs', '')
-			},
-			formatSrc(name, type = 'png') {
-				try {
-					return require('../../src/assets/' + name + '.' + type)
-				} catch(e) {
-//					console.log('缺少' + name + '.' + type)
-					return ''
-				}
-			}
 		},
 		created() {
 			console.log(this.$store.state.menus.list[0].menuList)
@@ -367,7 +129,6 @@
 			}
 		},
 		mounted() {
-//			this.$store.commit('setLoaded', true)
 		}
 	}
 </script>
@@ -379,20 +140,20 @@
 		width: 100%;
 		overflow: hidden;
 		}
-	.container .header .left_nav{
+	.container .loayout-content .left_nav{
 		width: 180px;
 		height:100vh;
 		float:left;
 		background: #001529;
 		color: rgba(255,255,255,0.65);
 	}
-	.container .toogleContent {
+	.container .toogle-content {
 	    left: 40px !important;
 	}
 	.container .toogleNav {
 	    width: 40px !important;
 	}
-	.container .header .right_content{
+	.container .loayout-content .right_content{
 		position: absolute;
 		right: 0px;
 		top: 0px;
@@ -400,37 +161,37 @@
 
 		overflow: hidden;
 	}
-	.container .header .right_content .contentHeader .menu-top{
+	.container .loayout-content .right_content .contentHeader .menu-top{
 		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
 	}
-	.container .header .right_content .contentHeader img{
+	.container .loayout-content .right_content .contentHeader img{
 		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
 	}
-	.container .header .right_content .contentHeader{
+	.container .loayout-content .right_content .contentHeader{
 		padding-right:20px;
 		padding-top:5px;
 		overflow: hidden;
 	}
-	.container .header .right_content .contentHeader .userinfo-inner{
+	.container .loayout-content .right_content .contentHeader .userinfo-inner{
 		 float: right;
     	line-height: 47px;
     	margin-right:10px;
 	}
 
-	.container .header .logo {
+	.container .loayout-content .logo {
 		height: 60px;
 		width:100%;
 		background: #00284d;
 		padding-top: 8px;
 	}
-	.container .header .left_nav .el-menu{
+	.container .loayout-content .left_nav .el-menu{
 		background: #000c17;
 		border:none !important
 	}
-	.container .header .left_nav .el-menu .el-submenu{
+	.container .loayout-content .left_nav .el-menu .el-submenu{
 		background:#001529 ;
 	}
-	.container .header .left_nav .el-menu .el-submenu .el-menu-item{
+	.container .loayout-content .left_nav .el-menu .el-submenu .el-menu-item{
 		padding:0;
 		min-width: 0px;
 		padding-left:10px !important;
@@ -439,25 +200,25 @@
 	.el-submenu .el-menu-item {
     height: 40px;
     line-height: 40px;}
-	.container .header .left_nav .el-menu .el-submenu .is-active{
+	.container .loayout-content .left_nav .el-menu .el-submenu .is-active{
 		background:#409EFF;
 		color:rgba(255,255,255,1);
 	}
-	.container .header .left_nav .el-menu .el-submenu .el-submenu__title:hover {
+	.container .loayout-content .left_nav .el-menu .el-submenu .el-submenu__title:hover {
     	background: #002243;
 		color: rgba(255,255,255,1);
 	}
-	.container .header .left_nav .el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
+	.container .loayout-content .left_nav .el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
 		background: #002243;
 		color: rgba(255,255,255,1);
 	}
-	.container .header .left_nav .el-menu .el-submenu div span{
+	.container .loayout-content .left_nav .el-menu .el-submenu div span{
 		color: rgba(255,255,255,0.65);
 	}
-	.container .header .logo img{
+	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
-	.container .header .right_content .contentHeader{
+	.container .loayout-content .right_content .contentHeader{
 		height:60px;
 		border-bottom: 1px solid #e9e9e9;
 		background-color: #fff;
@@ -465,7 +226,7 @@
 	.el-menu--collapse {
 	    width: 40px;
 	}
-	.container .header .right_content .el-breadcrumb {
+	.container .loayout-content .right_content .el-breadcrumb {
 	    font-size: 14px;
 	    line-height: 1;
 	    height: 40px;
