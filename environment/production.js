@@ -1,10 +1,10 @@
 export default {
 	gateways: {
-		authApi: 'http://api.auth.kingdomcloud.cn',
-		adminApi: 'http://api.admin.kingdomcloud.cn',
-		imageHost: 'http://image.kingdomcloud.cn',
-		webHost: 'http://kingdomcloud.cn',
-		adminHost: 'http://admin.kingdomcloud.cn'
+		authApi: 'http://api.auth.pinehub.cn',
+		adminApi: 'http://api.admin.pinehub.cn',
+		imageHost: 'http://image.pinehub.cn',
+		webHost: 'http://pinehub.cn',
+		adminHost: 'http://admin.pinehub.cn'
 	}
 	http: {
 		headers: {
