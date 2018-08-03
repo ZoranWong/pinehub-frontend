@@ -11,10 +11,19 @@ export default class Menus extends Model {
           title: '',
           icon: '',
           path: '',
-          params: '',
-          children: []
+          children: [
+            {
+              title: '',
+              icon: '',
+              path: '',
+            }
+          ]
         }
       ]
+    };
+  }
+  computed() {
+    return {
     };
   }
 }
