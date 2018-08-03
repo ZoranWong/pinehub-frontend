@@ -1,41 +1,9 @@
 <template>
     <div id="login">
 		<div class="login-container">
-			<!--<div class="login-bg">
-				<img class="logo" src="../../../src/assets/bg.png"/>
-			</div>-->
 			<transition name="fade">
-				<el-form :model="ruleForm2" v-if="login" key="login" :rules="rules2" ref="ruleForm2" label-width="0px" class="login-box">
-					<el-form-item prop="none">
-						<img class="logo" src="../../../src/assets/logo.svg" alt="" style="width:50%;margin:0 auto;display:block"/>
-						<p style="text-align: center;font-size: 18px;font-weight: bold;">PINEHUB管理系统</p>
-					</el-form-item>
-					<el-form-item prop="name">
-						<el-input type="text" v-model="ruleForm2.name" placeholder="请输入手机号码"></el-input>
-					</el-form-item>
-					<el-form-item prop="password">
-						<el-input type="password" @keyup.native.enter="handleSubmit2" v-model="ruleForm2.password" placeholder="请输入密码" :disabled="!Boolean(ruleForm2.name)"></el-input>
-					</el-form-item>
-					<el-checkbox v-model="checked" class="remember">记住密码</el-checkbox>
-					<!--<span class="forpsd" @click="forpsd">忘记密码？</span>-->
-					<el-form-item>
-						<el-button type="primary" style="width:100%;" @click="handleSubmit2" size="small">登录</el-button>
-					</el-form-item>
-				</el-form>
-				<el-form :model="ruleForm3" v-else key="seek" :rules="rules3" ref="ruleForm3" label-width="0px" class="login-box">
-					<el-form-item prop="passport">
-						<el-input type="text" v-model="ruleForm3.passport" placeholder="请输入用户名"></el-input>
-					</el-form-item>
-					<el-form-item prop="phone">
-						<el-input v-model="ruleForm3.phone" placeholder="请输绑定的手机号"></el-input>
-					</el-form-item>
-					<el-form-item style="text-align: right;">
-						<span class="back-login" @click="login = true">返回登录</span>
-					</el-form-item>
-					<el-form-item>
-						<el-button type="primary" style="width:100%;" @click="seekpsd" size="small">找回密码</el-button>
-					</el-form-item>
-				</el-form>
+				<sign-in v-if="login" > </sign-in>
+        <seek-password v-else ></seek-password>
 			</transition>
 		</div>
 		<div class="login-ft">
@@ -45,102 +13,29 @@
 </template>
 <script>
 /* eslint-disable */
-    export default {
+import SignInComponent from '../../components/SignInComponent.vue';
+import SeekPasswordComponent from '../../components/SeekPasswordComponent.vue';
+export default {
 		name: 'login',
 		data() {
 			return {
-				ruleForm2: {
-					name: '',
-					password: ''
-				},
-				ruleForm3: {
-					passport: '',
-					phone: ''
-				},
-				rules2: {
-					name: [{
-						required: true,
-						message: '请输入用户名',
-						trigger: 'blur'
-					},{ validator: this.validateTel, trigger: 'blur' }],
-					password: [{
-						required: true,
-						message: '请输入密码',
-						trigger: 'blur'
-					},
-					{
-						validator: this.validatePsd,
-						trigger: 'blur'
-					}]
-				},
-				rules3: {
-					passport: [{
-						required: true,
-						message: '请输入用户名',
-						trigger: 'blur'
-					}],
-					phone: [{
-							required: true,
-							message: '请输绑定的手机号',
-							trigger: 'blur'
-						},
-						{
-							validator: this.validateTel,
-							trigger: 'blur'
-						}
-					]
-				},
-				checked: false,
 				login: true,
-				publicKey : ''
 			}
 		},
+    components: {
+      'sign-in': SignInComponent,
+      'seek-password': SeekPasswordComponent
+    },
 		computed: {
 		},
 		methods: {
-			async handleSubmit2() {
-				let self = this;
-				let valid = await this.$refs.ruleForm2.validate();
-				if(valid){
-					let data = await this.auth(self.publicKey).login(this.ruleForm2.name, this.ruleForm2.password);
-					//登录后页面逻辑
-					if(data){
-					    console.log(data)
-						this.token().setToken(data.token)
-						sessionStorage.setItem('user', data.user.data.mobile)
-						this.$router.push({
-								path: '/Apps'
-						})
-					}
-				}
-			},
-			seekpsd() {
-				this.$refs.ruleForm3.validate((valid) => {
-					if(valid) {
-//						this.bLoading = true
-						var para = this.ruleForm3;
-//						this.post('/admin/pass/forgot.do', para, (data) => {
-//							this.$message({
-//								message: '密码已发送至你手机上，请查看',
-//								type: 'success'
-//							})
-//						})
-					}
-				})
-			},
-			forpsd() {
-				this.login = false
-				this.ruleForm3.passport = this.ruleForm2.name
-				this.ruleForm3.phone = ''
-			},
-			async getkey(){
-				this.publicKey = await this.auth().getPublicKey();
-				console.log(this.publicKey)
-			}
 		},
 		created() {
       this.$application.$error('notFound','暂无数据');
-      console.log(this.$store.dispatch('order/nextPage'), this.$store);
+      console.log(this.$store.state.order.currentPage);
+      this.$store.dispatch('order/nextPage');
+      console.log('change page');
+      console.log(this.$store.state.order.currentPage);
 		}
     }
 </script>
