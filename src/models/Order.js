@@ -11,4 +11,27 @@ export default class Order extends Model{
       currentPage: 0
     };
   }
+  computed() {
+    return {
+      orderPage: (state) => (page) => {
+        return state.orders[page];
+      }
+    }
+  }
+
+  dispatchs() {
+    return {
+      nextPage(context) {
+        context.commit('nextPage');
+      }
+    }
+  }
+
+  listeners() {
+    return {
+      nextPage(state) {
+        state.currentPage ++;
+      }
+    }
+  }
 }
