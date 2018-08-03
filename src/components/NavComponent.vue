@@ -18,7 +18,7 @@ export default {
   name: 'NavComponent',
   components: {
     menus: MenusComponent
-  }
+  },
   props: {
     show: Boolean,
     toogleMenu: Boolean
