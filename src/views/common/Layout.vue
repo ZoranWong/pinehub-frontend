@@ -115,6 +115,7 @@
 
 <script>
 /* eslint-disable */
+	import data from '../../models/Menus'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
@@ -430,6 +431,7 @@
 			}
 		},
 		created() {
+			console.log(new data())
 			var user = sessionStorage.getItem('user');
 			if(user) {
 //				user = JSON.parse(user)
