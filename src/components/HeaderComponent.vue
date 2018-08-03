@@ -26,16 +26,16 @@ export default {
   props: {
     toogleMenu: Boolean,
     selected: Boolean
-  }
+  },
   data() {
     return {
     }
-  }
+  },
   computed:{
     username() {
 
     }
-  }
+  },
   methods: {
     handleForm() {
 

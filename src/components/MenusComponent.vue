@@ -29,12 +29,12 @@ export default {
     return {
       toogleMenu: false
     }
-  }
+  },
   computed:{
     menus() {
       return this.$store.state.menus.list;
     }
-  }
+  },
   methods: {
     routeTo(path) {
 
