@@ -23,67 +23,18 @@
 				</section>
 			</div>
 		</div>
-		<el-dialog :visible.sync="formVisible" :close-on-click-modal="false">
-			<el-tabs active-name="first">
-				<el-tab-pane :label="$store.state.account.username+'-修改密码'" name="first"></el-tab-pane>
-			</el-tabs>
-			<el-form :model="formData" :rules="formRules" ref="formFileds" label-width="120px">
-				<el-form-item label="旧密码" prop="oldPassword">
-					<el-input type="password" v-model="formData.oldPassword" :maxlength="20"></el-input>
-				</el-form-item>
-				<el-form-item label="新密码" prop="newPassword">
-					<el-input type="password" v-model="formData.newPassword" :maxlength="20"></el-input>
-				</el-form-item>
-				<el-form-item label="确认密码" prop="doPsd">
-					<el-input type="password" v-model="formData.doPsd" :maxlength="20"></el-input>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="formVisible = false" size="small">取 消</el-button>
-				<el-button type="primary" @click="formSubmit()" size="small">确 定</el-button>
-			</div>
-		</el-dialog>
-		<el-dialog :visible.sync="viewVisible" @close="dialogClose">
-			<el-tabs active-name="first">
-				<el-tab-pane label="图片预览" name="first"></el-tab-pane>
-			</el-tabs>
-			<el-carousel height="450px" :autoplay="false">
-				<el-carousel-item v-for="(item,index) in imgList" :key="index">
-					<img :src="item" />
-				</el-carousel-item>
-			</el-carousel>
-		</el-dialog>
 		<reset-password></reset-password>
 	</el-row>
 </template>
 <script>
 /* eslint-disable */
-  import NavComponent from '../../components/NavComponent';
+    import NavComponent from '../../components/NavComponent';
 	import HeaderComponent from '../../components/HeaderComponent';
 	import ResetPasswordComponent from '../../components/ResetPasswordComponent';
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
-				formVisible:false,
-				viewVisible: false,
-				imgList: [],
-			    includedComponents: 'Index',
-			    contentBox: {
-					height: document.documentElement.clientHeight - 158 + 'px',
-					width: '100%'
-				},
-				formData: {
-					oldPassword: '',
-					newPassword: '',
-					doPsd: ''
-				},
-				formRules: {
-					oldPassword: [{required: true,message: '请输入旧密码',trigger: 'blur'},{validator: this.limitPsd,trigger: 'blur'}],
-					newPassword: [{required: true,message: '请输入新密码',trigger: 'blur'},{validator: this.limitPsd,trigger: 'blur'}],
-					doPsd: [{required: true,message: '请输入确认密码',trigger: 'blur'},{validator: this.confirmPass,trigger: 'blur'}]
-				}
-			}
 				toogleMenu: false,
 			};
 		},
@@ -107,26 +58,10 @@
 			}
 		},
 		watch: {
-//			'$route': 'fetchData',
-//			viewImgs(str) {
-//				if(!str) return
-//				this.viewVisible = true
-//				this.imgList = str.split(',')
-//			},
-//			editableTabs(tabs) {
-//				this.includedComponents = tabs.map(item => item.name.substr(1)).toString()
-//			}
 		},
 		methods: {
 		},
 		created() {
-			console.log(this.$store.state.menus.list[0].menuList)
-			var user = sessionStorage.getItem('user');
-			if(user) {
-//				user = JSON.parse(user)
-				this.$store.state.account.username = user || ''
-//				this.getMenuList(user)
-			}
 		},
 		mounted() {
 		}
