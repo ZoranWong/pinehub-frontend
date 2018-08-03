@@ -1,19 +1,19 @@
 <template>
 	<el-row class="container">
 		<div class="header">
-			<div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="showLeftSide">
+			<div class="left_nav" :class="{ 'toogleNav': $store.state.menus.list[0].toogleMenu}" v-if="showLeftSide">
 				<div class="logo" >
 					<router-link to="/apps">
-						<img src="../../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
+						<img src="../../../src/assets/logo_scale.png" v-if="$store.state.menus.list[0].toogleMenu" style="width:70%;margin-top:5px"/>
 						<img src="../../../src/assets/logo_white.svg" v-else/>
 					</router-link>
 				</div>
 				<aside>
-					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
-						<template v-for="(item,index) in menuList">
+					<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="$store.state.menus.list[0].toogleMenu">
+						<template v-for="(item,index) in $store.state.menus.list[0].menuList">
 							<el-submenu v-if="item.menu_name != '首页'" :index="index+''">
 								<template slot="title">
-									<el-tooltip effect="dark" :disabled="!toogleMenu" :content="item.menu_name" placement="right">
+									<el-tooltip effect="dark" :disabled="!$store.state.menus.list[0].toogleMenu" :content="item.menu_name" placement="right">
 										<div class="tipbox">
 											<img :src="formatSrc('menu_' + item.id)" style="width:50%"/>
 										</div>
@@ -21,7 +21,7 @@
 									<span>{{item.menu_name}}</span>
 								</template>
 								<el-menu-item @click="getRouter(child.href)" :class="{ 'is-active': checkActive('/' + child.href) }" v-for="(child,index) in item.childMenus" :index="'/' + child.href" :key="index">
-									<el-tooltip :disabled="!toogleMenu" effect="dark" :content="child.menu_name" placement="right">
+									<el-tooltip :disabled="!$store.state.menus.list[0].toogleMenu" effect="dark" :content="child.menu_name" placement="right">
 										<div class="tipbox">
 											<!--<img :src="formatSrc('menu_' + child.id)" />-->
 										</div>
@@ -33,11 +33,11 @@
 					</el-menu>
 				</aside>
 			</div>
-			<div :class="['right_content',{ 'toogleContent' : toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
+			<div :class="['right_content',{ 'toogleContent' : $store.state.menus.list[0].toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
 				<div class="contentHeader">
-					<div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="selectedApp">
-						<div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
-							<img src="../../../src/assets/icon_close.png" v-if="toogleMenu"/>
+					<div :class="['menu-top',{ 'txt-center' : !$store.state.menus.list[0].toogleMenu }]" v-if="selectedApp">
+						<div @click.active="$store.state.menus.list[0].toogleMenu = !$store.state.menus.list[0].toogleMenu;" class="tipbox">
+							<img src="../../../src/assets/icon_close.png" v-if="$store.state.menus.list[0].toogleMenu"/>
 							<img src="../../../src/assets/icon_open.png" v-else/>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 					</el-dropdown>
 					<img @click="" src="../../../src/assets/icon_bell.png" class="fr"/>
 					<!--<img @click="" src="../../src/assets/icon_search.png" class="fr"/>-->
-					<span class="userinfo-inner">{{sysUserName}}</span>
+					<span class="userinfo-inner">{{$store.state.account.username}}</span>
 				</div>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
@@ -82,7 +82,7 @@
 		</div>
 		<el-dialog :visible.sync="formVisible" :close-on-click-modal="false">
 			<el-tabs active-name="first">
-				<el-tab-pane :label="sysUserName+'-修改密码'" name="first"></el-tab-pane>
+				<el-tab-pane :label="$store.state.account.username+'-修改密码'" name="first"></el-tab-pane>
 			</el-tabs>
 			<el-form :model="formData" :rules="formRules" ref="formFileds" label-width="120px">
 				<el-form-item label="旧密码" prop="oldPassword">
@@ -112,57 +112,17 @@
 		</el-dialog>
 	</el-row>
 </template>
-
 <script>
 /* eslint-disable */
-//	import data from '../../models/Menus'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
-			    index: '#/index',
-				sysUserName: '',
-				sysUserAvatar: '',
 				formVisible:false,
-				menuListUrl: '/xwmin/index.php/Bckome/index.html',
-				saveUrl: ['/admin/system/sysUser/modifyPwd.do'],
-				menuList: [
-//					{childMenus:[
-//						{href:"fxy",id:"0",menu_name:"分析页",parent_id:"0"},
-//						{href:"jky",id:"0",menu_name:"监控页",parent_id:"0"}
-//					],href:"sy",id:"0",menu_name:"首页数据",parent_id:"0"},
-					{childMenus:[
-						{href:"wechatManage",id:"0",menu_name:"公众号信息",parent_id:"0"}
-					],href:"wechat",id:"1",menu_name:"微信管理",parent_id:"1"},
-					{childMenus:[
-						{href:"ccgl",id:"0",menu_name:"店铺管理",parent_id:"0"},
-						{href:"ddgl",id:"0",menu_name:"订单管理",parent_id:"0"}
-					],href:"zcc",id:"1",menu_name:"店铺管理",parent_id:"1"},
-					{childMenus:[
-						{href:"spgl",id:"0",menu_name:"商品管理",parent_id:"0"},
-						{href:"plgl",id:"0",menu_name:"品类管理",parent_id:"0"}
-					],href:"sc",id:"2",menu_name:"商品管理",parent_id:"2"},
-					{childMenus:[
-						{href:"yhq",id:"0",menu_name:"优惠券",parent_id:"0"}
-					],href:"kqxt",id:"3",menu_name:"卡券管理",parent_id:"3"},
-					{childMenus:[
-						{href:"hygl",id:"0",menu_name:"会员管理",parent_id:"0"},
-						{href:"khgl",id:"0",menu_name:"客户管理",parent_id:"0"},
-						{href:"jfgl",id:"0",menu_name:"积分管理",parent_id:"0"},
-						{href:"hyk",id:"0",menu_name:"会员卡",parent_id:"0"}
-					],href:"yhtj",id:"4",menu_name:"用户统计",parent_id:"4"},
-					{childMenus:[
-						{href:"zfyl",id:"0",menu_name:"支付有礼",parent_id:"0"},
-						{href:"mjs",id:"0",menu_name:"满减/送",parent_id:"0"}
-					],href:"yhtj",id:"4",menu_name:"营销",parent_id:"5"}
-				],
-				imgList: [],
-				toogleMenu: false,
 				viewVisible: false,
-				navHeight: {
-					height: document.documentElement.clientHeight - 50 + 'px'
-				},
-				contentBox: {
+				imgList: [],
+			    includedComponents: 'Index',
+			    contentBox: {
 					height: document.documentElement.clientHeight - 158 + 'px',
 					width: '100%'
 				},
@@ -172,43 +132,10 @@
 					doPsd: ''
 				},
 				formRules: {
-					oldPassword: [{
-							required: true,
-							message: '请输入旧密码',
-							trigger: 'blur'
-						},
-						{
-							validator: this.limitPsd,
-							trigger: 'blur'
-						}
-					],
-					newPassword: [{
-							required: true,
-							message: '请输入新密码',
-							trigger: 'blur'
-						},
-						{
-							validator: this.limitPsd,
-							trigger: 'blur'
-						}
-					],
-					doPsd: [{
-							required: true,
-							message: '请输入确认密码',
-							trigger: 'blur'
-						},
-						{
-							validator: this.confirmPass,
-							trigger: 'blur'
-						}
-					]
-				},
-				editableTabsValue: '/index',
-				editableTabs: [{
-					title: '首页',
-					name: '/index'
-				}],
-				includedComponents: 'Index'
+					oldPassword: [{required: true,message: '请输入旧密码',trigger: 'blur'},{validator: this.limitPsd,trigger: 'blur'}],
+					newPassword: [{required: true,message: '请输入新密码',trigger: 'blur'},{validator: this.limitPsd,trigger: 'blur'}],
+					doPsd: [{required: true,message: '请输入确认密码',trigger: 'blur'},{validator: this.confirmPass,trigger: 'blur'}]
+				}
 			}
 		},
 		computed: {
@@ -235,9 +162,9 @@
 //				this.viewVisible = true
 //				this.imgList = str.split(',')
 //			},
-			editableTabs(tabs) {
-				this.includedComponents = tabs.map(item => item.name.substr(1)).toString()
-			}
+//			editableTabs(tabs) {
+//				this.includedComponents = tabs.map(item => item.name.substr(1)).toString()
+//			}
 		},
 		methods: {
             goToIndex() {
@@ -431,12 +358,11 @@
 			}
 		},
 		created() {
-			console.log(this.$store._modulesNamespaceMap)
-			console.log(this.$store._modulesNamespaceMap.$menus)
+			console.log(this.$store.state.menus.list[0].menuList)
 			var user = sessionStorage.getItem('user');
 			if(user) {
 //				user = JSON.parse(user)
-				this.sysUserName = user || ''
+				this.$store.state.account.username = user || ''
 //				this.getMenuList(user)
 			}
 		},
@@ -445,7 +371,6 @@
 		}
 	}
 </script>
-
 <style>
 	.container {
 		position: absolute;

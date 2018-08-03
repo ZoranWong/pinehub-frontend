@@ -68,9 +68,9 @@
 </template>
 
 <script>
-	import QRCode from 'qrcodejs2'
-	import MainService from '../services/MainService';
-	import TokenService from '../services/TokenService';
+//	import QRCode from 'qrcodejs2'
+//	import MainService from '../services/MainService';
+//	import TokenService from '../services/TokenService';
 //	import IEcharts from 'vue-echarts-v3'
 	import { mapGetters } from 'vuex'
 	export default {

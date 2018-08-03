@@ -1,6 +1,7 @@
 // import account from './AccountRoute';
 import signIn from './SignInRoute';
 import layout from './LayoutRoute';
+import apps from './AppsRoute';
 //公众号管理
 import wechat from './WechatRoute';
 //营销管理

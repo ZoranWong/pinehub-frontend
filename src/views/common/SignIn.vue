@@ -3,7 +3,7 @@
 		<div class="login-container">
 			<transition name="fade">
 				<sign-in v-if="login" > </sign-in>
-        <seek-password v-else ></seek-password>
+        		<seek-password v-else ></seek-password>
 			</transition>
 		</div>
 		<div class="login-ft">
@@ -22,10 +22,10 @@ export default {
 				login: true,
 			}
 		},
-    components: {
-      'sign-in': SignInComponent,
-      'seek-password': SeekPasswordComponent
-    },
+	    components: {
+	      'sign-in': SignInComponent,
+	      'seek-password': SeekPasswordComponent
+	    },
 		computed: {
 		},
 		methods: {
