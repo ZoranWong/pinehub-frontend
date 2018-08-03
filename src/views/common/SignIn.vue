@@ -139,7 +139,8 @@
 			}
 		},
 		created() {
-      		this.$application.$error('notFound','暂无数据');
+      this.$application.$error('notFound','暂无数据');
+      console.log(this.$store.dispatch('order/nextPage'), this.$store);
 		}
     }
 </script>
