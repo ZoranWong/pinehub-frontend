@@ -4,8 +4,8 @@ export default class ExceptionHandler {
     this.exceptionHandler = exceptionHandler;
   }
   handle( message, type) {
-    message = !!message ? message : this.message;
-    type = !!type ? type : this.type;
+    message = typeof message !== 'undefined' ? message : this.message;
+    type = typeof type !== 'undefined' ? type : this.type;
     this.exceptionHandler({message: message,type: type});
   }
 }

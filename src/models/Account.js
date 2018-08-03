@@ -11,4 +11,11 @@ export default class Account extends Model{
       expiresAt: null
     };
   }
+  computed() {
+    return {
+      logined(state) {
+        return state.username;
+      }
+    };
+  }
 }
