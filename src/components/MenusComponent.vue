@@ -5,18 +5,18 @@
         <template slot="title">
           <el-tooltip effect="dark" :disabled="!toogleMenu" :content="menu.title" placement="right">
             <div class="tipbox">
-              <i class="menu.icon" v-v-if="menu.icon"></i>
+              <i :class="menu.icon" v-if="menu.icon"></i>
             </div>
           </el-tooltip>
           <span>{{ menu.title }}</span>
         </template>
-        <el-menu-item @click="routeTo( child.path )" :class="{ 'is-active': checkActive('/' + child.path) }"   v-for="(child, index) in menu.children" :index="'/' + child.path" :key="index">
+        <el-menu-item @click="routeTo( child.path )" :class="{ 'is-active': checkActive('/' + child.path) }" v-for="(child, index) in menu.children" :index="'/' + child.path" :key="index">
           <el-tooltip :disabled="!toogleMenu" effect="dark" :content="child.title" placement="right">
             <div class="tipbox">
-              <i class="child.icon" v-if="child.icon"></i>
+              <i :class="child.icon" v-if="child.icon"></i>
             </div>
           </el-tooltip>
-          <span>{{child.name}}</span>
+          <span>{{child.title}}</span>
         </el-menu-item>
       </el-submenu>
     </template>
@@ -25,20 +25,102 @@
 <script>
 export default {
   name: 'MenusComponent',
+  props: {
+    toogleMenu: Boolean
+  },
   data() {
     return {
-      toogleMenu: false
+//    toogleMenu: false
     }
   },
   computed:{
     menus() {
+    	console.log(this.$store.state.menus.list)
       return this.$store.state.menus.list;
     }
   },
   methods: {
     routeTo(path) {
 
+    },
+    checkActive(){
+    	
     }
   }
 }
 </script>
+<style scoped>
+	.toogle-content {
+	    left: 40px !important;
+	}
+	.toogleNav {
+	    width: 40px !important;
+	}
+	.el-submenu .el-menu-item {
+    height: 40px;
+    line-height: 40px;
+  }
+	.el-menu--collapse {
+	    width: 40px;
+	}
+	.el-breadcrumb {
+	    font-size: 14px;
+	    line-height: 1;
+	    height: 40px;
+	    line-height: 40px;
+	    background: #fff;
+	    padding-left:10px;
+	    border-bottom: 1px solid #e9e9e9;
+	}
+	.el-submenu__title{
+		padding:0 !important
+	}
+	.el-dropdown{
+		float:right
+	}
+</style>
+<style>
+	.el-menu .el-submenu .el-menu-item,.el-submenu__title{
+		padding:0;
+		min-width: 0px;
+		padding-left:10px !important;
+		color: rgba(255,255,255,0.65);
+	}
+	.el-submenu .el-menu-item {
+    height: 40px;
+    line-height: 40px;}
+	.el-menu .el-submenu .is-active{
+		background:#409EFF;
+		color:rgba(255,255,255,1);
+	}
+	.el-menu .el-submenu .el-submenu__title:hover {
+    	background: #666;
+		color: rgba(255,255,255,1);
+	}
+	.el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
+		background: #666 !important;
+		color: rgba(255,255,255,1);
+	}
+	.el-menu .el-submenu div span{
+		color: rgba(255,255,255,0.65);
+	}
+	.el-menu{
+		background: #444 !important;
+		border:none !important;
+	}
+	aside .tipbox {
+		width: 40px;
+		height: 40px;
+		line-height: 38px;
+		display: inline-block;
+		text-align: center;
+		cursor: pointer;
+	}
+	.el-menu .el-submenu .is-active{
+		background: #888 !important;
+	}
+	.el-submenu__title{
+					padding:0 !important
+				}
+				.el-menu--popup{background: #fff !important;border-radius: 5px !important;}
+</style>

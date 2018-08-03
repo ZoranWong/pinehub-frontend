@@ -7,7 +7,7 @@ export default class Menus extends Model {
     return {
       list:[{
 	      title: '微信管理',
-	      icon: '',
+	      icon: 'fa fa-weixin',
 	      path: 'wechat',
 	      children: [{
           title: '公众号信息',
@@ -16,7 +16,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '店铺管理',
-	      icon: '',
+	      icon: 'fa fa-building',
 	      path: 'shops',
 	      children: [{
           title: '早餐车管理',
@@ -25,7 +25,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '营销管理',
-	      icon: '',
+	      icon: 'fa fa-th-large',
 	      path: 'marketing',
 	      children: [{
           title: '满减/送',
@@ -38,7 +38,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '商品管理',
-	      icon: '',
+	      icon: 'fa fa-tag',
 	      path: 'merchandises',
 	      children: [{
           title: '商品管理',
@@ -47,7 +47,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '订单管理',
-	      icon: '',
+	      icon: 'fa fa-file-text',
 	      path: 'orders',
 	      children: [{
           title: '订单管理',
@@ -56,7 +56,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '优惠券管理',
-	      icon: '',
+	      icon: 'fa fa-ticket',
 	      path: 'tickets',
 	      children: [{
           title: '优惠券',
@@ -65,7 +65,7 @@ export default class Menus extends Model {
 	      }]
       },{
 	      title: '用户管理',
-	      icon: '',
+	      icon: 'fa fa-users',
 	      path: 'users',
 	      children: [{
           title: '客户管理',

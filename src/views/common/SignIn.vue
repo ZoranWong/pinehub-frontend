@@ -44,7 +44,7 @@ export default {
 		height: 100%;
 		padding-top:10%;
 		position: relative;
-		background-color: #35424D;
+		background-color: #444;
 	}
 	#login .login-ft{
 		width: 100%;

@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <aside>
-      <menus></menus>
+      <menus :toogleMenu="toogleMenu"></menus>
     </aside>
   </div>
 </template>
@@ -25,7 +25,42 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+	.left_nav{
+		width: 180px;
+		height:100vh;
+		float:left;
+		background: #444;
+		color: rgba(255,255,255,0.65);
+	}
+	.left_nav .el-menu{
+		background: #000c17;
+		border:none !important
+	}
+	.left_nav .el-menu .el-submenu{
+		background:#001529 ;
+	}
+	.left_nav .el-menu .el-submenu .el-menu-item{
+		padding:0;
+		min-width: 0px;
+		padding-left:10px !important;
+		color: rgba(255,255,255,0.65);
+	}
+	
+	.left_nav .el-menu .el-submenu .is-active{
+		background:#409EFF;
+		color:rgba(255,255,255,1);
+	}
+	.left_nav .el-menu .el-submenu .el-submenu__title:hover {
+    	background: #002243;
+		color: rgba(255,255,255,1);
+	}
+	.left_nav .el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
+		background: #002243;
+		color: rgba(255,255,255,1);
+	}
+	.left_nav .el-menu .el-submenu div span{
+		color: rgba(255,255,255,0.65);
+	}
 </style>
+
