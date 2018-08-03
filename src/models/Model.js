@@ -21,6 +21,10 @@ export default class Model {
   }
 
   listeners() {
-    
+
+  }
+
+  services(name) {
+    return this.$application.instances[name];
   }
 }

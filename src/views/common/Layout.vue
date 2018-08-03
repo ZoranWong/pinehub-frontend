@@ -1,6 +1,5 @@
 <template>
 	<el-row class="container">
-
 		<div class="layout-content">
 			<nav :toogleMenu="toogleMenu" :show="showLeftSide"></nav>
 			<div :class="['right_content',{ 'toogle-content' : toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
@@ -36,6 +35,10 @@
 		data() {
 			return {
 				toogleMenu: false,
+				contentBox: {
+					height: document.documentElement.clientHeight - 158 + 'px',
+					width: '100%'
+				},
 			};
 		},
 		components: {
