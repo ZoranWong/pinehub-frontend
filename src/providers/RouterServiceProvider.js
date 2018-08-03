@@ -21,7 +21,15 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    console.log(this.app.instances.store.getters['account/logined']);
+    if(this.app.instances.store.getters['account/logined']) {
+      if(to.name !== 'sign-in'){
+        next();
+      }else{
+        next(from.path);
+      }
+    }else if(to.name !== 'sign-in'){
+      next('/signIn');
+    }
     next();
   }
 }
