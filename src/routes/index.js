@@ -1,5 +1,7 @@
 // import account from './AccountRoute';
 import signIn from './SignInRoute';
+import layout from './LayoutRoute';
+import apps from './AppsRoute';
 //公众号管理
 import wechat from './WechatRoute';
 //营销管理
@@ -18,6 +20,7 @@ import users from './UsersRoute';
 let routes = [];
 // routes.push(account);
 routes.push(signIn);
+routes.push(layout);
 routes.push(marketing);
 routes.push(wechat);
 

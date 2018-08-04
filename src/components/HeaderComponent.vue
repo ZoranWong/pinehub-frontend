@@ -1,7 +1,7 @@
 <template>
   <div class="contentHeader">
     <div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="selected">
-      <div @click.active="toogleMenu = !toogleMenu;" class="tipbox">
+      <div @click.active="changeToogleMenu" class="tipbox">
         <img src="../../src/assets/icon_close.png" v-if="toogleMenu"/>
         <img src="../../src/assets/icon_open.png" v-else/>
       </div>
@@ -23,10 +23,10 @@
 <script>
 export default {
   name: 'HeaderComponent',
-  props: {
-    toogleMenu: Boolean,
-    selected: Boolean
-  },
+  props: [
+    'toogleMenu',
+    'selected',
+  ],
   data() {
     return {
     }
@@ -37,9 +37,33 @@ export default {
     }
   },
   methods: {
+  	logout(){
+  		
+  	},
     handleForm() {
 
+    },
+    changeToogleMenu(){
+      	this.$emit('toogle');
     }
   }
 }
 </script>
+<style scoped>
+	.contentHeader .menu-top{
+		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
+	}
+	 .contentHeader img{
+		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
+	}
+	.contentHeader{
+		padding-right:20px;
+		padding-top:5px;
+		overflow: hidden;
+	}
+	.contentHeader .userinfo-inner{
+		 float: right;
+    	line-height: 47px;
+    	margin-right:10px;
+	}
+</style>

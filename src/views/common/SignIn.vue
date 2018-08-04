@@ -3,7 +3,7 @@
 		<div class="login-container">
 			<transition name="fade">
 				<sign-in v-if="login" > </sign-in>
-        <seek-password v-else ></seek-password>
+        		<seek-password v-else ></seek-password>
 			</transition>
 		</div>
 		<div class="login-footer">
@@ -22,10 +22,10 @@ export default {
 				login: true,
 			}
 		},
-    components: {
-      'sign-in': SignInComponent,
-      'seek-password': SeekPasswordComponent
-    },
+	    components: {
+	      'sign-in': SignInComponent,
+	      'seek-password': SeekPasswordComponent
+	    },
 		computed: {
 		},
 		methods: {
@@ -44,7 +44,7 @@ export default {
 		height: 100%;
 		padding-top:10%;
 		position: relative;
-		background-color: #35424D;
+		background-color: #444;
 	}
 	#login .login-footer{
 		width: 100%;
