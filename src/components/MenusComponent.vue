@@ -23,6 +23,7 @@
   </el-menu>
 </template>
 <script>
+import _ from 'underscore.string';
 export default {
   name: 'MenusComponent',
   props: {
@@ -35,17 +36,16 @@ export default {
   },
   computed:{
     menus() {
-    	console.log(this.$store.state.menus.list)
       return this.$store.state.menus.list;
     }
   },
   methods: {
-    routeTo(href) {
-			if(this.$route.path.substring(1).split('/')[0] == href) return
-				this.$router.push('/' + href)
+
+    routeTo(path) {
+      path = '/' + _.strip(path, '/');
+      this.command('redirect', {path: path});
     },
     checkActive(){
-    	
     }
   }
 }

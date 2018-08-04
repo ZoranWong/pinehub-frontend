@@ -235,7 +235,7 @@ hr {
 }
 .el-table {
     border: 1px solid #dfe6ec !important;
-    border-bottom:none;
+    border-bottom:none !important;
     }
     .el-table thead{
     	color:#161616;

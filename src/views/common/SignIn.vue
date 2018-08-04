@@ -3,10 +3,10 @@
 		<div class="login-container">
 			<transition name="fade">
 				<sign-in v-if="login" > </sign-in>
-        		<seek-password v-else ></seek-password>
+        <seek-password v-else ></seek-password>
 			</transition>
 		</div>
-		<div class="login-ft">
+		<div class="login-footer">
 			<p class="subtitle">京抖云网络技术有限公司 版权所有</p>
 		</div>
 	</div>
@@ -22,10 +22,10 @@ export default {
 				login: true,
 			}
 		},
-	    components: {
-	      'sign-in': SignInComponent,
-	      'seek-password': SeekPasswordComponent
-	    },
+    components: {
+      'sign-in': SignInComponent,
+      'seek-password': SeekPasswordComponent
+    },
 		computed: {
 		},
 		methods: {
@@ -44,9 +44,9 @@ export default {
 		height: 100%;
 		padding-top:10%;
 		position: relative;
-		background-color: #444;
+		background-color: #35424D;
 	}
-	#login .login-ft{
+	#login .login-footer{
 		width: 100%;
 		height: 10%;
 		position: absolute;
@@ -56,12 +56,12 @@ export default {
 		align-items: center;
 		flex-direction: column;
 	}
-	#login .login-ft .title{
+	#login .login-footer .title{
 		text-align: center;
 		color: #FFFFFF;
 		font-size: 10px;
 	}
-	#login .login-ft .subtitle{
+	#login .login-footer .subtitle{
 		text-align: center;
 		color: #FFFFFF;
 		font-size: 10px;

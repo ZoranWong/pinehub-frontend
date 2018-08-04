@@ -9,13 +9,13 @@
 						<el-col :span="24" class="breadcrumb-container">
 							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="selectedApp">
 								<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
-									{{ item.tag }}
+									{{ item.path }}
 								</el-breadcrumb-item>
 							</el-breadcrumb>
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
 							<keep-alive :include="includedComponents">
-								<router-view :style="contentBox"></router-view>
+								<router-view class = "page-content" :style="pageContentStyle"></router-view>
 							</keep-alive>
 						</el-col>
 					</div>
@@ -35,8 +35,8 @@
 		data() {
 			return {
 				toogleMenu: false,
-				contentBox: {
-					height: document.documentElement.clientHeight - 158 + 'px',
+				pageContentStyle: {
+					height: document.documentElement.clientHeight - 15 + 'px',
 					width: '100%'
 				},
 			};
@@ -50,11 +50,14 @@
 			showLeftSide() {
 				return true
 			},
-     		selectedApp(){
+     	selectedApp(){
 				return true;
 			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
+			},
+			pageContentHeight() {
+				return document.documentElement.clientHeight - 158;
 			},
 			includedComponents() {
 				return 'Index';
@@ -68,7 +71,7 @@
 			}
 		},
 		created() {
-			
+			console.log(this.$route.matched)
 		},
 		mounted() {
 			
@@ -83,7 +86,7 @@
 		width: 100%;
 		overflow: hidden;
 		}
-	
+
 	.container .toogle-content {
 	    left: 40px !important;
 	}
@@ -97,7 +100,7 @@
 		bottom: 0px;
 		overflow: hidden;
 	}
-	.right_content .contentHeader .userinfo-inner{
+	.right_content .contentHeader .userinfo-inner{f
 		 float: right;
     	line-height: 47px;
     	margin-right:10px;
@@ -117,7 +120,7 @@
 	.el-submenu .el-menu-item {
     height: 40px;
     line-height: 40px;}
-	
+
 	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
