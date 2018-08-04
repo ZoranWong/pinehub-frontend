@@ -23,7 +23,7 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    if(this.app.instances.store.getters['account/logined']) {
+    if(this.app.instances.storeInstance.getters['account/logined']) {
       if(to.name !== 'sign-in'){
         next();
       }else{
