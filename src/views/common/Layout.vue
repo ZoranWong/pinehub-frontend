@@ -15,7 +15,7 @@
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
 							<keep-alive :include="includedComponents">
-								<router-view :style="contentBox"></router-view>
+								<router-view class = "page-content" :style="pageContentStyle"></router-view>
 							</keep-alive>
 						</el-col>
 					</div>
@@ -35,8 +35,8 @@
 		data() {
 			return {
 				toogleMenu: false,
-				contentBox: {
-					height: document.documentElement.clientHeight - 158 + 'px',
+				pageContentStyle: {
+					height: document.documentElement.clientHeight - 15 + 'px',
 					width: '100%'
 				},
 			};
@@ -50,11 +50,14 @@
 			showLeftSide() {
 				return true
 			},
-     		selectedApp(){
+     	selectedApp(){
 				return true;
 			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
+			},
+			pageContentHeight() {
+				return document.documentElement.clientHeight - 158;
 			},
 			includedComponents() {
 				return '';
@@ -68,7 +71,7 @@
 			}
 		},
 		created() {
-			
+
 		},
 		mounted() {
 		}
@@ -82,7 +85,7 @@
 		width: 100%;
 		overflow: hidden;
 		}
-	
+
 	.container .toogle-content {
 	    left: 40px !important;
 	}
@@ -96,7 +99,7 @@
 		bottom: 0px;
 		overflow: hidden;
 	}
-	
+
 	.container .loayout-content .right_content .contentHeader .userinfo-inner{
 		 float: right;
     	line-height: 47px;
@@ -109,11 +112,11 @@
 		background: #00284d;
 		padding-top: 8px;
 	}
-	
+
 	.el-submenu .el-menu-item {
     height: 40px;
     line-height: 40px;}
-	
+
 	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
@@ -139,7 +142,7 @@
 		background: #fff;
 		border-radius: 6px;
 	}
-	
+
 	.el-submenu__title{
 		padding:0 !important
 	}

@@ -23,6 +23,7 @@
   </el-menu>
 </template>
 <script>
+import _ from 'underscore.string';
 export default {
   name: 'MenusComponent',
   props: {
@@ -41,10 +42,10 @@ export default {
   },
   methods: {
     routeTo(path) {
-
+      path = '/' + _.strip(path, '/');
+      this.command('redirect', {path: path});
     },
     checkActive(){
-    	
     }
   }
 }
