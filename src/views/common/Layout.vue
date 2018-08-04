@@ -9,7 +9,7 @@
 						<el-col :span="24" class="breadcrumb-container">
 							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="selectedApp">
 								<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
-									{{ item.path }}
+									{{ tag(item.name) }}
 								</el-breadcrumb-item>
 							</el-breadcrumb>
 						</el-col>
@@ -61,6 +61,9 @@
 			},
 			includedComponents() {
 				return 'Index';
+			},
+			routeMap() {
+				return this.$application.instances.routeMap;
 			}
 		},
 		watch: {
@@ -68,13 +71,18 @@
 		methods: {
 			toogle(){
 				this.toogleMenu=!this.toogleMenu
+			},
+			tag(name) {
+				console.log(name);
+				console.log(this.routeMap[name]);
+				return this.routeMap[name]['tag'];
 			}
 		},
 		created() {
 			console.log(this.$route.matched)
 		},
 		mounted() {
-			
+
 		}
 	}
 </script>
