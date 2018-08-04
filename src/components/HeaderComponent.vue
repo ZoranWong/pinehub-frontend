@@ -66,4 +66,9 @@ export default {
     	line-height: 47px;
     	margin-right:10px;
 	}
+	.contentHeader{
+		height:60px;
+		border-bottom: 1px solid #e9e9e9;
+		background-color: #fff;
+	}
 </style>

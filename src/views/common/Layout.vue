@@ -57,7 +57,7 @@
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
 			},
 			includedComponents() {
-				return '';
+				return 'Index';
 			}
 		},
 		watch: {
@@ -71,6 +71,7 @@
 			
 		},
 		mounted() {
+			
 		}
 	}
 </script>
@@ -89,27 +90,30 @@
 	.container .toogleNav {
 	    width: 40px !important;
 	}
-	.container .loayout-content .right_content{
+	.right_content{
 		position: absolute;
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
 		overflow: hidden;
 	}
-	
-	.container .loayout-content .right_content .contentHeader .userinfo-inner{
+	.right_content .contentHeader .userinfo-inner{
 		 float: right;
     	line-height: 47px;
     	margin-right:10px;
 	}
-
+	.right_content .contentHeader .menu-top{
+		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
+	}
+	.right_content .contentHeader img{
+		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
+	}
 	.container .loayout-content .logo {
 		height: 60px;
 		width:100%;
 		background: #00284d;
 		padding-top: 8px;
 	}
-	
 	.el-submenu .el-menu-item {
     height: 40px;
     line-height: 40px;}
@@ -117,15 +121,20 @@
 	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
-	.container .loayout-content .right_content .contentHeader{
-		height:60px;
-		border-bottom: 1px solid #e9e9e9;
-		background-color: #fff;
+	.right_content .contentHeader{
+		padding-right:20px;
+		padding-top:5px;
+		overflow: hidden;
+	}
+	.right_content .contentHeader .userinfo-inner{
+		 float: right;
+    	line-height: 47px;
+    	margin-right:10px;
 	}
 	.el-menu--collapse {
 	    width: 40px;
 	}
-	.container .loayout-content .right_content .el-breadcrumb {
+	.right_content .el-breadcrumb {
 	    font-size: 14px;
 	    line-height: 1;
 	    height: 40px;
@@ -134,12 +143,6 @@
 	    padding-left:10px;
 	    border-bottom: 1px solid #e9e9e9;
 	}
-	.container .content-box{
-		margin:16px 14px 0;
-		background: #fff;
-		border-radius: 6px;
-	}
-	
 	.el-submenu__title{
 		padding:0 !important
 	}
@@ -154,4 +157,11 @@
     text-align: center;
     cursor: pointer;
 }
+</style>
+<style>
+	.content-box{
+		margin:16px 14px 0;
+		background: #fff;
+		border-radius: 6px;
+	}
 </style>

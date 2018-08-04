@@ -40,8 +40,9 @@ export default {
     }
   },
   methods: {
-    routeTo(path) {
-
+    routeTo(href) {
+			if(this.$route.path.substring(1).split('/')[0] == href) return
+				this.$router.push('/' + href)
     },
     checkActive(){
     	

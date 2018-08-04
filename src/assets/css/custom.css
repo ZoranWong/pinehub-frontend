@@ -234,7 +234,7 @@ hr {
 	top: 8px;
 }
 .el-table {
-    border: 1px solid #dfe6ec;
+    border: 1px solid #dfe6ec !important;
     border-bottom:none;
     }
     .el-table thead{
