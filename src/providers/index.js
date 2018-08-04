@@ -5,6 +5,7 @@ import CommandServiceProvider from './CommandServiceProvider';
 import ModelsServiceProvider from './ModelsServiceProvider';
 import ConfigServiceProvider from './ConfigServiceProvider';
 import ExceptionsServiceProvider from './ExceptionsServiceProvider';
+import ValidateServiceProvider from './ValidateServiceProvider';
 export default {
   configServiceProvider: ConfigServiceProvider,
   appServiceProvider: AppServiceProvider,
@@ -12,5 +13,6 @@ export default {
   routerServiceProvider: RouterServiceProvider,
   commandServiceProvider: CommandServiceProvider,
   modelsServiceProvider: ModelsServiceProvider,
-  exceptionsServiceProvider: ExceptionsServiceProvider
+  exceptionsServiceProvider: ExceptionsServiceProvider,
+  validateServiceProvider: ValidateServiceProvider
 };
