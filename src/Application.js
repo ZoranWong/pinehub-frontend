@@ -33,7 +33,7 @@ export default class Application {
     this.$vm.use($class);
   }
   registerCommand(name, command) {
-    return (this.commands[name] = this.$vm.prototype[name] = new command(this));
+    return (this.commands[name]  = new command(this));
   }
   command(command, params) {
     this.commands[command].handle(params);
@@ -73,12 +73,15 @@ export default class Application {
 
   register(name, service = null) {
     if(!service && _.isFunction(name)) {
-      return this.instances[name] = this.$vm.prototype[name] = new name(this);
+      return this.instances[name]  = new name(this);
     }else if(name && _.isFunction(service)){
-      return  this.instances[name] = this.$vm.prototype[name] = new service(this);
+      return  this.instances[name] = new service(this);
     }else{
-      return  this.instances[name] = this.$vm.prototype[name] = service;
+      return  this.instances[name]  = service;
     }
+  }
+  resetForm(form) {
+    form.resetFields();
   }
   $on(event, callback) {
     this.vueApp.$on(event, callback);
@@ -92,24 +95,79 @@ export default class Application {
   $error(exception, params = null) {
     this.$emit(exception, params);
   }
+
+  scroll(context) {
+    context.box = document.querySelector('.content-scroll');
+    if(context.box) {
+      context.scrollTop = this.box.scrollTop + 20 + 'px';
+    }
+  }
+  adapt() {
+    let container = document.querySelectorAll('.form-container');
+    if(container.length) {
+      for(var i = 0; i < container.length; i++) {
+        container[i].style.maxHeight = this.box.offsetHeight - 200 + 'px';
+        container[i].scrollTop = 0;
+      }
+    }
+  }
+  dialogClose(context) {
+    if(!context.box) return;
+    context.box.style.overflowY = 'auto';
+    context.$emit('dialogClose');
+  }
+  dialogOpen(context) {
+    if(!context.box) {
+      return;
+    }
+    context.box.style.overflowY = 'hidden';
+    context.$emit('dialogOpen');
+  }
+  vueMixin() {
+    let self = this;
+    this.$vm.mixin({
+      data(){
+        return _.extend(self.instances, {config: self.config, application: self});
+      },
+      methods: {
+        resetForm(name) {
+          self.resetForm(this.$refs[name]);
+        },
+        command(command, params) {
+          self.command(command, params);
+        },
+        $error(exception, params = null) {
+          self.$error(exception, params);
+        },
+        adapt(){
+          self.adapt();
+        },
+        scroll(){
+          self.scroll(this);
+        },
+        dialogClose(){
+          self.dialogClose(this);
+        },
+        dialogOpen() {
+          self.dialogOpen(this);
+        }
+      }
+    });
+  }
+
   run() {
     this.$vm = Vue;
-    this.$vm.prototype.$application = this;
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
-
     let self = this;
-    this.$vm.prototype['command'] = function(command, params) {
-      self.command(command, params);
-    }
     _.prototype.json = function(str) {
       return self.json(str);
     }
     self.registerServiceProviders();
-    let store = this.instances.store;
+    let store = this.instances.storeInstance;
     let router = this.instances.router;
-    console.log(store);
+    this.vueMixin();
     self.vueApp = new Vue({
       router: router,
       store: store,

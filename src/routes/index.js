@@ -17,7 +17,10 @@ import tickets from './TicketsRoute';
 //用户管理
 import users from './UsersRoute';
 
+import Route from './Route';
+
 let routes = [];
+let routeMap = Route.routeMap;
 // routes.push(account);
 routes.push(signIn);
 routes.push(layout);
@@ -29,4 +32,4 @@ routes.push(orders);
 routes.push(shops);
 routes.push(tickets);
 routes.push(users);
-export default routes;
+export {routes, routeMap};

@@ -15,6 +15,9 @@ export default class Route {
         route['name'] = name;
       }
     }
+    if(typeof Route.routeMap === 'undefined')
+      Route.routeMap = {};
+    Route.routeMap[route['name']] = route;
     this.route.push(route);
   }
 
@@ -37,6 +40,14 @@ export default class Route {
     if(typeof group['component'] !== 'undefined') {
       $route['component'] = group['component'];
     }
+
+    if(typeof group['tag'] !== 'undefined') {
+      $route['tag'] = group['tag'];
+    }
+
+    if(typeof Route.routeMap === 'undefined')
+      Route.routeMap = {};
+    Route.routeMap[$route['name']] = $route;
     this.route.push( $route );
   }
 

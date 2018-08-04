@@ -31,7 +31,7 @@ export default {
 		methods: {
 		},
 		created() {
-      this.$application.$error('notFound','暂无数据');
+      this.$error('notFound', '暂无数据');
       console.log(this.$store.state.order.currentPage);
       this.$store.dispatch('order/nextPage');
       console.log('change page');
