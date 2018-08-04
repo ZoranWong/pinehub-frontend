@@ -5,7 +5,7 @@ export default class ValidateServiceProvider extends ServiceProvider {
   }
   register() {
     let validate = this.validates();
-    this.app.register('validate', validate);
+    this.app.register('validater', validate);
   }
   validates() {
     return {
