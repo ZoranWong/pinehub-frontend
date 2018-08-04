@@ -6,7 +6,7 @@
         <seek-password v-else ></seek-password>
 			</transition>
 		</div>
-		<div class="login-ft">
+		<div class="login-footer">
 			<p class="subtitle">京抖云网络技术有限公司 版权所有</p>
 		</div>
 	</div>
@@ -46,7 +46,7 @@ export default {
 		position: relative;
 		background-color: #35424D;
 	}
-	#login .login-ft{
+	#login .login-footer{
 		width: 100%;
 		height: 10%;
 		position: absolute;
