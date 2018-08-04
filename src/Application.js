@@ -21,16 +21,13 @@ export default class Application {
     this.config = {};
     this.exceptionHandlers = {};
     this.env = env;
-  }
-  json(str) {
-    try {
-      return JSON.parse(str);
-    } catch (e) {
-      return str;
-    }
+    this.mixinMethods = {};
   }
   use($class) {
     this.$vm.use($class);
+  }
+  mixin(methods) {
+    this.mixinMethods = methods;
   }
   registerCommand(name, command) {
     return (this.commands[name]  = new command(this));
@@ -95,63 +92,13 @@ export default class Application {
   $error(exception, params = null) {
     this.$emit(exception, params);
   }
-
-  scroll(context) {
-    context.box = document.querySelector('.content-scroll');
-    if(context.box) {
-      context.scrollTop = this.box.scrollTop + 20 + 'px';
-    }
-  }
-  adapt() {
-    let container = document.querySelectorAll('.form-container');
-    if(container.length) {
-      for(var i = 0; i < container.length; i++) {
-        container[i].style.maxHeight = this.box.offsetHeight - 200 + 'px';
-        container[i].scrollTop = 0;
-      }
-    }
-  }
-  dialogClose(context) {
-    if(!context.box) return;
-    context.box.style.overflowY = 'auto';
-    context.$emit('dialogClose');
-  }
-  dialogOpen(context) {
-    if(!context.box) {
-      return;
-    }
-    context.box.style.overflowY = 'hidden';
-    context.$emit('dialogOpen');
-  }
   vueMixin() {
     let self = this;
     this.$vm.mixin({
       data(){
         return _.extend(self.instances, {config: self.config, application: self});
       },
-      methods: {
-        resetForm(name) {
-          self.resetForm(this.$refs[name]);
-        },
-        command(command, params) {
-          self.command(command, params);
-        },
-        $error(exception, params = null) {
-          self.$error(exception, params);
-        },
-        adapt(){
-          self.adapt();
-        },
-        scroll(){
-          self.scroll(this);
-        },
-        dialogClose(){
-          self.dialogClose(this);
-        },
-        dialogOpen() {
-          self.dialogOpen(this);
-        }
-      }
+      methods: self.mixinMethods
     });
   }
 
@@ -161,12 +108,9 @@ export default class Application {
     Vue.use(Vuex);
     Vue.use(ElementUI);
     let self = this;
-    _.prototype.json = function(str) {
-      return self.json(str);
-    }
     self.registerServiceProviders();
-    let store = this.instances.storeInstance;
-    let router = this.instances.router;
+    let store = this.instances['vue-store'];
+    let router = this.instances['vue-router'];
     this.vueMixin();
     self.vueApp = new Vue({
       router: router,

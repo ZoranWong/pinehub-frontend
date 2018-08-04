@@ -4,7 +4,7 @@ export default class Service {
     this.$vm = this.$application.$vm.prototype;
   }
 
-  services() {
-    return this.$application.instances;
+  services(name = null) {
+    return name ? this.$application.instances[name] : this.$application.instances;
   }
 }

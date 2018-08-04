@@ -6,6 +6,8 @@ import ModelsServiceProvider from './ModelsServiceProvider';
 import ConfigServiceProvider from './ConfigServiceProvider';
 import ExceptionsServiceProvider from './ExceptionsServiceProvider';
 import ValidateServiceProvider from './ValidateServiceProvider';
+import MixinMethodsServiceProvider from './MixinMethodsServiceProvider';
+
 export default {
   configServiceProvider: ConfigServiceProvider,
   appServiceProvider: AppServiceProvider,
@@ -14,5 +16,6 @@ export default {
   commandServiceProvider: CommandServiceProvider,
   modelsServiceProvider: ModelsServiceProvider,
   exceptionsServiceProvider: ExceptionsServiceProvider,
-  validateServiceProvider: ValidateServiceProvider
+  validateServiceProvider: ValidateServiceProvider,
+  mixinMethodsServiceProvider: MixinMethodsServiceProvider
 };

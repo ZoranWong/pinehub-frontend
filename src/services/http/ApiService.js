@@ -14,7 +14,7 @@ export default class ApiService extends Service{
   // eslint-disable-next-line
   async httpGet (route, params = [], auth = false) {
     if(auth) {
-      let token = await this.services().token.getToken();
+      let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
     let result = await this.axios.get(this.gateway + route + this.services().uri.query(params));
@@ -23,7 +23,7 @@ export default class ApiService extends Service{
 
   async httpPost(route, params = [], auth = false) {
     if(auth) {
-      let token = await this.services().token.getToken();
+      let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
     let result = await this.axios.post(this.gateway + route, params);
@@ -32,7 +32,7 @@ export default class ApiService extends Service{
 
   async httpPut(route, id, params = [], auth = false) {
     if(auth) {
-      let token = await this.services().token.getToken();
+      let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
     let result = await this.axios.put(this.gateway + route + id , params);
@@ -41,10 +41,10 @@ export default class ApiService extends Service{
 
   async httpDelete(route, params = [], auth = false) {
     if(auth) {
-      let token = await this.services().token.getToken();
+      let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    let id = _.isString(params) || _.isNumber(params) ? params : this.$application.json(params);
+    let id = _.isString(params) || _.isNumber(params) ? params : this.services('json').encode(params);
     let result = await this.axios.delete(this.gateway + route + id);
     return null;
   }
