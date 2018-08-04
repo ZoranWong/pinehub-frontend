@@ -26,7 +26,7 @@ export default class Application {
   use($class) {
     this.$vm.use($class);
   }
-  vueMixinMethods(methods) {
+  mixin(methods) {
     this.mixinMethods = methods;
   }
   registerCommand(name, command) {

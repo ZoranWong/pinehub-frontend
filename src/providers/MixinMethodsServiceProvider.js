@@ -5,7 +5,7 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
   }
   register() {
     let methods = this.methods();
-    this.app.vueMixinMethods(methods);
+    this.app.mixin(methods);
   }
   methods () {
     let self = this;
