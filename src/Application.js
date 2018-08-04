@@ -109,8 +109,8 @@ export default class Application {
     Vue.use(ElementUI);
     let self = this;
     self.registerServiceProviders();
-    let store = this.instances.storeInstance;
-    let router = this.instances.router;
+    let store = this.instances['vue-store'];
+    let router = this.instances['vue-router'];
     this.vueMixin();
     self.vueApp = new Vue({
       router: router,

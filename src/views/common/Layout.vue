@@ -61,9 +61,6 @@
 			},
 			includedComponents() {
 				return 'Index';
-			},
-			routeMap() {
-				return this.$application.instances.routeMap;
 			}
 		},
 		watch: {

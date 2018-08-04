@@ -13,7 +13,7 @@ export default class RouteServiceProvider extends ServiceProvider {
       route = route.getRoute();
       routerArray.push(route);
     });
-    let router = this. app.register('router',  new VueRouter({
+    let router = this. app.register('vue-router',  new VueRouter({
       routes: routerArray
     }));
     this.app.register('routeMap', routeMap);
@@ -23,7 +23,7 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    if(this.app.instances.storeInstance.getters['account/logined']) {
+    if(this.app.instances['vue-store'].getters['account/logined']) {
       if(to.name !== 'sign-in'){
         next();
       }else{
