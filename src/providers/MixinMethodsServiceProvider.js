@@ -8,18 +8,18 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
     this.app.vueMixinMethods(methods);
   }
   methods () {
-    let self = this.app;
+    let self = this;
     return {
-      resetForm(name) {
-        self.resetForm(this.$refs[name]);
+      $resetForm(name) {
+        self.app.resetForm(this.$refs[name]);
       },
-      command(command, params) {
-        self.command(command, params);
+      $command(command, params = null) {
+        self.app.command(command, params);
       },
       $error(exception, params = null) {
-        self.$error(exception, params);
+        self.app.$error(exception, params);
       },
-      adapt() {
+      $adapt() {
         let container = document.querySelectorAll('.form-container');
         if(container.length) {
           for(var i = 0; i < container.length; i++) {
@@ -28,19 +28,19 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
           }
         }
       },
-      dialogClose() {
+      $dialogClose() {
         if(!this.box) return;
         this.box.style.overflowY = 'auto';
         this.$emit('dialogClose');
       },
-      dialogOpen() {
+      $dialogOpen() {
         if(!this.box) {
           return;
         }
         this.box.style.overflowY = 'hidden';
         this.$emit('dialogOpen');
       },
-      scroll() {
+      $scroll() {
         this.box = document.querySelector('.content-scroll');
         if(this.box) {
           this.scrollTop = this.box.scrollTop + 20 + 'px';
