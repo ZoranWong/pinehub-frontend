@@ -22,14 +22,16 @@ export default class TokenService extends ApiService {
       	return token['token'];
     }
     static asyncToken(){
-
     	let token = sessionStorage.getItem('token');
-        token = JSON.parse(token);
-        return Promise.resolve(token);
+      token = JSON.parse(token);
+      return new Promise(function(resolve) {
+        return resolve(token);
+      }).then(function (token) {
+        return  token;
+      });
     }
     static setToken (token) {
-    	console.log('set token', token);
-        sessionStorage.setItem('token', JSON.stringify(token))
+      sessionStorage.setItem('token', JSON.stringify(token))
     }
 
     static async refreshToken(token) {
@@ -37,7 +39,6 @@ export default class TokenService extends ApiService {
         try {
             TokenService.validate(response.data);
             var data = response.data.data;
-            console.log(data);
             return  data;
         } catch (e) {
             TokenService.exception.throwError(response.data.message, response.data['status_code']);

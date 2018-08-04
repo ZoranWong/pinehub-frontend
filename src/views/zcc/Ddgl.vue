@@ -249,7 +249,7 @@
 				],
 				//列表查询字段
 				filters: {
-					orderNum:'',
+					code:'',
 					type: '',
 					status: '',
 					pay_type: '',
