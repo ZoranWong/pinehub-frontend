@@ -44,6 +44,10 @@ export default class Menus extends Model {
           title: '商品管理',
           icon: '',
           path: 'merchandisesManage',
+	      },{
+          title: '品类管理',
+          icon: '',
+          path: 'CategoryManage',
 	      }]
       },{
 	      title: '订单管理',
