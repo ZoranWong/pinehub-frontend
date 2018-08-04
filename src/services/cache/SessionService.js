@@ -6,7 +6,7 @@ export default class SessionService extends Service {
   }
   get(key) {
     let data = sessionStorage.getItem(key);
-    return this.$application.json(data);
+    return this.services('json').decode(data);
   }
 
   put() {

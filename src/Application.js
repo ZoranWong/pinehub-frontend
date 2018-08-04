@@ -23,13 +23,6 @@ export default class Application {
     this.env = env;
     this.mixinMethods = {};
   }
-  json(str) {
-    try {
-      return JSON.parse(str);
-    } catch (e) {
-      return str;
-    }
-  }
   use($class) {
     this.$vm.use($class);
   }
@@ -115,9 +108,6 @@ export default class Application {
     Vue.use(Vuex);
     Vue.use(ElementUI);
     let self = this;
-    _.prototype.json = function(str) {
-      return self.json(str);
-    }
     self.registerServiceProviders();
     let store = this.instances.storeInstance;
     let router = this.instances.router;

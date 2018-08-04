@@ -35,6 +35,7 @@ export default {
       console.log(this.$store.state.order.currentPage);
       this.$store.dispatch('order/nextPage');
       console.log('change page');
+      this.account.httpGet('', '', true);
       console.log(this.$store.state.order.currentPage);
 		}
 }
