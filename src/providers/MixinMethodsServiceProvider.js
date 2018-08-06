@@ -45,6 +45,11 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
         if(this.box) {
           this.scrollTop = this.box.scrollTop + 20 + 'px';
         }
+      },
+      $scrollToBottom() {
+        if(this.$el.scrollTop+this.$el.offsetHeight>this.$el.scrollHeight){
+          this.$emit('scroll-to-bottom');
+        }
       }
     };
   }
