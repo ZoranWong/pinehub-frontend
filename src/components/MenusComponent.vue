@@ -43,7 +43,7 @@ export default {
 
     routeTo(path) {
       path = '/' + _.strip(path, '/');
-      this.command('redirect', {path: path});
+      this.$command('redirect', {path: path});
     },
     checkActive(){
     }
