@@ -1,14 +1,23 @@
 import Model from './Model'
-export default class Order extends Model{
+export default class WechatManage extends Model{
   constructor(application) {
     super(application);
   }
-
   data() {
     return {
-      orders:[],
-      pageCount: 0,
-      currentPage: 0
+      	selectData:[],
+      	pageCount: 0,
+      	currentPage: 0,
+		totalNum:0,
+		
+		formVisible: false, //新增编辑界面是否显示
+		detailVisible: false, //详情界面是否显示
+		detailData: {},
+		
+		paginator : {
+			page:1,
+			limit:10
+		},
     };
   }
   computed() {
@@ -21,9 +30,9 @@ export default class Order extends Model{
 
   dispatchs() {
     return {
-      nextPage(context) {
-        context.commit('nextPage');
-      }
+      	nextPage(context) {
+        	context.commit('nextPage');
+      	}
     }
   }
 

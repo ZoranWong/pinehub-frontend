@@ -10,8 +10,12 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
   methods () {
     let self = this;
     return {
+    	$handleCurrentChange(val, filters = self.filters, fun) {
+				filters.pageNum = val
+				fun()
+			},
       $resetForm(name) {
-        self.app.resetForm(this.$refs[name]);
+        self.app.resetForm(self.$refs[name]);
       },
       $command(command, params = null) {
         self.app.command(command, params);
@@ -23,27 +27,28 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
         let container = document.querySelectorAll('.form-container');
         if(container.length) {
           for(var i = 0; i < container.length; i++) {
-            container[i].style.maxHeight = this.box.offsetHeight - 200 + 'px';
+            container[i].style.maxHeight = self.box.offsetHeight - 200 + 'px';
             container[i].scrollTop = 0;
           }
         }
       },
       $dialogClose() {
-        if(!this.box) return;
-        this.box.style.overflowY = 'auto';
-        this.$emit('dialogClose');
+        if(!self.box) return;
+        self.box.style.overflowY = 'auto';
+        self.$emit('dialogClose');
       },
       $dialogOpen() {
-        if(!this.box) {
+      	console.log(self.$store)
+        if(!self.box) {
           return;
         }
-        this.box.style.overflowY = 'hidden';
-        this.$emit('dialogOpen');
+        self.box.style.overflowY = 'hidden';
+        self.$emit('dialogOpen');
       },
       $scroll() {
-        this.box = document.querySelector('.content-scroll');
-        if(this.box) {
-          this.scrollTop = this.box.scrollTop + 20 + 'px';
+        self.box = document.querySelector('.content-scroll');
+        if(self.box) {
+          self.scrollTop = self.box.scrollTop + 20 + 'px';
         }
       }
     };

@@ -11,19 +11,19 @@
 					<el-form-item prop="province">
 						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
 							<el-option label="请选择省" value="" @click.native="filters.city = '';filters.area = ''"></el-option>
-							<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in $store.state.common.provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item prop="city">
 						<el-select size="small" v-model="filters.city" @change="linkageChange($event,'cxAreaData','area')">
 							<el-option label="请选择市" value="" @click.native="filters.area = ''"></el-option>
-							<el-option v-for="(item,index) in cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in $store.state.common.cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item prop="area">
 						<el-select size="small" v-model="filters.area">
 							<el-option label="请选择区" value=""></el-option>
-							<el-option v-for="(item,index) in cxAreaData" :label="item.name" :value="item.id" :key="index"></el-option>
+							<el-option v-for="(item,index) in $store.state.common.cxAreaData" :label="item.name" :value="item.id" :key="index"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item>
@@ -40,7 +40,7 @@
 			</el-col>
 
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
+			<el-table :data="$store.state.shops.selectData" highlight-current-row v-loading="$store.state.common.tLoading">
 				<el-table-column prop="index" label="序号" width="50"></el-table-column>
 				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
 				<el-table-column prop="manager.user_name" label="车主" min-width="100"></el-table-column>
@@ -67,15 +67,16 @@
 
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>
+				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" background :total="$store.state.shops.totalNum"></el-pagination>
 			</div>
+			
 			<!--新增编辑界面-->
 			<diningCar-add :formVisible = "formVisible"></diningCar-add>
 			<!--详情界面-->
 			<diningCar-detail :detailVisible = "detailVisible"></diningCar-detail>
 			
 			<!--二维码图片界面-->
-			<el-dialog :visible.sync="imgCodeVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="imgCodeVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane :label="imgInfo" name="first"></el-tab-pane>
 				</el-tabs>
@@ -114,13 +115,6 @@
 					province: '',
 					city: '',
 					area: ''
-				},
-				mapfilter:{
-					address:''
-				},
-				mapfilters:{
-					lng:'',
-					lat:''
 				},
 				geocoder:'',
 				imgCodeUrl:'',
@@ -237,7 +231,7 @@
 
 		},
 		created() {
-			console.log(this.validate.discount())
+			console.log()
 //			this.getList(this.paginator)
 //			this.getListData()
 		}

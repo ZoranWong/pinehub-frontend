@@ -1,12 +1,12 @@
 <template>
 	<div class="content-scroll">
 		<div class="content-box">
-			<el-dialog :visible.sync="detailVisible" @close="dialogClose" @open="dialogOpen" width="100%" :fullscreen="true" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="detailVisible" @close="$dialogClose" @open="$dialogOpen" width="100%" :fullscreen="true" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="店铺信息" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form v-loading="fLoading" label-width="120px">
+					<el-form v-loading="$store.state.common.fLoading" label-width="120px">
 						<el-form-item label="店铺编号：">
 							<span v-text="detailData.number"></span>
 						</el-form-item>
@@ -25,9 +25,9 @@
 					<el-tab-pane label="店铺订单：(78单)" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form v-loading="fLoading" label-width="120px">
+					<el-form v-loading="$store.state.common.fLoading" label-width="120px">
 						<el-form-item label="" label-width="10px" >
-							<el-table :data="detailData.orderData" highlight-current-row v-loading="tLoading">
+							<el-table :data="detailData.orderData" highlight-current-row v-loading="$store.state.common.tLoading">
 								<el-table-column prop="sIndex" label="序号" width="60"></el-table-column>
 								<el-table-column prop="name" label="编号" min-width="80"></el-table-column>
 								<el-table-column prop="phone" label="车主" min-width="100"></el-table-column>

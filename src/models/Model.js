@@ -8,11 +8,13 @@ export default class Model {
   }
 
   data(){
-    return {};
+    return {
+    	
+    };
   }
   computed() {
     return {
-
+			
     };
   }
 

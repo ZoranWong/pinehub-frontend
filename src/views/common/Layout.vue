@@ -76,7 +76,7 @@
 			}
 		},
 		created() {
-			console.log(this.$route.matched)
+			console.log(this.$store.state.shops.currentPage)
 		},
 		mounted() {
 
