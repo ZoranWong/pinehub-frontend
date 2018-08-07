@@ -27,7 +27,7 @@ export default {
 </script>
 <style scoped>
 	.left_nav{
-		width: 180px;
+		width: 120px;
 		height:100vh;
 		float:left;
 		background: #444;
@@ -46,7 +46,7 @@ export default {
 		padding-left:10px !important;
 		color: rgba(255,255,255,0.65);
 	}
-	
+
 	.left_nav .el-menu .el-submenu .is-active{
 		background:#409EFF;
 		color:rgba(255,255,255,1);
@@ -63,4 +63,3 @@ export default {
 		color: rgba(255,255,255,0.65);
 	}
 </style>
-

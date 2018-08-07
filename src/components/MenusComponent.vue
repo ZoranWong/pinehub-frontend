@@ -1,7 +1,7 @@
 <template>
   <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
     <template v-for="(menu, index) in menus">
-      <el-submenu v-if="menu.title != '首页'" :index="index+''">
+      <el-submenu v-if="menu.title != '首页'" :index="index+''" >
         <template slot="title">
           <el-tooltip effect="dark" :disabled="!toogleMenu" :content="menu.title" placement="right">
             <div class="tipbox">
@@ -10,13 +10,8 @@
           </el-tooltip>
           <span>{{ menu.title }}</span>
         </template>
-        <el-menu-item @click="routeTo( child.path )" :class="{ 'is-active': checkActive('/' + child.path) }" v-for="(child, index) in menu.children" :index="'/' + child.path" :key="index">
-          <el-tooltip :disabled="!toogleMenu" effect="dark" :content="child.title" placement="right">
-            <div class="tipbox">
-              <i :class="child.icon" v-if="child.icon"></i>
-            </div>
-          </el-tooltip>
-          <span>{{child.title}}</span>
+        <el-menu-item @click="routeTo( menu.path + '/' +child.path )" :class="{ 'is-active': checkActive('/' + child.path) }" v-for="(child, index) in menu.children" :index="'/' + child.path" :key="index">
+          <span style="padding:0 16px;">{{child.title}}</span>
         </el-menu-item>
       </el-submenu>
     </template>
@@ -121,7 +116,7 @@ export default {
 		background: #888 !important;
 	}
 	.el-submenu__title{
-					padding:0 !important
-				}
-				.el-menu--popup{background: #fff !important;border-radius: 5px !important;}
+		padding:0 !important
+	}
+	.el-menu--popup{background: #fff !important;border-radius: 5px !important;}
 </style>
