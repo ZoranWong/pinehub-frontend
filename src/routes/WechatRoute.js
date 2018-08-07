@@ -7,7 +7,7 @@ route.group('/wechat', {
   	'tag' : '公众号信息',
   	'component': Layout,
   	'uses' : function(route) {
-	  	route.addRoute('/wechatManage', {
+	  	route.addRoute('/manage', {
 	  		'name': 'wechat-manage',
 	  		'component': WechatManage,
 	  		'tag': '公众号列表'

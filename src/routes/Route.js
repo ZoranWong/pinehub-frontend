@@ -1,7 +1,9 @@
 import _ from 'underscore';
+import _str from 'underscore.string';
 export default class Route {
   constructor() {
     this.route = [];
+    this.parent = null;
   }
   addRoute(route, component = [], name = null) {
     if(_.isArray(component) || _.isObject(component)) {
@@ -15,6 +17,12 @@ export default class Route {
         route['name'] = name;
       }
     }
+    if(this.parent) {
+      let path = '/' + _str.strip(this.parent.route[0]['path'], '/');
+      path += '/';
+      path +=  _str.strip(route['path'], '/');
+      route['path'] = path;
+    }
     if(typeof Route.routeMap === 'undefined')
       Route.routeMap = {};
     Route.routeMap[route['name']] = route;
@@ -23,16 +31,13 @@ export default class Route {
 
   group(route, callback) {
     let children = new Route();
+    children.parent = this;
     let group = callback;
     if(typeof callback !== 'function') {
       callback = group['uses'];
     }
-    callback(children);
-    let list = children.getRoute();
-    list = list.length > 1 ? list : [list];
     let $route = {
       path: route,
-      children: list
     };
     if(typeof group['name'] !== 'undefined') {
       $route['name'] = group['name'];
@@ -49,6 +54,10 @@ export default class Route {
       Route.routeMap = {};
     Route.routeMap[$route['name']] = $route;
     this.route.push( $route );
+    callback(children);
+    let list = children.getRoute();
+    list = list.length > 1 ? list : [list];
+    $route['children'] = list;
   }
 
   getRoute() {

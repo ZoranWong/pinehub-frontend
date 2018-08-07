@@ -2,7 +2,7 @@
 	<el-row class="container">
 		<div class="layout-content">
 			<layout-nav :toogleMenu="toogleMenu" :show="showLeftSide"></layout-nav>
-			<div :class="['right_content',{ 'toogle-content' : toogleMenu }]" :style="showLeftSide?'left: 180px;':'left: 0px;'">
+			<div :class="['right_content',{ 'toogle-content' : toogleMenu }]" :style="showLeftSide?'left: 120px;':'left: 0px;'">
 				<c-header @toogle="toogle" :selected = "selectedApp" :toogleMenu = "toogleMenu"></c-header>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
@@ -14,9 +14,10 @@
 							</el-breadcrumb>
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
-							<keep-alive :include="includedComponents">
+							<!-- <keep-alive :include="includedComponents">
 								<router-view class = "page-content" :style="pageContentStyle"></router-view>
-							</keep-alive>
+							</keep-alive> -->
+							<router-view class = "page-content" :style="pageContentStyle"></router-view>
 						</el-col>
 					</div>
 				</section>

@@ -25,6 +25,7 @@ export default class RouteServiceProvider extends ServiceProvider {
   beforeEach(to, from, next) {
     console.log('to page', to.path);
     if(this.app.instances['vue-store'].getters['account/logined']) {
+      this.app.instances['vue-store'].state.menus.activeMenu = null;
       if(to.name !== 'sign-in'){
         next();
       }else{

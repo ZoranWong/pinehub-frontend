@@ -5,89 +5,208 @@ export default class Menus extends Model {
   }
   data() {
     return {
+      activeMenu: null,
       list:[{
-	      title: '微信管理',
+        id: 1,
+	      title: '微信',
 	      icon: 'fa fa-weixin',
 	      path: 'wechat',
 	      children: [{
-          title: '公众号信息',
+          id: 2 ,
+          title: '公众号管理',
           icon: '',
-          path: 'wechatManage',
-	      }]
+          path: 'manage',
+	      },{
+          id: 3,
+          title: '菜单管理',
+          icon:'',
+          path: 'menus'
+        },{
+          id: 6,
+          title: '自动回复',
+          icon: '',
+          path: 'autoReply'
+        },{
+          id: 7,
+          title: '素材管理',
+          icon: '',
+          path: 'meterials'
+        }]
       },{
-	      title: '店铺管理',
+        id: 8,
+	      title: '店铺',
 	      icon: 'fa fa-building',
-	      path: 'shops',
+	      path: 'shop',
 	      children: [{
-          title: '早餐车管理',
+          id: 9,
+          title: '店铺管理',
           icon: '',
-          path: 'diningCarManage',
-	      }]
+          path: 'manage',
+	      },{
+          id: 10,
+          title: '关门店铺',
+          icon: '',
+          path: 'closed'
+        },{
+          id: 40,
+          title: '营业店铺',
+          icon: '',
+          path: 'open'
+        }]
       },{
-	      title: '营销管理',
+        id: 11,
+	      title: '营销',
 	      icon: 'fa fa-th-large',
 	      path: 'marketing',
-	      children: [{
-          title: '满减/送',
-          icon: '',
-          path: 'fullReduce',
-	      },{
-          title: '支付有礼',
-          icon: '',
-          path: 'payGift',
-	      }]
+	      children: [
+          {
+            id: 12,
+            title: '营销中心',
+            icon: '',
+            path: 'manage',
+  	      },{
+            id: 13,
+            title: '满减/送',
+            icon: '',
+            path: 'fullReduce',
+	        },{
+            id: 14,
+            title: '支付有礼',
+            icon: '',
+            path: 'payGift',
+	        },{
+            id: 15,
+            title: '优惠券管理',
+  	        icon: 'fa fa-ticket',
+  	         path: 'tickets',
+          }]
       },{
-	      title: '商品管理',
+        id: 16,
+	      title: '商品',
 	      icon: 'fa fa-tag',
-	      path: 'merchandises',
+	      path: 'merchandise',
 	      children: [{
+          id: 17,
           title: '商品管理',
           icon: '',
-          path: 'merchandisesManage',
+          path: 'manage',
 	      },{
+          id: 18,
+          title: '出售中',
+          icon: '',
+          path: 'up',
+	      },{
+          id: 19,
+          title: '仓库中',
+          icon: '',
+          path: 'down',
+	      },{
+          id: 20,
+          title: '已售罄',
+          icon: '',
+          path: 'manage',
+	      },{
+          id: 21,
           title: '品类管理',
           icon: '',
-          path: 'CategoryManage',
+          path: 'category/manage',
 	      }]
       },{
-	      title: '订单管理',
+        id: 22,
+	      title: '订单',
 	      icon: 'fa fa-file-text',
-	      path: 'orders',
+	      path: 'order',
 	      children: [{
+          id: 23,
           title: '订单管理',
           icon: '',
-          path: 'orderManage',
-	      }]
-      },{
-	      title: '优惠券管理',
-	      icon: 'fa fa-ticket',
-	      path: 'tickets',
-	      children: [{
-          title: '优惠券',
+          path: 'manage',
+	      },{
+          id: 24,
+          title: '线下订单',
           icon: '',
-          path: 'coupon',
-	      }]
+          path: 'scan',
+        },{
+          id: 25,
+          title: '商家订单',
+          icon: '',
+          path: 'seller/PUR',
+        },{
+          id: 16,
+          title: '采购订单',
+          icon: '',
+          path: 'company/PUR',
+        },{
+          id: 27,
+          title: '分销订单',
+          icon: '',
+          path: 'distribution',
+        }
+      ]
       },{
-	      title: '用户管理',
+        id: 28,
+	      title: '用户',
 	      icon: 'fa fa-users',
-	      path: 'users',
+	      path: 'user',
 	      children: [{
+          id: 29,
           title: '客户管理',
           icon: '',
-          path: 'customerManage',
+          path: 'customer/manage',
 	      },{
+          id: 30,
           title: '会员卡',
           icon: '',
           path: 'memberCard',
 	      },{
+          id: 31,
           title: '会员管理',
           icon: '',
-          path: 'memberManage',
+          path: 'member/manage',
 	      },{
+          id: 32,
           title: '积分管理',
           icon: '',
-          path: 'pointManage',
+          path: 'score/manage',
 	      }]
+      },{
+        id: 33,
+        title: '分销',
+        icon: 'fa fa-bullhorn',
+        path: 'distribution',
+        children:[
+          {
+            id: 34,
+            title: '分销员管理',
+            icon: '',
+            path: 'score/manage',
+          },{
+            id: 35,
+            title: '订单管理',
+            icon: '',
+            path: 'score/manage',
+          },{
+            id: 36,
+            title: '提现管理',
+            icon: '',
+            path: 'score/manage',
+          }
+        ]
+      },{
+        id: 37,
+        title: '财务',
+        icon: 'fa fa-bar-chart',
+        path: 'finance'
+      },{
+        id: 38,
+        title: '供应商',
+        icon: 'fa fa-handshake-o',
+        path: ''
+      },{
+        id: 39,
+        title: '物流',
+        icon: 'fa fa-truck',
+        path: ''
       }]
     };
   }
@@ -96,9 +215,3 @@ export default class Menus extends Model {
     };
   }
 }
-
-
-
-
-
-
