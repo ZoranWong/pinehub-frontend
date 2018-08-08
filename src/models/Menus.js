@@ -36,12 +36,12 @@ export default class Menus extends Model {
         id: 8,
 	      title: '店铺',
 	      icon: 'fa fa-building',
-	      path: 'shop',
+	      path: 'shops',
 	      children: [{
           id: 9,
           title: '店铺管理',
           icon: '',
-          path: 'manage',
+          path: 'diningCarManage',
 	      },{
           id: 10,
           title: '关门店铺',
@@ -78,18 +78,18 @@ export default class Menus extends Model {
             id: 15,
             title: '优惠券管理',
   	        icon: 'fa fa-ticket',
-  	         path: 'tickets',
+  	        path: 'cuopon',
           }]
       },{
         id: 16,
 	      title: '商品',
 	      icon: 'fa fa-tag',
-	      path: 'merchandise',
+	      path: 'merchandises',
 	      children: [{
           id: 17,
           title: '商品管理',
           icon: '',
-          path: 'manage',
+          path: 'merchandisesManage',
 	      },{
           id: 18,
           title: '出售中',
@@ -109,18 +109,18 @@ export default class Menus extends Model {
           id: 21,
           title: '品类管理',
           icon: '',
-          path: 'category/manage',
+          path: 'categoryManage',
 	      }]
       },{
         id: 22,
 	      title: '订单',
 	      icon: 'fa fa-file-text',
-	      path: 'order',
+	      path: 'orders',
 	      children: [{
           id: 23,
           title: '订单管理',
           icon: '',
-          path: 'manage',
+          path: 'orderManage',
 	      },{
           id: 24,
           title: '线下订单',
@@ -147,12 +147,12 @@ export default class Menus extends Model {
         id: 28,
 	      title: '用户',
 	      icon: 'fa fa-users',
-	      path: 'user',
+	      path: 'users',
 	      children: [{
           id: 29,
           title: '客户管理',
           icon: '',
-          path: 'customer/manage',
+          path: 'customerManage',
 	      },{
           id: 30,
           title: '会员卡',
@@ -162,12 +162,12 @@ export default class Menus extends Model {
           id: 31,
           title: '会员管理',
           icon: '',
-          path: 'member/manage',
+          path: 'memberManage',
 	      },{
           id: 32,
           title: '积分管理',
           icon: '',
-          path: 'score/manage',
+          path: 'pointManage',
 	      }]
       },{
         id: 33,

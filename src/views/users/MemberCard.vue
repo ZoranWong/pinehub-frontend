@@ -20,7 +20,7 @@
 								     	 无门槛会员卡
 								     	 <i class="el-icon-question"></i>
 								    </template>
-								    <div class="showCard" v-for="(item,index) in selectData" :key="index" :style="item.background_pic_url?('background:url('+IMAGE_SERVER_HOST+'/material/view?material_src='+item.background_pic_url+') repeat;background-size: cover;border-radius: 10px 10px 0 0;background-position: 50%;'):('background:'+(formatSelect(item.color)))">
+								    <div class="showCard" v-for="(item,index) in $store.state.common.selectData" :key="index" :style="item.background_pic_url?('background:url('+IMAGE_SERVER_HOST+'/material/view?material_src='+item.background_pic_url+') repeat;background-size: cover;border-radius: 10px 10px 0 0;background-position: 50%;'):('background:'+(formatSelect(item.color)))">
 								    	<div class="header">
 									        <h3 class="pull-left">{{item.title}}</h3>
 									        <h4 class="pull-right">无门槛领卡</h4>
@@ -56,7 +56,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="receiveData" highlight-current-row v-loading="tLoading">
+						<el-table :data="receiveData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="领取时间" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="会员卡号" min-width="120"></el-table-column>
 							<el-table-column prop="integral" label="会员" min-width="100">
@@ -90,7 +90,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="checkOutData" highlight-current-row v-loading="tLoading">
+						<el-table :data="checkOutData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="领取时间" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="会员卡号" min-width="120"></el-table-column>
 							<el-table-column prop="integral" label="会员" min-width="100"></el-table-column>
@@ -116,12 +116,12 @@
 				</el-tabs>
 			</el-col>
 			<!--导入-->
-			<el-dialog :visible.sync="importVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="importVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="批量导入" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="importData" v-loading="fLoading" label-width="120px" :rules="importRules" ref="importFileds">
+					<el-form :model="importData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="importRules" ref="importFileds">
 						<el-form-item label="选会员卡：" prop="card">
 							<el-select size="small" v-model="importData.card" multiple>
 								<el-option label="选择无门槛卡" value=""></el-option>
@@ -129,7 +129,7 @@
 							</el-select>
 						</el-form-item>
 						<el-form-item label="上传数据：" prop="merchantpic">
-							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/app/logo/cloud?token='+tokens" :data="exImportData" :on-success="handleSuccess" :on-remove="handleRemove" :on-error="handleError" :beforeUpload="beforeUpload">
+							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/app/logo/cloud?token='+tokens" :data="exImportData" :on-success="handleSuccess" :on-remove="handleRemove" :on-error="$handleError" :beforeUpload="beforeUpload">
 								<el-button size="small" type="text">添加文件</el-button>
 								<div slot="tip" class="el-upload__tip">当前仅支持csv格式文件（大小在10M以内）下载文件模版请严格按照模板内容填入用户数据，否则可能会出现异常</div>
 							</el-upload>
@@ -138,16 +138,16 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="importVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="importSubmit()" :loading="bLoading" size="small">保存</el-button>
+					<el-button type="primary" @click.native="importSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
 			<!--新建会员卡界面-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" width="60%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" width="60%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="新建会员卡" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container addCardLayout">
-					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+					<el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<h4>会员卡基本信息</h4>
 						<el-form-item label="店铺名称：">
 							<span v-text="formData.base_info.brand_name"></span>
@@ -164,7 +164,7 @@
 							    		<div class="colorLayout">
 							    			<span v-for="(item,index) in colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
 							    		</div>
-									  <div class="showColor" slot="reference" size="small"><p :style="saveType?('background-color:'+formatSelect(formData.base_info.color)):chooseColor"></p></div>
+									  <div class="showColor" slot="reference" size="small"><p :style="$store.state.common.saveType?('background-color:'+formatSelect(formData.base_info.color)):chooseColor"></p></div>
 									</el-popover>
 							    	<p><span></span></p>
 							    </div>
@@ -214,7 +214,7 @@
 						</el-form-item>
 						
 						<h4>领取设置</h4>
-						<el-form-item label="会员期限：" prop="base_info.date_info.type" v-if="saveType">
+						<el-form-item label="会员期限：" prop="base_info.date_info.type" v-if="$store.state.common.saveType">
 							<el-radio-group v-model="formData.base_info.date_info.type" @change="clearDataInfo">
 								<div><el-radio label="DATE_TYPE_PERMANENT" disabled> 无限期</el-radio> </div>
 							    <div style="margin:10px 0;" v-if="formData.base_info.date_info.fixed_term">
@@ -291,15 +291,15 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">保存</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
 			<!--选择图片-->
-			<el-dialog :visible.sync="imgVisible" title="选择图片" @close="dialogClose" @open="dialogOpen" width="80%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="imgVisible" title="选择图片" @close="$dialogClose" @open="$dialogOpen" width="80%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<div class="form-container" style="position: relative;">
 					<div class="imgLayoutRight">
 						<div class="upload">
-							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/wechat/image/material?app_id='+appId" :on-remove="handleRemove" :data="exImportData" :on-success="handleSuccess" :on-error="handleError" list-type="picture-card">
+							<el-upload class="upload-demo" name="merchantpic" :headers="headers" :action="ADMIN_SERVER_HOST+'/wechat/image/material?app_id='+appId" :on-remove="handleRemove" :data="exImportData" :on-success="handleSuccess" :on-error="$handleError" list-type="picture-card">
 							  <el-button plain size="small">点击上传 <i class="el-icon-edit el-icon--right"></i> </el-button>
 							  <div slot="tip" class="el-upload__tip">仅支持jpg、gif、png三种格式, 大小不超过1 MB </div>
 							</el-upload>
@@ -328,7 +328,7 @@
 //	import UserService from '../../services/UserService';
 //	import NoPublicService from '../../services/NoPublicService';
 	export default {
-		name: 'hyk',
+		name: 'memberCard',
 		data() {
 			let self = this;
 			return {
@@ -344,6 +344,7 @@
 		           	}
 		        },		
 				appId:'',
+				formVisible:false,
 				groupImgShow:false,
 				groupImgList:[],
 				imgVisible:false,
@@ -542,7 +543,7 @@
 				if( result ) {
 				    this.$refs.formFileds.resetFields();
 			    	if(type) {
-						this.saveType = 1
+						this.$store.state.common.saveType = 1
 						if(this.exData) {
 							this.exData.affairId = id
 						}
@@ -557,7 +558,7 @@
 						this.formData.id=list.id
 						console.log(this.formData)
 			    	} else {
-						this.saveType = 0
+						this.$store.state.common.saveType = 0
 						this.formData.base_info.date_info={
 		                    type: "",
 		                    begin_timestamp: "",
@@ -595,7 +596,7 @@
 						this.copyFormData.base_info.date_info.begin_timestamp=this.copyFormData.base_info.date_info.begin_timestamp?Date.parse(this.copyFormData.base_info.date_info.begin_timestamp)/1000:''
 						this.copyFormData.base_info.date_info.end_timestamp=this.copyFormData.base_info.date_info.end_timestamp?Date.parse(this.copyFormData.base_info.date_info.end_timestamp)/1000:''
 						
-						if(this.saveType){
+						if(this.$store.state.common.saveType){
 							if(this.copyFormData.base_info.date_info.type=='DATE_TYPE_FIX_TIME_RANGE'){
 								delete this.copyFormData.base_info.date_info.fixed_term
 							}else{
@@ -625,22 +626,22 @@
 				}
 			},
 			async getList(fliters, search){
-				let [list, meta] = await this.adminApi(UserService).MemberCards.getLists(fliters, search);
-				this.meta = meta;
-				this.selectData= list;
+//				let [list, meta] = await this.adminApi(UserService).MemberCards.getLists(fliters, search);
+//				this.meta = meta;
+//				this.selectData= list;
 			}
 		},
 		filters: {
 			
 		},
 		created() {
-			this.getList(this.filters)
-			let shopInfo=JSON.parse(sessionStorage.getItem('appInfo'))
-			if(shopInfo){
-				this.formData.base_info.logo_url=shopInfo.logo
-				this.formData.base_info.brand_name=shopInfo.name
-			}
-			this.appId= JSON.parse(sessionStorage.getItem('appInfo')).wechat_app_id || '';
+//			this.getList(this.filters)
+//			let shopInfo=JSON.parse(sessionStorage.getItem('appInfo'))
+//			if(shopInfo){
+//				this.formData.base_info.logo_url=shopInfo.logo
+//				this.formData.base_info.brand_name=shopInfo.name
+//			}
+//			this.appId= JSON.parse(sessionStorage.getItem('appInfo')).wechat_app_id || '';
 		},
 		mounted() {
 

@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu">
+  <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu" :style="scrollStyle">
     <template v-for="(menu, index) in menus">
       <el-submenu v-if="menu.title != '首页'" :index="index+''" >
         <template slot="title">
@@ -26,6 +26,7 @@ export default {
   },
   data() {
     return {
+    	scrollStyle:''
     }
   },
   computed:{
@@ -45,7 +46,9 @@ export default {
     }
   },
   created() {
-    console.log('menus created');
+    this.scrollStyle='height:'+(window.innerHeight-36.66)+'px';
+    
+    console.log(this.scrollStyle);
   },
   mounted() {
     console.log('menus mounted');
@@ -77,6 +80,10 @@ export default {
 	}
 	.el-submenu__title{
 		padding:0 !important
+	}
+	.logo{
+		    width: 113px;
+    background: #444;
 	}
 	.el-dropdown{
 		float:right
@@ -110,6 +117,13 @@ export default {
 	.el-menu{
 		background: #444 !important;
 		border:none !important;
+		overflow-x: hidden;
+    overflow-y: auto;
+    height:100%;
+    width:132px;
+	}
+	aside{
+		overflow: hidden;
 	}
 	aside .tipbox {
 		width: 40px;

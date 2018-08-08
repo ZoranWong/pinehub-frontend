@@ -57,7 +57,7 @@
 			</el-form>
 			<el-tabs v-model="activeName" type="card">
 				<el-tab-pane label="全部" name="first">
-					<el-table highlight-current-row v-loading="tLoading" class="showHeader">
+					<el-table highlight-current-row v-loading="$store.state.common.tLoading" class="showHeader">
 						<el-table-column prop="" label="商品" min-width="250"></el-table-column>
 						<el-table-column prop="" label="单价/数量" min-width="80"></el-table-column>
 						<el-table-column prop="" label="售后" min-width="80"></el-table-column>
@@ -77,7 +77,7 @@
 							</div>
 							<div style="float:right">备注</div>
 						</div>
-						<el-table :data="[item]" v-loading="tLoading" :show-header="false" border>
+						<el-table :data="[item]" v-loading="$store.state.common.tLoading" :show-header="false" border>
 							<el-table-column prop="name" label="商品" min-width="330" header-align="center">
 								<template slot-scope="scope">
 									<el-row :gutter="20" type="flex" align="middle" v-for="(item,indexs) in scope.row.order_items" :key="indexs" v-if="item.merchandise_id">
@@ -126,7 +126,7 @@
 							</el-table-column>
 							<el-table-column prop="payment_amount" label="实付金额" min-width="80" align="center"></el-table-column>
 						</el-table>
-						<!--<el-table :data="item.order_items" v-loading="tLoading" :show-header="false" border :span-method="spanMethod">
+						<!--<el-table :data="item.order_items" v-loading="$store.state.common.tLoading" :show-header="false" border :span-method="spanMethod">
 							<el-table-column prop="name" label="商品" min-width="380">
 								<template slot-scope="scope">
 							        <el-row :gutter="20" type="flex" align="middle">
@@ -169,7 +169,7 @@
 					</div>
 					<!--工具条-->
 					<div class="toolbar" style="text-align: right;">
-						<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>
+						<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" background :total="$store.state.common.totalNum"></el-pagination>
 					</div>
 				</el-tab-pane>
 				<el-tab-pane label="待付款"  name="second">
@@ -183,20 +183,20 @@
 				</el-tab-pane>
 			</el-tabs>
 			<!--发货界面-->
-			<el-dialog :visible.sync="shipVisible" @close="dialogClose" @open="dialogOpen" width="60%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="shipVisible" @close="$dialogClose" @open="$dialogOpen" width="60%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="商品发货" name="first"></el-tab-pane>
 				</el-tabs>
 				<div>待发货，已选</div>
 				<div class="form-container" style="padding:0">
-					<el-table :data="shipList" highlight-current-row v-loading="tLoading" stripe @selection-change="shipSelectionChange">
+					<el-table :data="shipList" highlight-current-row v-loading="$store.state.common.tLoading" stripe @selection-change="shipSelectionChange">
 						<el-table-column type="selection" width="55"></el-table-column>
 						<el-table-column prop="name" label="商品" min-width="200"></el-table-column>
 						<el-table-column prop="num" label="数量" min-width="80"></el-table-column>
 						<el-table-column prop="orderNum" label="物流/单号" min-width="180"></el-table-column>
 						<el-table-column prop="status" label="状态" min-width="80"></el-table-column>
 					</el-table>
-					<el-form :model="shipData" v-loading="fLoading" label-width="100px" ref="shipFileds" label-position="left">
+					<el-form :model="shipData" v-loading="$store.state.common.fLoading" label-width="100px" ref="shipFileds" label-position="left">
 						<el-form-item label="收货地址：">
 							<span v-text="shipData.address"></span>
 						</el-form-item>
@@ -230,7 +230,7 @@
 <script>
 //	import AdminApiService from '../../services/AdminApiService';
 	export default {
-		name: 'ddgl',
+		name: 'orderManage',
 		data() {
 			return {
 				paginator:{
@@ -313,7 +313,7 @@
 
 		},
 		created() {
-			this.getList(this.paginator)
+//			this.getList(this.paginator)
 		}
 	}
 </script>

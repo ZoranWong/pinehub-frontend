@@ -18,7 +18,7 @@
 								<el-button size="small" type="success" @click="getUpdate()">新建满减满送</el-button>
 							</el-form-item>
 						</el-form>
-						<el-table :data="levelsData" highlight-current-row v-loading="tLoading">
+						<el-table :data="levelsData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="活动名称" min-width="120"></el-table-column>
 							<el-table-column prop="" label="有效时间" min-width="140">
 								<template slot-scope="scope">
@@ -46,7 +46,7 @@
 						</el-table>
 						<!--工具条-->
 						<div class="toolbar" style="text-align: right;">
-							<p>共{{totalNum}}条，每页20条</p>
+							<p>共{{$store.state.fullReduce.totalNum}}条，每页20条</p>
 							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
 						</div>
 					</el-tab-pane>
@@ -65,7 +65,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="nostartData" highlight-current-row v-loading="tLoading">
+						<el-table :data="nostartData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="活动名称" min-width="120"></el-table-column>
 							<el-table-column prop="" label="有效时间" min-width="140">
 								<template slot-scope="scope">
@@ -112,7 +112,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="processData" highlight-current-row v-loading="tLoading">
+						<el-table :data="processData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="活动名称" min-width="120"></el-table-column>
 							<el-table-column prop="" label="有效时间" min-width="140">
 								<template slot-scope="scope">
@@ -159,7 +159,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="endData" highlight-current-row v-loading="tLoading">
+						<el-table :data="endData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="活动名称" min-width="120"></el-table-column>
 							<el-table-column prop="" label="有效时间" min-width="140">
 								<template slot-scope="scope">
@@ -194,12 +194,12 @@
 				</el-tabs>
 			</el-col>
 			<!--新增编辑界面-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="80%" :close-on-click-modal="false">
+			<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" :modal="false" :top="$store.state.common.scrollTop" width="80%" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="设置满减送" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+					<el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<h4>活动信息</h4>
 						<el-form-item label="活动名称：" prop="name">
 							<el-input v-model="formData.name" style="width:30%"></el-input>
@@ -215,7 +215,7 @@
 				    	</el-form-item>
 						
 						<h4>优惠设置</h4>
-						<el-table :data="formData.gift"  v-loading="tLoading">
+						<el-table :data="formData.gift"  v-loading="$store.state.common.tLoading">
 							<el-table-column prop="level_type" label="层级" width="60"></el-table-column>
 							<el-table-column prop="condition.least_amount" label="优惠门槛" min-width="220">
 								<template slot-scope="scope">
@@ -265,7 +265,7 @@
 							</el-table-column>
 							<el-table-column label="操作" width="70" align="center">
 								<template slot-scope="scope" v-if="scope.$index != 0">
-									<el-button type="danger" :loading="bLoading" size="mini" :disabled="scope.$index == 0 || scope.$index != formData.gift.length - 1" @click="levelDel(scope.$index)">删除</el-button>
+									<el-button type="danger" :loading="$store.state.common.bLoading" size="mini" :disabled="scope.$index == 0 || scope.$index != formData.gift.length - 1" @click="levelDel(scope.$index)">删除</el-button>
 								</template>
 							</el-table-column>
 						</el-table>
@@ -283,7 +283,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">提交</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">提交</el-button>
 				</div>
 			</el-dialog>
 			<!--详情界面-->
@@ -371,7 +371,8 @@
 					}]
 				},
 				ticketList:[],
-				meta:{}
+				meta:{},
+				formVisible:false
 			};
 		},
 		mounted() {
@@ -546,8 +547,8 @@
 		filters: {
 		},
 		created() {
-			this.getList(this.filters)
-			this.getLists()
+//			this.getList(this.filters)
+//			this.getLists()
 		}
 	}
 </script>

@@ -52,7 +52,7 @@
 			</el-col>
 
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading" @selection-change="handleSelectionChange">
+			<el-table :data="$store.state.merchandisesManage.selectData" highlight-current-row v-loading="$store.state.common.tLoading" @selection-change="handleSelectionChange">
 				<el-table-column type="selection" width="55"></el-table-column>
 				<el-table-column prop="code" label="商品  价格" min-width="200">
 					<template slot-scope="scope">
@@ -96,15 +96,15 @@
 
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>
+				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" background :total="$store.state.merchandisesManage.totalNum"></el-pagination>
 			</div>
 			<!--新增编辑界面-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" :modal="false" :top="scrollTop" width="80%" :close-on-click-modal="false">
+			<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" :modal="false" :top="$store.state.common.scrollTop" width="80%" :close-on-click-modal="false">
 				<el-tabs active-name="first">
-					<el-tab-pane :label="saveType ? '编辑商品' : '发布商品'" name="first"></el-tab-pane>
+					<el-tab-pane :label="$store.state.common.saveType ? '编辑商品' : '发布商品'" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+					<el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<h4>基本信息</h4>
 						<el-form-item label="商品名：" prop="name">
 							<el-input v-model="formData.name" style="width:30%"></el-input>
@@ -114,7 +114,7 @@
 						</el-form-item>
 						<p class="prompt">微信分享给好友时会显示，建议36个字以内</p>
 						<el-form-item label="商品图：" prop="images">
-							<el-upload class="upload-demo" name="merchantpic" :beforeUpload="beforeUpload" :headers="headers" :action="ADMIN_SERVER_HOST+'/merchandise/image/cloud?selected_appid='+appId+'&token='+tokens" :on-remove="handleRemove" :data="exData" :file-list="fileList" :on-success="handleSuccess" :on-error="handleError" list-type="picture-card">
+							<el-upload class="upload-demo" name="merchantpic" :beforeUpload="beforeUpload" :headers="headers" :action="ADMIN_SERVER_HOST+'/merchandise/image/cloud?selected_appid='+appId+'&token='+tokens" :on-remove="handleRemove" :data="exData" :file-list="fileList" :on-success="handleSuccess" :on-error="$handleError" list-type="picture-card">
 							  <el-button plain size="small" type="text">+ 点击上传  </el-button>
 							  <div slot="tip" class="el-upload__tip">建议尺寸：800*800像素，你可以拖拽图片调整顺序，最多上传15张 </div>
 							</el-upload>
@@ -128,7 +128,7 @@
 						  	
 						</el-form-item>
 						<el-form-item label="主图：" prop="main_image">
-							<el-upload class="upload-demo" name="main_image" :beforeUpload="mainBeforeUpload" :headers="headers" :action="ADMIN_SERVER_HOST+'/merchandise/image/cloud?selected_appid='+appId+'&token='+tokens" :on-remove="mainHandleRemove" :file-list="mainFileList" :data="mainExData" :on-success="mainHandleSuccess" :on-error="handleError" list-type="picture-card">
+							<el-upload class="upload-demo" name="main_image" :beforeUpload="mainBeforeUpload" :headers="headers" :action="ADMIN_SERVER_HOST+'/merchandise/image/cloud?selected_appid='+appId+'&token='+tokens" :on-remove="mainHandleRemove" :file-list="mainFileList" :data="mainExData" :on-success="mainHandleSuccess" :on-error="$handleError" list-type="picture-card">
 							  	<el-button plain size="small" type="text">+点击上传 </el-button>
 							  	<div slot="tip" class="el-upload__tip">建议尺寸：800*800像素，最多上传1张 </div>
 							</el-upload>
@@ -181,16 +181,16 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">提交</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">提交</el-button>
 				</div>
 			</el-dialog>
 			<!--新建分组-->
-			<el-dialog :visible.sync="groupingVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="groupingVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="新建商品分组" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="groupingData" v-loading="fLoading" label-width="120px" ref="groupingFileds">
+					<el-form :model="groupingData" v-loading="$store.state.common.fLoading" label-width="120px" ref="groupingFileds">
 						<el-form-item label="分组名称:" prop="name" :rules="[{ required: true, message: '请输入分组名称', trigger: 'blur' }]">
 							<el-input v-model="groupingData.name" style="width:50%"></el-input>
 						</el-form-item>
@@ -198,7 +198,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="groupingVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="groupSubmit()" :loading="bLoading" size="small">保存</el-button>
+					<el-button type="primary" @click.native="groupSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
 		</div>
@@ -212,13 +212,14 @@
 //	import { mapGetters } from 'vuex'
 //	import { TMap } from '../../TMap'
 	export default {
-		name: 'spgl',
+		name: 'merchandisesManage',
 		data() {
 			return {
 				paginator:{
 					page:1,
 					limit:10
 				},
+				formVisible:false,
 				groupingVisible:false,
 				appId:'',
 				tokens:'',
@@ -317,12 +318,201 @@
 
 		},
 		methods: {
-			
+			handleSuccess(response, file, fileList) {
+				if(response.status_code){
+					this.$message({ message: '上传失败', type: 'warning' })
+				}else{
+					this.formData.images||(this.formData.images=[]);
+					//for(let i in fileList){
+					this.formData.images.push(response.data.src);
+					//}
+				}
+				this.groupImgShow=true
+			},
+			handleRemove(file, fileList) {
+				if(!file) return
+				console.log(file)
+				console.log(fileList)
+			},
+			mainHandleSuccess(response, file, fileList) {
+				if(response.status_code){
+					this.$message({ message: '上传失败', type: 'warning' })
+				}else{
+					this.formData.main_image=response.data.src;
+				}
+				this.groupImgShow=true
+			},
+			mainHandleRemove(file, fileList) {
+				if(!file) return
+				this.formData.main_image=''
+				
+			},
+			mainBeforeUpload(file) {
+				const isJPG = file.type === 'image/png';
+		        const isLt2M = file.size / 1024 / 1024 < 1;
+				if(this.mainFileList.length > 0) {
+					this.$message({ message: '最多上传一张图片', type: 'warning' })
+					return false
+				}
+		        if (!isJPG) {
+		          this.$message.error('上传图片只能是PNG格式!');
+		        }
+		        if (!isLt2M) {
+		          this.$message.error('上传图片大小不能超过 1MB!');
+		        }
+        		return isJPG && isLt2M;
+			},
+			//图片上传组件 before-upload 所对应的方法 可限制图片的格式大小数量等
+			beforeUpload(file) {
+				console.log(file)
+				const isJPG = file.type === 'image/png';
+		        const isLt2M = file.size / 1024 / 1024 < 1;
+		        console.log(this.formData.images)
+				if(this.formData.images.length > 14) {
+					this.$message({ message: '最多上传15张图片', type: 'warning' })
+					return false
+				}
+		        if (!isJPG) {
+		          this.$message.error('上传图片只能是PNG格式!');
+		        }
+		        if (!isLt2M) {
+		          this.$message.error('上传图片大小不能超过 1MB!');
+		        }
+        		return isJPG && isLt2M;
+			},
+			handleSelectionChange(val){
+				
+			},
+			upload(){
+				window.open(this.imgCodeUrl)
+			},
+			addressSearch(){
+				if(this.mapfilter.address){
+					this.geocoder.getLocation(this.mapfilter.address)
+				}else{
+					this.$message({message:"请先输入有效地址再搜索",type: 'warning'})
+				}
+			},
+			async addGroup(){
+				this.groupingVisible = true
+				let result = await this.$nextTick();
+				if( result ) {
+				    this.$refs.groupingFileds.resetFields();
+			    	
+				}
+			},
+			async groupSubmit() {
+				let self = this;
+				let valid = await this.$refs.groupingFileds.validate();
+				if(valid){
+					let result = await this.$confirm('确认保存吗？', '提示', {})
+					if(result) {
+						let para = Object.assign({}, this.groupingData);
+						let data=await self.adminApi(MerchandisesService).Merchandises.createGroup(para);
+						console.log(data)
+						if(data) {
+							this.$message({message:"新增成功",type: 'success'})
+							this.getGroup()
+						}
+						this.groupingVisible = false
+					}
+				}
+			},
+			async getUpdate(type, row, para,fun) {
+				this.formVisible = true
+				let result = await this.$nextTick();
+				if( result ) {
+				    this.$refs.formFileds.resetFields();
+			    	if(type) {
+						this.saveType = 1
+						if(this.exData) {
+							this.exData.affairId = row.id
+						}
+						let list = await this.adminApi(MerchandisesService).Merchandises.detailData(row.id);
+						
+						this.formData=Object.assign(this.formData, list)
+						this.formData.status=this.formData.status.toString()
+						this.formData.images=this.formData.images?this.formData.images:[]
+						if(this.formData.categories.length){
+							var catArr=[]
+							for(let i in this.formData.categories){
+								catArr.push(this.formData.categories[i].id)
+							}
+						}
+						this.formData.categories=catArr
+						console.log(this.formData)
+					} else {
+						console.log(this.formData)
+						this.saveType = 0
+						if(this.exData) {
+							this.exData.affairId = ''
+						}
+						delete this.formData.id
+						if(fun) {
+							fun()
+						}
+					}
+				}
+			},
+			async getDetail(row){
+				let list = await this.adminApi(MerchandisesService).Merchandises.detailData(row.id);
+				this.detailData=list
+				this.detailVisible = true
+				this.$nextTick(() => {
+					this.adapt()
+				})
+			},
+			async createSubmit(beforeSave,afterSave) {
+				if(beforeSave) {
+					beforeSave()
+				}
+				let self = this;
+				let valid = await this.$refs.formFileds.validate();
+				if(valid){
+					let result = await this.$confirm('确认提交吗？', '提示', {})
+					if(result) {
+						if(this.saveType){
+							let para = Object.assign({}, this.formData);
+							let data = await self.adminApi(MerchandisesService).Merchandises.updateData(this.formData.id,para);
+							console.log(data)
+							if(data) {
+								this.$message({message:"编辑成功",type: 'success'})
+							}
+						}else{
+							let para = Object.assign({}, this.formData);
+							let data=await self.adminApi(MerchandisesService).Merchandises.createData(para);
+							console.log(data)
+							if(data) {
+								this.$message({message:"新增成功",type: 'success'})
+								this.getList(this.filters)
+							}
+						}
+						this.formVisible = false
+					}
+				}
+			},
+			async getGroup(){
+				let [list, meta] = await this.adminApi(MerchandisesService).Merchandises.getGroups();
+				this.groupList=list
+				console.log(list);
+			},
+			async getList(fliters){
+				let [list, meta] = await this.adminApi(MerchandisesService).Merchandises.getLists(fliters);
+				this.meta = meta;
+				this.selectData= list;
+				for(var i in this.selectData){
+					this.selectData[i].index=parseInt(i)+1
+				}
+				this.totalNum=this.meta.total
+			}
 		},
 		filters: {
 		},
 		created() {
-			
+//			this.getList(this.paginator)
+//			this.getGroup()
+//			this.appId= JSON.parse(sessionStorage.getItem('appInfo')).id || '';
+//			this.tokens= TokenService.getToken();
 		}
 	}
 </script>

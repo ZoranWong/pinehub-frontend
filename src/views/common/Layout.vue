@@ -106,7 +106,7 @@
 		bottom: 0px;
 		overflow: hidden;
 	}
-	.right_content .contentHeader .userinfo-inner{f
+	.right_content .contentHeader .userinfo-inner{
 		 float: right;
     	line-height: 47px;
     	margin-right:10px;

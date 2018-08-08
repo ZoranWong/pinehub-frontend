@@ -31,7 +31,7 @@
 			<!--工具条-->
 			<el-button size="small" type="primary" @click.native="getUpdate()" style="margin-bottom: 10px;">新建积分规则</el-button>
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
+			<el-table :data="$store.state.pointManage.selectData" highlight-current-row v-loading="$store.state.common.tLoading">
 				<el-table-column prop="type" label="奖励条件" min-width="180">
 					<template slot-scope="scope">
 						<span v-if="scope.row.type == '10'">每购买金额{{scope.row.rule.order_amount}}元全部商品参加</span>
@@ -55,16 +55,16 @@
 			</el-table>
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
-				<p>共{{totalNum}}条，50条每页</p>
+				<p>共{{$store.state.common.totalNum}}条，50条每页</p>
 				<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
 			</div>
 			<!--店铺积分通用规则界面-->
-			<el-dialog :visible.sync="cardVisible" @close="dialogClose" @open="dialogOpen" width="80%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="cardVisible" @close="$dialogClose" @open="$dialogOpen" width="80%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="店铺积分通用规则" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="cardData" v-loading="fLoading" label-width="120px" :rules="cardRules" ref="cardFileds">
+					<el-form :model="cardData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="cardRules" ref="cardFileds">
 						<el-form-item label="通用有效期：" prop="garden">
 							<el-radio-group v-model="cardData.garden">
 								<div><el-radio label="click">永久有效</el-radio> </div>
@@ -98,16 +98,16 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="cardVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="universalSet()" :loading="bLoading" size="small">确定</el-button>
+					<el-button type="primary" @click.native="universalSet()" :loading="$store.state.common.bLoading" size="small">确定</el-button>
 				</div>
 			</el-dialog>
 			<!--新建积分规则-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" width="80%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" width="80%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="新建积分规则" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+					<el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<el-form-item label="奖励分值：" prop="score">
 							<el-input v-model="formData.score" style="width:50%"></el-input>
 						</el-form-item>
@@ -146,7 +146,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">确定</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">确定</el-button>
 				</div>
 			</el-dialog>
 		</div>
@@ -158,7 +158,7 @@
 //	import UserService from '../../services/UserService';
 //	import { mapGetters } from 'vuex'
 	export default {
-		name: 'jfgl',
+		name: 'pointManage',
 		data() {
 			return {
 				selected_appid:'',
@@ -166,6 +166,7 @@
 					expires_at:'',	
 					score:''
 				},
+				formVisible:false,
 				cardVisible:false,
 				cardData:{
 					type:'0',
@@ -322,8 +323,8 @@
 		filters: {
 		},
 		created() {
-			this.getList(this.filters)
-			this.getListT()
+//			this.getList(this.filters)
+//			this.getListT()
 		},
 		mounted() {
 

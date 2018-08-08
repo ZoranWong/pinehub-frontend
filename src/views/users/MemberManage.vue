@@ -37,13 +37,13 @@
 					<el-form-item prop="province">
 						<el-select size="small" v-model="filters.province" @change="linkageChange($event,'cxCityData','city')">
 							<el-option label="请选择省" value="" @click.native="filters.city = '';filters.area = ''"></el-option>
-							<el-option v-for="(item,index) in provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in $store.state.common.provinceData" :label="item.name" :value="item.id" :key="index" @click.native="filters.city = '';filters.area = ''"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item prop="city">
 						<el-select size="small" v-model="filters.city" @change="linkageChange($event,'cxAreaData','area')">
 							<el-option label="请选择市" value="" @click.native="filters.area = ''"></el-option>
-							<el-option v-for="(item,index) in cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
+							<el-option v-for="(item,index) in $store.state.common.cxCityData" :label="item.name" :value="item.id" :key="index" @click.native="filters.area = ''"></el-option>
 						</el-select>
 					</el-form-item>
 					<!--<el-form-item prop="area">
@@ -61,7 +61,7 @@
 				</el-form>
 			</el-col>
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading">
+			<el-table :data="$store.state.memberManage.selectData" highlight-current-row v-loading="$store.state.common.tLoading">
 				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
 				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
 				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
@@ -82,10 +82,10 @@
 
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" :total="totalNum"></el-pagination>
+				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" :total="$store.state.memberManage.totalNum"></el-pagination>
 			</div>
 			<!--设置会员卡界面-->
-			<el-dialog :visible.sync="cardVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="cardVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="设置会员卡" name="first"></el-tab-pane>
 				</el-tabs>
@@ -94,7 +94,7 @@
 					<p>注：会员可以拥有多张零门槛卡，但只能一张规则卡</p>
 				</div>
 				<div class="form-container">
-					<el-form :model="cardData" v-loading="fLoading" label-width="120px" ref="cardFileds">
+					<el-form :model="cardData" v-loading="$store.state.common.fLoading" label-width="120px" ref="cardFileds">
 						<el-form-item label="无门槛卡：" prop="c1">
 							<el-select size="small" v-model="cardData.c1" multiple>
 								<el-option label="选择无门槛卡" value=""></el-option>
@@ -111,7 +111,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="cardVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="setMember()" :loading="bLoading" size="small">确定</el-button>
+					<el-button type="primary" @click.native="setMember()" :loading="$store.state.common.bLoading" size="small">确定</el-button>
 				</div>
 			</el-dialog>
 		</div>
@@ -122,7 +122,7 @@
 //	import UserService from '../../services/UserService';
 //	import { mapGetters } from 'vuex'
 	export default {
-		name: 'hygl',
+		name: 'memberManage',
 		data() {
 			return {
 				paginator:{
@@ -181,8 +181,8 @@
 			
 		},
 		created() {
-			this.getList(this.paginator)
-			this.getListData()
+//			this.getList(this.paginator)
+//			this.getListData()
 		},
 		mounted() {
 

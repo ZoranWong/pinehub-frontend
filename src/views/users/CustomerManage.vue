@@ -58,7 +58,7 @@
 			</el-col>
 
 			<!--列表-->
-			<el-table :data="selectData" highlight-current-row v-loading="tLoading" @selection-change="handleSelectionChange">
+			<el-table :data="$store.state.customerManage.selectData" highlight-current-row v-loading="$store.state.common.tLoading" @selection-change="handleSelectionChange">
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
 				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
@@ -113,10 +113,10 @@
 			</el-table>
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>
+				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" background :total="$store.state.customerManage.totalNum"></el-pagination>
 			</div>
 			<!--设置会员卡界面-->
-			<el-dialog :visible.sync="cardVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="cardVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="设置会员卡" name="first"></el-tab-pane>
 				</el-tabs>
@@ -125,7 +125,7 @@
 					<p>注：会员可以拥有多张零门槛卡，但只能一张规则卡</p>
 				</div>
 				<div class="form-container">
-					<el-form :model="cardData" v-loading="fLoading" label-width="120px" :rules="cardRules" ref="cardFileds">
+					<el-form :model="cardData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="cardRules" ref="cardFileds">
 						<el-form-item label="无门槛卡：" prop="c1">
 							<el-select size="small" v-model="cardData.c1" multiple>
 								<el-option label="选择无门槛卡" value=""></el-option>
@@ -142,16 +142,16 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="cardVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="setMember()" :loading="bLoading" size="small">确定</el-button>
+					<el-button type="primary" @click.native="setMember()" :loading="$store.state.common.bLoading" size="small">确定</el-button>
 				</div>
 			</el-dialog>
 			<!--添加客户界面-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" width="50%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="添加客户" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container">
-					<el-form :model="formData" v-loading="fLoading" label-width="120px" :rules="formRules" ref="formFileds">
+					<el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
 						<el-form-item label="客户身份：" prop="type">
 							<el-radio-group v-model="formData.type">
 								<el-radio label="click">非会员</el-radio>
@@ -186,7 +186,7 @@
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">保存</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
 		</div>
@@ -197,13 +197,14 @@
 /* eslint-disable */
 //	import UserService from '../../services/UserService';
 	export default {
-		name: 'khgl',
+		name: 'customerManage',
 		data() {
 			return {
 				paginator:{
 					page:1,
 					limit:10
 				},
+				formVisible:false,
 				news:false,
 				integrals:false,
 				labels:false,
@@ -334,7 +335,7 @@
 
 		},
 		created() {
-			this.getList(this.paginator)
+//			this.getList(this.paginator)
 		},
 		mounted() {
 

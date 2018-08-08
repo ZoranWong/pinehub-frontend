@@ -6,7 +6,7 @@
         <img src="../../src/assets/logo_white.svg" v-else/>
       </router-link>
     </div>
-    <aside>
+    <aside >
       <menus :toogleMenu="toogleMenu"></menus>
     </aside>
   </div>
@@ -33,6 +33,10 @@ export default {
 		background: #444;
 		color: rgba(255,255,255,0.65);
 	}
+	/*.left_nav .logo{
+		    width: 113px;
+    background: #444;
+	}*/
 	.left_nav .el-menu{
 		background: #000c17;
 		border:none !important

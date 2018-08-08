@@ -10,6 +10,9 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
   methods () {
     let self = this;
     return {
+    	$handleError() {
+				this.$notify.error({title: '上传失败',message: '图片上传失败'});
+			},
     	$handleCurrentChange(val, filters = self.filters, fun) {
 				filters.pageNum = val
 				fun()
@@ -38,7 +41,6 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
         self.$emit('dialogClose');
       },
       $dialogOpen() {
-      	console.log(self.$store)
         if(!self.box) {
           return;
         }
