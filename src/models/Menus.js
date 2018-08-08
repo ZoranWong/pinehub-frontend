@@ -1,4 +1,5 @@
 import Model from './Model';
+import _ from 'underscore';
 export default class Menus extends Model {
   constructor(application) {
     super(application);
@@ -212,6 +213,22 @@ export default class Menus extends Model {
   }
   computed() {
     return {
+      getMenuByPath :(state) => (path) => {
+        let menu = null;
+        _.map(state.list, function(value) {
+          if(value.path === path){
+            menu =   value;
+          }
+          if(value.children){
+            _.map(value.children , function(child) {
+              if(('/' + value.path + '/' +child.path) === path) {
+                menu =   child;
+              }
+            });
+          }
+        });
+        return menu;
+      }
     };
   }
 }
