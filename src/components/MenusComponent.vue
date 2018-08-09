@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu" :style="scrollStyle">
+=======
+  <el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu">
+>>>>>>> 9c7c6c337efddb879e7c9f9c186485c1ecf4cb86
     <template v-for="(menu, index) in menus">
       <el-submenu v-if="menu.title != '首页'" :index="index+''" >
         <template slot="title">
@@ -10,7 +14,7 @@
           </el-tooltip>
           <span>{{ menu.title }}</span>
         </template>
-        <el-menu-item @click="routeTo( menu.path + '/' +child.path, child.id )" :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="'/' + child.path" :key="index">
+        <el-menu-item @click="routeTo( menu.path + '/' +child.path, child.id )" :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id" :key="index">
           <span style="padding:0 16px;">{{child.title}}</span>
         </el-menu-item>
       </el-submenu>

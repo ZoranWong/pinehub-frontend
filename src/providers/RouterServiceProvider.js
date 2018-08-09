@@ -23,9 +23,10 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    console.log('to page', to.path);
+    console.log('to page', to);
     if(this.app.instances['vue-store'].getters['account/logined']) {
-      this.app.instances['vue-store'].state.menus.activeMenu = null;
+      let menu = this.app.instances['vue-store'].getters['menus/getMenuByPath'](to.path);
+      this.app.instances['vue-store'].state.menus.activeMenu = menu ? menu['id'] : null;
       if(to.name !== 'sign-in'){
         next();
       }else{
