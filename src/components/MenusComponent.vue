@@ -1,9 +1,6 @@
 <template>
-<<<<<<< HEAD
   <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu" :style="scrollStyle">
-=======
-  <el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu">
->>>>>>> 9c7c6c337efddb879e7c9f9c186485c1ecf4cb86
+  <!--<el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu">-->
     <template v-for="(menu, index) in menus">
       <el-submenu v-if="menu.title != '首页'" :index="index+''" >
         <template slot="title">
