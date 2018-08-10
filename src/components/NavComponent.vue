@@ -1,7 +1,7 @@
 <template>
   <div class="nav" :class="{ 'toogle-nav': toogleMenu}" v-if="show">
     <div class="logo" >
-      <router-link :to="'/project/' + {projectId}">
+      <router-link :to="{name: 'project', params: { id: projectId }}">
         <img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
         <img src="../../src/assets/logo_white.svg" v-else/>
       </router-link>
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     projectId() {
-      return 1;
+      return '1';
     }
   },
   props: {

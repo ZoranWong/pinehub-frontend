@@ -8,7 +8,7 @@
 <script>
 /* eslint-disable */
 	export default {
-		name: 'WechatIndex',
+		name: 'Project',
 	}
 </script>
 
