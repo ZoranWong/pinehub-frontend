@@ -85,12 +85,12 @@ export default class Menus extends Model {
         id: 16,
 	      title: '商品',
 	      icon: 'fa fa-tag',
-	      path: 'merchandises',
+	      path: 'merchandise',
 	      children: [{
           id: 17,
           title: '商品管理',
           icon: '',
-          path: 'merchandisesManage',
+          path: 'index',
 	      },{
           id: 18,
           title: '出售中',
@@ -110,7 +110,7 @@ export default class Menus extends Model {
           id: 21,
           title: '品类管理',
           icon: '',
-          path: 'categoryManage',
+          path: '/category/index',
 	      }]
       },{
         id: 22,
@@ -221,7 +221,7 @@ export default class Menus extends Model {
           }
           if(value.children){
             _.map(value.children , function(child) {
-              if(('/' + value.path + '/' +child.path) === path) {
+              if((child.path.charAt(0) === '/' && child.path === path) || ('/' + value.path + '/' +child.path) === path) {
                 menu =   child;
               }
             });

@@ -17,6 +17,9 @@ import tickets from './TicketsRoute';
 //用户管理
 import users from './UsersRoute';
 
+//品类管理
+import categories from './CategoriesRoute';
+
 import Route from './Route';
 
 let routes = [];
@@ -26,7 +29,7 @@ routes.push(signIn);
 routes.push(layout);
 routes.push(marketing);
 routes.push(wechat);
-
+routes.push(categories);
 routes.push(merchandises);
 routes.push(orders);
 routes.push(shops);

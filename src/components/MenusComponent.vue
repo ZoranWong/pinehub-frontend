@@ -10,7 +10,7 @@
           </el-tooltip>
           <span>{{ menu.title }}</span>
         </template>
-        <el-menu-item @click="routeTo( menu.path + '/' +child.path, child.id )" :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
+        <el-menu-item @click="routeTo( menu, child )" :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
           <span style="padding:0 16px;">{{child.title}}</span>
         </el-menu-item>
       </el-submenu>
@@ -35,9 +35,15 @@ export default {
     }
   },
   methods: {
-    routeTo(path, id) {
-      this.$store.state.menus.activeMenu = id;
-      path = '/' + _.strip(path, '/');
+    routeTo(menu, child) {
+      this.$store.state.menus.activeMenu = child.id;
+      let path = '';
+      if(child.path.charAt(0) === '/') {
+        path = child.path;
+      }else{
+        path += '/' + _.strip(menu.path, '/');
+        path += '/' + _.strip(child.path, '/');
+      }
       this.$command('redirect', {path: path});
     },
     checkActive(id){
