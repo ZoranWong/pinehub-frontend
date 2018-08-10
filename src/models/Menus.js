@@ -10,7 +10,7 @@ export default class Menus extends Model {
       list:[{
         id: 1,
 	      title: '微信',
-	      icon: 'fa fa-weixin',
+	      icon: '#icon-weixin',
 	      path: 'wechat',
 	      children: [{
           id: 2 ,
@@ -36,7 +36,7 @@ export default class Menus extends Model {
       },{
         id: 8,
 	      title: '店铺',
-	      icon: 'fa fa-building',
+	      icon: '#icon-shangcheng',
 	      path: 'shop',
 	      children: [{
           id: 9,
@@ -57,7 +57,7 @@ export default class Menus extends Model {
       },{
         id: 11,
 	      title: '营销',
-	      icon: 'fa fa-th-large',
+	      icon: '#icon-icon_',
 	      path: 'marketing',
 	      children: [
           {
@@ -84,7 +84,7 @@ export default class Menus extends Model {
       },{
         id: 16,
 	      title: '商品',
-	      icon: 'fa fa-tag',
+	      icon: '#icon-category',
 	      path: 'merchandise',
 	      children: [{
           id: 17,
@@ -115,7 +115,7 @@ export default class Menus extends Model {
       },{
         id: 22,
 	      title: '订单',
-	      icon: 'fa fa-file-text',
+	      icon: '#icon-dingdanguanli',
 	      path: 'orders',
 	      children: [{
           id: 23,
@@ -147,7 +147,7 @@ export default class Menus extends Model {
       },{
         id: 28,
 	      title: '用户',
-	      icon: 'fa fa-users',
+	      icon: '#icon-drxx10',
 	      path: 'users',
 	      children: [{
           id: 29,
@@ -173,7 +173,7 @@ export default class Menus extends Model {
       },{
         id: 33,
         title: '分销',
-        icon: 'fa fa-bullhorn',
+        icon: '#icon--',
         path: 'distribution',
         children:[
           {
@@ -196,17 +196,17 @@ export default class Menus extends Model {
       },{
         id: 37,
         title: '财务',
-        icon: 'fa fa-bar-chart',
+        icon: '#icon-fenxi',
         path: 'finance'
       },{
         id: 38,
         title: '供应商',
-        icon: 'fa fa-handshake-o',
+        icon: '#icon-supplier',
         path: ''
       },{
         id: 39,
         title: '物流',
-        icon: 'fa fa-truck',
+        icon: '#icon-icon_wuliuguanli',
         path: ''
       }]
     };

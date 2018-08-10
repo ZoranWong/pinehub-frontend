@@ -5,7 +5,10 @@
         <template slot="title">
           <el-tooltip effect="dark" :disabled="!toogleMenu" :content="menu.title" placement="right">
             <div class="tipbox">
-              <i :class="menu.icon" v-if="menu.icon"></i>
+              <svg class="icon menu-icon" aria-hidden="true"  v-if="menu.icon">
+                <use :xlink:href="menu.icon"></use>
+              </svg>
+              <!-- <i :class="menu.icon" v-if="menu.icon"></i> -->
             </div>
           </el-tooltip>
           <span>{{ menu.title }}</span>
@@ -145,4 +148,7 @@ export default {
 		padding:0 !important
 	}
 	.el-menu--popup{background: #fff !important;border-radius: 5px !important;}
+  .menu-icon {
+     font-size: 18px;
+  }
 </style>
