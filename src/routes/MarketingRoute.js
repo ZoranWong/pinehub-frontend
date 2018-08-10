@@ -2,6 +2,7 @@ import Route from './Route';
 import Layout from '../views/common/Layout';
 import FullReduce from '../views/marketing/FullReduce';
 import PayGift from '../views/marketing/PayGift';
+import Coupon from '../views/marketing/Coupon';
 let route = new Route();
 route.group('/marketing', 
 	{
@@ -18,6 +19,11 @@ route.group('/marketing',
 		  		'name': 'pay-gift',
 		  		'component': PayGift,
 		  		'tag': '支付有礼'
+		  	});
+		  	route.addRoute('/coupon', {
+		  		'name': 'coupon',
+		  		'component': Coupon,
+		  		'tag': '优惠券'
 		  	});
 	  	}
 	});

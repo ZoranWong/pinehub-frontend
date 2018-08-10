@@ -11,6 +11,7 @@ import MemberCard from './MemberCard';
 import MemberManage from './MemberManage';
 import PointManage from './PointManage';
 import CustomerManage from './CustomerManage';
+import Coupon from './Coupon';
 export default class Store {
   constructor(application) {
     this.$application = application;
@@ -26,6 +27,7 @@ export default class Store {
     this.addModel('memberManage', MemberManage);
     this.addModel('pointManage', PointManage);
     this.addModel('customerManage', CustomerManage);
+    this.addModel('coupon', Coupon);
   }
   addModel(name, model) {
     this.modules[name] = new model(this.$application);

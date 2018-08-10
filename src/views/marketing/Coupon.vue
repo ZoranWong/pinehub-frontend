@@ -18,7 +18,7 @@
 								<el-button size="small" type="success" @click="getUpdate()">新建优惠券</el-button>
 							</el-form-item>
 						</el-form>
-						<el-table :data="$store.state.coupon.couponsData" highlight-current-row v-loading="tLoading">
+						<el-table :data="$store.state.coupon.couponsData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="title" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100">
 								<template slot-scope="scope">
@@ -58,7 +58,7 @@
 						</el-table>
 						<!--工具条-->
 						<div class="toolbar" style="text-align: right;">
-							<p>共{{totalNum}}条，每页20条</p>
+							<p>共{{$store.state.coupon.totalNum}}条，每页20条</p>
 							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
 						</div>
 					</el-tab-pane>
@@ -77,7 +77,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="$store.state.coupon.nostartData" highlight-current-row v-loading="tLoading">
+						<el-table :data="$store.state.coupon.nostartData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
 							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
@@ -115,7 +115,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="$store.state.coupon.processData" highlight-current-row v-loading="tLoading">
+						<el-table :data="$store.state.coupon.processData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
 							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
@@ -151,7 +151,7 @@
 							</el-form-item>
 						</el-form>
 						<!--列表-->
-						<el-table :data="$store.state.coupon.endData" highlight-current-row v-loading="tLoading">
+						<el-table :data="$store.state.coupon.endData" highlight-current-row v-loading="$store.state.common.tLoading">
 							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
 							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
 							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
@@ -175,12 +175,12 @@
 				</el-tabs>
 			</el-col>
 			<!--新增优惠券界面-->
-			<el-dialog :visible.sync="formVisible" @close="dialogClose" @open="dialogOpen" width="60%" :modal="false" :top="scrollTop" :close-on-click-modal="false">
+			<el-dialog :visible.sync="$store.state.coupon.formVisible" @close="$dialogClose" @open="$dialogOpen" width="60%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
 					<el-tab-pane label="设置店铺优惠券" name="first"></el-tab-pane>
 				</el-tabs>
 				<div class="form-container addCardLayout">
-					<el-form :model="$store.state.coupon.formData" v-loading="fLoading" label-width="120px" :rules="$store.state.coupon.formRules" ref="formFileds">
+					<el-form :model="$store.state.coupon.formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="$store.state.coupon.formRules" ref="formFileds">
 						<h4>优惠券基础信息</h4>
 						<el-form-item label="优惠券名称：" prop="base_info.title">
 							<el-input v-model="$store.state.coupon.formData.base_info.title" :maxlength='10' placeholder="最多支持10个字"></el-input>
@@ -226,7 +226,7 @@
 					    		<div class="colorLayout">
 					    			<span v-for="(item,index) in $store.state.coupon.colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
 					    		</div>
-							  <div class="showColor" slot="reference" size="small"><p :style="saveType?('background-color:'+formatSelect($store.state.coupon.formData.base_info.color)):$store.state.coupon.chooseColor"></p></div>
+							  <div class="showColor" slot="reference" size="small"><p :style="$store.state.common.saveType?('background-color:'+formatSelect($store.state.coupon.formData.base_info.color)):$store.state.coupon.chooseColor"></p></div>
 							</el-popover>
 						</el-form-item>
 						<el-form-item label="卡券标题：" prop="base_info.brand_name" :style="$store.state.coupon.formData.base_info.brand_name?'margin-bottom: 0px;':'margin-bottom: 20px;'">
@@ -304,8 +304,8 @@
 					</el-form>
 				</div>
 				<div slot="footer" class="dialog-footer">
-					<el-button @click.native="formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="bLoading" size="small">保存</el-button>
+					<el-button @click.native="$store.state.coupon.formVisible = false" size="small">取消</el-button>
+					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
 				</div>
 			</el-dialog>
 		</div>
@@ -377,12 +377,14 @@
 		    	}
 		    },
 			async getUpdate(type, row, para,fun) {
-				this.formVisible = true
+				this.$store.state.coupon.formVisible = true
 				let result = await this.$nextTick();
 				if( result ) {
-				    this.$refs.formFileds.resetFields();
+//					if (this.$refs.formFileds!==undefined) {
+				    	this.$refs.formFileds.resetFields();
+//				   	}
 			    	if(type) {
-						this.saveType = 1
+						this.$store.state.common.saveType = 1
 						if(this.exData) {
 							this.exData.affairId = row.id
 						}
@@ -398,7 +400,7 @@
 						this.$store.state.coupon.formData.end_at=list.begin_at?list.end_at.date.substr(0,19):''
 						console.log(this.$store.state.coupon.formData)
 					} else {
-						this.saveType = 0
+						this.$store.state.common.saveType = 0
 						this.$store.state.coupon.formData.base_info.date_info={
 		                    type: "",
 		                    begin_timestamp: "",
@@ -444,7 +446,7 @@
 							}
 						this.$store.state.coupon.copyFormData.base_info.date_info.begin_timestamp=this.$store.state.coupon.formData.base_info.date_info.begin_timestamp?Date.parse(this.$store.state.coupon.formData.base_info.date_info.begin_timestamp)/1000:''
 						this.$store.state.coupon.copyFormData.base_info.date_info.end_timestamp=this.$store.state.coupon.formData.base_info.date_info.end_timestamp?Date.parse(this.$store.state.coupon.formData.base_info.date_info.end_timestamp)/1000:''
-						if(this.saveType){
+						if(this.$store.state.common.saveType){
 							delete this.$store.state.coupon.copyFormData.id
 							para.ticket_info=this.$store.state.coupon.copyFormData
 							let data = await self.adminApi(CardsService).Coupons.updateData(this.$store.state.coupon.formData.id,para);
@@ -460,7 +462,7 @@
 								this.getList(this.filters)
 							}
 						}
-						this.formVisible = false
+						this.$store.state.coupon.formVisible = false
 					}
 				}
 			},
@@ -477,11 +479,11 @@
 		filters: {
 		},
 		created() {
-			this.getList(this.$store.state.coupon.couponsFilters)
-			let shopInfo=JSON.parse(sessionStorage.getItem('shopInfo'))
-			if(shopInfo){
-				this.$store.state.coupon.formData.base_info.logo_url=shopInfo.logo
-			}
+//			this.getList(this.$store.state.coupon.couponsFilters)
+//			let shopInfo=JSON.parse(sessionStorage.getItem('shopInfo'))
+//			if(shopInfo){
+//				this.$store.state.coupon.formData.base_info.logo_url=shopInfo.logo
+//			}
 		},
 		mounted() {
 

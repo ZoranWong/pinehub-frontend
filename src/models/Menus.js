@@ -8,203 +8,203 @@ export default class Menus extends Model {
     return {
       activeMenu: null,
       list:[{
-        id: 1,
+        id: '1',
 	      title: '微信',
 	      icon: 'fa fa-weixin',
 	      path: 'wechat',
 	      children: [{
-          id: 2 ,
+          id: '2' ,
           title: '公众号管理',
           icon: '',
           path: 'manage',
 	      },{
-          id: 3,
+          id: '3',
           title: '菜单管理',
           icon:'',
           path: 'menus'
         },{
-          id: 6,
+          id: '6',
           title: '自动回复',
           icon: '',
           path: 'autoReply'
         },{
-          id: 7,
+          id: '7',
           title: '素材管理',
           icon: '',
           path: 'meterials'
         }]
       },{
-        id: 8,
+        id: '8',
 	      title: '店铺',
 	      icon: 'fa fa-building',
 	      path: 'shops',
 	      children: [{
-          id: 9,
+          id: '9',
           title: '店铺管理',
           icon: '',
           path: 'diningCarManage',
 	      },{
-          id: 10,
+          id: '10',
           title: '关门店铺',
           icon: '',
           path: 'closed'
         },{
-          id: 40,
+          id: '40',
           title: '营业店铺',
           icon: '',
           path: 'open'
         }]
       },{
-        id: 11,
+        id: '11',
 	      title: '营销',
 	      icon: 'fa fa-th-large',
 	      path: 'marketing',
 	      children: [
           {
-            id: 12,
+            id: '12',
             title: '营销中心',
             icon: '',
             path: 'manage',
   	      },{
-            id: 13,
+            id: '13',
             title: '满减/送',
             icon: '',
             path: 'fullReduce',
 	        },{
-            id: 14,
+            id: '14',
             title: '支付有礼',
             icon: '',
             path: 'payGift',
 	        },{
-            id: 15,
+            id: '15',
             title: '优惠券管理',
   	        icon: 'fa fa-ticket',
-  	        path: 'cuopon',
+  	        path: 'coupon',
           }]
       },{
-        id: 16,
+        id: '16',
 	      title: '商品',
 	      icon: 'fa fa-tag',
 	      path: 'merchandises',
 	      children: [{
-          id: 17,
+          id: '17',
           title: '商品管理',
           icon: '',
           path: 'merchandisesManage',
 	      },{
-          id: 18,
+          id: '18',
           title: '出售中',
           icon: '',
           path: 'up',
 	      },{
-          id: 19,
+          id: '19',
           title: '仓库中',
           icon: '',
           path: 'down',
 	      },{
-          id: 20,
+          id: '20',
           title: '已售罄',
           icon: '',
           path: 'manage',
 	      },{
-          id: 21,
+          id: '21',
           title: '品类管理',
           icon: '',
           path: 'categoryManage',
 	      }]
       },{
-        id: 22,
+        id: '22',
 	      title: '订单',
 	      icon: 'fa fa-file-text',
 	      path: 'orders',
 	      children: [{
-          id: 23,
+          id: '23',
           title: '订单管理',
           icon: '',
           path: 'orderManage',
 	      },{
-          id: 24,
+          id: '24',
           title: '线下订单',
           icon: '',
           path: 'scan',
         },{
-          id: 25,
+          id: '25',
           title: '商家订单',
           icon: '',
           path: 'seller/PUR',
         },{
-          id: 16,
+          id: '16',
           title: '采购订单',
           icon: '',
           path: 'company/PUR',
         },{
-          id: 27,
+          id: '27',
           title: '分销订单',
           icon: '',
           path: 'distribution',
         }
       ]
       },{
-        id: 28,
+        id: '28',
 	      title: '用户',
 	      icon: 'fa fa-users',
 	      path: 'users',
 	      children: [{
-          id: 29,
+          id: '29',
           title: '客户管理',
           icon: '',
           path: 'customerManage',
 	      },{
-          id: 30,
+          id: '30',
           title: '会员卡',
           icon: '',
           path: 'memberCard',
 	      },{
-          id: 31,
+          id: '31',
           title: '会员管理',
           icon: '',
           path: 'memberManage',
 	      },{
-          id: 32,
+          id: '32',
           title: '积分管理',
           icon: '',
           path: 'pointManage',
 	      }]
       },{
-        id: 33,
+        id: '33',
         title: '分销',
         icon: 'fa fa-bullhorn',
         path: 'distribution',
         children:[
           {
-            id: 34,
+            id: '34',
             title: '分销员管理',
             icon: '',
             path: 'score/manage',
           },{
-            id: 35,
+            id: '35',
             title: '订单管理',
             icon: '',
             path: 'score/manage',
           },{
-            id: 36,
+            id: '36',
             title: '提现管理',
             icon: '',
             path: 'score/manage',
           }
         ]
       },{
-        id: 37,
+        id: '37',
         title: '财务',
         icon: 'fa fa-bar-chart',
         path: 'finance'
       },{
-        id: 38,
+        id: '38',
         title: '供应商',
         icon: 'fa fa-handshake-o',
         path: ''
       },{
-        id: 39,
+        id: '39',
         title: '物流',
         icon: 'fa fa-truck',
         path: ''
