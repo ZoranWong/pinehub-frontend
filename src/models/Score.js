@@ -1,5 +1,5 @@
 import Model from './Model'
-export default class PointManage extends Model{
+export default class Score extends Model{
   constructor(application) {
     super(application);
   }
@@ -18,14 +18,14 @@ export default class PointManage extends Model{
 				//
 				selected_appid:'',
 				universalData:{
-					expires_at:'',	
+					expires_at:'',
 					score:''
 				},
 				formVisible:false,
 				cardVisible:false,
 				cardData:{
 					type:'0',
-					expires_at:'',	
+					expires_at:'',
 					garden:'click',
 					num:true,
 					score:'',

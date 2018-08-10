@@ -13,7 +13,7 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
     	$handleError() {
 				this.$notify.error({title: '上传失败',message: '图片上传失败'});
 			},
-    	$handleCurrentChange(val, filters = self.filters, fun) {
+    	$changePage(val, filters = self.filters, fun) {
 				filters.pageNum = val
 				fun()
 			},
