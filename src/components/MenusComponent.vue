@@ -1,6 +1,5 @@
 <template>
-  <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="toogleMenu" :style="scrollStyle">
-  <!--<el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu">-->
+  <el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu" :style="scrollStyle">
     <template v-for="(menu, index) in menus">
       <el-submenu v-if="menu.title != '首页'" :index="index+''" >
         <template slot="title">
@@ -48,7 +47,7 @@ export default {
   },
   created() {
     this.scrollStyle='height:'+(window.innerHeight-36.66)+'px';
-    
+
     console.log(this.scrollStyle);
   },
   mounted() {

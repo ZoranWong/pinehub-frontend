@@ -1,7 +1,7 @@
 <template>
-  <div class="left_nav" :class="{ 'toogleNav': toogleMenu}" v-if="show">
+  <div class="nav" :class="{ 'toogle-nav': toogleMenu}" v-if="show">
     <div class="logo" >
-      <router-link to="/apps">
+      <router-link :to="'/project/' + {projectId}">
         <img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
         <img src="../../src/assets/logo_white.svg" v-else/>
       </router-link>
@@ -19,6 +19,11 @@ export default {
   components: {
     menus: MenusComponent
   },
+  computed: {
+    projectId() {
+      return 1;
+    }
+  },
   props: {
     show: Boolean,
     toogleMenu: Boolean
@@ -26,44 +31,43 @@ export default {
 }
 </script>
 <style scoped>
-	.left_nav{
+	.nav{
 		width: 120px;
 		height:100vh;
 		float:left;
 		background: #444;
 		color: rgba(255,255,255,0.65);
 	}
-	/*.left_nav .logo{
-		    width: 113px;
-    background: #444;
-	}*/
-	.left_nav .el-menu{
+  .toogle-nav {
+    width: 40px !important;
+  }
+	.nav .el-menu{
 		background: #000c17;
 		border:none !important
 	}
-	.left_nav .el-menu .el-submenu{
+	.nav .el-menu .el-submenu{
 		background:#001529 ;
 	}
-	.left_nav .el-menu .el-submenu .el-menu-item{
+	.nav .el-menu .el-submenu .el-menu-item{
 		padding:0;
 		min-width: 0px;
 		padding-left:10px !important;
 		color: rgba(255,255,255,0.65);
 	}
 
-	.left_nav .el-menu .el-submenu .is-active{
+	.nav .el-menu .el-submenu .is-active{
 		background:#409EFF;
 		color:rgba(255,255,255,1);
 	}
-	.left_nav .el-menu .el-submenu .el-submenu__title:hover {
+	.nav .el-menu .el-submenu .el-submenu__title:hover {
     	background: #002243;
 		color: rgba(255,255,255,1);
 	}
-	.left_nav .el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
+	.nav .el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
 		background: #002243;
 		color: rgba(255,255,255,1);
 	}
-	.left_nav .el-menu .el-submenu div span{
+	.nav .el-menu .el-submenu div span{
 		color: rgba(255,255,255,0.65);
 	}
 </style>

@@ -2,12 +2,12 @@
 	<el-row class="container">
 		<div class="layout-content">
 			<layout-nav :toogleMenu="toogleMenu" :show="showLeftSide"></layout-nav>
-			<div :class="['right_content',{ 'toogle-content' : toogleMenu }]" :style="showLeftSide?'left: 120px;':'left: 0px;'">
-				<c-header @toogle="toogle" :selected = "selectedApp" :toogleMenu = "toogleMenu"></c-header>
+			<div :class="['right-content',{ 'toogle-content' : toogleMenu }, {'left-content': showLeftSide}]">
+				<c-header @toogle="toogle" :selected = "showLeftSide" :toogleMenu = "toogleMenu"></c-header>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
 						<el-col :span="24" class="breadcrumb-container">
-							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="selectedApp">
+							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="showLeftSide">
 								<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
 									{{ tag(item.name) }}
 								</el-breadcrumb-item>
@@ -28,7 +28,7 @@
 </template>
 <script>
 /* eslint-disable */
-    import NavComponent from '../../components/NavComponent';
+  import NavComponent from '../../components/NavComponent';
 	import HeaderComponent from '../../components/HeaderComponent';
 	import ResetPasswordComponent from '../../components/ResetPasswordComponent';
 	import { mapGetters } from 'vuex'
@@ -51,9 +51,6 @@
 			showLeftSide() {
 				return true
 			},
-     	selectedApp(){
-				return true;
-			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
 			},
@@ -71,16 +68,13 @@
 				this.toogleMenu=!this.toogleMenu
 			},
 			tag(name) {
-				console.log(name);
-				console.log(this.routeMap[name]);
 				return this.routeMap[name]['tag'];
 			}
 		},
 		created() {
-			console.log(this.$store.state.shops.currentPage)
+
 		},
 		mounted() {
-
 		}
 	}
 </script>
@@ -96,54 +90,24 @@
 	.container .toogle-content {
 	    left: 40px !important;
 	}
-	.container .toogleNav {
-	    width: 40px !important;
-	}
-	.right_content{
+	.right-content{
 		position: absolute;
 		right: 0px;
 		top: 0px;
 		bottom: 0px;
 		overflow: hidden;
 	}
-	.right_content .contentHeader .userinfo-inner{
-		 float: right;
-    	line-height: 47px;
-    	margin-right:10px;
-	}
-	.right_content .contentHeader .menu-top{
-		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
-	}
-	.right_content .contentHeader img{
-		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
-	}
+
 	.container .loayout-content .logo {
 		height: 60px;
 		width:100%;
 		background: #00284d;
 		padding-top: 8px;
 	}
-	.el-submenu .el-menu-item {
-    height: 40px;
-    line-height: 40px;}
-
 	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
-	.right_content .contentHeader{
-		padding-right:20px;
-		padding-top:5px;
-		overflow: hidden;
-	}
-	.right_content .contentHeader .userinfo-inner{
-		 float: right;
-    	line-height: 47px;
-    	margin-right:10px;
-	}
-	.el-menu--collapse {
-	    width: 40px;
-	}
-	.right_content .el-breadcrumb {
+	.right-content .el-breadcrumb {
 	    font-size: 14px;
 	    line-height: 1;
 	    height: 40px;
@@ -152,20 +116,9 @@
 	    padding-left:10px;
 	    border-bottom: 1px solid #e9e9e9;
 	}
-	.el-submenu__title{
-		padding:0 !important
+	.left-content{
+		left: 120px;
 	}
-	.el-dropdown{
-		float:right
-	}
-	.container .left_nav aside .tipbox {
-    width: 40px;
-    height: 40px;
-    line-height: 38px;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-}
 </style>
 <style>
 	.content-box{
