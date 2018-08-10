@@ -2,7 +2,6 @@ import Model from './Model'
 export default class Common extends Model{
   constructor(application) {
     super(application);
-    this.provinces = [];
   }
   data(){
     let self = this;

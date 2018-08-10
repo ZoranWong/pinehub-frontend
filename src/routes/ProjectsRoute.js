@@ -12,7 +12,7 @@ route.group('/project', {
       component: Index
     });
     child.addRoute(':id', {
-      name: 'project',
+      name: 'project-detial',
       component: Project
     });
   }
