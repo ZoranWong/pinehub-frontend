@@ -31,7 +31,7 @@ export default class Menus extends Model {
           id: 7,
           title: '素材管理',
           icon: '',
-          path: 'meterials'
+          path: 'materials'
         }]
       },{
         id: 8,
