@@ -16,7 +16,7 @@ export default class Menus extends Model {
           id: '2' ,
           title: '公众号管理',
           icon: '',
-          path: 'manage',
+          path: 'index',
 	      },{
           id: '3',
           title: '菜单管理',
@@ -37,12 +37,12 @@ export default class Menus extends Model {
         id: '8',
 	      title: '店铺',
 	      icon: 'fa fa-building',
-	      path: 'shops',
+	      path: 'shop',
 	      children: [{
           id: '9',
           title: '店铺管理',
           icon: '',
-          path: 'diningCarManage',
+          path: 'index',
 	      },{
           id: '10',
           title: '关门店铺',

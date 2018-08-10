@@ -1,15 +1,15 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import WechatManage from '../views/wechat/WechatManage';
+import WechatIndex from '../views/wechat/Index';
 let route = new Route();
 route.group('/wechat', {
   	'name': 'wechat',
   	'tag' : '公众号信息',
   	'component': Layout,
   	'uses' : function(route) {
-	  	route.addRoute('/manage', {
-	  		'name': 'wechat-manage',
-	  		'component': WechatManage,
+	  	route.addRoute('/index', {
+	  		'name': 'wechat-index',
+	  		'component': WechatIndex,
 	  		'tag': '公众号列表'
 	  	});
 	}

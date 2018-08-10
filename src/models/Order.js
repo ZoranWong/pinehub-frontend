@@ -1,5 +1,5 @@
 import Model from './Model'
-export default class OrderManage extends Model{
+export default class Order extends Model{
   constructor(application) {
     super(application);
   }

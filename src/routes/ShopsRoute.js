@@ -1,16 +1,16 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import DiningCarManage from '../views/shops/DiningCarManage';
+import Index from '../views/shops/Index';
 let route = new Route();
-route.group('/shops', 
+route.group('/shop',
 	{
 	  	'tag': '店铺管理',
-	  	'name': 'shops',
+	  	'name': 'shop',
 	  	'component': Layout,
 	  	'uses': function(route) {
-		  	route.addRoute('/diningCarManage', {
-		  		'name': 'diningCar-manage',
-		  		'component': DiningCarManage,
+		  	route.addRoute('/index', {
+		  		'name': 'shop-index',
+		  		'component': Index,
 		  		'tag': '餐车管理'
 		  	});
 	  	}

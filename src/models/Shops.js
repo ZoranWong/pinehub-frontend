@@ -1,25 +1,16 @@
 import Model from './Model'
+import _ from 'underscore';
+import Shop from './Shop';
 export default class Shops extends Model{
   constructor(application) {
     super(application);
   }
   data() {
     return {
-      	selectData:[],
+      	list:[],
       	pageCount: 0,
       	currentPage: 0,
 				totalNum:0,
-				tLoading: false, //表格加载
-				fLoading: false, //表单加载
-				bLoading: false, //按钮加载
-				formVisible: false, //新增编辑界面是否显示
-				detailVisible: false, //详情界面是否显示
-				detailData: {},
-				
-				paginator : {
-					page:1,
-					limit:10
-				},
     };
   }
   computed() {
@@ -42,6 +33,15 @@ export default class Shops extends Model{
     return {
       nextPage(state) {
         state.currentPage ++;
+      },
+      reset(state) {
+
+      },
+      getShops(state) {
+        let shops = [];//异步请求
+        _.each(shops, function(shop) {
+          state.list[state.currentPage].push(new Shop(shop));
+        });
       }
     }
   }
