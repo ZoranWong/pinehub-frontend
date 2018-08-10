@@ -10,7 +10,7 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
   methods () {
     let self = this;
     return {
-    	$handleError() {
+    	$uploadFailed() {
 				this.$notify.error({title: '上传失败',message: '图片上传失败'});
 			},
     	$changePage(val, filters = self.filters, fun) {

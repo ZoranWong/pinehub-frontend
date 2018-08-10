@@ -1,6 +1,6 @@
 import Model from './Model'
 import _ from 'underscore';
-import Shop from './Shop';
+import Shop from './transformers/Shop';
 export default class Shops extends Model{
   constructor(application) {
     super(application);

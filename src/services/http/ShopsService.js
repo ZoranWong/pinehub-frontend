@@ -3,4 +3,7 @@ export default class ShopsService extends ApiService{
 	constructor(application) {
 		super(application);
 	}
+	shops() {
+		
+	}
 }

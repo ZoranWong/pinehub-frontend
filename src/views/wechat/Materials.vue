@@ -4,11 +4,10 @@
 		</div>
 	</div>
 </template>
-
 <script>
 /* eslint-disable */
 	export default {
-		name: 'WechatIndex',
+		name: 'WechatMaterials',
 	}
 </script>
 

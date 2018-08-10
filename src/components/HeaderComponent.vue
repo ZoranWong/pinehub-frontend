@@ -1,5 +1,5 @@
 <template>
-  <div class="contentHeader">
+  <div class="content-header">
     <div :class="['menu-top',{ 'txt-center' : !toogleMenu }]" v-if="selected">
       <div @click.active="changeToogleMenu" class="tipbox">
         <img src="../../src/assets/icon_close.png" v-if="toogleMenu"/>
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
   	logout(){
-  		
+
   	},
     handleForm() {
 
@@ -50,23 +50,23 @@ export default {
 }
 </script>
 <style scoped>
-	.contentHeader .menu-top{
+	.content-header .menu-top{
 		float:left;line-height:60px;padding-left: 5px;cursor: pointer;
 	}
-	 .contentHeader img{
+	 .content-header img{
 		width:26px;opacity: 0.65;margin:17px 5px;display: inline-block;margin-top:10px;cursor:pointer
 	}
-	.contentHeader{
+	.content-header{
 		padding-right:20px;
 		padding-top:5px;
 		overflow: hidden;
 	}
-	.contentHeader .userinfo-inner{
+	.content-header .userinfo-inner{
 		 float: right;
     	line-height: 47px;
     	margin-right:10px;
 	}
-	.contentHeader{
+	.content-header{
 		height:60px;
 		border-bottom: 1px solid #e9e9e9;
 		background-color: #fff;
