@@ -49,7 +49,7 @@
 		},
 		computed: {
 			showLeftSide() {
-				return true
+				return !this.routeMap[this.$router.currentRoute.name]['menuHide'];
 			},
 			contentWight(){
 				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
@@ -93,6 +93,7 @@
 	.right-content{
 		position: absolute;
 		right: 0px;
+		left: 0px;
 		top: 0px;
 		bottom: 0px;
 		overflow: hidden;
@@ -117,7 +118,7 @@
 	    border-bottom: 1px solid #e9e9e9;
 	}
 	.left-content{
-		left: 120px;
+		left: 120px !important;
 	}
 </style>
 <style>
