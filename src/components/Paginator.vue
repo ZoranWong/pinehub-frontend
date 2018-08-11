@@ -14,11 +14,16 @@ export default {
     totalNum: {
       default: 0,
       type: Integer
+    },
+    command: {
+      default: '',
+      type: String
     }
   },
   methods: {
     changePage(page) {
       this.currentPage = page;
+      this.$command(this.command, this.currentPage);
     }
   }
 }
