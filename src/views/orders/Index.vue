@@ -49,18 +49,18 @@
 					<el-button size="small"  @click="">导出</el-button>
 				</el-form-item>
 			</el-form>
-			<el-tabs v-model="activeName" type="card">
+			<el-tabs v-model="activeTab" type="card">
 				<el-tab-pane label="全部" name="first">
-					<tabtab-pane></tabtab-pane>
+					<tab-pane></tab-pane>
 				</el-tab-pane>
 				<el-tab-pane label="待付款"  name="second">
-					<tabtab-pane></tabtab-pane>
+					<tab-pane></tab-pane>
 				</el-tab-pane>
 				<el-tab-pane label="已完成"  name="third">
-					<tabtab-pane></tabtab-pane>
+					<tab-pane></tab-pane>
 				</el-tab-pane>
 				<el-tab-pane label="已关闭"  name="forth">
-					<tabtab-pane></tabtab-pane>
+					<tab-pane></tab-pane>
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -76,6 +76,7 @@
 		},
 		data() {
 			return {
+				activeTab: 'first',
 				searchFields: {
 
 				}
