@@ -4,3 +4,5 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  constructor(app) {$/;"	function	line:5
+handle	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  handle(page, search) {$/;"	function	line:8

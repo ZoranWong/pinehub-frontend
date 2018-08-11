@@ -1,0 +1,7 @@
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  constructor(app) {$/;"	function	line:2
+handle	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  handle(params) {$/;"	function	line:6
+service	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  service(name) {$/;"	function	line:12
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:6
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:9
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  constructor(app) {$/;"	function	line:5
+handle	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  handle(page, search) {$/;"	function	line:8

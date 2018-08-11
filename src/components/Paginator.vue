@@ -37,6 +37,9 @@ export default {
     changePage(page) {
       this.$command(this.command, page, this.search);
     }
+  },
+  created() {
+    this.$command(this.command, 1, this.search);
   }
 }
 </script>
