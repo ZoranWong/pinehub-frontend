@@ -116,12 +116,12 @@ export default class Menus extends Model {
         id: '22',
 	      title: '订单',
 	      icon: '#icon-dingdanguanli',
-	      path: 'orders',
+	      path: 'order',
 	      children: [{
           id: '23',
           title: '订单管理',
           icon: '',
-          path: 'orderManage',
+          path: 'index',
 	      },{
           id: '24',
           title: '线下订单',
@@ -131,12 +131,12 @@ export default class Menus extends Model {
           id: '25',
           title: '商家订单',
           icon: '',
-          path: 'seller/PUR',
+          path: 'seller/pur',
         },{
           id: '16',
           title: '采购订单',
           icon: '',
-          path: 'company/PUR',
+          path: 'company/pur',
         },{
           id: '27',
           title: '分销订单',

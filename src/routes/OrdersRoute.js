@@ -1,15 +1,15 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import OrderManage from '../views/orders/OrderManage';
+import Index from '../views/orders/Index';
 let route = new Route();
-route.group('/orders', {
-  	'name': 'orders',
+route.group('/order', {
+  	'name': 'order',
   	'tag' : '订单管理',
   	'component': Layout,
   	'uses' : function(route) {
-	  	route.addRoute('/orderManage', {
-	  		'name': 'order-manage',
-	  		'component': OrderManage,
+	  	route.addRoute('/index', {
+	  		'name': 'order-index',
+	  		'component': Index,
 	  		'tag': '订单管理'
 	  	});
 		}

@@ -1,6 +1,7 @@
 import ServiceProvider from './ServiceProvider';
 import AccountService from '../services/http/AccountService';
 import UriService from '../services/http/UriService';
+import ShopsService from '../services/http/ShopsService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -11,5 +12,6 @@ export default class HttpServiceProvider extends ServiceProvider {
       });
       this.app.register('account', AccountService);
       this.app.register('uri', UriService);
+      this.app.register('shop', ShopsService);
   }
 }

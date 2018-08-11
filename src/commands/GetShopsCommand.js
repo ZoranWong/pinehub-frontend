@@ -6,6 +6,7 @@ export default class GetShopsCommand extends Command {
     super(app);
   }
   handle(page, search) {
+    console.log(this.service('shop'));
     console.log(`get page:${page} shops data, search data`, search);
   }
   static commandName() {
