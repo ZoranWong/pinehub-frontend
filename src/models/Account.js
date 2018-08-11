@@ -6,7 +6,7 @@ export default class Account extends Model{
   }
   data() {
     return {
-      username: null,
+      username: 'null',
       password: null,
       roles: [],
       expiresAt: null
