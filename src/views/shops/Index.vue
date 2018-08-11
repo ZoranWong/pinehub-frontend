@@ -39,7 +39,6 @@
 					<el-button size="small"  @click="handleExport()">导出</el-button>
 				</div>
 			</el-col>
-
 			<!--列表-->
 			<el-table :data="$store.state.shops.list" highlight-current-row v-loading="isLoading">
 				<el-table-column prop="index" label="序号" width="50"></el-table-column>
@@ -60,7 +59,6 @@
 					</template>
 				</el-table-column>
 			</el-table>
-
 			<!--工具条-->
 			<div class="toolbar" style="text-align: right;">
 				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$changePage" background :total="$store.state.shops.totalNum"></el-pagination>
@@ -83,7 +81,6 @@
 </template>
 <script>
 /* eslint-disable */
-
 	export default {
 		name: 'Shops',
 		data() {

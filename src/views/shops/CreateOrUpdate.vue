@@ -1,9 +1,9 @@
 <template>
 	<div class="content-scroll">
 		<div class="content-box">
-      <el-tabs active-name="first">
-        <el-tab-pane :label="$store.state.common.saveType ? '店铺管理编辑' : '店铺管理新增'" name="first"></el-tab-pane>
-      </el-tabs>
+      	<el-tabs active-name="first">
+        	<el-tab-pane :label="$store.state.common.saveType ? '店铺管理编辑' : '店铺管理新增'" name="first"></el-tab-pane>
+      	</el-tabs>
       <div class="form-container">
         <el-form :model="formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="formRules" ref="formFileds">
           <el-form-item label="店铺编号：" prop="code">
@@ -104,7 +104,7 @@
 </template>
 <script>
 	export default {
-		name: 'ShopCreateOrUpdate',
+		name: 'CreateOrUpdate',
 		data() {
 		    return {
 		    	mapfilter:{
