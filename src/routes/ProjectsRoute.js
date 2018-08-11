@@ -11,6 +11,7 @@ route.group('/project', {
     child.addRoute('index', {
       name: 'project-index',
       component: Index,
+      menuHide: true,
       tag: '项目管理'
     });
     child.addRoute(':id', {
