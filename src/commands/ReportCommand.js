@@ -5,8 +5,8 @@ export default class ReportCommand extends Command {
   constructor(app) {
     super(app);
   }
-  handle(params) {
-    console.log('report front-end running status', params);
+  handle(message) {
+    console.log('report front-end running status', message);
   }
   static commandName() {
     return 'report';

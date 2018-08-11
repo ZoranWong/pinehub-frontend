@@ -32,8 +32,9 @@ export default class Application {
   registerCommand(name, command) {
     return (this.commands[name]  = new command(this));
   }
-  command(command, params) {
-    this.commands[command].handle(params);
+  command(...params) {
+    let command = params.shift();
+    this.commands[command].handle.apply(this.commands[command], params);
   }
   instanceRegister(instance) {
     if(_.isFunction(instance)) {

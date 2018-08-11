@@ -60,10 +60,7 @@
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
-			<!--<paginator></paginator>-->
-			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$changePage" background :total="$store.state.shops.totalNum"></el-pagination>
-			</div>
+			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :command="command"></paginator>
 			<!--二维码图片界面-->
 			<el-dialog :visible.sync="qrCode" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first">
@@ -82,9 +79,13 @@
 </template>
 <script>
 /* eslint-disable */
-//	import Paginator from '../../components/Paginator';
+	import Paginator from '../../components/Paginator.vue';
+	import GetShopsCommand from '../../commands/GetShopsCommand';
 	export default {
 		name: 'Shops',
+		components: {
+			paginator: Paginator
+		},
 		data() {
 			return {
 				isLoading: false,
@@ -98,9 +99,6 @@
 				}
 			};
 		},
-//		components: {
-//			'paginator': Paginator
-//		},
 		mounted() {
 
 		},
@@ -113,6 +111,15 @@
 			},
 			counties () {
 				return this.searchFields.city.counties;
+			},
+			totalNum() {
+				return 68;
+			},
+			totalPage() {
+				return 5;
+			},
+			command() {
+				return GetShopsCommand.commandName();
 			}
 		},
 		watch: {

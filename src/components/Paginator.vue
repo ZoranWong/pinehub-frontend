@@ -1,6 +1,8 @@
 <template>
   <div class="toolbar" style="text-align: right;">
-    <el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="changePage" background :total="totalNum"></el-pagination>
+    <el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="changePage" background :total="totalNum"
+      :page-size="limit"
+      :pager-count="totalPage"></el-pagination>
   </div>
 </template>
 <script>
@@ -9,21 +11,31 @@ export default {
   props:{
     currentPage: {
       default: 0,
-      type: Integer
+      type: Number
     },
     totalNum: {
       default: 0,
-      type: Integer
+      type: Number
     },
     command: {
       default: '',
       type: String
+    },
+    search:{
+      default: null
+    },
+    limit: {
+      default: 15,
+      type: Number
+    },
+    totalPage: {
+      default: 0,
+      type: Number
     }
   },
   methods: {
     changePage(page) {
-      this.currentPage = page;
-      this.$command(this.command, this.currentPage);
+      this.$command(this.command, page, this.search);
     }
   }
 }
