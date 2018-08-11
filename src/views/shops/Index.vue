@@ -60,6 +60,7 @@
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
+			<!--<paginator></paginator>-->
 			<div class="toolbar" style="text-align: right;">
 				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$changePage" background :total="$store.state.shops.totalNum"></el-pagination>
 			</div>
@@ -81,6 +82,7 @@
 </template>
 <script>
 /* eslint-disable */
+//	import Paginator from '../../components/Paginator';
 	export default {
 		name: 'Shops',
 		data() {
@@ -96,6 +98,9 @@
 				}
 			};
 		},
+//		components: {
+//			'paginator': Paginator
+//		},
 		mounted() {
 
 		},
