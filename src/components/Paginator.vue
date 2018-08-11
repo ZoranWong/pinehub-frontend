@@ -18,12 +18,16 @@ export default {
     command: {
       default: '',
       type: String
+    },
+    search:{
+      default: {},
+      type: Object
     }
   },
   methods: {
     changePage(page) {
       this.currentPage = page;
-      this.$command(this.command, this.currentPage);
+      this.$command(this.command, this.currentPage, this.search);
     }
   }
 }

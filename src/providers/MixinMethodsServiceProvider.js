@@ -20,8 +20,8 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
       $resetForm(name) {
         self.app.resetForm(self.$refs[name]);
       },
-      $command(command, params = null) {
-        self.app.command(command, params);
+      $command(...params) {
+        self.app.command.apply(self.app, params);
       },
       $error(exception, params = null) {
         self.app.$error(exception, params);
