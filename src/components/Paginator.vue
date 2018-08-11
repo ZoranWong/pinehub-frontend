@@ -1,19 +1,23 @@
 <template>
+  <div class="toolbar" style="text-align: right;">
+    <el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="changePage" background :total="totalNum"></el-pagination>
+  </div>
 </template>
 <script>
 export default {
   name: 'Paginator',
-  data() {
-    return {
-      currentPage: 0,
-      totalNum: 0,
-    };
+  props:{
+    currentPage: {
+      default: 0,
+      type: Integer
+    },
+    totalNum: {
+      default: 0,
+      type: Integer
+    }
   },
   methods: {
-    next() {
-
-    },
-    jumpTo(page) {
+    changePage(page) {
       this.currentPage = page;
     }
   }
