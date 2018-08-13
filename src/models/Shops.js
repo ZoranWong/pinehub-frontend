@@ -18,15 +18,19 @@ export default class Shops extends Model{
       orderPage: (state) => (page) => {
         return state.orders[page];
       }
-    }
+    };
   }
 
   dispatchs() {
     return {
-      	nextPage(context) {
-        	context.commit('nextPage');
-      	}
-    }
+      	nextPage({commit}) {
+        	commit('nextPage');
+      	},
+        setShops({commit}, payload){
+
+          commit('setShops', payload);
+        }
+    };
   }
 
   listeners() {
@@ -37,10 +41,18 @@ export default class Shops extends Model{
       reset(state) {
 
       },
-      getShops(state) {
-        let shops = [];//异步请求
-        this.list[this.currentPage] = this.transform(shops, Shop);
+      setShops: (state, payload) => {
+        let shops = payload['shops'];
+        let page = payload['currentPage'];
+        let totalNum = payload['totalNum'];
+        let totalPage = payload['totalPage'];
+        state.currentPage = page;
+        state.list[page] = shops;
+        if(totalNum !== null)
+          state.totalNum = totalNum;
+        if(totalPage !== null)
+          state.totalPage = totalPage;
       }
-    }
+    };
   }
 }

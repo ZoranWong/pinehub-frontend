@@ -12,4 +12,8 @@ export default class Command {
   service(name) {
     return this.$application.instances[name];
   }
+
+  store() {
+    return this.service('vue-store') ;
+  }
 }

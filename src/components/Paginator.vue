@@ -2,7 +2,7 @@
   <div class="toolbar" style="text-align: right;">
     <el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="changePage" background :total="totalNum"
       :page-size="limit"
-      :pager-count="totalPage"></el-pagination>
+      :page-count="totalPage"></el-pagination>
   </div>
 </template>
 <script>
