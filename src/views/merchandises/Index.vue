@@ -125,7 +125,7 @@
 						  	</el-select>
 						  	<el-button type="text" size="small" @click="">刷新</el-button> |
 						  	<el-button type="text" size="small" @click="addGroup()">新建分组</el-button>
-						  	
+
 						</el-form-item>
 						<el-form-item label="主图：" prop="main_image">
 							<el-upload class="upload-demo" name="main_image" :beforeUpload="mainBeforeUpload" :headers="headers" :action="ADMIN_SERVER_HOST+'/merchandise/image/cloud?selected_appid='+appId+'&token='+tokens" :on-remove="mainHandleRemove" :file-list="mainFileList" :data="mainExData" :on-success="mainHandleSuccess" :on-error="$handleError" list-type="picture-card">
@@ -150,13 +150,13 @@
 						<el-form-item label="库存：" prop="stock_num">
 							<el-input v-model.number="formData.stock_num" style="width:30%"></el-input>
 						</el-form-item>
-						
-						
+
+
 						<el-form-item label="会员折扣：" prop="sync" style="margin-bottom: 0;">
 							<el-checkbox v-model="formData.sync">参加会员折扣</el-checkbox> <el-button @click.native="$router.push({path: '/Hyk'})" type="text" size="small">管理会员卡 </el-button>
 						</el-form-item>
 						<p class="prompt">是否勾选不影响自定义会员价生效。</p>
-						
+
 						<h4>其他信息</h4>
 						<el-form-item label="上下架：" prop="status">
 							<el-radio-group v-model="formData.status">
@@ -207,12 +207,8 @@
 
 <script>
 /* eslint-disable */
-//	import MerchandisesService from '../../services/MerchandisesService';
-//	import TokenService from '../../services/TokenService';
-//	import { mapGetters } from 'vuex'
-//	import { TMap } from '../../TMap'
 	export default {
-		name: 'merchandisesManage',
+		name: 'Merchandises',
 		data() {
 			return {
 				paginator:{
@@ -227,7 +223,7 @@
 		          	disabledDate(time) {
 		            	return time.getTime() < Date.now() - 8.64e7;
 		           	}
-		        },		
+		        },
 				headers:{
 					Accept: 'application/vnd.pinehub.v0.0.1+json'
 				},
@@ -345,7 +341,7 @@
 			mainHandleRemove(file, fileList) {
 				if(!file) return
 				this.formData.main_image=''
-				
+
 			},
 			mainBeforeUpload(file) {
 				const isJPG = file.type === 'image/png';
@@ -381,7 +377,7 @@
         		return isJPG && isLt2M;
 			},
 			handleSelectionChange(val){
-				
+
 			},
 			upload(){
 				window.open(this.imgCodeUrl)
@@ -398,7 +394,7 @@
 				let result = await this.$nextTick();
 				if( result ) {
 				    this.$refs.groupingFileds.resetFields();
-			    	
+
 				}
 			},
 			async groupSubmit() {
@@ -429,7 +425,7 @@
 							this.exData.affairId = row.id
 						}
 						let list = await this.adminApi(MerchandisesService).Merchandises.detailData(row.id);
-						
+
 						this.formData=Object.assign(this.formData, list)
 						this.formData.status=this.formData.status.toString()
 						this.formData.images=this.formData.images?this.formData.images:[]

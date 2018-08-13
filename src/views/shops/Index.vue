@@ -62,18 +62,6 @@
 			<!--工具条-->
 			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :command="command"></paginator>
 			<!--二维码图片界面-->
-			<el-dialog :visible.sync="qrCode" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.scrollTop" :close-on-click-modal="false">
-				<el-tabs active-name="first">
-					<el-tab-pane :label="qrCodeTitle" name="first"></el-tab-pane>
-				</el-tabs>
-				<div class="form-container" >
-					<img :src="qrCode" alt="" style="width:200px;height:200px;display:block;margin:0 auto"/>
-				</div>
-				<div slot="footer" class="dialog-footer">
-					<el-button size="small" type="primary">下载</el-button>
-					<el-button size="small">返回</el-button>
-				</div>
-			</el-dialog>
 		</div>
 	</div>
 </template>
@@ -126,18 +114,14 @@
 			
 		},
 		methods: {
-			showQRCode(type,row){
-				if(type){
-					this.qrCodeTitle='微信参数二维码'
-					this.qrCode = row.wechat_qrcode;
-				}else{
-					this.qrCodeTitle ='支付二维码'
-					this.qrCode = row.payment_qrcode;
-				}
-			},
 		},
 		created() {
 			console.log('create shops moduel');
+			let self = this;
+			(async function(){
+				console.log('mock request  shops service', await self.shops.shops());
+			})();
+
 		}
 	}
 </script>

@@ -64,7 +64,7 @@ export default class Menus extends Model {
             id: '12',
             title: '营销中心',
             icon: '',
-            path: 'manage',
+            path: 'index',
   	      },{
             id: '13',
             title: '满减/送',

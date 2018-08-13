@@ -1,3 +1,4 @@
+import _ from 'underscore';
 export default class Model {
   constructor(application) {
     this.$application = application;
@@ -9,12 +10,12 @@ export default class Model {
 
   data(){
     return {
-    	
+
     };
   }
   computed() {
     return {
-			
+
     };
   }
 
@@ -28,5 +29,15 @@ export default class Model {
 
   services(name) {
     return this.$application.instances[name];
+  }
+
+  transform(data, transformer) {
+    if(_.isArray(data)) {
+      return _.map(data, function(value) {
+        return new transformer(value);
+      });
+    }else{
+      return new transformer(data);
+    }
   }
 }

@@ -148,7 +148,7 @@
 /* eslint-disable */
 	import { mapGetters } from 'vuex'
 	export default {
-		name: 'plgl',
+		name: 'Categories',
 		data() {
 			return {
 				paginator:{

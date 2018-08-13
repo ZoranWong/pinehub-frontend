@@ -3,329 +3,33 @@
 		<div class="content-box">
 			<!--工具条-->
 			<el-col :span="24" class="toolbar">
-				<el-tabs v-model="$store.state.coupon.activeName" type="card">
+				<el-tabs  type="card">
 					<el-tab-pane label="所有优惠券" name="first">
-						<el-form :inline="true" :model="$store.state.coupon.couponsFilters" label-width="10px" ref="couponsFileds" style="float:right">
-							<el-form-item prop="ticket_type" label="">
-								<el-input size="small" v-model="$store.state.coupon.couponsFilters.ticket_type" placeholder="搜索"></el-input>
-							</el-form-item>
-							<el-form-item>
-								<el-button size="small" type="primary" @click="getList($store.state.coupon.couponsFilters)">搜索</el-button>
-							</el-form-item>
-						</el-form>
-						<el-form :inline="true"  label-width="10px" style="float:left">
-							<el-form-item label="">
-								<el-button size="small" type="success" @click="getUpdate()">新建优惠券</el-button>
-							</el-form-item>
-						</el-form>
-						<el-table :data="$store.state.coupon.couponsData" highlight-current-row v-loading="$store.state.common.tLoading">
-							<el-table-column prop="title" label="优惠券名称" min-width="120"></el-table-column>
-							<el-table-column prop="phone" label="价值" min-width="100">
-								<template slot-scope="scope">
-									<div v-if="scope.row.card_type=='discount'" class="couponsType">
-										<p>{{scope.row.discount}} 折</p>
-										<p>最低消费:</p>
-										<p>￥{{scope.row.least_cost}}</p>
-									</div>
-									<div v-if="scope.row.card_type=='cash'" class="couponsType">
-										<p>{{scope.row.reduce_cost}}</p>
-										<p>最低消费:</p>
-										<p>￥{{scope.row.least_cost}}</p>
-									</div>
-								</template>
-							</el-table-column>
-							<el-table-column prop="get_limit" label="领取限制" min-width="100">
-								<template slot-scope="scope" class="couponsType">
-									<p v-if="scope.row.get_limit">一人 {{scope.row.get_limit}} 张</p>
-									<p v-else>不限张数</p>
-								</template>
-							</el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="140">
-								<template slot-scope="scope">
-									<p>{{scope.row.begin_at?scope.row.created_at.date.substr(0,19):''}} 至</p>
-									<p>{{scope.row.end_at?scope.row.end_at.date.substr(0,19):''}}</p>
-								</template>
-							</el-table-column>
-							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
-							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
-							<el-table-column label="操作" width="100">
-								<template slot-scope="scope">
-									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
-									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-						<!--工具条-->
-						<div class="toolbar" style="text-align: right;">
-							<p>共{{$store.state.coupon.totalNum}}条，每页20条</p>
-							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
-						</div>
 					</el-tab-pane>
 					<el-tab-pane label="未开始"  name="second">
-						<el-form :inline="true" :model="$store.state.coupon.nostartFilters" label-width="10px" ref="nostartFileds" style="float:right">
-							<el-form-item prop="ticket_type" label="">
-								<el-input size="small" v-model="$store.state.coupon.nostartFilters.ticket_type" placeholder="搜索"></el-input>
-							</el-form-item>
-							<el-form-item>
-								<el-button size="small" type="primary" @click="getList($store.state.coupon.nostartFilters)">搜索</el-button>
-							</el-form-item>
-						</el-form>
-						<el-form :inline="true" label-width="10px" style="float:left">
-							<el-form-item label="">
-								<el-button size="small" type="success" @click="getUpdate()">新建优惠券</el-button>
-							</el-form-item>
-						</el-form>
-						<!--列表-->
-						<el-table :data="$store.state.coupon.nostartData" highlight-current-row v-loading="$store.state.common.tLoading">
-							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
-							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
-							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="120">
-								
-							</el-table-column>
-							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
-							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
-							<el-table-column label="操作" width="100">
-								<template slot-scope="scope">
-									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
-									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-						<!--工具条-->
-						<div class="toolbar" style="text-align: right;">
-							<p>共1条，每页20条</p>
-							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
-						</div>
 					</el-tab-pane>
 					<el-tab-pane label="进行中"  name="third">
-						<el-form :inline="true" :model="$store.state.coupon.processFilters" label-width="10px" ref="processFileds" style="float:right">
-							<el-form-item prop="ticket_type" label="">
-								<el-input size="small" v-model="$store.state.coupon.processFilters.ticket_type" placeholder="搜索"></el-input>
-							</el-form-item>
-							<el-form-item>
-								<el-button size="small" type="primary" @click="getList($store.state.coupon.processFilters)">搜索</el-button>
-							</el-form-item>
-						</el-form>
-						<el-form :inline="true" label-width="10px" style="float:left">
-							<el-form-item label="">
-								<el-button size="small" type="success" @click="getUpdate()">新建优惠券</el-button>
-							</el-form-item>
-						</el-form>
-						<!--列表-->
-						<el-table :data="$store.state.coupon.processData" highlight-current-row v-loading="$store.state.common.tLoading">
-							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
-							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
-							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="120"></el-table-column>
-							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
-							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
-							<el-table-column label="操作" width="100">
-								<template slot-scope="scope">
-									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
-									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-						<!--工具条-->
-						<div class="toolbar" style="text-align: right;">
-							<p>共1条，每页20条</p>
-							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
-						</div>
 					</el-tab-pane>
 					<el-tab-pane label="已结束" name="forth">
-						<el-form :inline="true" :model="$store.state.coupon.endFilters" label-width="10px" ref="endFileds" style="float:right">
-							<el-form-item prop="ticket_type" label="">
-								<el-input size="small" v-model="$store.state.coupon.endFilters.ticket_type" placeholder="搜索"></el-input>
-							</el-form-item>
-							<el-form-item>
-								<el-button size="small" type="primary" @click="getSelectData()">搜索</el-button>
-							</el-form-item>
-						</el-form>
-						<el-form :inline="true" label-width="10px" style="float:left">
-							<el-form-item label="">
-								<el-button size="small" type="success" @click="getUpdate()">新建优惠券</el-button>
-							</el-form-item>
-						</el-form>
-						<!--列表-->
-						<el-table :data="$store.state.coupon.endData" highlight-current-row v-loading="$store.state.common.tLoading">
-							<el-table-column prop="name" label="优惠券名称" min-width="120"></el-table-column>
-							<el-table-column prop="phone" label="价值" min-width="100"></el-table-column>
-							<el-table-column prop="integral" label="领取限制" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="有效期" min-width="120"></el-table-column>
-							<el-table-column prop="num" label="领取人/次" min-width="100"></el-table-column>
-							<el-table-column prop="num" label="已使用" min-width="80"></el-table-column>
-							<el-table-column prop="num" label="领取率/使用率" min-width="150"></el-table-column>
-							<el-table-column label="操作" width="100">
-								<template slot-scope="scope">
-									<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button> -
-									<el-button size="small" @click.active="delData(scope.row)" type="text">删除</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-						<!--工具条-->
-						<div class="toolbar" style="text-align: right;">
-							<p>共1条，每页20条</p>
-							<!--<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="handleCurrentChange" background :total="totalNum"></el-pagination>-->
-						</div>
 					</el-tab-pane>
 				</el-tabs>
 			</el-col>
-			<!--新增优惠券界面-->
-			<el-dialog :visible.sync="$store.state.coupon.formVisible" @close="$dialogClose" @open="$dialogOpen" width="60%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
-				<el-tabs active-name="first">
-					<el-tab-pane label="设置店铺优惠券" name="first"></el-tab-pane>
-				</el-tabs>
-				<div class="form-container addCardLayout">
-					<el-form :model="$store.state.coupon.formData" v-loading="$store.state.common.fLoading" label-width="120px" :rules="$store.state.coupon.formRules" ref="formFileds">
-						<h4>优惠券基础信息</h4>
-						<el-form-item label="优惠券名称：" prop="base_info.title">
-							<el-input v-model="$store.state.coupon.formData.base_info.title" :maxlength='10' placeholder="最多支持10个字"></el-input>
-						</el-form-item>
-						<el-form-item label="发放总量：" prop="base_info.sku.quantity">
-							<el-input v-model.number="$store.state.coupon.formData.base_info.sku.quantity" style="width:50%"><template slot="append">张</template></el-input>
-						</el-form-item>
-						<el-form-item label="优惠形式：" prop="card_type">
-							<el-radio-group v-model="$store.state.coupon.formData.card_type" @change="clearOffer">
-							    <div><el-radio label="cash">指定金额 </el-radio>
-							    	<el-form-item label="" label-width="10px" prop="reduce_cost" v-if="$store.state.coupon.formData.card_type=='cash'">
-										面值：<el-input v-model.number="$store.state.coupon.formData.reduce_cost" style="width:30%" :disabled="$store.state.coupon.formData.card_type!='cash'"></el-input> 
-										<p style="color:gray;font-size: 12px;">同步至微信卡包,不支持金额随机</p>
-									</el-form-item>
-							    </div>
-							    <div><el-radio label="discount">折扣</el-radio>
-							    	<el-form-item label="" label-width="10px" prop="discount" style="display:inline-block" v-if="$store.state.coupon.formData.card_type=='discount'">
-										：<el-input v-model.number="$store.state.coupon.formData.discount" style="width:30%" :disabled="$store.state.coupon.formData.card_type!='discount'"></el-input> 折
-									</el-form-item>
-							    </div>
-							 </el-radio-group>
-						</el-form-item>
-						<el-form-item label="使用门槛：" prop="least_cost">
-							<el-radio-group v-model="$store.state.coupon.formData.least_cost" @change="clearSill">
-							    <div><el-radio label="">不限制 </el-radio>
-							    	<el-form-item label="" label-width="10px" v-if="$store.state.coupon.formData.least_cost==''">
-										<span style="color:red;font-size: 12px;">请谨慎设置无门槛优惠券，避免资金损失</span>
-									</el-form-item>
-							    </div>
-							  	<div><el-radio label="least_cost">满</el-radio>
-								  	<el-form-item label="" label-width="10px" prop="advanced_info.use_condition.least_cost" style="display:inline-block">
-										<el-input v-model.number="$store.state.coupon.formData.advanced_info.use_condition.least_cost" style="width:30%"></el-input> 元可使用
-									</el-form-item>
-							  	</div>
-							 </el-radio-group>
-						</el-form-item>
-						<el-form-item label="同步发布至：" prop="sync" style="display: inline-block;margin-bottom: 0;">
-							<el-checkbox v-model="$store.state.coupon.formData.sync">微信卡券（包）</el-checkbox>
-						</el-form-item>
-						<p style="color:gray;font-size: 12px;margin-left: 120px;">如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</p>
-						<el-form-item label="卡券颜色：" prop="base_info.color">
-							<el-popover placement="bottom" width="185" trigger="hover">
-					    		<div class="colorLayout">
-					    			<span v-for="(item,index) in $store.state.coupon.colorOptions" v-on:click="eidtColor(item)" :style="'background-color:'+item.color"></span>
-					    		</div>
-							  <div class="showColor" slot="reference" size="small"><p :style="$store.state.common.saveType?('background-color:'+formatSelect($store.state.coupon.formData.base_info.color)):$store.state.coupon.chooseColor"></p></div>
-							</el-popover>
-						</el-form-item>
-						<el-form-item label="卡券标题：" prop="base_info.brand_name" :style="$store.state.coupon.formData.base_info.brand_name?'margin-bottom: 0px;':'margin-bottom: 20px;'">
-							<el-input v-model="$store.state.coupon.formData.base_info.brand_name" :maxlength='9' placeholder="最多可输入9个字"></el-input>
-						</el-form-item>
-						<p style="color:gray;font-size: 12px;margin-left: 120px;">建议填写代金券“减免金额”及自定义内容，描述卡券提供的具体优惠。例如：贝塔咖啡5元代金券</p>
-						<!--<el-form-item label="卡券副标题：" prop="brand_name" >
-							<el-input v-model="$store.state.coupon.formData.brand_name" :maxlength='18' placeholder="最多可输入18个字"></el-input>
-						</el-form-item>-->
-						<h4>基本规则</h4>
-						<el-form-item label="会员等级：">
-							<span>所以用户领取</span>
-						</el-form-item>
-						<el-form-item label="每人限领：" prop="base_info.get_limit">
-							 <el-select size="small" v-model="$store.state.coupon.formData.base_info.get_limit">
-							 	<el-option label="不限张" value="" ></el-option>
-								<el-option v-for="(item,index) in $store.state.coupon.options[0]" :label="item.label" :value="item.value" :key="index"></el-option>
-							</el-select>
-						</el-form-item>
-						<!--<el-form-item label="同步打标签：" prop="set">
-							<el-input v-model="$store.state.coupon.formData.phone" placeholder="选择要同步的标签" style="width:50%"></el-input>
-							<el-button size="small" @click.active="" type="text">刷新</el-button> |
-							<el-button size="small" @click.active="" type="text">新建</el-button>
-						</el-form-item>-->
-						<el-form-item label="有效期：" prop="base_info.date_info.type">
-							<el-radio-group v-model="$store.state.coupon.formData.base_info.date_info.type" @change="clearDataInfo">
-								<div><el-radio label="DATE_TYPE_FIX_TIME_RANGE">固定日期</el-radio> 
-									<div v-if="$store.state.coupon.formData.base_info.date_info.type=='DATE_TYPE_FIX_TIME_RANGE'">
-										<el-form-item label="" prop="base_info.date_info.begin_timestamp" label-width="10px">
-								    		生效时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="$store.state.coupon.formData.base_info.date_info.begin_timestamp" type="datetime" :picker-$store.state.coupon.options="$store.state.coupon.pickerOptions1" :editable="false" placeholder="开始时间" style="width:50%;margin-right:10px"></el-date-picker>
-								    	</el-form-item>
-								    	<el-form-item label="" prop="base_info.date_info.end_timestamp" label-width="10px">
-								    		过期时间：<el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="$store.state.coupon.formData.base_info.date_info.end_timestamp" type="datetime" :picker-$store.state.coupon.options="$store.state.coupon.pickerOptions2" :editable="false" placeholder="结束时间" style="width:50%"></el-date-picker>
-								    	</el-form-item>
-									</div>
-								</div>
-							    <div style="margin:10px 0;">
-							    	<el-radio label="DATE_TYPE_FIX_TERM">领到券当日开始</el-radio>  
-							    		<el-form-item label="" prop="base_info.date_info.fixed_term" label-width="0px" style="display:inline-block">
-							    			<el-input v-model="$store.state.coupon.formData.base_info.date_info.fixed_term" style="width:30%" v-if="$store.state.coupon.formData.base_info.date_info.type=='DATE_TYPE_FIX_TERM'"></el-input><span v-else> N </span> 天内有效
-							    		</el-form-item>
-							    </div>
-							   	<!--<div>
-							    	<el-radio label="end">领到券次日开始
-							    		<el-input v-model="$store.state.coupon.formData.names" style="width:30%" v-if="$store.state.coupon.formData.gardens=='end'"></el-input>
-							    		<span v-else> N </span>
-							    		天内有效</el-radio>  
-							    </div>-->
-							 </el-radio-group>
-						</el-form-item> 
-						<!--<el-form-item label="到期提醒：" prop="checkeds" style="margin-bottom: 0;">
-							<el-checkbox v-model="$store.state.coupon.formData.checkeds">到期前4天提醒一次</el-checkbox>
-						</el-form-item>-->
-						<p style="color:gray;font-size: 12px;margin-left: 120px;">过期提醒需授权公众号到有赞，未授权商家将无法推送消息。</p>
-						<el-form-item label="分享设置：" prop="base_info.can_share" style="margin-bottom: 0;">
-							<el-checkbox v-model="$store.state.coupon.formData.base_info.can_share">允许分享优惠券</el-checkbox>
-						</el-form-item> 
-						<el-form-item label="适用范围：" prop="garden">
-							<el-radio-group v-model="$store.state.coupon.formData.garden">
-							    <el-radio label="click" disabled>全店商品</el-radio>
-							    <el-radio label="view" disabled>指定商品</el-radio>
-							    <el-radio label="views" disabled>指定商品不可用</el-radio>
-							 </el-radio-group>
-						</el-form-item>
-						<!--<el-form-item label="" prop="checked">
-							<el-checkbox v-model="$store.state.coupon.formData.checked">仅原价购买商品时可用</el-checkbox>
-						</el-form-item> -->
-						
-						<el-form-item label="使用说明：" prop="base_info.description">
-							<el-input v-model="$store.state.coupon.formData.base_info.description" type="textarea" :rows="3" :maxlength='300' placeholder="填写活动的详细说明，支持换行；"></el-input>
-						</el-form-item> 
-						<el-form-item label="客服电话：" prop="base_info.service_phone">
-							<el-input v-model="$store.state.coupon.formData.base_info.service_phone" placeholder="手机号或固定电话"></el-input>
-						</el-form-item>
-					</el-form>
-				</div>
-				<div slot="footer" class="dialog-footer">
-					<el-button @click.native="$store.state.coupon.formVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="createSubmit()" :loading="$store.state.common.bLoading" size="small">保存</el-button>
-				</div>
-			</el-dialog>
 		</div>
 	</div>
 </template>
 
 <script>
-/* eslint-disable */
-//	import CardsService from '../../services/CardsService';
-//	import { mapGetters } from 'vuex'
+	/* eslint-disable */
 	export default {
 		name: 'coupon',
 		data() {
 			let self = this;
 			return {
-				
+
 			}
 		},
 		computed: {
-			
+
 		},
 		watch: {
 
@@ -511,7 +215,7 @@
 	.colorLayout span{width: 20px;height: 20px;display: inline-block;margin-left: 10px;cursor: pointer;}
 	.showColor{width:94px;height:32px;border:1px solid #d1d1d1;display:inline-block;padding:4px 12px;margin-left:10px;}
 	.showColor p{width:65px;height:22px;}
-	
+
 	.discountAfter:after{content:"   开卡赠送";margin-left:15px}
 	.discountsAfter:after{content:"   开卡赠送";margin-left:40px}
 	.couponsType{text-align: center;}

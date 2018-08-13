@@ -23,6 +23,9 @@ export default class Application {
     this.env = env;
     this.mixinMethods = {};
   }
+  mock() {
+    return this.config.app.mock;
+  }
   use($class) {
     this.$vm.use($class);
   }
