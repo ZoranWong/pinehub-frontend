@@ -1,10 +1,24 @@
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  constructor(app) {$/;"	function	line:6
 register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  register() {$/;"	function	line:9
 boot	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  boot() {$/;"	function	line:16
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:6
 register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:9
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  constructor(application) {$/;"	function	line:3
-data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  data() {$/;"	function	line:6
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:7
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Mock.js	/^  constructor(application) {$/;"	function	line:2
-data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Mock.js	/^  data() {$/;"	function	line:9
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Mock.js	/^  data() {$/;"	function	line:10
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  constructor(app) {$/;"	function	line:2
+handle	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  handle(params) {$/;"	function	line:6
+service	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  service(name) {$/;"	function	line:12
+store	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  store() {$/;"	function	line:16
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  constructor(app) {$/;"	function	line:5
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  data() {$/;"	function	line:8
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  computed() {$/;"	function	line:16
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  dispatchs() {$/;"	function	line:24
+nextPage	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      	nextPage({commit}) {$/;"	function	line:26
+setShops	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^        setShops({commit}, payload){$/;"	function	line:29
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  listeners() {$/;"	function	line:36
+nextPage	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      nextPage(state) {$/;"	function	line:38
+reset	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      reset(state) {$/;"	function	line:41

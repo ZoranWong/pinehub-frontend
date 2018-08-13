@@ -60,7 +60,7 @@
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
-			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :command="command"></paginator>
+			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :currentPage="currentPage" :command="command"></paginator>
 			<!--二维码图片界面-->
 		</div>
 	</div>
@@ -101,10 +101,13 @@
 				return this.searchFields.city.counties;
 			},
 			totalNum() {
-				return 68;
+				return this.$store.state.shops.totalNum;
 			},
 			totalPage() {
-				return 5;
+				return this.$store.state.shops.pageCount;
+			},
+			currentPage() {
+				return this.$store.state.shops.currentPage;
 			},
 			command() {
 				return GetShopsCommand.commandName();
@@ -121,7 +124,6 @@
 			(async function(){
 				console.log('mock request  shops service', await self.shops.shops());
 			})();
-
 		}
 	}
 </script>

@@ -2,10 +2,11 @@ import Mock from './Mock';
 export default class Shops extends Mock {
   constructor(application) {
     super(application);
+    this.total = 150;
   }
-  data() {
+  data(page = 1, search = null, limit = 15) {
     return {
-      "data|+15":[{
+      "data|15":[{
         "id|+1": 1,
         "country": "中国",
         "province": "@PROVINCE",
@@ -24,11 +25,11 @@ export default class Shops extends Mock {
       }],
       "meta": {
         "pagination":{
-             "total": 20,
+             "total": this.total,
              "count": 1,
-             "per_page": 15,
-             "current_page|1-2": 1,
-             "total_pages": 2,
+             "per_page": limit,
+             "current_page": page,
+             "total_pages": Math.ceil(this.total / limit),
              "links":[]
          }
       }

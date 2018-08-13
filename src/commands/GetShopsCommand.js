@@ -5,9 +5,16 @@ export default class GetShopsCommand extends Command {
   constructor(app) {
     super(app);
   }
-  handle(page, search) {
-    console.log(this.service('shop'));
-    console.log(`get page:${page} shops data, search data`, search);
+  async handle(page, search = null, limit = 15) {
+    let [shops, totalNum, currentPage, totalPage ] = await this.service('shops').shops(page, search, limit);
+    this.store().dispatch({
+      type: 'shops/setShops',
+      shops: shops,
+      totalNum: totalNum,
+      currentPage: currentPage,
+      totalPage: totalPage
+    });
+    console.log('request shops data ', shops, totalNum, currentPage, totalPage);
   }
   static commandName() {
     return 'get-shops';
