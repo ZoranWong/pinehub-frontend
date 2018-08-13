@@ -59,7 +59,7 @@
 				<el-tab-pane label="已完成"  name="third">
 					<tab-pane></tab-pane>
 				</el-tab-pane>
-				<el-tab-pane label="已关闭"  name="forth">
+				<el-tab-pane label="已关闭"  name="fourth">
 					<tab-pane></tab-pane>
 				</el-tab-pane>
 			</el-tabs>

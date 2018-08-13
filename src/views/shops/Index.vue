@@ -123,7 +123,7 @@
 			}
 		},
 		watch: {
-
+			
 		},
 		methods: {
 			showQRCode(type,row){
