@@ -39,9 +39,7 @@ export default class Shops extends Model{
       },
       getShops(state) {
         let shops = [];//异步请求
-        _.each(shops, function(shop) {
-          state.list[state.currentPage].push(new Shop(shop));
-        });
+        this.list[this.currentPage] = this.transform(shops, Shop);
       }
     }
   }

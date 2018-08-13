@@ -3,7 +3,9 @@ export default class ShopsService extends ApiService{
 	constructor(application) {
 		super(application);
 	}
-	shops() {
-		
+	async shops() {
+		if(this.$application.mock()) {
+			return await this.services('shopsMock').mock();
+		}
 	}
 }

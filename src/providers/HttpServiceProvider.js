@@ -12,6 +12,6 @@ export default class HttpServiceProvider extends ServiceProvider {
       });
       this.app.register('account', AccountService);
       this.app.register('uri', UriService);
-      this.app.register('shop', ShopsService);
+      this.app.register('shops', ShopsService);
   }
 }

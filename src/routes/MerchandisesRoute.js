@@ -1,6 +1,6 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import Index from '../views/merchandises/MerchandisesManage';
+import Index from '../views/merchandises/Index';
 let route = new Route();
 route.group('/merchandise', {
   	'name': 'merchandise',
