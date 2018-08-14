@@ -40,7 +40,7 @@
 				</div>
 			</el-col>
 			<!--列表-->
-			<el-table :data="$store.state.shops.list" highlight-current-row v-loading="isLoading">
+			<el-table :data="currentPageShops" highlight-current-row v-loading="isLoading">
 				<el-table-column prop="index" label="序号" width="50"></el-table-column>
 				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
 				<el-table-column prop="boss()" label="车主" min-width="100"></el-table-column>
@@ -107,7 +107,12 @@
 				return this.$store.state.shops.pageCount;
 			},
 			currentPage() {
+				console.log('change data', this.$store.state.shops);
 				return this.$store.state.shops.currentPage;
+			},
+			currentPageShops() {
+				console.log(this.$store.getters['shops/currentPage']);
+				return this.$store.getters['shops/currentPage'];
 			},
 			command() {
 				return GetShopsCommand.commandName();
