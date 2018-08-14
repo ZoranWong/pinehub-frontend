@@ -7,11 +7,7 @@ export default class Shop {
     this.province = shop.province;
     this.city = shop.city;
     this.county = shop.city;
-  }
-  boss() {
-    return this.manager.user_name + '('+ this.manager.mobile +')';
-  }
-  location() {
-    return this.province.name + '-' + this.city.name + '-' + this.county.name;
+    this.boss = this.manager.user_name + '('+ this.manager.mobile +')';
+    this.address = shop.address;
   }
 }

@@ -56,7 +56,7 @@ export default class Shops extends Model{
         let totalPage = payload['totalPage'];
         console.log(this);
         state.currentPage = page;
-        state.list[page - 1] = this.transform(shops, ShopTransformer);
+        state.list[page - 1] =  this.transform(shops, ShopTransformer);
         if(totalNum !== null)
           state.totalNum = totalNum;
         if(totalPage !== null)
