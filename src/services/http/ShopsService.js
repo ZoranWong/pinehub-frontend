@@ -8,17 +8,19 @@ export default class ShopsService extends ApiService{
 		let totalNum = 0;
 		let currentPage = 0;
 		let pageCount = 0;
+		let totalPage = 0;
 		if(this.$application.mock()) {
 			let response =  await this.services('shopsMock').mock(page, search, limit);
 			shops = response.data;
 			let pagination = response.meta.pagination;
 			totalNum = pagination.total;
 			currentPage = pagination['current_page'];
-			pageCount = pagination['total_pages'];
+			totalPage = pagination['total_pages'];
+			pageCount = pagination['per_page'];
 		}else{
 			//服务器交互代码
 		}
 		console.log(pageCount);
-		return [shops, totalNum, currentPage, pageCount];
+		return [shops, totalNum, currentPage, totalPage, pageCount];
 	}
 }
