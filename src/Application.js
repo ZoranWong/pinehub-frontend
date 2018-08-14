@@ -122,6 +122,8 @@ export default class Application {
       render: h => h(App),
       beforeCreate: function() {
         self.vueApp = this;
+        self.instances['vue-router'] = this.$router;
+        self.instances['vue-store'] = this.$store;
         _.each(self.exceptionHandlers, function(exception, key) {
           self.$on(key, function(message) {
             let handler = new exception(self, self.vueApp.$message);

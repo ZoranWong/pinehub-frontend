@@ -40,14 +40,14 @@
 				</div>
 			</el-col>
 			<!--列表-->
-			<el-table :data="$store.state.shops.list" highlight-current-row v-loading="isLoading">
-				<el-table-column prop="index" label="序号" width="50"></el-table-column>
+			<el-table :data="currentPageShops" highlight-current-row v-loading="isLoading">
+				<el-table-column prop="id" label="序号" width="50"></el-table-column>
 				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
-				<el-table-column prop="boss()" label="车主" min-width="100"></el-table-column>
-				<el-table-column prop="location()" label="地理位置" min-width="180"></el-table-column>
+				<el-table-column prop="boss" label="车主" min-width="100"></el-table-column>
+				<el-table-column prop="address" label="地址" min-width="180"></el-table-column>
 				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
 				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
-				<el-table-column label="操作" width="200">
+				<!-- <el-table-column label="操作" width="200">
 					<template slot-scope="scope">
 						<el-button type="success" size="mini" >查看</el-button>
 						<el-button type="primary" size="mini" >编辑</el-button>
@@ -56,7 +56,7 @@
 							<el-button type="success" size="mini" @click="showQRCode(true,scope.row)">微信参数二维码</el-button>
 							<el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
 						</el-popover>
-					</template>
+					</template> -->
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
@@ -107,7 +107,12 @@
 				return this.$store.state.shops.pageCount;
 			},
 			currentPage() {
+				console.log('change data', this.$store.state.shops);
 				return this.$store.state.shops.currentPage;
+			},
+			currentPageShops() {
+				console.log(this.$store.getters['shops/currentPage']);
+				return this.$store.getters['shops/currentPage'];
 			},
 			command() {
 				return GetShopsCommand.commandName();

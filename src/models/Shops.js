@@ -1,6 +1,6 @@
 import Model from './Model'
 import _ from 'underscore';
-import Shop from './transformers/Shop';
+import ShopTransformer from './transformers/Shop';
 export default class Shops extends Model{
   constructor(application) {
     super(application);
@@ -15,8 +15,16 @@ export default class Shops extends Model{
   }
   computed() {
     return {
-      orderPage: (state) => (page) => {
-        return state.orders[page];
+      getShopsBuyPage: (state) => (page) => {
+        return state.orders[page -1];
+      },
+      currentPage: (state) =>  {
+        if(state.currentPage) {
+          return state.list[state.currentPage -1];
+        }else{
+          return null;
+        }
+
       }
     };
   }
@@ -46,8 +54,9 @@ export default class Shops extends Model{
         let page = payload['currentPage'];
         let totalNum = payload['totalNum'];
         let totalPage = payload['totalPage'];
+        console.log(this);
         state.currentPage = page;
-        state.list[page] = shops;
+        state.list[page - 1] =  this.transform(shops, ShopTransformer);
         if(totalNum !== null)
           state.totalNum = totalNum;
         if(totalPage !== null)

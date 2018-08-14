@@ -14,7 +14,6 @@ export default class GetShopsCommand extends Command {
       currentPage: currentPage,
       totalPage: totalPage
     });
-    console.log('request shops data ', shops, totalNum, currentPage, totalPage);
   }
   static commandName() {
     return 'get-shops';
