@@ -26,7 +26,7 @@
 				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 							<p class="project-name" style="margin-top: 80px;">名称：{{ project.name }}</p>
-							<p class="project-name">创建时间：{{ project.updata }}</p>
+							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" >编辑</el-button>
 								<el-button size="mini" type="text" >授权</el-button>
@@ -35,7 +35,7 @@
 						</div>
 				  	</el-col>
 				</el-row>
-				
+
 			</div>
 			<div class="card-footer" v-if="totalNum">
 				<p>共{{ totalNum }}条，每页48条</p>
@@ -50,22 +50,19 @@
 		name: 'Projects',
 		data(){
 			return {
-		        searchFields: {
+        searchFields: {
 					name:''
-		        },
-		        
-		        
+        },
 			}
 		},
 		mounted () {
-			
+
 		},
 		computed:{
 			totalNum() {
 				return this.$store.state.projects.totalNum;
 			},
 			currentPageProjects(){
-				console.log(this.$store.getters['projects/currentPage'])
 				return this.$store.getters['projects/currentPage'];
 			}
 		},
@@ -78,7 +75,7 @@
 </script>
 <style scoped>
 	.content-box{padding:0}
-  	.header-search .el-form-item{margin-bottom: 12px;}
+  .header-search .el-form-item{margin-bottom: 12px;}
 	.header-search {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;}
 	.header-search .el-form-item__content{line-height: '';}
 	.project-cards{clear: both;padding:20px}
