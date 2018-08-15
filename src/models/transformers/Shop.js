@@ -1,5 +1,6 @@
 export default class Shop {
   constructor(shop) {
+    this.index = shop.index;
     this.id = shop.id;
     this.name = shop.name;
     this.manager = shop.manager;

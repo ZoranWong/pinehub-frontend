@@ -6,13 +6,14 @@ export default class GetShopsCommand extends Command {
     super(app);
   }
   async handle(page, search = null, limit = 15) {
-    let [shops, totalNum, currentPage, totalPage ] = await this.service('shops').shops(page, search, limit);
+    let [shops, totalNum, currentPage, totalPage, pageCount ] = await this.service('shops').shops(page, search, limit);
     this.store().dispatch({
       type: 'shops/setShops',
       shops: shops,
       totalNum: totalNum,
       currentPage: currentPage,
-      totalPage: totalPage
+      totalPage: totalPage,
+      pageCount: pageCount
     });
   }
   static commandName() {

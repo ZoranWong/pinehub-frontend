@@ -54,13 +54,17 @@ export default class Shops extends Model{
         let page = payload['currentPage'];
         let totalNum = payload['totalNum'];
         let totalPage = payload['totalPage'];
-        console.log(this);
+        let limit = payload['pageCount'];
         state.currentPage = page;
-        state.list[page - 1] =  this.transform(shops, ShopTransformer);
+        let startIndex = (page - 1) * limit + 1;
+        state.list[page - 1] =  this.transform(shops, ShopTransformer, startIndex);
         if(totalNum !== null)
           state.totalNum = totalNum;
         if(totalPage !== null)
           state.totalPage = totalPage;
+          if(limit !== null) {
+            state.pageCount = limit;
+          }
       }
     };
   }

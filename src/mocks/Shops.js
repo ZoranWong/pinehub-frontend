@@ -8,7 +8,7 @@ export default class Shops extends Mock {
     return {
       "data|15":[{
         "id|+1": 1,
-        "code|12": 1,
+        "code": /\d{12}/,
         "country": "中国",
         "province": "@PROVINCE",
         "city": "@CITY",

@@ -5,12 +5,10 @@ constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServi
 register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:9
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Mock.js	/^  constructor(application) {$/;"	function	line:2
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Mock.js	/^  data() {$/;"	function	line:10
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  constructor(app) {$/;"	function	line:2
 handle	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  handle(params) {$/;"	function	line:6
 service	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  service(name) {$/;"	function	line:12
 store	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/Command.js	/^  store() {$/;"	function	line:16
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  constructor(app) {$/;"	function	line:5
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^  constructor() {$/;"	function	line:14
 mock	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^  mock() {$/;"	function	line:26
 use	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^  use($class) {$/;"	function	line:29
@@ -34,6 +32,15 @@ vueMixin	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^  vue
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^      data(){$/;"	function	line:102
 run	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^  run() {$/;"	function	line:109
 beforeCreate	/Users/wangzaron/workspace/www/pinehub-admin/src/Application.js	/^      beforeCreate: function() {$/;"	function	line:123
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  constructor(application) {$/;"	function	line:3
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  data(){$/;"	function	line:11
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  computed() {$/;"	function	line:16
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  dispatchs() {$/;"	function	line:22
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  listeners() {$/;"	function	line:26
+services	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  services(name) {$/;"	function	line:30
+transform	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  transform(data, transformer, startIndex = 1) {$/;"	function	line:34
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Shop.js	/^  constructor(shop) {$/;"	function	line:2
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/GetShopsCommand.js	/^  constructor(app) {$/;"	function	line:5
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  constructor(application) {$/;"	function	line:5
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  data() {$/;"	function	line:8
 computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  computed() {$/;"	function	line:16
@@ -43,6 +50,6 @@ setShops	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^    
 listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^  listeners() {$/;"	function	line:44
 nextPage	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      nextPage(state) {$/;"	function	line:46
 reset	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      reset(state) {$/;"	function	line:49
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  constructor(application) {$/;"	function	line:3
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:7
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Shop.js	/^  constructor(shop) {$/;"	function	line:2
