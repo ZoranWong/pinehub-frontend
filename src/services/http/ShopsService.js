@@ -6,6 +6,7 @@ export default class ShopsService extends ApiService{
 	async shops(page = 1, search = null, limit = 15) {
 		let shops = null;
 		let totalNum = 0;
+		let totalPage = 0;
 		let currentPage = 0;
 		let pageCount = 0;
 		let response = null;
@@ -17,9 +18,9 @@ export default class ShopsService extends ApiService{
 		shops = response.data;
 		let pagination = response.meta.pagination;
 		totalNum = pagination.total;
+		totalPage=pagination['totalPage'];
 		currentPage = pagination['current_page'];
 		pageCount = pagination['total_pages'];
-		console.log(pageCount);
 		return [shops, totalNum, currentPage, totalPage, pageCount];
 	}
 }

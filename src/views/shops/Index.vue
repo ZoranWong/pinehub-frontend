@@ -47,16 +47,21 @@
 				<el-table-column prop="address" label="地址" min-width="180"></el-table-column>
 				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
 				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
-				<!-- <el-table-column label="操作" width="200">
+				<el-table-column prop="goods" label="商品数" min-width="80"></el-table-column>
+				<el-table-column prop="goods" label="本月营业额" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="本月销售费用" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="上月实际收入" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="店铺余额" min-width="100"></el-table-column>
+				 <el-table-column label="操作" width="220">
 					<template slot-scope="scope">
-						<el-button type="success" size="mini" >查看</el-button>
-						<el-button type="primary" size="mini" >编辑</el-button>
+						<el-button type="success" size="mini">采购单</el-button>
+						<el-button type="primary" size="mini">修改</el-button>
 						<el-popover placement="top">
-							<el-button type="success" size="mini" @click="showQRCode(false,scope.row)">支付二维码</el-button>
-							<el-button type="success" size="mini" @click="showQRCode(true,scope.row)">微信参数二维码</el-button>
+							<el-button type="primary" size="mini">充值记录</el-button>
+							<el-button type="primary" size="mini">销售记录</el-button>
 							<el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
 						</el-popover>
-					</template> -->
+					</template> 
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
@@ -124,7 +129,6 @@
 		methods: {
 		},
 		created() {
-			console.log('create shops moduel');
 			let self = this;
 			(async function(){
 				console.log('mock request  shops service', await self.shops.shops());
