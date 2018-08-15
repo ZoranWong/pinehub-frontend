@@ -1,4 +1,5 @@
 //model模块
+import Projects from './Projects';
 import Account from './Account';
 import Order from './Order';
 import Menus from './Menus';
@@ -18,6 +19,7 @@ export default class Store {
     let common = new Common(application);
     _.extend(this, common);
     this.modules = {};
+    this.addModel('projects', Projects);
     this.addModel('order', Order);
     this.addModel('account', Account);
     this.addModel('menus', Menus);

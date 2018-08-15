@@ -37,7 +37,7 @@
 			return {
 				toogleMenu: false,
 				pageContentStyle: {
-					height: document.documentElement.clientHeight - 15 + 'px',
+					height: document.documentElement.clientHeight - 115 + 'px',
 					width: '100%'
 				},
 			};

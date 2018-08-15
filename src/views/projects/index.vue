@@ -20,14 +20,22 @@
 				</el-form>
 			</div>
 			<div class="project-cards">
-				<div class="card" v-for="(project , index) in projects" :key="index" v-on:click="pathTo(item)">
-					<p class="project-name">{{ project.name }}</p>
-					<img :src="project.logo" alt="" class="project-logo"/>
-					<div class="card-opt">
-						<el-button size="mini" type="text" >修改</el-button>
-						<el-button size="mini" type="text" >删除</el-button>
-					</div>
-				</div>
+				<el-row :gutter="20">
+				  	<el-col :span="6" v-for="(project , index) in currentPageProjects" :key="index">
+				  		<div class="card"  v-on:click="pathTo(item)">
+				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
+				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
+							<p class="project-name" style="margin-top: 80px;">名称：{{ project.name }}</p>
+							<p class="project-name">创建时间：{{ project.updata }}</p>
+							<div class="card-opt">
+								<el-button size="mini" type="text" >编辑</el-button>
+								<el-button size="mini" type="text" >授权</el-button>
+								<el-button size="mini" type="text" >删除</el-button>
+							</div>
+						</div>
+				  	</el-col>
+				</el-row>
+				
 			</div>
 			<div class="card-footer" v-if="totalNum">
 				<p>共{{ totalNum }}条，每页48条</p>
@@ -37,39 +45,49 @@
 </template>
 
 <script>
+	import GetProjectsCommand from '../../commands/GetProjectsCommand';
 	export default {
 		name: 'Projects',
 		data(){
 			return {
-        searchFields: {
-
-        }
+		        searchFields: {
+					name:''
+		        },
+		        
+		        
 			}
 		},
 		mounted () {
-
+			
 		},
 		computed:{
-
+			totalNum() {
+				return this.$store.state.projects.totalNum;
+			},
+			currentPageProjects(){
+				console.log(this.$store.getters['projects/currentPage'])
+				return this.$store.getters['projects/currentPage'];
+			}
 		},
 		methods:{
 		},
 		created(){
+			this.$command(GetProjectsCommand.commandName(), 1, this.searchFields);
 		}
 	}
-
 </script>
 <style scoped>
 	.content-box{padding:0}
-  .header-search .el-form-item{margin-bottom: 12px;}
+  	.header-search .el-form-item{margin-bottom: 12px;}
 	.header-search {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;}
 	.header-search .el-form-item__content{line-height: '';}
 	.project-cards{clear: both;padding:20px}
-	.project-cards .card .card-opt{position: relative;top: 42px;height: 12px;float: right;}
+	.project-cards .card .card-opt{position: absolute;bottom: 10px;right: 10px;}
 	.card-footer{float:right;padding:20px}
 	.card-footer p{font-size: 12px;line-height: 16px;}
-	.project-cards .card{position:relative;display:inline-block;margin-right:10px;width: 260px;height: 120px;padding: 0 20px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;border-top: 3px solid #ff6e6e;background: #fff;cursor: pointer;color: #999;}
+	.project-cards .card{position:relative;display:inline-block;margin-right:10px;width: 100%;height: auto;padding: 10px 20px 80px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;border-top: 3px solid #ff6e6e;background: #fff;cursor: pointer;color: #999;}
 	.project-cards .card p{height: 22px;line-height: 22px;font-size: 12px;}
-	.project-cards .card .project-logo{border: 1px solid #ff6e6e;color: #ff6e6e;position: absolute;top: 10px;right: 10px;border-radius: 2px;width:64px;height: 64px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
-	.project-cards .card p.project-name{margin-top: 18px;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
+	.project-cards .card .project-logo{border: 1px solid #ff6e6e;color: #ff6e6e;display: block;
+    margin: 0 auto;border-radius: 2px;width:64px;height: 64px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
+	.project-cards .card p.project-name{margin-top: 15px;clear: both;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
 </style>

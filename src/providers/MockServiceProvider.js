@@ -2,6 +2,7 @@
 /*eslint-env es6*/
 import ServiceProvider from './ServiceProvider';
 import Shops from '../mocks/Shops';
+import Projects from '../mocks/Projects';
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
     super(app);
@@ -11,6 +12,7 @@ export default class AppServiceProvider extends ServiceProvider{
       console.log('mock data register');
       this.app.register('mock', require('mockjs'));
       this.app.register('shopsMock', Shops);
+      this.app.register('projectsMock', Projects);
     }
   }
   boot() {
