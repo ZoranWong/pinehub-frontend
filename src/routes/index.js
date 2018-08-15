@@ -16,9 +16,9 @@ import shops from './ShopsRoute';
 import tickets from './TicketsRoute';
 //用户管理
 import users from './UsersRoute';
-
 //品类管理
 import categories from './CategoriesRoute';
+
 
 import Route from './Route';
 

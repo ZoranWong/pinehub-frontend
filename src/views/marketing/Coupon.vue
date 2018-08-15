@@ -14,6 +14,27 @@
 					</el-tab-pane>
 				</el-tabs>
 			</el-col>
+			<el-table :data="currentPageShops" highlight-current-row v-loading="isLoading">
+				<el-table-column prop="index" label="序号" width="50"></el-table-column>
+				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
+				<el-table-column prop="boss" label="优惠券名称" min-width="100"></el-table-column>
+				<el-table-column prop="address" label="类型" min-width="180"></el-table-column>
+				<el-table-column prop="num" label="是否同步微信" min-width="60"></el-table-column>
+				<el-table-column prop="money" label="有效时间" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="总发行数" min-width="80"></el-table-column>
+				<el-table-column prop="goods" label="库存" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="已领取是数量" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="使用数" min-width="100"></el-table-column>
+				<el-table-column prop="goods" label="使用率" min-width="100"></el-table-column>
+				 <el-table-column label="操作" width="220">
+					<template slot-scope="scope">
+						<el-button type="success" size="mini">查看</el-button>
+						<el-button type="primary" size="mini">修改</el-button>
+					</template> 
+				</el-table-column>
+			</el-table>
+			<!--工具条-->
+			<!--<paginator :totalNum = "totalNum" :totalPage = "totalPage" :currentPage="currentPage" :command="command"></paginator>-->
 		</div>
 	</div>
 </template>
@@ -25,11 +46,12 @@
 		data() {
 			let self = this;
 			return {
-
+				isLoading:false,
+				currentPageShops:[]
 			}
 		},
 		computed: {
-
+	
 		},
 		watch: {
 

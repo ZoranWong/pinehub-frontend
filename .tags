@@ -53,3 +53,4 @@ reset	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Shops.js	/^      r
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  constructor(application) {$/;"	function	line:3
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:7
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Project.js	/^  constructor(data) {$/;"	function	line:2

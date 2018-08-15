@@ -22,11 +22,11 @@
 			<div class="project-cards">
 				<el-row :gutter="20">
 				  	<el-col :span="6" v-for="(project , index) in currentPageProjects" :key="index">
-				  		<div class="card"  v-on:click="pathTo(item)">
+				  		<div class="card"  v-on:click="pathTo(project)">
 				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 							<p class="project-name" style="margin-top: 80px;">名称：{{ project.name }}</p>
-							<p class="project-name">创建时间：{{ project.createdAt }}</p>
+							<p class="project-name">创建时间：{{ project.created }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" >编辑</el-button>
 								<el-button size="mini" type="text" >授权</el-button>
@@ -35,10 +35,6 @@
 						</div>
 				  	</el-col>
 				</el-row>
-
-			</div>
-			<div class="card-footer" v-if="totalNum">
-				<p>共{{ totalNum }}条，每页48条</p>
 			</div>
 		</div>
 	</div>
@@ -67,6 +63,9 @@
 			}
 		},
 		methods:{
+			pathTo(item) {
+				this.$router.push({name: 'project-detial',  query: {projectId: item.id}});
+			}
 		},
 		created(){
 			this.$command(GetProjectsCommand.commandName(), 1, this.searchFields);

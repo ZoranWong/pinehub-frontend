@@ -11,6 +11,7 @@ export default class Projects extends Model {
       	pageCount: 0,
       	currentPage: 0,
 				totalNum:0,
+				formVisible:false
     };
   }
   computed() {
