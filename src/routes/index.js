@@ -18,8 +18,6 @@ import tickets from './TicketsRoute';
 import users from './UsersRoute';
 //品类管理
 import categories from './CategoriesRoute';
-//项目主页
-import main from './Main';
 
 
 import Route from './Route';
@@ -37,5 +35,4 @@ routes.push(orders);
 routes.push(shops);
 routes.push(tickets);
 routes.push(users);
-routes.push(main);
 export {routes, routeMap};
