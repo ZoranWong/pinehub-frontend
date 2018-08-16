@@ -18,8 +18,8 @@
 				<el-table-column prop="index" label="序号" width="50"></el-table-column>
 				<el-table-column prop="code" label="编号" min-width="80"></el-table-column>
 				<el-table-column prop="title" label="优惠券名称" min-width="100"></el-table-column>
-				<el-table-column prop="type" label="类型" min-width="180"></el-table-column>
-				<el-table-column prop="isTrue" label="是否同步微信" min-width="60"></el-table-column>
+				<el-table-column prop="type" label="类型" min-width="120"></el-table-column>
+				<el-table-column prop="isTrue" label="是否同步微信" min-width="80"></el-table-column>
 				<el-table-column prop="cratedAt" label="有效时间" min-width="100"></el-table-column>
 				<el-table-column prop="hangs" label="总发行数" min-width="80"></el-table-column>
 				<el-table-column prop="total" label="库存" min-width="100"></el-table-column>

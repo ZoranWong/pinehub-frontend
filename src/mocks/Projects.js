@@ -9,8 +9,8 @@ export default class Projects extends Mock {
       "data|12":[{
         "id|+1": 1,
         "name": "@NAME",
-        "url": "@PROVINCE",
-        "qrCode": "@CITY",
+        "logo": "@image('125x125','#4A7BF7','Hello')",
+        "qrCode": "@image('125x125','#FF6600','QRcode')",
         "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
         "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"
       }],

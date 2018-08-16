@@ -1,7 +1,10 @@
 export default class Project {
-  constructor(data) {
-    this.id = data.id;
-    this.name = data.name;
-    this.cratedAt = data.created_at;
+  constructor(project) {
+  	console.log(project)
+    this.id = project.id;
+    this.name = project.name;
+    this.cratedAt = project.created_at;
+    this.logo = project.logo;
+    this.qrCode = project.qrCode;
   }
 }

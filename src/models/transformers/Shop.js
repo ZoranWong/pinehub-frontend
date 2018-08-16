@@ -10,5 +10,13 @@ export default class Shop {
     this.county = shop.city;
     this.boss = this.manager.user_name + '('+ this.manager.mobile +')';
     this.address = shop.address;
+    
+    this.num = shop.num;
+    this.money = shop.money.toFixed(2);
+    this.sells = shop.sells.toFixed(2);
+    this.goods = shop.goods;
+    this.turnover = shop.turnover.toFixed(2);
+    this.actual = shop.actual.toFixed(2);
+    this.shopTurnover = shop.shopTurnover.toFixed(2);
   }
 }
