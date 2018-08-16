@@ -3,6 +3,7 @@ import AccountService from '../services/http/AccountService';
 import UriService from '../services/http/UriService';
 import ShopsService from '../services/http/ShopsService';
 import ProjectsService from '../services/http/ProjectsService';
+import CouponService from '../services/http/CouponService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -15,5 +16,6 @@ export default class HttpServiceProvider extends ServiceProvider {
       this.app.register('uri', UriService);
       this.app.register('shops', ShopsService);
       this.app.register('projects', ProjectsService);
+      this.app.register('coupon', CouponService);
   }
 }
