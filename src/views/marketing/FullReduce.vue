@@ -20,15 +20,17 @@
 <script>
 /* eslint-disable */
 	export default {
-		name: 'mjs',
+		name: 'FullReduce',
 		data() {
 			let self=this;
 			return {
-				activeTab:'all'
+				activeTab: 'all',
+				search: {
+					type: 0
+				}
 			};
 		},
 		mounted() {
-			console.log('mounted');
 		},
 		updated() {
 			this.updatedTab();
