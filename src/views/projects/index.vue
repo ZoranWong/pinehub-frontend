@@ -39,16 +39,15 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	import GetProjectsCommand from '../../commands/GetProjectsCommand';
 	export default {
 		name: 'Projects',
 		data(){
 			return {
-        searchFields: {
+		        searchFields: {
 					name:''
-        },
+		        },
 			}
 		},
 		mounted () {
@@ -75,7 +74,7 @@
 </script>
 <style scoped>
 	.content-box{padding:0}
-  .header-search .el-form-item{margin-bottom: 12px;}
+  	.header-search .el-form-item{margin-bottom: 12px;}
 	.header-search {padding-top:10px;overflow: hidden;border-bottom: 16px solid #eee;}
 	.header-search .el-form-item__content{line-height: '';}
 	.project-cards{clear: both;padding:20px}
