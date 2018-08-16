@@ -48,4 +48,14 @@ export default class ApiService extends Service{
     let result = await this.axios.delete(this.gateway + route + id);
     return null;
   }
+
+  searchBuilder(searchFields) {
+    let search = {};
+    search = this.buildSearchStr(searchFields);
+    return 'searchJson=' + this.services('base64').encode(search);
+  }
+
+  buildSearchStr(searchFields) {
+    return '';
+  }
 }
