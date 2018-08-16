@@ -14,7 +14,8 @@ export default class RouteServiceProvider extends ServiceProvider {
       routerArray.push(route);
     });
     let router = this. app.register('vue-router',  new VueRouter({
-      routes: routerArray
+      routes: routerArray,
+      mode: 'history'
     }));
     this.app.register('routeMap', routeMap);
     let self = this;

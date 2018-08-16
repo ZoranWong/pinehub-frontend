@@ -54,3 +54,18 @@ constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/Shops
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  constructor(application) {$/;"	function	line:3
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Shops.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:7
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Project.js	/^  constructor(data) {$/;"	function	line:2
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  constructor(app) {$/;"	function	line:6
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  register() {$/;"	function	line:9
+beforeEach	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  beforeEach(to, from, next) {$/;"	function	line:26
+html	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^<html>$/;"	function	line:2
+head	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^  <head>$/;"	function	line:3
+meta	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <meta charset="utf-8">$/;"	function	line:4
+meta	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <meta http-equiv="X-UA-Compatible" content="IE=edge">$/;"	function	line:5
+meta	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <meta name="viewport" content="width=device-width,initial-scale=1.0">$/;"	function	line:6
+link	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <link href="https:\/\/cdn.bootcss.com\/font-awesome\/4.7.0\/css\/font-awesome.min.css" rel="stylesheet">$/;"	function	line:7
+link	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <link rel="shortcut icon" href="<%= webpackConfig.output.publicPath %>favicon.ico">$/;"	function	line:8
+title	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <title>pinehub-frontend<\/title>$/;"	function	line:9
+style	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <style type="text\/css">$/;"	function	line:10
+body	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^  <body>$/;"	function	line:19
+div	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^    <div id="app"><\/div>$/;"	function	line:20
+script	/Users/wangzaron/workspace/www/pinehub-admin/public/index.html	/^  <script src="\/fonts\/iconfont.js"><\/script>$/;"	function	line:23

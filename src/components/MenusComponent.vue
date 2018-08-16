@@ -47,7 +47,7 @@ export default {
         path += '/' + _.strip(menu.path, '/');
         path += '/' + _.strip(child.path, '/');
       }
-      this.$command('redirect', {path: path});
+      this.$command('redirect', {path: path, query:{projectId: this.$router.currentRoute.query.projectId}});
     },
     checkActive(id){
       return this.$store.state.menus.activeMenu === id;
