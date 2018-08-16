@@ -26,7 +26,7 @@
 				  			<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 				  			<el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col>
 							<p class="project-name">名称：{{ project.name }}</p>
-							<p class="project-name">创建时间：{{ project.cratedAt }}</p>
+							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" >编辑</el-button>
 								<el-button size="mini" type="text" >授权</el-button>
@@ -82,7 +82,7 @@
 	.project-cards .card .card-opt{position: absolute;bottom: -10px;right: 10px;}
 	.card-footer{float:right;padding:20px}
 	.card-footer p{font-size: 12px;line-height: 16px;}
-	.project-cards .card{position:relative;display:inline-block;margin-right:10px;width: 100%;height: auto;padding: 10px 20px 80px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;border-top: 3px solid #ff6e6e;background: #fff;cursor: pointer;color: #999;}
+	.project-cards .card{position:relative;display:inline-block;margin-right:10px;width: 100%;height: auto;padding: 10px 20px 80px;margin-bottom: 20px;border-radius: 2px;border: 1px solid #e5e5e5;background: #fff;cursor: pointer;color: #999;}
 	.project-cards .card p{height: 22px;line-height: 22px;font-size: 12px;}
 	.project-cards .card div{margin-bottom: 20px;}
 	.project-cards .card div:first-child{padding-left:0 !important}
