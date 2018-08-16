@@ -12,6 +12,7 @@ import MemberCard from './MemberCard';
 import Member from './Member';
 import Score from './Score';
 import Customer from './Customer';
+import Coupon from './Coupon';
 import _ from 'underscore';
 export default class Store {
   constructor(application) {
@@ -32,7 +33,7 @@ export default class Store {
     this.addModel('memberManage', Member);
     this.addModel('score', Score);
     this.addModel('customer', Customer);
-
+		this.addModel('coupon', Coupon);
   }
   addModel(name, model) {
     this.modules[name] = new model(this.$application);
