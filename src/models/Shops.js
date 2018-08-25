@@ -34,8 +34,7 @@ export default class Shops extends Model{
       	nextPage({commit}) {
         	commit('nextPage');
       	},
-        setShops({commit}, payload){
-
+        setShops({commit}, payload) {
           commit('setShops', payload);
         }
     };

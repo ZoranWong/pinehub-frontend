@@ -5,7 +5,7 @@ export default {
 		imageHost: 'http://image.kingdomcloud.cn',
 		webHost: 'http://kingdomcloud.cn',
 		adminHost: 'http://admin.kingdomcloud.cn'
-	}
+	},
 	http: {
 		headers: {
 			Accept: 'application/vnd.pinehub.v0.0.1+json'
