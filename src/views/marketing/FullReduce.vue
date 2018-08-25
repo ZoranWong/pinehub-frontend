@@ -13,17 +13,38 @@
 					</el-tab-pane>
 				</el-tabs>
 			</el-col>
+			<el-table :data="currentPageFullReduce" highlight-current-row v-loading="isLoading">
+				<el-table-column prop="name" label="活动名称" min-width="120"></el-table-column>
+				<el-table-column prop="createdAt" label="有效时间" min-width="120"></el-table-column>
+				<el-table-column prop="get_limit" label="活动状态" min-width="100"></el-table-column>
+				<el-table-column prop="pays" label="参与活动支付金额" min-width="100"></el-table-column>
+				<el-table-column prop="num" label="参与活动的订单数" min-width="100"></el-table-column>
+				<el-table-column prop="number" label="参与活动人数" min-width="100"></el-table-column>
+				<el-table-column label="操作" width="100">
+					<template slot-scope="scope">
+						<el-button size="small" @click.active="" type="text">编辑</el-button> -
+						<el-button size="small" @click.active="" type="text" disabled>删除</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :currentPage="currentPage" :command="command"></paginator>
 		</div>
 	</div>
 </template>
 
 <script>
 /* eslint-disable */
+	import GetFullReduceCommand from '../../commands/GetFullReduceCommand';
+	import Paginator from '../../components/Paginator.vue';
 	export default {
 		name: 'FullReduce',
+		components: {
+			paginator: Paginator
+		},
 		data() {
 			let self=this;
 			return {
+				isLoading:false,
 				activeTab: 'all',
 				search: {
 					type: 0
@@ -36,7 +57,22 @@
 			this.updatedTab();
 		},
 		computed: {
-
+			totalNum() {
+				return this.$store.state.fullReduce.totalNum;
+			},
+			totalPage() {
+				return this.$store.state.fullReduce.pageCount;
+			},
+			currentPage() {
+				return this.$store.state.fullReduce.currentPage;
+			},
+			currentPageFullReduce(){
+				console.log(this.$store.getters['fullReduce/currentPage'])
+				return this.$store.getters['fullReduce/currentPage'];
+			},
+			command() {
+				return GetFullReduceCommand.commandName();
+			}
 		},
 		watch: {
 
@@ -78,10 +114,7 @@
 
 <style scoped>
 	.prompt{color:gray;font-size: 12px;margin-left: 120px;}
-	#mapContainer{
-	    min-width:500px;
-	    min-height:500px;
-	}
+	#mapContainer{min-width:500px;min-height:500px;}
 </style>
 <style>
 	.el-input-group__prepend{padding:0 5px !important}

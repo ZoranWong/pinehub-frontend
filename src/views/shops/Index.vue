@@ -48,10 +48,10 @@
 				<el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
 				<el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
 				<el-table-column prop="goods" label="商品数" min-width="80"></el-table-column>
-				<el-table-column prop="goods" label="本月营业额" min-width="100"></el-table-column>
-				<el-table-column prop="goods" label="本月销售费用" min-width="100"></el-table-column>
-				<el-table-column prop="goods" label="上月实际收入" min-width="100"></el-table-column>
-				<el-table-column prop="goods" label="店铺余额" min-width="100"></el-table-column>
+				<el-table-column prop="turnover" label="本月营业额" min-width="100"></el-table-column>
+				<el-table-column prop="sells" label="本月销售费用" min-width="100"></el-table-column>
+				<el-table-column prop="actual" label="上月实际收入" min-width="100"></el-table-column>
+				<el-table-column prop="shopTurnover" label="店铺余额" min-width="100"></el-table-column>
 				 <el-table-column label="操作" width="220">
 					<template slot-scope="scope">
 						<el-button type="success" size="mini">采购单</el-button>

@@ -1,46 +1,63 @@
-import Model from './Model'
-export default class FullReduce extends Model{
+import Model from './Model';
+import _ from 'underscore';
+import FullReduceTransformer from './transformers/FullReduce';
+export default class FullReduce extends Model {
   constructor(application) {
     super(application);
   }
   data() {
     return {
-      	selectData:[],
+      	list:[],
       	pageCount: 0,
       	currentPage: 0,
-		totalNum:0,
-		
-		formVisible: false, //新增编辑界面是否显示
-		detailVisible: false, //详情界面是否显示
-		detailData: {},
-		
-		paginator : {
-			page:1,
-			limit:10
-		},
+				totalNum:0,
+				formVisible:false
     };
   }
   computed() {
     return {
-      orderPage: (state) => (page) => {
-        return state.orders[page];
+      getShopsBuyPage: (state) => (page) => {
+        return state.orders[page -1];
+      },
+      currentPage: (state) =>  {
+       console.log(state)
+          return state.list[state.currentPage -1];
       }
-    }
+    };
   }
 
   dispatchs() {
     return {
-      	nextPage(context) {
-        	context.commit('nextPage');
-      	}
-    }
+      	nextPage({commit}) {
+        	commit('nextPage');
+      	},
+        setFullReduce({commit}, payload){
+
+          commit('setFullReduce', payload);
+        }
+    };
   }
 
   listeners() {
     return {
       nextPage(state) {
         state.currentPage ++;
+      },
+      reset(state) {
+
+      },
+      setFullReduce: (state, payload) => {
+        let fullReduce = payload['fullReduce'];
+        let page = payload['currentPage'];
+        let totalNum = payload['totalNum'];
+        let totalPage = payload['totalPage'];
+        state.currentPage = page;
+        state.list[page - 1] =  this.transform(fullReduce, FullReduceTransformer);
+        if(totalNum !== null)
+          state.totalNum = totalNum;
+        if(totalPage !== null)
+          state.totalPage = totalPage;
       }
-    }
+    };
   }
 }

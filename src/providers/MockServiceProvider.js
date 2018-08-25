@@ -4,6 +4,7 @@ import ServiceProvider from './ServiceProvider';
 import Shops from '../mocks/Shops';
 import Projects from '../mocks/Projects';
 import Coupon from '../mocks/Coupon';
+import FullReduce from '../mocks/FullReduce';
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
     super(app);
@@ -15,6 +16,7 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('shopsMock', Shops);
       this.app.register('projectsMock', Projects);
       this.app.register('couponMock', Coupon);
+      this.app.register('fullReduceMock', FullReduce);
     }
   }
   boot() {
