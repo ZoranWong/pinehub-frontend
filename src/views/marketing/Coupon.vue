@@ -26,11 +26,11 @@
 				<el-table-column prop="nums" label="已领取是数量" min-width="100"></el-table-column>
 				<el-table-column prop="useNum" label="使用数" min-width="100"></el-table-column>
 				<el-table-column prop="useF" label="使用率" min-width="100"></el-table-column>
-				 <el-table-column label="操作" width="150">
-					<template slot-scope="scope">
+				<el-table-column label="操作" width="150">
+					<template >
 						<el-button type="success" size="mini">查看</el-button>
 						<el-button type="primary" size="mini">修改</el-button>
-					</template> 
+					</template>
 				</el-table-column>
 			</el-table>
 			<!--工具条-->

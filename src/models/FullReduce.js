@@ -1,5 +1,5 @@
 import Model from './Model';
-import _ from 'underscore';
+//import _ from 'underscore';
 import FullReduceTransformer from './transformers/FullReduce';
 export default class FullReduce extends Model {
   constructor(application) {
@@ -7,11 +7,11 @@ export default class FullReduce extends Model {
   }
   data() {
     return {
-      	list:[],
-      	pageCount: 0,
-      	currentPage: 0,
-				totalNum:0,
-				formVisible:false
+      list:[],
+      pageCount: 0,
+      currentPage: 0,
+      totalNum:0,
+      formVisible:false
     };
   }
   computed() {
@@ -20,8 +20,7 @@ export default class FullReduce extends Model {
         return state.orders[page -1];
       },
       currentPage: (state) =>  {
-       console.log(state)
-          return state.list[state.currentPage -1];
+        return state.list[state.currentPage -1];
       }
     };
   }
@@ -32,7 +31,6 @@ export default class FullReduce extends Model {
         	commit('nextPage');
       	},
         setFullReduce({commit}, payload){
-
           commit('setFullReduce', payload);
         }
     };
@@ -44,7 +42,10 @@ export default class FullReduce extends Model {
         state.currentPage ++;
       },
       reset(state) {
-
+        state.list = [];
+        state.totalNum = 0;
+        state.totalPage = 0;
+        state.currentPage = 0;
       },
       setFullReduce: (state, payload) => {
         let fullReduce = payload['fullReduce'];

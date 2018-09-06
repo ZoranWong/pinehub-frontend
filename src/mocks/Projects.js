@@ -1,4 +1,5 @@
 import Mock from './Mock';
+/* eslint-disable */
 export default class Projects extends Mock {
   constructor(application) {
     super(application);

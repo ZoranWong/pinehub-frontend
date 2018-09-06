@@ -21,9 +21,9 @@
 				<el-table-column prop="num" label="参与活动的订单数" min-width="100"></el-table-column>
 				<el-table-column prop="number" label="参与活动人数" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="100">
-					<template slot-scope="scope">
-						<el-button size="small" @click.active="" type="text">编辑</el-button> -
-						<el-button size="small" @click.active="" type="text" disabled>删除</el-button>
+					<template >
+						<el-button size="small"  type="text">编辑</el-button> -
+						<el-button size="small"  type="text" disabled>删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

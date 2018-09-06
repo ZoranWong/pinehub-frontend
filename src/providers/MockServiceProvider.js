@@ -5,6 +5,7 @@ import Shops from '../mocks/Shops';
 import Projects from '../mocks/Projects';
 import Coupon from '../mocks/Coupon';
 import FullReduce from '../mocks/FullReduce';
+/* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
     super(app);

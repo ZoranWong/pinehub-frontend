@@ -1,4 +1,5 @@
 import Mock from './Mock';
+/* eslint-disable */
 export default class Coupon extends Mock {
   constructor(application) {
     super(application);
@@ -17,7 +18,7 @@ export default class Coupon extends Mock {
         "total": "@integer( 100, 100000 )",
         "nums": "@integer( 20, 200 )",
         "useNum": "@integer( 10, 100 )",
-        
+
         "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
         "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"
       }],

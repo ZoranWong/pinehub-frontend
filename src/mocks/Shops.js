@@ -1,4 +1,5 @@
 import Mock from './Mock';
+/* eslint-disable */
 export default class Shops extends Mock {
   constructor(application) {
     super(application);
@@ -14,7 +15,7 @@ export default class Shops extends Mock {
         "city": "@CITY",
         "county": "@COUNTY",
         "address": "@COUNTY(true)",
-        
+
         "num": "@integer( 10, 100 )",
         "money": "@float( 1, 5000, 1, 99 )",
         "goods": "@integer( 10, 500 )",
@@ -22,7 +23,7 @@ export default class Shops extends Mock {
         "sells": "@float( 1, 3000, 1, 99 )",
         "actual": "@float( 1, 2000, 1, 99 )",
         "shopTurnover": "@float( 1, 10000, 1, 99 )",
-        
+
         "manager": {
             "id|+1": 1,
             "nickname": "@NAME",

@@ -52,8 +52,8 @@
 				<el-table-column prop="sells" label="本月销售费用" min-width="100"></el-table-column>
 				<el-table-column prop="actual" label="上月实际收入" min-width="100"></el-table-column>
 				<el-table-column prop="shopTurnover" label="店铺余额" min-width="100"></el-table-column>
-				 <el-table-column label="操作" width="220">
-					<template slot-scope="scope">
+				<el-table-column label="操作" width="220">
+					<template >
 						<el-button type="success" size="mini">采购单</el-button>
 						<el-button type="primary" size="mini">修改</el-button>
 						<el-popover placement="top">
@@ -61,7 +61,7 @@
 							<el-button type="primary" size="mini">销售记录</el-button>
 							<el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
 						</el-popover>
-					</template> 
+					</template>
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
@@ -124,7 +124,7 @@
 			}
 		},
 		watch: {
-			
+
 		},
 		methods: {
 		},
