@@ -2,7 +2,7 @@ import ServiceProvider from './ServiceProvider';
 import SignInCommand from '../commands/SignInCommand';
 import ReportCommand from '../commands/ReportCommand';
 import RedirectCommand from '../commands/RedirectCommand';
-import GetShopsCommand from '../commands/GetShopsCommand';
+import DataListCommand from '../commands/DataListCommand';
 import GetProjectsCommand from '../commands/GetProjectsCommand';
 import UpLoadCommand from '../commands/UpLoadCommand';
 import GetCouponCommand from '../commands/GetCouponCommand';
@@ -13,7 +13,7 @@ export default class CommandServiceProvider extends ServiceProvider {
     this.commands = [];
   }
   register() {
-    let commands = [SignInCommand, ReportCommand, RedirectCommand, GetShopsCommand,GetProjectsCommand,UpLoadCommand,GetCouponCommand,GetFullReduceCommand];
+    let commands = [SignInCommand, ReportCommand, RedirectCommand, DataListCommand,GetProjectsCommand,UpLoadCommand,GetCouponCommand,GetFullReduceCommand];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);
     }

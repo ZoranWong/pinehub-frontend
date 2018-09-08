@@ -1,10 +1,14 @@
 export default {
 	gateways: {
-		authApi: 'http://api.auth.pinehub.cn',
-		adminApi: 'http://api.admin.pinehub.cn',
-		imageHost: 'http://image.pinehub.cn',
-		webHost: 'http://pinehub.cn',
-		adminHost: 'http://admin.pinehub.cn'
+		api:{
+			auth: 'http://api.auth.pinehub',
+			admin: 'http://api.admin.pinehub'
+		},
+		web: {
+			image: 'http://image.pinehub',
+			web: 'http://pinehub',
+			admin: 'http://admin.pinehub'
+		}
 	},
 	http: {
 		headers: {

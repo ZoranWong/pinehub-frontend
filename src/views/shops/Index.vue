@@ -65,7 +65,7 @@
 				</el-table-column>
 			</el-table>
 			<!--工具条-->
-			<paginator :totalNum = "totalNum" :totalPage = "totalPage" :currentPage="currentPage" :command="command"></paginator>
+			<paginator :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command"></paginator>
 			<!--二维码图片界面-->
 		</div>
 	</div>
@@ -73,7 +73,7 @@
 <script>
 /* eslint-disable */
 	import Paginator from '../../components/Paginator.vue';
-	import GetShopsCommand from '../../commands/GetShopsCommand';
+	import DataListCommand from '../../commands/DataListCommand';
 	export default {
 		name: 'Shops',
 		components: {
@@ -81,13 +81,15 @@
 		},
 		data() {
 			return {
+				service: 'shops',
+				event: 'shops/setList',
 				isLoading: false,
 				qrCode: null,
 				qrCodeTitle: null,
 				searchFields: {
 					code: null,
-					province: {name: '',cities: []},
-					city: {name: '', counties: []},
+					province: {name: '', cities: []},
+					city: {name: '',  counties: []},
 					county: {name: ''}
 				}
 			};
@@ -112,15 +114,13 @@
 				return this.$store.state.shops.pageCount;
 			},
 			currentPage() {
-				console.log('change data', this.$store.state.shops);
 				return this.$store.state.shops.currentPage;
 			},
 			currentPageShops() {
-				console.log(this.$store.getters['shops/currentPage']);
 				return this.$store.getters['shops/currentPage'];
 			},
 			command() {
-				return GetShopsCommand.commandName();
+				return DataListCommand.commandName();
 			}
 		},
 		watch: {
@@ -130,8 +130,9 @@
 		},
 		created() {
 			let self = this;
+			console.log(self);
 			(async function(){
-				console.log('mock request  shops service', await self.shops.shops());
+				console.log('mock request  shops service', await self.provincesMock.mock(1, null, 10));
 			})();
 		}
 	}

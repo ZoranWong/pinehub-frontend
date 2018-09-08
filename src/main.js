@@ -20,4 +20,7 @@ Date.prototype.format = function( format ) {
   return format;
 }
 const application = new Application();
-application.run();
+application.run(async function (vue) {
+  let data = await vue.app.publicKey();
+  console.log(data);
+});

@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
+    "staging": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint",
     "test": "karma start"
   },

@@ -6,12 +6,15 @@
 				<c-header @toogle="toogle" :selected = "showLeftSide" :toogleMenu = "toogleMenu"></c-header>
 				<section class="content-container">
 					<div class="grid-content bg-purple-light">
-						<el-col :span="24" class="breadcrumb-container">
-							<el-breadcrumb separator="/" class="breadcrumb-inner" v-if="showLeftSide">
-								<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
-									{{ tag(item.name) }}
-								</el-breadcrumb-item>
-							</el-breadcrumb>
+						<el-col :span="24" class="header-bottom"  v-if="showLeftSide">
+							<el-col :span="16" class="breadcrumb-container">
+								<el-breadcrumb separator="/" class="breadcrumb-inner">
+									<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
+										{{ tag(item.name) }}
+									</el-breadcrumb-item>
+								</el-breadcrumb>
+							</el-col>
+							<el-col :span="8" style="text-align:right"><router-link style = "margin-right:26px;" :to="{name: 'project-index'}">返回首页</router-link></el-col>
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
 							<!-- <keep-alive :include="includedComponents">
@@ -108,11 +111,11 @@
 	.container .loayout-content .logo img{
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
-	.right-content .el-breadcrumb {
+	.right-content .header-bottom, .right-content .el-breadcrumb{
 	    font-size: 14px;
-	    line-height: 1;
 	    height: 40px;
-	    line-height: 40px;
+			font-color: #606266;
+	    line-height: 40px !important;
 	    background: #fff;
 	    padding-left:10px;
 	    border-bottom: 1px solid #e9e9e9;

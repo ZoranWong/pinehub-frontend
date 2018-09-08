@@ -17,7 +17,10 @@ export default class ApiService extends Service{
       let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    let result = await this.axios.get(this.gateway + route + this.services().uri.query(params));
+    route = route.trim('/');
+    route = '/' + route;
+    let gateway = this.gateway.trim('/');
+    let result = await this.axios.get(gateway + route + this.services().uri.query(params));
     return result;
   }
 
@@ -26,7 +29,11 @@ export default class ApiService extends Service{
       let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    let result = await this.axios.post(this.gateway + route, params);
+    route = route.trim('/');
+    route = '/' + route;
+    let gateway = this.gateway.trim('/');
+
+    let result = await this.axios.post(gateway + route, params);
     return result;
   }
 
@@ -35,7 +42,10 @@ export default class ApiService extends Service{
       let token = await this.services('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
-    let result = await this.axios.put(this.gateway + route + id , params);
+    route = route.trim('/');
+    route = '/' + route;
+    let gateway = this.gateway.trim('/');
+    let result = await this.axios.put(gateway + route + id , params);
     return result;
   }
 
@@ -45,7 +55,10 @@ export default class ApiService extends Service{
       this.headers().get['Authorization'] = 'bearer ' + token;
     }
     let id = _.isString(params) || _.isNumber(params) ? params : this.services('json').encode(params);
-    let result = await this.axios.delete(this.gateway + route + id);
+    route = route.trim('/');
+    route = '/' + route;
+    let gateway = this.gateway.trim('/');
+    let result = await this.axios.delete(gateway + route + id);
     return null;
   }
 

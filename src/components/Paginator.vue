@@ -31,15 +31,23 @@ export default {
     totalPage: {
       default: 0,
       type: Number
-    }
+    },
+    service: {
+      default: null,
+      type: String
+    },
+    event: {
+      default: null,
+      type: String
+    },
   },
   methods: {
     changePage(page) {
-      this.$command(this.command, page, this.search);
+      this.$command(this.command, this.service, this.event, page, this.search);
     }
   },
   created() {
-    this.$command(this.command, 1, this.search);
+    this.$command(this.command, this.service, this.event, 1, this.search);
   }
 }
 </script>

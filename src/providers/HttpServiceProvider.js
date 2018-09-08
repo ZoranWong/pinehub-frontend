@@ -5,6 +5,8 @@ import ShopsService from '../services/http/ShopsService';
 import ProjectsService from '../services/http/ProjectsService';
 import CouponService from '../services/http/CouponService';
 import FullReduceService from '../services/http/FullReduceService';
+import AppService from '../services/http/AppService';
+import ProvincesService from '../services/http/ProvincesService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -19,5 +21,7 @@ export default class HttpServiceProvider extends ServiceProvider {
       this.app.register('projects', ProjectsService);
       this.app.register('coupon', CouponService);
       this.app.register('fullReduce', FullReduceService);
+      this.app.register('app', AppService);
+      this.app.register('provinces', ProvincesService);
   }
 }

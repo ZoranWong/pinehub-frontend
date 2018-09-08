@@ -4,14 +4,7 @@ import ShopTransformer from './transformers/Shop';
 export default class Shops extends Model{
   constructor(application) {
     super(application);
-  }
-  data() {
-    return {
-      	list:[],
-      	pageCount: 0,
-      	currentPage: 0,
-				totalNum:0,
-    };
+    this.transformer = ShopTransformer;
   }
   computed() {
     return {
@@ -28,43 +21,23 @@ export default class Shops extends Model{
       }
     };
   }
+  data() {
+    let data = super.data();
+    return _.extend(data, {
 
+    });
+  }
   dispatchs() {
-    return {
-      	nextPage({commit}) {
-        	commit('nextPage');
-      	},
-        setShops({commit}, payload) {
-          commit('setShops', payload);
-        }
-    };
+    let dispatchs = super.dispatchs();
+    return _.extend(dispatchs, {
+      
+    });
   }
 
   listeners() {
-    return {
-      nextPage(state) {
-        state.currentPage ++;
-      },
-      reset(state) {
+    let listeners = super.listeners();
+    return _.extend(listeners, {
 
-      },
-      setShops: (state, payload) => {
-        let shops = payload['shops'];
-        let page = payload['currentPage'];
-        let totalNum = payload['totalNum'];
-        let totalPage = payload['totalPage'];
-        let limit = payload['pageCount'];
-        state.currentPage = page;
-        let startIndex = (page - 1) * limit + 1;
-        state.list[page - 1] =  this.transform(shops, ShopTransformer, startIndex);
-        if(totalNum !== null)
-          state.totalNum = totalNum;
-        if(totalPage !== null)
-          state.totalPage = totalPage;
-          if(limit !== null) {
-            state.pageCount = limit;
-          }
-      }
-    };
+    });
   }
 }

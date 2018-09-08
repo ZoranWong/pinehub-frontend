@@ -88,7 +88,7 @@ export default class Application {
     this.vueApp.$on(event, callback);
   }
   $off(event) {
-
+    this.vueApp.$off(event);
   }
   $emit(event, params = null) {
     this.vueApp.$emit(event, params);
@@ -100,13 +100,13 @@ export default class Application {
     let self = this;
     this.$vm.mixin({
       data(){
-        return _.extend(self.instances, {config: self.config, application: self});
+        return _.extend(self.instances, {config: self.config, application: self, env: self.env});
       },
       methods: self.mixinMethods
     });
   }
 
-  run() {
+  run(callback = null) {
     this.$vm = Vue;
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
@@ -116,6 +116,7 @@ export default class Application {
     let store = this.instances['vue-store'];
     let router = this.instances['vue-router'];
     this.vueMixin();
+    if(callback) callback(self.instances);
     self.vueApp = new Vue({
       router: router,
       store: store,

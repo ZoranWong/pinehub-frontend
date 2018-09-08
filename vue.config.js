@@ -8,7 +8,7 @@ function FrontEnvConfigSettingPlug() {
   	envConfigPath = path.join(__dirname, '/environment/production.js');
   }else if(process.env.NODE_ENV === 'development'){
   	envConfigPath = path.join(__dirname, '/environment/development.js');
-  }else if(process.env.NODE_ENV === 'staging'){
+  }else if(process.env.NODE_ENV === 'test'){
   	envConfigPath = path.join(__dirname, '/environment/staging.js');
   }
   console.log(envConfigPath);
