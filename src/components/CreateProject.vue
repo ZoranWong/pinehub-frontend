@@ -3,16 +3,7 @@
 	<el-dialog :visible.sync="visible" @close="close" @open="open" :modal="true"  width="36%" :close-on-click-modal="false"  title="创建项目" center>
 		<div class="form-container">
 			<el-form :model="formData" v-loading="loading" label-width="120px" :rules="rules" ref="createProject">
-				<el-form-item label="应用名称：" prop="name">
-					<el-input v-model="formData.name"></el-input>
-				</el-form-item>
-        <el-form-item label="联系人：" prop="contactName">
-					<el-input v-model="formData.contact_name"></el-input>
-				</el-form-item>
-        <el-form-item label="联系人电话：" prop="contactPhoneNum">
-					<el-input v-model="formData.contact_phone_num"></el-input>
-				</el-form-item>
-				<!--图片上传-->
+        <!--图片上传-->
 				<el-form-item label="项目logo：" prop="projectLogo">
 					<div v-if="formData.logo" style="padding:2px;width:155px;height:155px;border:1px dashed #ddd">
 						<img :src="formData.logo" alt="" style="width:148px;"/>
@@ -23,6 +14,15 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 						<div slot="tip" class="el-upload__tip">只能上传png文件,且大小不超过2MB的正方形图片</div>
 					</el-upload>
+				</el-form-item>
+				<el-form-item label="应用名称：" prop="name">
+					<el-input v-model="formData.name"></el-input>
+				</el-form-item>
+        <el-form-item label="联系人：" prop="contactName">
+					<el-input v-model="formData.contact_name"></el-input>
+				</el-form-item>
+        <el-form-item label="联系人电话：" prop="contactPhoneNum">
+					<el-input v-model="formData.contact_phone_num"></el-input>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -56,6 +56,9 @@ export default {
         contactPhoneNum: [
           { required: true, message: '请输入项目联系人电话', trigger: 'blur' },
           { max: 16, message: '最大长度为12', trigger: 'blur' }
+        ],
+        projectLogo:[
+          { required: true, message: '请输入项目联系人电话', trigger: 'blur' }
         ]
       },
       loading: false,
@@ -131,6 +134,9 @@ export default {
    }
 </style>
 <style scoped>
+  .upload-logo{
+    display: flex;
+  }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
@@ -146,5 +152,13 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .el-upload__tip {
+    font-size: 12px;
+    color: #f52e57;
+    margin-top: 54px;
+    width: 220px;
+    margin-left: 12px;
+    line-height: 24px;
   }
 </style>
