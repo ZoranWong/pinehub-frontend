@@ -1,18 +1,18 @@
 //model模块
 import Projects from './Projects';
 import Account from './Account';
-import Order from './Order';
+// import Order from './Order';
 import Menus from './Menus';
 import Shops from './Shops';
 import Common from './Common';
-import FullReduce from './FullReduce';
-import Merchandise from './Merchandise';
+// import FullReduce from './FullReduce';
+import Merchandises from './Merchandises';
 
-import MemberCard from './MemberCard';
-import Member from './Member';
-import Score from './Score';
-import Customer from './Customer';
-import Coupon from './Coupon';
+// import MemberCard from './MemberCard';
+// import Member from './Member';
+// import Score from './Score';
+// import Customer from './Customer';
+import Categories from './Categories';
 import WechatMenu from './WechatMenu';
 import _ from 'underscore';
 export default class Store {
@@ -22,19 +22,19 @@ export default class Store {
     _.extend(this, common);
     this.modules = {};
     this.addModel('projects', Projects);
-    this.addModel('order', Order);
+    // this.addModel('order', Order);
     this.addModel('account', Account);
     this.addModel('menus', Menus);
     this.addModel('shops', Shops);
     //this.addModel('common', Common);
-    this.addModel('fullReduce', FullReduce);
-    this.addModel('merchandise', Merchandise);
-    this.addModel('memberCard', MemberCard);
-
-    this.addModel('memberManage', Member);
-    this.addModel('score', Score);
-    this.addModel('customer', Customer);
-		this.addModel('coupon', Coupon);
+    // this.addModel('fullReduce', FullReduce);
+    this.addModel('merchandises', Merchandises);
+    // this.addModel('memberCard', MemberCard);
+    //
+    // this.addModel('memberManage', Member);
+    // this.addModel('score', Score);
+    // this.addModel('customer', Customer);
+		this.addModel('categories', Categories);
     this.addModel('wechatMenus', WechatMenu);
   }
   addModel(name, model) {

@@ -6,20 +6,19 @@
 			<!--列表-->
 			<m-table :merchandises = "merchandises"></m-table>
 			<!--工具条-->
-			<paginator @change-page="changePage" :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command" :search="query"></paginator>
+			<paginator :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command" @change-page="changePage" :search="query"></paginator>
 		</div>
 	</div>
 </template>
 
 <script>
-	/* eslint-disable */
-	import _ from 'underscore';
+/* eslint-disable */
 	import Header from './Header';
 	import Paginator from '@/components/Paginator';
 	import MerchandiseTable from './MerchandiseTable';
 	import DataListCommand from '../../commands/DataListCommand';
 	export default {
-		name: 'Merchandises',
+		name: 'MerchandiseDown',
 		components: {
 			's-header': Header,
 			'paginator': Paginator,
@@ -30,9 +29,10 @@
 				service: 'http.merchandises',
 				event: 'merchandises/setList',
 				isLoading: false,
-				query: {
+        query: {
 					page: 1,
 					projectId: 0,
+          status: 0
 				}
 			};
 		},
@@ -54,15 +54,12 @@
 			}
 		},
 		methods: {
-			search(data) {
-				this.query = _.extend(this.query, data);
-			},
-			changePage(page) {
-				this.query['page'] = page;
-			}
-		},
-		created() {
-			//this.query = this.$router.currentRoute.query;
+      search(data) {
+        this.query = _.extend(this.query, data);
+      },
+      changePage(page) {
+        this.query['page'] = page;
+      }
 		}
 	}
 </script>

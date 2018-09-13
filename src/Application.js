@@ -73,13 +73,42 @@ export default class Application {
   }
 
   register(name, service = null) {
+    let instance = null;
     if(!service && _.isFunction(name)) {
-      return this.instances[name]  = new name(this);
+       instance = this.instances[name]  = new name(this);
     }else if(name && _.isFunction(service)){
-      return  this.instances[name] = new service(this);
+      instance =  this.instances[name] = new service(this);
     }else{
-      return  this.instances[name]  = service;
+      instance =  this.instances[name]  = service;
     }
+
+    let keys =name.split('.');
+    let key = keys.length - 1;
+    let tmp = [];
+    tmp[keys[key]] = instance;
+    while(key > 0){
+      key --;
+      let tmp0 = [];
+      tmp0[keys[key]] = tmp;
+      tmp = tmp0;
+    }
+    function extend(dist, src, deep) {
+      for (var key in src) {
+        if (src.hasOwnProperty(key)) {
+          let value = src[key];
+          let end = !deep;
+          if(end){
+            dist[key] = value;
+            continue;
+          }else if(!dist[key]) {
+            dist[key] = [];
+          }
+          extend(dist[key], value, deep - 1);
+        }
+      }
+    }
+    extend(this.instances, tmp, keys.length - 1);
+    return instance;
   }
   resetForm(form) {
     form.resetFields();
@@ -106,17 +135,28 @@ export default class Application {
     });
   }
 
-  run(callback = null) {
+  run(before = null, created = null) {
     this.$vm = Vue;
     Vue.use(VueAxios, axios);
     Vue.use(Vuex);
     Vue.use(ElementUI);
     let self = this;
+    if(before && created && _.isFunction(before) && _.isFunction(created)) {
+      before(this);
+    }else if(!created) {
+      created = before;
+    }
+    self.afterBoot();
+    console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
     self.registerServiceProviders();
     let store = this.instances['vue-store'];
     let router = this.instances['vue-router'];
+    self.afterBoot();
+    console.log('application registerServiceProviders time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
     this.vueMixin();
-    if(callback) callback(self.instances);
+    if(created && _.isFunction(created)) {
+      created(self);
+    }
     self.vueApp = new Vue({
       router: router,
       store: store,
@@ -144,5 +184,10 @@ export default class Application {
         console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
       }
     }).$mount('#app');
+    self.afterBoot();
+    console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
+    // if(created && _.isFunction(created)) {
+    //   created(self);
+    // }
   }
 }

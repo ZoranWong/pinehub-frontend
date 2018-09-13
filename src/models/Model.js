@@ -1,6 +1,7 @@
 import _ from 'underscore';
 export default class Model {
   constructor(application) {
+    this.dataMap = {};
     this.$application = application;
     this.state = this.data();
     this.getters = this.computed();
@@ -10,16 +11,23 @@ export default class Model {
   }
 
   data() {
-    return {
+    this.dataMap = _.extend(this.dataMap, {
         list:[],
         pageCount: 0,
         currentPage: 0,
         totalNum:0,
-    };
+    });
+    return this.dataMap;
   }
   computed() {
     return {
-
+      currentPage: (state) =>  {
+        if(state.currentPage) {
+          return state.list[state.currentPage -1];
+        }else{
+          return null;
+        }
+      }
     };
   }
 
@@ -40,7 +48,11 @@ export default class Model {
         state.currentPage ++;
       },
       reset(state) {
-        state = {};
+        for (var key in state) {
+          if (state.hasOwnProperty(key)) {
+            state[key] = null;
+          }
+        }
       },
       setList: (state, payload) => {
         let list = payload['list'];

@@ -22,7 +22,7 @@ export default {
       type: String
     },
     search:{
-      default: null
+      default: function(){return {}}
     },
     limit: {
       default: 15,
@@ -41,13 +41,25 @@ export default {
       type: String
     },
   },
+  watch:{
+  },
   methods: {
     changePage(page) {
-      this.$command(this.command, this.service, this.event, page, this.search);
+      this.$emit('change-page', page);
+      let query = this.search;
+      query['projectId'] = this.$router.currentRoute.query.projectId;
+      this.$router.push({name: this.$router.currentRoute.name,  query: query});
+      this.updateList();
+    },
+    updateList() {
+      this.$command(this.command, this.service, this.event, this.search['page'], this.search);
     }
   },
+  updated(){
+    this.updateList();
+  },
   created() {
-    this.$command(this.command, this.service, this.event, 1, this.search);
+    this.updateList();
   }
 }
 </script>

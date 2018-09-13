@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Model from './Model';
 import _ from 'underscore';
 export default class Menus extends Model {
@@ -95,7 +96,7 @@ export default class Menus extends Model {
           id: '18',
           title: '出售中',
           icon: '',
-          path: 'up',
+          path: 'selling',
 	      },{
           id: '19',
           title: '仓库中',
@@ -105,7 +106,7 @@ export default class Menus extends Model {
           id: '20',
           title: '已售罄',
           icon: '',
-          path: 'manage',
+          path: 'sold_out',
 	      },{
           id: '21',
           title: '品类管理',

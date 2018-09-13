@@ -7,6 +7,9 @@ import CouponService from '../services/http/CouponService';
 import FullReduceService from '../services/http/FullReduceService';
 import AppService from '../services/http/AppService';
 import ProvincesService from '../services/http/ProvincesService';
+import WechatMenusService from '../services/http/WechatMenuService';
+import MerchandisesService from '../services/http/MerchandisesService';
+import CategoriesService from '../services/http/CategoriesService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -15,13 +18,17 @@ export default class HttpServiceProvider extends ServiceProvider {
       this.app.axios = this.app.$vm.axios.create({
         headers: this.app.config['http']['headers']
       });
-      this.app.register('account', AccountService);
       this.app.register('uri', UriService);
-      this.app.register('shops', ShopsService);
-      this.app.register('projects', ProjectsService);
-      this.app.register('coupon', CouponService);
-      this.app.register('fullReduce', FullReduceService);
-      this.app.register('app', AppService);
-      this.app.register('provinces', ProvincesService);
+
+      this.app.register('http.account', AccountService);
+      this.app.register('http.shops', ShopsService);
+      this.app.register('http.projects', ProjectsService);
+      this.app.register('http.coupon', CouponService);
+      this.app.register('http.fullReduce', FullReduceService);
+      this.app.register('http.app', AppService);
+      this.app.register('http.provinces', ProvincesService);
+      this.app.register('http.wechatMenus', WechatMenusService);
+      this.app.register('http.merchandises', MerchandisesService);
+      this.app.register('http.categories', CategoriesService);
   }
 }

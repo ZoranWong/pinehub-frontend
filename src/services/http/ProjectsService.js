@@ -10,7 +10,7 @@ export default class ProjectsService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.mock()) {
-			response =  await this.services('projectsMock').mock(page, search, limit);
+			response =  await this.services('mock.projects').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 		}

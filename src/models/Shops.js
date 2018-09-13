@@ -7,36 +7,25 @@ export default class Shops extends Model{
     this.transformer = ShopTransformer;
   }
   computed() {
-    return {
+    return _.extend(super.computed(), {
       getShopsBuyPage: (state) => (page) => {
         return state.orders[page -1];
-      },
-      currentPage: (state) =>  {
-        if(state.currentPage) {
-          return state.list[state.currentPage -1];
-        }else{
-          return null;
-        }
-
       }
-    };
+    });
   }
   data() {
-    let data = super.data();
-    return _.extend(data, {
+    return _.extend(super.data(), {
 
     });
   }
   dispatchs() {
-    let dispatchs = super.dispatchs();
-    return _.extend(dispatchs, {
-      
+    return _.extend(super.dispatchs(), {
+
     });
   }
 
   listeners() {
-    let listeners = super.listeners();
-    return _.extend(listeners, {
+    return _.extend(super.listeners(), {
 
     });
   }

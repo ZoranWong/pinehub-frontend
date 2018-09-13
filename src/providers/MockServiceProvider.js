@@ -6,6 +6,9 @@ import Projects from '../mocks/Projects';
 import Coupon from '../mocks/Coupon';
 import FullReduce from '../mocks/FullReduce';
 import Provinces from '../mocks/Provinces';
+import WechatMenus from '../mocks/WechatMenus';
+import Merchandises from '../mocks/Merchandises';
+import Categories from '../mocks/Categories';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -13,13 +16,15 @@ export default class AppServiceProvider extends ServiceProvider{
   }
   register() {
     if(this.app.mock()) {
-      console.log('mock data register');
       this.app.register('mock', require('mockjs'));
-      this.app.register('shopsMock', Shops);
-      this.app.register('projectsMock', Projects);
-      this.app.register('couponMock', Coupon);
-      this.app.register('fullReduceMock', FullReduce);
-      this.app.register('provincesMock', Provinces);
+      this.app.register('mock.shops', Shops);
+      this.app.register('mock.projects', Projects);
+      this.app.register('mock.coupon', Coupon);
+      this.app.register('mock.fullReduce', FullReduce);
+      this.app.register('mock.provinces', Provinces);
+      this.app.register('mock.wechatMenus', WechatMenus);
+      this.app.register('mock.merchandises', Merchandises);
+      this.app.register('mock.categories', Categories);
     }
   }
   boot() {

@@ -10,7 +10,7 @@ export default class FullReduceService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.mock()) {
-			response =  await this.services('fullReduceMock').mock(page, search, limit);
+			response =  await this.services('mock.fullReduce').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 		}

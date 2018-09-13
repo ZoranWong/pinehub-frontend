@@ -1,4 +1,5 @@
 import Application from './Application';
+import VueResize from 'vue-resize';
 Date.prototype.format = function( format ) {
   let o = {
     "M+" : this.getMonth()+1, //month
@@ -20,7 +21,10 @@ Date.prototype.format = function( format ) {
   return format;
 }
 const application = new Application();
-application.run(async function (vue) {
-  let data = await vue.app.publicKey();
+application.run(async function(app) {
+  app.use(VueResize);
+
+}, async function (app) {
+  let data = await app.instances.http.app.publicKey();
   console.log(data);
 });

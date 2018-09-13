@@ -11,7 +11,7 @@ export default class ProvincesService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.mock()) {
-			response =  await this.services('provincessMock').mock(page, search, limit);
+			response =  await this.services('mock.provinces').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('provinces', {page: page, limit: limit, searchJson: search});

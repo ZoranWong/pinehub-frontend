@@ -1,0 +1,23 @@
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Merchandise.js	/^  constructor(merchandise) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Categories.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Categories.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  constructor(application) {$/;"	function	line:5
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  computed() {$/;"	function	line:9
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  data() {$/;"	function	line:15
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  dispatchs() {$/;"	function	line:21
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  listeners() {$/;"	function	line:28
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  constructor(app) {$/;"	function	line:14
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  register() {$/;"	function	line:17
+boot	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  boot() {$/;"	function	line:30
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  constructor(application) {$/;"	function	line:19
+addModel	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  addModel(name, model) {$/;"	function	line:40
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/CategoriesService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:14
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:17
+uses	/Users/wangzaron/workspace/www/pinehub-admin/src/routes/MerchandisesRoute.js	/^    uses : function(route) {$/;"	function	line:13
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  data() {$/;"	function	line:8
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  computed() {$/;"	function	line:215
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Category.js	/^  constructor(category) {$/;"	function	line:2
