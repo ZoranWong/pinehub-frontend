@@ -20,7 +20,8 @@
 				</el-table-column>
       </el-table>
 			<!--工具条-->
-			<paginator :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command" @change-page="changePage" :search="query"></paginator>
+			<paginator :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command"
+			 @change-page="changePage" :search="query"></paginator>
 		</div>
 	</div>
 </template>
@@ -45,6 +46,10 @@
 				}
 			};
 		},
+		created() {
+			let page = this.$router.currentRoute.query.page;
+			this.query.page = parseInt(!page ? 1 : page);
+		},
 		computed: {
 			categories() {
 				return this.$store.getters['categories/currentPage'];
@@ -53,7 +58,7 @@
 				return this.$store.state.categories.totalNum;
 			},
 			totalPage() {
-				return this.$store.state.categories.pageCount;
+				return this.$store.state.categories.totalPage ? this.$store.state.categories.totalPage : 15;
 			},
 			currentPage() {
 				return this.$store.state.categories.currentPage;
