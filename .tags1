@@ -4,6 +4,5 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  constructor(application) {$/;"	function	line:5
-data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  data() {$/;"	function	line:8
-computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  computed() {$/;"	function	line:215
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/UpToCutActivities.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/UpToCutActivities.js	/^  data(page = 1, search = null, limit = 10) {$/;"	function	line:8

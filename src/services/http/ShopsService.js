@@ -9,7 +9,7 @@ export default class ShopsService extends ApiService{
 		let totalPage = 0;
 		let currentPage = 0;
 		let response = null;
-		if(this.$application.mock()) {
+		if(this.$application.needMock()) {
 			response =  await this.services('mock.shops').mock(page, search, limit);
 		}else{
 			//服务器交互代码

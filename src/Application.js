@@ -23,7 +23,7 @@ export default class Application {
     this.env = env;
     this.mixinMethods = {};
   }
-  mock() {
+  needMock() {
     return this.config.app.mock;
   }
   use($class) {
@@ -75,11 +75,11 @@ export default class Application {
   register(name, service = null) {
     let instance = null;
     if(!service && _.isFunction(name)) {
-       instance = this.instances[name]  = new name(this);
+       instance = this[name] = this.instances[name]  = new name(this);
     }else if(name && _.isFunction(service)){
-      instance =  this.instances[name] = new service(this);
+      instance = this[name] =  this.instances[name] = new service(this);
     }else{
-      instance =  this.instances[name]  = service;
+      instance = this[name] =  this.instances[name]  = service;
     }
 
     let keys =name.split('.');
@@ -108,6 +108,7 @@ export default class Application {
       }
     }
     extend(this.instances, tmp, keys.length - 1);
+    extend(this, tmp, keys.length - 1);
     return instance;
   }
   resetForm(form) {
@@ -146,13 +147,9 @@ export default class Application {
     }else if(!created) {
       created = before;
     }
-    self.afterBoot();
-    console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
     self.registerServiceProviders();
     let store = this.instances['vue-store'];
     let router = this.instances['vue-router'];
-    self.afterBoot();
-    console.log('application registerServiceProviders time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
     this.vueMixin();
     if(created && _.isFunction(created)) {
       created(self);
@@ -169,7 +166,6 @@ export default class Application {
           self.$on(key, function(message) {
             let handler = new exception(self, self.vueApp.$message);
             handler.handle(message);
-            console.log('error');
           });
         });
       },
@@ -184,10 +180,5 @@ export default class Application {
         console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
       }
     }).$mount('#app');
-    self.afterBoot();
-    console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
-    // if(created && _.isFunction(created)) {
-    //   created(self);
-    // }
   }
 }

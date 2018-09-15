@@ -15,7 +15,7 @@ export default class AppServiceProvider extends ServiceProvider{
     super(app);
   }
   register() {
-    if(this.app.mock()) {
+    if(this.app.needMock()) {
       this.app.register('mock', require('mockjs'));
       this.app.register('mock.shops', Shops);
       this.app.register('mock.projects', Projects);

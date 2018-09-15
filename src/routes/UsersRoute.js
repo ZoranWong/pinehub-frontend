@@ -1,19 +1,19 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import MemberManage from '../views/users/MemberManage';
+import Members from '../views/users/member/Index';
 import MemberCard from '../views/users/MemberCard';
-import PointManage from '../views/users/PointManage';
-import CustomerManage from '../views/users/CustomerManage';
+import Scores from '../views/users/score/Index';
+import Customers from '../views/users/customer/Index';
 let route = new Route();
-route.group('/users', 
+route.group('/users',
 	{
 	  	'tag': '用户管理',
 	  	'name': 'users',
 	  	'component': Layout,
 	  	'uses': function(route) {
-		  	route.addRoute('/memberManage', {
-		  		'name': 'member-manage',
-		  		'component': MemberManage,
+		  	route.addRoute('/members', {
+		  		'name': 'members',
+		  		'component': Members,
 		  		'tag': '会员管理'
 		  	});
 		  	route.addRoute('/memberCard', {
@@ -21,14 +21,14 @@ route.group('/users',
 		  		'component': MemberCard,
 		  		'tag': '会员卡'
 		  	});
-		  	route.addRoute('/pointManage', {
-		  		'name': 'point-manage',
-		  		'component': PointManage,
+		  	route.addRoute('/scores', {
+		  		'name': 'scores',
+		  		'component': Scores,
 		  		'tag': '积分管理'
 		  	});
-		  	route.addRoute('/customerManage', {
-		  		'name': 'customer-manage',
-		  		'component': CustomerManage,
+		  	route.addRoute('/customers', {
+		  		'name': 'customers',
+		  		'component': Customers,
 		  		'tag': '客户管理'
 		  	});
 	  	}

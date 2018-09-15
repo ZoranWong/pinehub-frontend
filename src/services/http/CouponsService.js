@@ -9,7 +9,7 @@ export default class CouponsService extends ApiService{
 		let currentPage = 0;
 		let totalPage = 0;
 		let response = null;
-		if(this.$application.mock()) {
+		if(this.$application.needMock()) {
 			response =  await this.services('mock.coupons').mock(page, search, limit);
 		}else{
 			//服务器交互代码

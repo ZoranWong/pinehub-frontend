@@ -10,7 +10,7 @@ export default class UpToCutActivities extends Mock {
       "data|15":[{
         "id|+1": 1,
         "name": "@NAME",
-        "active_time": "@DATE(yyyy-MM-dd hh:mm:ss) - @DATE(yyyy-MM-dd hh:mm:ss)",
+        "active_time": "@DATE(yyyy年MM月dd日) -- @DATE(yyyy年MM月dd日)",
         "order_num": "@integer( 10, 100 )",
         "user_num": "@integer( 10, 50 )",
         "status": "@integer( 1,3 )",

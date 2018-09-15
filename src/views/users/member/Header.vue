@@ -1,16 +1,13 @@
 <template>
   <el-col :span="24" class="toolbar">
-    <el-tabs type="card">
-      <el-tab-pane label="所有支付礼包" name="first">
+    <el-tabs  type="card">
+      <el-tab-pane label="所有优惠券" name="first">
       </el-tab-pane>
       <el-tab-pane label="未开始"  name="second">
-
       </el-tab-pane>
       <el-tab-pane label="进行中"  name="third">
-
       </el-tab-pane>
-      <el-tab-pane label="已结束"  name="forth">
-
+      <el-tab-pane label="已结束" name="forth">
       </el-tab-pane>
     </el-tabs>
   </el-col>

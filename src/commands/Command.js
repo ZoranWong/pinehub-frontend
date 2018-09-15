@@ -10,7 +10,7 @@ export default class Command {
     return '';
   }
   service(name) {
-    return this.$application.instances[name];
+    return this.$application[name];
   }
 
   store() {
