@@ -6,7 +6,6 @@
 			<el-col class = "c-header">
 				<el-button size="small" type="primary" icon="el-icon-plus">添加新品类</el-button>
 			</el-col>
-			<!-- <s-header @search="search"></s-header> -->
 			<!--列表-->
       <el-table  highlight-current-row :data="categories">
         <el-table-column type="selection" width="55"></el-table-column>
