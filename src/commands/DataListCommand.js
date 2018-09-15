@@ -6,17 +6,18 @@ export default class DataListCommand extends Command {
     super(app);
   }
   async handle(service, event, page, search = null, limit = 15) {
-    let [list, totalNum, currentPage, totalPage, pageCount ] = await this.service(service).list(page, search, limit);
+    console.log(this.service(service), service);
+    let [list, totalNum, currentPage,  totalPage ] = await this.service(service).list(page, search, limit);
     this.store().dispatch({
       type: event,
       list: list,
       totalNum: totalNum,
       currentPage: currentPage,
       totalPage: totalPage,
-      pageCount: pageCount
+      pageCount: limit
     });
   }
   static commandName() {
-    return 'get-data-list';
+    return 'data.list';
   }
 }

@@ -70,17 +70,17 @@ export default class Menus extends Model {
             id: '13',
             title: '满减/送',
             icon: '',
-            path: 'fullReduce',
+            path: 'up_to_cut',
 	        },{
             id: '14',
             title: '支付有礼',
             icon: '',
-            path: 'payGift',
+            path: 'paid_gift',
 	        },{
             id: '15',
-            title: '优惠券管理',
+            title: '优惠券',
   	        icon: 'fa fa-ticket',
-  	        path: 'coupon',
+  	        path: 'coupons',
           }]
       },{
         id: '16',

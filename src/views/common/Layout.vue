@@ -130,4 +130,7 @@
 		background: #fff;
 		border-radius: 6px;
 	}
+	.content-wrapper{
+		height: inherit;
+	}
 </style>

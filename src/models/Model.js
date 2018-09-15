@@ -13,9 +13,10 @@ export default class Model {
   data() {
     this.dataMap = _.extend(this.dataMap, {
         list:[],
-        pageCount: 0,
+        pageCount: 1,
         currentPage: 0,
-        totalNum:0,
+        totalNum:1,
+        totalPage: 0
     });
     return this.dataMap;
   }
@@ -59,16 +60,16 @@ export default class Model {
         let page = payload['currentPage'];
         let totalNum = payload['totalNum'];
         let totalPage = payload['totalPage'];
-        let limit = payload['pageCount'];
+        let pageCount = payload['pageCount'];
         state.currentPage = page;
-        let startIndex = (page - 1) * limit + 1;
+        let startIndex = (page - 1) * pageCount + 1;
         state.list[page - 1] =  this.transform(list, this.transformer, startIndex);
         if(totalNum !== null)
           state.totalNum = totalNum;
         if(totalPage !== null)
           state.totalPage = totalPage;
-          if(limit !== null) {
-            state.pageCount = limit;
+          if(pageCount !== null) {
+            state.pageCount = pageCount;
           }
       }
     };

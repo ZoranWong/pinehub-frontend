@@ -78,7 +78,7 @@ export default{
     width: 100%;
     height: 11.2%;
     color: #fff;
-    background: url(/img/bg_mobile_head.1c931282.png) no-repeat;
+    background: url(../assets/bg_mobile_head.png) no-repeat;
     background-size: 100%;
   }
   .mobile .mobile-content{

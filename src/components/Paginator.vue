@@ -1,8 +1,12 @@
 <template>
   <div class="toolbar" style="text-align: right;">
-    <el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="changePage" background :total="totalNum"
-      :page-size="limit"
-      :page-count="totalPage"></el-pagination>
+    <el-pagination layout="prev, pager, next, ->, total, jumper"
+      @current-change="changePage" background
+      :total="total"
+      :page-size="pageSize"
+      :current-page = "currPage"
+      :page-count ="pageCount" ref="paginator">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -41,12 +45,47 @@ export default {
       type: String
     },
   },
-  watch:{
+  watch: {
+    currentPage:{
+      immediate:true,
+      handler(value) {
+        this.currPage = value;
+      }
+    },
+    totalNum: {
+      immediate:true,
+      handler(value) {
+        this.total = value;
+      }
+    },
+    limit: {
+      immediate:true,
+      handler(value) {
+        this.pageSize = value;
+      }
+    },
+    totalPage: {
+      immediate:true,
+      handler(value) {
+        this.pageCount = value;
+      }
+    }
+  },
+  computed:{
+  },
+  data() {
+    return {
+      currPage: this.currentPage,
+      total: this.totalNum,
+      pageCount: this.totalPage,
+      pageSize: this.limit
+    };
   },
   methods: {
     changePage(page) {
       this.$emit('change-page', page);
       let query = this.search;
+      query['page'] = page;
       query['projectId'] = this.$router.currentRoute.query.projectId;
       this.$router.push({name: this.$router.currentRoute.name,  query: query});
       this.updateList();
@@ -58,8 +97,13 @@ export default {
   updated(){
     this.updateList();
   },
+  beforeCreate() {
+  },
   created() {
     this.updateList();
+  },
+  mounted() {
+
   }
 }
 </script>

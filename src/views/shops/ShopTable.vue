@@ -1,7 +1,7 @@
 <template>
   <el-table  highlight-current-row :data="shops">
-    <el-table-column prop="index" label="序号" width="50"></el-table-column>
-    <el-table-column prop="code" label="编号" min-width="80"></el-table-column>
+    <el-table-column prop="index" label="#" width="50"></el-table-column>
+    <el-table-column prop="code" label="店铺编号" min-width="80"></el-table-column>
     <el-table-column prop="boss" label="车主" min-width="100"></el-table-column>
     <el-table-column prop="address" label="地址" min-width="180"></el-table-column>
     <el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
@@ -12,8 +12,8 @@
     <el-table-column prop="actual" label="上月实际收入" min-width="100"></el-table-column>
     <el-table-column prop="shopTurnover" label="店铺余额" min-width="100"></el-table-column>
     <el-table-column label="操作" width="220">
-      <template >
-        <el-button type="success" size="mini">采购单</el-button>
+      <template slot-scope="scope">
+        <el-button type="success" size="mini" @click="purchaseOrders(scope.row.id)">采购单</el-button>
         <el-button type="primary" size="mini">修改</el-button>
         <el-popover placement="top">
           <el-button type="primary" size="mini">充值记录</el-button>
@@ -35,6 +35,11 @@
     data() {
       return {
       };
+    },
+    methods:{
+      purchaseOrders(shopId) {
+
+      }
     }
   }
 </script>

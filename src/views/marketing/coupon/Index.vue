@@ -1,10 +1,10 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
 		<template slot = "header" slot-scope="{ search }">
-			<merchandise-header :search = "search"></merchandise-header>
+			<card-header :search = "search"></card-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<merchandise-table :merchandises="data"></merchandise-table>
+			<card-table :coupons="data"></card-table>
 		</template>
 	</table-list>
 </template>
@@ -12,20 +12,20 @@
 <script>
   /* eslint-disable */
 	import Header from './Header';
-	import MerchandiseTable from './MerchandiseTable';
+	import CouponTable from './Table';
 	import TableList from '@/components/TableList';
 	export default {
-		name: 'MerchandiseDown',
+		name: 'CouponCards',
 		components: {
-			'merchandise-header': Header,
-			'merchandise-table': MerchandiseTable,
+			'card-header': Header,
+			'card-table': CouponTable,
 			'table-list': TableList
 		},
 		data() {
 			return {
-				service: 'http.merchandises',
-				event: 'merchandises/setList',
-				current: 'merchandises/currentPage',
+				service: 'http.couponCards',
+				event: 'couponCards/setList',
+				current: 'couponCards/currentPage',
         query: {
           status: 0
 				}
@@ -33,8 +33,7 @@
 		},
 		computed: {
 			model() {
-				console.log(this.$store.state.merchandises);
-				return this.$store.state.merchandises;
+				return this.$store.state.couponCards;
 			},
 		},
 		methods: {

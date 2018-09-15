@@ -9,7 +9,6 @@ export default class MerchandisesService extends ApiService{
 		let totalNum = 0;
 		let totalPage = 0;
 		let currentPage = 0;
-		let pageCount = 0;
 		let response = null;
 		if(this.$application.mock()) {
 			response =  await this.services('mock.merchandises').mock(page, search, limit);
@@ -20,9 +19,8 @@ export default class MerchandisesService extends ApiService{
 		merchandises = response.data;
 		let pagination = response.meta.pagination;
 		totalNum = pagination.total;
-		totalPage=pagination['totalPage'];
 		currentPage = pagination['current_page'];
-		pageCount = pagination['total_pages'];
-		return [merchandises, totalNum, currentPage, totalPage, pageCount];
+		totalPage = pagination['total_pages'];
+		return [merchandises, totalNum, currentPage,  totalPage];
 	}
 }

@@ -1,19 +1,14 @@
 //model模块
 import Projects from './Projects';
 import Account from './Account';
-// import Order from './Order';
 import Menus from './Menus';
 import Shops from './Shops';
 import Common from './Common';
-// import FullReduce from './FullReduce';
 import Merchandises from './Merchandises';
-
-// import MemberCard from './MemberCard';
-// import Member from './Member';
-// import Score from './Score';
-// import Customer from './Customer';
 import Categories from './Categories';
 import WechatMenu from './WechatMenu';
+import CouponCards from './Coupons';
+import UpToCutActivities from './UpToCutActivities';
 import _ from 'underscore';
 export default class Store {
   constructor(application) {
@@ -27,13 +22,9 @@ export default class Store {
     this.addModel('menus', Menus);
     this.addModel('shops', Shops);
     //this.addModel('common', Common);
-    // this.addModel('fullReduce', FullReduce);
+    this.addModel('upToCutActivities', UpToCutActivities);
     this.addModel('merchandises', Merchandises);
-    // this.addModel('memberCard', MemberCard);
-    //
-    // this.addModel('memberManage', Member);
-    // this.addModel('score', Score);
-    // this.addModel('customer', Customer);
+    this.addModel('couponCards', CouponCards);
 		this.addModel('categories', Categories);
     this.addModel('wechatMenus', WechatMenu);
   }

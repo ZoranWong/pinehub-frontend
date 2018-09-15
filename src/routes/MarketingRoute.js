@@ -1,8 +1,8 @@
 import Route from './Route';
 import Layout from '../views/common/Layout';
-import FullReduce from '../views/marketing/FullReduce';
-import PayGift from '../views/marketing/PayGift';
-import Coupon from '../views/marketing/Coupon';
+import UpToCut from '../views/marketing/up_to_cut/Index';
+import PaidGift from '../views/marketing/paid_gift/Index';
+import Coupons from '../views/marketing/coupon/Index';
 import Index from '../views/marketing/Index';
 let route = new Route();
 route.group('/marketing',
@@ -16,19 +16,19 @@ route.group('/marketing',
 		  		'component': Index,
 		  		'tag': '营销中心'
 		  	});
-		  	route.addRoute('/fullReduce', {
-		  		'name': 'full-reduce',
-		  		'component': FullReduce,
+		  	route.addRoute('/up_to_cut', {
+		  		'name': 'up-to-cut',
+		  		'component': UpToCut,
 		  		'tag': '满减/送'
 		  	});
-		  	route.addRoute('/payGift', {
+		  	route.addRoute('/paid_gift', {
 		  		'name': 'pay-gift',
-		  		'component': PayGift,
+		  		'component': PaidGift,
 		  		'tag': '支付有礼'
 		  	});
-		  	route.addRoute('/coupon', {
+		  	route.addRoute('/coupons', {
 		  		'name': 'coupon',
-		  		'component': Coupon,
+		  		'component': Coupons,
 		  		'tag': '优惠券'
 		  	});
 	  	}

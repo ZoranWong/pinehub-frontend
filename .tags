@@ -1,5 +1,3 @@
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  constructor(application) {$/;"	function	line:4
-data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Merchandise.js	/^  constructor(merchandise) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Categories.js	/^  constructor(application) {$/;"	function	line:4
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Categories.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
@@ -8,16 +6,100 @@ computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  data() {$/;"	function	line:15
 dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  dispatchs() {$/;"	function	line:21
 listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Categories.js	/^  listeners() {$/;"	function	line:28
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/CategoriesService.js	/^	constructor(application) {$/;"	function	line:3
+uses	/Users/wangzaron/workspace/www/pinehub-admin/src/routes/MerchandisesRoute.js	/^    uses : function(route) {$/;"	function	line:13
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Category.js	/^  constructor(category) {$/;"	function	line:2
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  constructor(app) {$/;"	function	line:6
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  register() {$/;"	function	line:9
+beforeEach	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/RouterServiceProvider.js	/^  beforeEach(to, from, next) {$/;"	function	line:26
+resolve	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^function resolve (dir) {$/;"	function	line:3
+resolve	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^function resolve (dir) {$/;"	function	line:3
+FrontEnvConfigSettingPlug	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^function FrontEnvConfigSettingPlug() {$/;"	function	line:6
+FrontEnvConfigSettingPlug	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^function FrontEnvConfigSettingPlug() {$/;"	function	line:6
+FrontEnvConfigSettingPlug	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^}$/;"	class	line:24
+FrontEnvConfigSettingPlug.apply	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^FrontEnvConfigSettingPlug.prototype.apply = compler => {$/;"	method	line:25
+module.exports.chainWebpack	/Users/wangzaron/workspace/www/pinehub-admin/vue.config.js	/^module.exports = {$/;"	property	line:29
+validator	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      validator(value) {$/;"	function	line:25
+default	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      default() {$/;"	function	line:42
+data	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^  data() {$/;"	function	line:58
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^  render(h) {$/;"	function	line:67
+TEMPLATE_MAP.prev	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    const TEMPLATE_MAP = {$/;"	property	line:74
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:111
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:120
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:138
+handler	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^          handler(newVal, oldVal) {$/;"	function	line:165
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:176
+handleChange	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        handleChange(val) {$/;"	function	line:204
+data	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      data() {$/;"	function	line:217
+handleFocus	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        handleFocus(event) {$/;"	function	line:234
+handleBlur	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        handleBlur({ target }) {$/;"	function	line:237
+handleKeyup	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        handleKeyup({ keyCode, target }) {$/;"	function	line:241
+handleChange	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        handleChange(value) {$/;"	function	line:246
+resetValueIfNeed	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        resetValueIfNeed(value) {$/;"	function	line:252
+reassignMaxValue	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^        reassignMaxValue(value) {$/;"	function	line:262
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:270
+render	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      render(h) {$/;"	function	line:296
+handleCurrentChange	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    handleCurrentChange(val) {$/;"	function	line:309
+prev	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    prev() {$/;"	function	line:315
+next	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    next() {$/;"	function	line:323
+getValidCurrentPage	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    getValidCurrentPage(value) {$/;"	function	line:331
+emitChange	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    emitChange() {$/;"	function	line:356
+internalPageCount	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    internalPageCount() {$/;"	function	line:368
+handler	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      handler(val) {$/;"	function	line:381
+handler	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      handler(val) {$/;"	function	line:388
+handler	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^      handler(newVal, oldVal) {$/;"	function	line:395
+internalPageCount	/Users/wangzaron/workspace/www/pinehub-admin/node_modules/element-ui/packages/pagination/src/pagination.js	/^    internalPageCount(newVal) {$/;"	function	line:417
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Merchandises.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ShopsService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/MerchandisesService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  constructor(application) {$/;"	function	line:3
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  data() {$/;"	function	line:13
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  computed() {$/;"	function	line:23
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  dispatchs() {$/;"	function	line:35
+nextPage	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^      nextPage({commit}) {$/;"	function	line:37
+setList	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^      setList({commit}, payload) {$/;"	function	line:40
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  listeners() {$/;"	function	line:46
+nextPage	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^      nextPage(state) {$/;"	function	line:48
+reset	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^      reset(state) {$/;"	function	line:51
+services	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  services(name) {$/;"	function	line:78
+transform	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Model.js	/^  transform(data, transformer, startIndex = 1) {$/;"	function	line:82
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Coupon.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Coupon.js	/^  data(page = 1, search = null, limit = 10) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/CouponsService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Coupon.js	/^  constructor(coupon) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Coupons.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Coupons.js	/^  data(page = 1, search = null, limit = 10) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/CouponCard.js	/^  constructor(coupon) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Coupons.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Coupons.js	/^  data() {$/;"	function	line:9
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Coupons.js	/^  computed() {$/;"	function	line:14
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Coupons.js	/^  dispatchs() {$/;"	function	line:20
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Coupons.js	/^  listeners() {$/;"	function	line:26
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Cashs.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Cashs.js	/^  data() {$/;"	function	line:9
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Cashs.js	/^  computed() {$/;"	function	line:14
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Cashs.js	/^  dispatchs() {$/;"	function	line:20
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Cashs.js	/^  listeners() {$/;"	function	line:26
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Cashs.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Cashs.js	/^  data(page = 1, search = null, limit = 10) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  constructor(application) {$/;"	function	line:14
+addModel	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  addModel(name, model) {$/;"	function	line:31
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  constructor(app) {$/;"	function	line:14
 register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  register() {$/;"	function	line:17
 boot	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  boot() {$/;"	function	line:30
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  constructor(application) {$/;"	function	line:19
-addModel	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  addModel(name, model) {$/;"	function	line:40
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/CategoriesService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/UpToCutActivities.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/UpToCutActivities.js	/^  data() {$/;"	function	line:9
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/UpToCutActivities.js	/^  computed() {$/;"	function	line:14
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/UpToCutActivities.js	/^  dispatchs() {$/;"	function	line:20
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/UpToCutActivities.js	/^  listeners() {$/;"	function	line:26
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/commands/DataListCommand.js	/^  constructor(app) {$/;"	function	line:5
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:14
 register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:17
-uses	/Users/wangzaron/workspace/www/pinehub-admin/src/routes/MerchandisesRoute.js	/^    uses : function(route) {$/;"	function	line:13
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/UpToCutActivitiesService.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/UpToCutActivities.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/UpToCutActivities.js	/^  data(page = 1, search = null, limit = 10) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/UpToCutActivity.js	/^  constructor(activity) {$/;"	function	line:3
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  constructor(application) {$/;"	function	line:5
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  data() {$/;"	function	line:8
 computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  computed() {$/;"	function	line:215
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/Category.js	/^  constructor(category) {$/;"	function	line:2

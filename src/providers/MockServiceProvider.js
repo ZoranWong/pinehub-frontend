@@ -3,8 +3,8 @@
 import ServiceProvider from './ServiceProvider';
 import Shops from '../mocks/Shops';
 import Projects from '../mocks/Projects';
-import Coupon from '../mocks/Coupon';
-import FullReduce from '../mocks/FullReduce';
+import Coupons from '../mocks/Coupons';
+import UpToCutActivities from '../mocks/UpToCutActivities';
 import Provinces from '../mocks/Provinces';
 import WechatMenus from '../mocks/WechatMenus';
 import Merchandises from '../mocks/Merchandises';
@@ -19,8 +19,8 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock', require('mockjs'));
       this.app.register('mock.shops', Shops);
       this.app.register('mock.projects', Projects);
-      this.app.register('mock.coupon', Coupon);
-      this.app.register('mock.fullReduce', FullReduce);
+      this.app.register('mock.coupons', Coupons);
+      this.app.register('mock.upToCutActivities', UpToCutActivities);
       this.app.register('mock.provinces', Provinces);
       this.app.register('mock.wechatMenus', WechatMenus);
       this.app.register('mock.merchandises', Merchandises);

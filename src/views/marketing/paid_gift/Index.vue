@@ -1,10 +1,10 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
 		<template slot = "header" slot-scope="{ search }">
-			<merchandise-header :search = "search"></merchandise-header>
+			<act-header :search = "search"></act-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<merchandise-table :merchandises="data"></merchandise-table>
+			<act-table :activities="data"></act-table>
 		</template>
 	</table-list>
 </template>
@@ -12,20 +12,20 @@
 <script>
   /* eslint-disable */
 	import Header from './Header';
-	import MerchandiseTable from './MerchandiseTable';
+	import CouponTable from './Table';
 	import TableList from '@/components/TableList';
 	export default {
-		name: 'MerchandiseDown',
+		name: 'PaidGiftActivities',
 		components: {
-			'merchandise-header': Header,
-			'merchandise-table': MerchandiseTable,
+			'act-header': Header,
+			'act-table': CouponTable,
 			'table-list': TableList
 		},
 		data() {
 			return {
-				service: 'http.merchandises',
-				event: 'merchandises/setList',
-				current: 'merchandises/currentPage',
+				service: 'http.paidGiftActivities',
+				event: 'paidGiftActivities/setList',
+				current: 'paidGiftActivities/currentPage',
         query: {
           status: 0
 				}
@@ -33,8 +33,7 @@
 		},
 		computed: {
 			model() {
-				console.log(this.$store.state.merchandises);
-				return this.$store.state.merchandises;
+				return this.$store.state.paidGiftActivities;
 			},
 		},
 		methods: {

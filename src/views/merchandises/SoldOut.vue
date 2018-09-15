@@ -1,72 +1,46 @@
 <template>
-	<div class="content-scroll">
-		<div class="content-box">
-			<!--工具条-->
-			<s-header @search="search"></s-header>
-			<!--列表-->
-			<m-table :merchandises = "merchandises"></m-table>
-			<!--工具条-->
-			<paginator :totalNum = "totalNum" :service="service" :event="event" :totalPage = "totalPage" :currentPage="currentPage" :command="command" @change-page="changePage" :search="query"></paginator>
-		</div>
-	</div>
+	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
+		<template slot = "header" slot-scope="{ search }">
+			<merchandise-header :search = "search"></merchandise-header>
+		</template>
+		<template slot = "table" slot-scope="{ data }">
+			<merchandise-table :merchandises="data"></merchandise-table>
+		</template>
+	</table-list>
 </template>
 
 <script>
-/* eslint-disable */
+  /* eslint-disable */
 	import Header from './Header';
-	import Paginator from '@/components/Paginator';
 	import MerchandiseTable from './MerchandiseTable';
-	import DataListCommand from '../../commands/DataListCommand';
+	import TableList from '@/components/TableList';
 	export default {
 		name: 'MerchandiseSoldOut',
 		components: {
-			's-header': Header,
-			'paginator': Paginator,
-			'm-table': MerchandiseTable
+			'merchandise-header': Header,
+			'merchandise-table': MerchandiseTable,
+			'table-list': TableList
 		},
 		data() {
 			return {
 				service: 'http.merchandises',
 				event: 'merchandises/setList',
-				isLoading: false,
+				current: 'merchandises/currentPage',
         query: {
-					page: 1,
-					projectId: 0,
           status: 2
 				}
 			};
 		},
 		computed: {
-			merchandises() {
-				return this.$store.getters['merchandises/currentPage'];
+			model() {
+				console.log(this.$store.state.merchandises);
+				return this.$store.state.merchandises;
 			},
-			totalNum() {
-				return this.$store.state.merchandises.totalNum;
-			},
-			totalPage() {
-				return this.$store.state.merchandises.pageCount;
-			},
-			currentPage() {
-				return this.$store.state.merchandises.currentPage;
-			},
-			command() {
-				return DataListCommand.commandName();
-			}
 		},
 		methods: {
       search(data) {
         this.query = _.extend(this.query, data);
-      },
-      changePage(page) {
-        this.query['page'] = page;
       }
 		}
 	}
 </script>
-
-<style scoped>
-	.prompt{color:gray;font-size: 12px;margin-left: 120px;}
-</style>
-<style>
-	.el-input-group__prepend{padding:0 5px !important}
-</style>
