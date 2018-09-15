@@ -12,8 +12,6 @@ import merchandises from './MerchandisesRoute';
 import orders from './OrdersRoute';
 //餐车管理
 import shops from './ShopsRoute';
-//优惠券管理
-import tickets from './TicketsRoute';
 //用户管理
 import users from './UsersRoute';
 //品类管理
@@ -33,6 +31,5 @@ routes.push(categories);
 routes.push(merchandises);
 routes.push(orders);
 routes.push(shops);
-routes.push(tickets);
 routes.push(users);
 export {routes, routeMap};

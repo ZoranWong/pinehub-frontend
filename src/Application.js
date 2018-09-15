@@ -127,6 +127,7 @@ export default class Application {
     this.$emit(exception, params);
   }
   vueMixin() {
+    _.extend(this, this.mixinMethods);
     let self = this;
     this.$vm.mixin({
       data(){
@@ -135,7 +136,6 @@ export default class Application {
       methods: self.mixinMethods
     });
   }
-
   run(before = null, created = null) {
     this.$vm = Vue;
     Vue.use(VueAxios, axios);
