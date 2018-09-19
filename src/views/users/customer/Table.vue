@@ -1,40 +1,96 @@
 <template>
-  <el-table  highlight-current-row :data="coupons">
-    <el-table-column prop="index" label="#" width="50"></el-table-column>
-    <el-table-column prop="code" label="优惠券编号" min-width="80"></el-table-column>
-    <el-table-column prop="title" label="优惠券名称" min-width="100"></el-table-column>
-    <el-table-column prop="type" label="类型" min-width="120"></el-table-column>
-    <el-table-column prop="publish" label="是否同步微信" min-width="80"></el-table-column>
-    <el-table-column prop="endAt" label="有效时间" min-width="100"></el-table-column>
-    <el-table-column prop="issuedNum" label="总发行数" min-width="80"></el-table-column>
-    <el-table-column prop="stockNum" label="库存" min-width="100"></el-table-column>
-    <el-table-column prop="receivedNum" label="已领取是数量" min-width="100"></el-table-column>
-    <el-table-column prop="useNum" label="使用数" min-width="100"></el-table-column>
-    <el-table-column prop="useRate" label="使用率" min-width="100"></el-table-column>
-    <el-table-column label="操作" width="150">
+  <el-table  highlight-current-row :data="customers">
+    <el-table-column prop="idx" label="#"></el-table-column>
+    <el-table-column prop="nickname" label="昵称" >
       <template slot-scope="scope">
-        <el-button type="success" size="mini" @click="show(scope)">查看</el-button>
-        <el-button type="primary" size="mini">修改</el-button>
+        {{ scope.row.nickname ? scope.row.nickname : '--' }}
+      </template>
+    </el-table-column>
+    <el-table-column prop="tags" label="标签">
+      <template slot-scope="scope">
+        <el-tag v-for ="(tag, key ) in scope.row.tags" size="mini" :key="key">{{tag}}</el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column prop="ordersCount" label="购次"></el-table-column>
+    <el-table-column prop="totalScore" label="累计积分" min-width="100"></el-table-column>
+    <el-table-column prop="score" label="积分" ></el-table-column>
+    <el-table-column prop="canUseScore" label="可用积分" ></el-table-column>
+    <el-table-column prop="registerChannel" label="来源方式">
+      <template slot-scope="scope">
+        <el-tag size="mini" :type="channel(scope.row.channel)">{{channels[scope.row.channel]}}</el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column prop="isMember" label="客户身份"></el-table-column>
+    <el-table-column label="性别">
+      <template slot-scope="scope">
+        {{sex[scope.row.sex]}}
+      </template>
+    </el-table-column>
+    <el-table-column label="操作" >
+      <template slot-scope="scope" >
+        <el-popover title="加标签" v-model="scope.row['showAddTag']" placement="left" popper-class="customer-table-opt">
+          <el-form class = "tags-box">
+            <el-form-item prop="tag">
+              <el-input size="small" v-model="tag" placeholder="输入标签名称"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button size="mini" plain @click="scope.row['showAddTag'] = false">取消</el-button>
+              <el-button type="primary" size="mini">确定</el-button>
+            </el-form-item>
+          </el-form>
+          <el-button slot="reference" size="mini" type="success" @click="scope.row['showAddTag'] = true">加标签</el-button>
+        </el-popover>
+
+        <el-popover placement="left" v-model="scope.row['showAddScore']" title="给客户积分" popper-class="customer-table-opt">
+          <el-button slot="reference" size="mini" type="primary">给积分</el-button>
+        </el-popover>
       </template>
     </el-table-column>
   </el-table>
 </template>
 <script>
+  import UserDict from '../UserDict';
+  import _ from 'underscore';
   export default {
     props: {
-      coupons: {
+      customers: {
         default: null,
         type: Array
       }
     },
     data() {
-      return {
-      };
+      return _.extend({
+        tag: null,
+        showAddTag: false,
+      }, UserDict);
     },
     methods: {
       show(scope) {
         console.log(scope);
+      },
+      channel(ch) {
+        switch (ch) {
+          case 0:
+            return 'info';
+            break;
+          case 1:
+            return 'success';
+            break;
+          case 2:
+            return 'primary';
+            break;
+        }
       }
     }
   }
 </script>
+<style scoped>
+  .tags-box{
+    text-align: right;
+    margin: 0;
+  }
+  .customer-table-opt{
+    display: inline-flex;
+    width: 50%;
+  }
+</style>

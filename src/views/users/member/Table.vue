@@ -1,39 +1,46 @@
 <template>
-  <el-table  highlight-current-row :data="coupons">
-    <el-table-column prop="index" label="#" width="50"></el-table-column>
-    <el-table-column prop="code" label="优惠券编号" min-width="80"></el-table-column>
-    <el-table-column prop="title" label="优惠券名称" min-width="100"></el-table-column>
-    <el-table-column prop="type" label="类型" min-width="120"></el-table-column>
-    <el-table-column prop="publish" label="是否同步微信" min-width="80"></el-table-column>
-    <el-table-column prop="endAt" label="有效时间" min-width="100"></el-table-column>
-    <el-table-column prop="issuedNum" label="总发行数" min-width="80"></el-table-column>
-    <el-table-column prop="stockNum" label="库存" min-width="100"></el-table-column>
-    <el-table-column prop="receivedNum" label="已领取是数量" min-width="100"></el-table-column>
-    <el-table-column prop="useNum" label="使用数" min-width="100"></el-table-column>
-    <el-table-column prop="useRate" label="使用率" min-width="100"></el-table-column>
-    <el-table-column label="操作" width="150">
-      <template slot-scope="scope">
-        <el-button type="success" size="mini" @click="show(scope)">查看</el-button>
-        <el-button type="primary" size="mini">修改</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table  highlight-current-row :data="members">
+        <el-table-column prop="idx" label="#"></el-table-column>
+        <el-table-column prop="nickname" label="昵称" ></el-table-column>
+        <el-table-column prop="mobile" label="手机号码" ></el-table-column>
+        <el-table-column prop="ordersCount" label="购次"></el-table-column>
+        <el-table-column prop="card" label="会员卡"></el-table-column>
+        <el-table-column prop="totalScore" label="累计积分"></el-table-column>
+        <el-table-column prop="score" label="积分"></el-table-column>
+        <el-table-column prop="canUseScore" label="可用积分"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click.native="memberCard = !memberCard">设置会员卡</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <member-card :show="memberCard" @open="showMemberCard" @close="closeMemberCard"></member-card>
+  </div>
 </template>
 <script>
+  import SetMemberCard from "./SetMemberCard";
   export default {
     props: {
-      coupons: {
+      members: {
         default: null,
         type: Array
       }
     },
+    components: {
+      'member-card': SetMemberCard
+    },
     data() {
       return {
+        memberCard: false
       };
     },
     methods: {
-      show(scope) {
-        console.log(scope);
+      showMemberCard() {
+        this.memberCard = true;
+      },
+      closeMemberCard() {
+        this.memberCard = false;
       }
     }
   }

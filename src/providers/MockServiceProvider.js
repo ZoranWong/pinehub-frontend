@@ -1,14 +1,18 @@
 /*eslint constructor-super: "error"*/
 /*eslint-env es6*/
 import ServiceProvider from './ServiceProvider';
-import Shops from '../mocks/Shops';
-import Projects from '../mocks/Projects';
-import Coupons from '../mocks/Coupons';
-import UpToCutActivities from '../mocks/UpToCutActivities';
-import Provinces from '../mocks/Provinces';
-import WechatMenus from '../mocks/WechatMenus';
-import Merchandises from '../mocks/Merchandises';
-import Categories from '../mocks/Categories';
+import Shops from '@/mocks/Shops';
+import Projects from '@/mocks/Projects';
+import Coupons from '@/mocks/Coupons';
+import UpToCutActivities from '@/mocks/UpToCutActivities';
+import Provinces from '@/mocks/Provinces';
+import WechatMenus from '@/mocks/WechatMenus';
+import Merchandises from '@/mocks/Merchandises';
+import Categories from '@/mocks/Categories';
+import Orders from '@/mocks/Orders';
+import Customers from '@/mocks/Customers';
+import Members from '@/mocks/Members';
+import MemberCards from '@/mocks/MemberCards';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -25,6 +29,10 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock.wechatMenus', WechatMenus);
       this.app.register('mock.merchandises', Merchandises);
       this.app.register('mock.categories', Categories);
+      this.app.register('mock.orders', Orders);
+      this.app.register('mock.customers', Customers);
+      this.app.register('mock.members', Members);
+      this.app.register('mock.memberCards', MemberCards);
     }
   }
   boot() {

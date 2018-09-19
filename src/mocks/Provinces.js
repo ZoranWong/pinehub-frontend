@@ -1,6 +1,6 @@
 import Mock from './Mock';
 /* eslint-disable */
-export default class Shops extends Mock {
+export default class Provinces extends Mock {
   constructor(application) {
     super(application);
     this.total = 150;

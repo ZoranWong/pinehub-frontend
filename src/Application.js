@@ -55,9 +55,11 @@ export default class Application {
       serviceProvider.register();
     });
   }
+
   beforeBoot() {
 
   }
+
   boot() {
     _.each(this.serviceProviders, function(serviceProvider) {
       serviceProvider.boot();
@@ -111,21 +113,27 @@ export default class Application {
     extend(this, tmp, keys.length - 1);
     return instance;
   }
+
   resetForm(form) {
     form.resetFields();
   }
+
   $on(event, callback) {
     this.vueApp.$on(event, callback);
   }
+
   $off(event) {
     this.vueApp.$off(event);
   }
+
   $emit(event, params = null) {
     this.vueApp.$emit(event, params);
   }
+
   $error(exception, params = null) {
     this.$emit(exception, params);
   }
+
   vueMixin() {
     _.extend(this, this.mixinMethods);
     let self = this;
@@ -136,6 +144,7 @@ export default class Application {
       methods: self.mixinMethods
     });
   }
+
   run(before = null, created = null) {
     this.$vm = Vue;
     Vue.use(VueAxios, axios);

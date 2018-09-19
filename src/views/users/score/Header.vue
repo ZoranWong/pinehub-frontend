@@ -1,15 +1,19 @@
 <template>
   <el-col :span="24" class="toolbar">
-    <el-tabs  type="card">
-      <el-tab-pane label="所有优惠券" name="first">
-      </el-tab-pane>
-      <el-tab-pane label="未开始"  name="second">
-      </el-tab-pane>
-      <el-tab-pane label="进行中"  name="third">
-      </el-tab-pane>
-      <el-tab-pane label="已结束" name="forth">
-      </el-tab-pane>
-    </el-tabs>
+    <el-row :gutter="0" type="flex" align="middle" class="score-header">
+      <el-col :span="8">
+        <p>可用积分</p>
+        <p class="can-use-score">8888</p>
+      </el-col>
+      <el-col :span="8">
+        <p>已消耗积分</p>
+        <p class="used-score">8888</p>
+      </el-col>
+      <el-col :span="8">
+        <p>保护内积分</p>
+        <p class="protected-score">8888</p>
+      </el-col>
+    </el-row>
   </el-col>
 </template>
 <script>

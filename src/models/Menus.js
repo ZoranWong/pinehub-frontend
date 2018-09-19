@@ -125,25 +125,31 @@ export default class Menus extends Model {
           path: 'index',
 	      },{
           id: '24',
-          title: '线下订单',
+          title: '扫码付订单',
           icon: '',
-          path: 'scan',
+          path: 'scan_payment',
         },{
           id: '25',
-          title: '商家订单',
+          title: '预定订单',
           icon: '',
-          path: 'seller/pur',
+          path: 'booking',
         },{
-          id: '16',
-          title: '采购订单',
+          id: '40',
+          title: '即时订单',
           icon: '',
-          path: 'company/pur',
-        },{
-          id: '27',
-          title: '分销订单',
-          icon: '',
-          path: 'distribution',
-        }
+          path: 'immediate',
+        },
+        // {
+        //   id: '16',
+        //   title: '采购订单',
+        //   icon: '',
+        //   path: 'purchase',
+        // },{
+        //   id: '27',
+        //   title: '分销订单',
+        //   icon: '',
+        //   path: 'distribution',
+        // }
       ]
       },{
         id: '28',
@@ -154,22 +160,24 @@ export default class Menus extends Model {
           id: '29',
           title: '客户管理',
           icon: '',
-          path: 'customerManage',
-	      },{
-          id: '30',
-          title: '会员卡',
-          icon: '',
-          path: 'memberCard',
-	      },{
+          path: 'customers',
+	      },
+        // {
+        //   id: '30',
+        //   title: '会员卡',
+        //   icon: '',
+        //   path: 'memberCard',
+	      // },
+        {
           id: '31',
           title: '会员管理',
           icon: '',
-          path: 'memberManage',
+          path: 'members',
 	      },{
           id: '32',
           title: '积分管理',
           icon: '',
-          path: 'pointManage',
+          path: 'scores',
 	      }]
       },{
         id: '33',

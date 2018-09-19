@@ -61,59 +61,6 @@
 				</el-form>
 			</el-col>
 			<!--列表-->
-			<el-table :data="$store.state.memberManage.selectData" highlight-current-row v-loading="$store.state.common.tLoading">
-				<el-table-column prop="mobile" label="姓名" min-width="120"></el-table-column>
-				<el-table-column prop="mobile" label="手机号码" min-width="120"></el-table-column>
-				<el-table-column prop="nickname" label="微信号/微信昵称" min-width="140">
-					<template slot-scope="scope">
-						<p>{{scope.row.mobile}}</p>
-						<p>{{scope.row.nickname}}</p>
-					</template>
-				</el-table-column>
-				<el-table-column prop="orders_count" label="购次" min-width="80"></el-table-column>
-				<el-table-column prop="card" label="会员卡" min-width="150"></el-table-column>
-				<el-table-column prop="score" label="积分" min-width="100"></el-table-column>
-				<el-table-column label="操作" width="120">
-					<template slot-scope="scope">
-						<el-button type="text" size="mini" @click="cardVisible=true">设置会员卡</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-
-			<!--工具条-->
-			<div class="toolbar" style="text-align: right;">
-				<el-pagination layout="prev, pager, next, ->, total, jumper" @current-change="$handleCurrentChange" :total="$store.state.memberManage.totalNum"></el-pagination>
-			</div>
-			<!--设置会员卡界面-->
-			<el-dialog :visible.sync="cardVisible" @close="$dialogClose" @open="$dialogOpen" width="50%" :modal="false" :top="$store.state.common.scrollTop" :close-on-click-modal="false">
-				<el-tabs active-name="first">
-					<el-tab-pane label="设置会员卡" name="first"></el-tab-pane>
-				</el-tabs>
-				<div style="color:gray;border-bottom: 1px solid #dfe6ec;padding:10px 0 20px 0;margin-bottom: 20px;">
-					<p>你可以在这里编辑该会员的会员卡信息，添加／删除无门槛卡、添加／删除规则卡。（暂不支持编辑付费卡）</p>
-					<p>注：会员可以拥有多张零门槛卡，但只能一张规则卡</p>
-				</div>
-				<div class="form-container">
-					<el-form :model="cardData" v-loading="$store.state.common.fLoading" label-width="120px" ref="cardFileds">
-						<el-form-item label="无门槛卡：" prop="c1">
-							<el-select size="small" v-model="cardData.c1" multiple>
-								<el-option label="选择无门槛卡" value=""></el-option>
-								<el-option v-for="(item,index) in cardsData" :label="item.label" :value="item.value" :key="index"></el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="规则卡：" prop="c2" multiple>
-							<el-select size="small" v-model="cardData.c2">
-								<el-option label="选择规则卡" value=""></el-option>
-								<el-option v-for="(item,index) in cardsData" :label="item.label" :value="item.value" :key="index"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-form>
-				</div>
-				<div slot="footer" class="dialog-footer">
-					<el-button @click.native="cardVisible = false" size="small">取消</el-button>
-					<el-button type="primary" @click.native="setMember()" :loading="$store.state.common.bLoading" size="small">确定</el-button>
-				</div>
-			</el-dialog>
 		</div>
 	</div>
 </template>
@@ -157,7 +104,7 @@
 			}
 		},
 		computed: {
-			
+
 		},
 		watch: {
 
@@ -178,7 +125,7 @@
 			}
 		},
 		filters: {
-			
+
 		},
 		created() {
 //			this.getList(this.paginator)
@@ -191,5 +138,5 @@
 </script>
 
 <style>
-	
+
 </style>

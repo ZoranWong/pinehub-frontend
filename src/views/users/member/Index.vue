@@ -1,10 +1,10 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
 		<template slot = "header" slot-scope="{ search }">
-			<card-header :search = "search"></card-header>
+			<member-header :search = "search"></member-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<card-table :coupons="data"></card-table>
+			<member-table :members="data"></member-table>
 		</template>
 	</table-list>
 </template>
@@ -15,17 +15,17 @@
 	import MembersTable from './Table';
 	import TableList from '@/components/TableList';
 	export default {
-		name: 'CouponCards',
+		name: 'Members',
 		components: {
-			'card-header': Header,
-			'card-table': MembersTable,
+			'member-header': Header,
+			'member-table': MembersTable,
 			'table-list': TableList
 		},
 		data() {
 			return {
-				service: 'http.couponCards',
-				event: 'couponCards/setList',
-				current: 'couponCards/currentPage',
+				service: 'http.members',
+				event: 'members/setList',
+				current: 'members/currentPage',
         query: {
           status: 0
 				}
@@ -33,7 +33,8 @@
 		},
 		computed: {
 			model() {
-				return this.$store.state.couponCards;
+				console.log(this.$store.state.members);
+				return this.$store.state.members;
 			},
 		},
 		methods: {

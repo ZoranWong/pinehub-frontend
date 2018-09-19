@@ -1,33 +1,29 @@
 import Model from './Model'
 import _ from 'underscore';
 import CategoryTransformer from './transformers/Category';
-export default class categories extends Model{
+export default class Categories extends Model{
   constructor(application) {
     super(application);
     this.transformer = CategoryTransformer;
   }
   computed() {
-    let computed = super.computed();
-    return _.extend(computed, {
+    return _.extend(super.computed(), {
 
     });
   }
   data() {
-    let data = super.data();
-    return _.extend(data, {
+    return _.extend(super.data(), {
 
     });
   }
   dispatchs() {
-    let dispatchs = super.dispatchs();
-    return _.extend(dispatchs, {
+    return _.extend(super.dispatchs(), {
 
     });
   }
 
   listeners() {
-    let listeners = super.listeners();
-    return _.extend(listeners, {
+    return _.extend(super.listeners(), {
 
     });
   }

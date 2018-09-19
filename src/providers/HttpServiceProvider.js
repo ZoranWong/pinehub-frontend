@@ -10,6 +10,10 @@ import ProvincesService from '../services/http/ProvincesService';
 import WechatMenusService from '../services/http/WechatMenuService';
 import MerchandisesService from '../services/http/MerchandisesService';
 import CategoriesService from '../services/http/CategoriesService';
+import OrdersService from '../services/http/OrdersService';
+import CustomersService from '../services/http/CustomersService';
+import MembersService from '../services/http/MemberService';
+import MemberCardService from '@/services/http/MemberCardService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -30,5 +34,9 @@ export default class HttpServiceProvider extends ServiceProvider {
       this.app.register('http.wechatMenus', WechatMenusService);
       this.app.register('http.merchandises', MerchandisesService);
       this.app.register('http.categories', CategoriesService);
+      this.app.register('http.orders', OrdersService);
+      this.app.register('http.customers', CustomersService);
+      this.app.register('http.members', MembersService);
+      this.app.register('http.memberCards', MemberCardService);
   }
 }

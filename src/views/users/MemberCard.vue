@@ -15,7 +15,7 @@
 						</el-form>
 						<div class="cardMenu">
 							<el-collapse accordion v-model="activeNames">
-								<el-collapse-item name='1'> 
+								<el-collapse-item name='1'>
 								    <template slot="title">
 								     	 无门槛会员卡
 								     	 <i class="el-icon-question"></i>
@@ -33,7 +33,7 @@
 									        	<el-button size="small" @click.active="" type="text">查看成员</el-button> -
 									            <el-button size="small" @click.active="importVisible=true" type="text">导入</el-button> -
 									            <el-button size="small" @click.active="" type="text">发卡</el-button> -
-									            <el-button size="small" @click.active="getUpdate(true,item.id)" type="text">编辑</el-button> 
+									            <el-button size="small" @click.active="getUpdate(true,item.id)" type="text">编辑</el-button>
 									        </div>
 									        <div class="state">{{item.sync=='0'?'同步失败':'同步成功'}}</div>
 									    </div>
@@ -208,11 +208,11 @@
 						</el-form-item>
 						<el-form-item label="使用须知：" prop="base_info.description">
 							<el-input v-model="formData.base_info.description" type="textarea" :rows="3" :maxlength='300' placeholder="会员特权会跟你您上文的勾选情况系统自动生成，此处可填写其他补充信息以便会员知晓，最多可输入300个字符"></el-input>
-						</el-form-item> 
+						</el-form-item>
 						<el-form-item label="客服电话：" prop="base_info.service_phone">
 							<el-input v-model="formData.base_info.service_phone" placeholder="请输入手机号或固定电话"></el-input>
 						</el-form-item>
-						
+
 						<h4>领取设置</h4>
 						<el-form-item label="会员期限：" prop="base_info.date_info.type" v-if="$store.state.common.saveType">
 							<el-radio-group v-model="formData.base_info.date_info.type" @change="clearDataInfo">
@@ -281,9 +281,9 @@
 							    <el-radio label="0">禁止会员分享</el-radio>
 							 </el-radio-group>
 						</el-form-item>
-						
+
 						<h4>同步设置</h4>
-						
+
 						<el-form-item label="同步发布至：" prop="sync" style="display: inline-block;">
 							<el-checkbox v-model="formData.sync">微信卡包</el-checkbox>
 						</el-form-item>
@@ -317,7 +317,7 @@
 						<el-button @click.native="imgSubmit()" size="small" type="success">确定</el-button>
 						<el-button @click.native="imgVisible = false" size="small">取消</el-button>
 					</div>
-				</div>	
+				</div>
 			</el-dialog>
 		</div>
 	</div>
@@ -337,12 +337,12 @@
 			          	const d = self.formData.base_info.date_info.begin_timestamp?Date.parse(self.formData.base_info.date_info.begin_timestamp) + 48 * 60 * 60 * 1000:''
 			            return time.getTime() < (d?d:Date.now()) - 8.64e7;
 		           	}
-		        },		
+		        },
 				pickerOptions1:{
 		          	disabledDate(time) {
 		            	return time.getTime() < Date.now() - 8.64e7;
 		           	}
-		        },		
+		        },
 				appId:'',
 				formVisible:false,
 				groupImgShow:false,
@@ -390,7 +390,7 @@
 		            },
 		            discount:'',
 					sync:false,
-					
+
 					cover:'',
 					quanyi:[]
 				},
@@ -408,7 +408,7 @@
 		          disabledDate(time) {
 		            return time.getTime() < Date.now() - 8.64e7;
 		           }
-		        },	
+		        },
 				chooseColor:'background-color:#2c9f67',
 				colorOptions:[{color:"#63b359",baseColor:"Color010"},{color:"#2c9f67",baseColor:"Color020"},{color:"#509fc9",baseColor:"Color030"},{color:"#5885cf",baseColor:"Color040"},{color:"#9062c0",baseColor:"Color050"},{color:"#d09a45",baseColor:"Color060"},{color:"#e4b138",baseColor:"Color070"},{color:"#ee903c",baseColor:"Color080"},{color:"#dd6549",baseColor:"Color090"},{color:"#cc463d",baseColor:"Color100"}],
 				activeName:'first',
@@ -418,7 +418,7 @@
 				importVisible:false,
 				importData:{},
 				importRules:{},
-				
+
 				checkOutFilters: {
 					name: ''
 				},
@@ -429,7 +429,7 @@
 				cardFilters: {
 					name: ''
 				},
-				
+
 				formRules:{
 					'base_info.title': [{ required: true, message: '会员卡名称不能为空', trigger: 'blur' }],
 					quanyi: [{ required: true, message: '请至少为会员卡选择一种权益', trigger: 'blur' }],
@@ -444,7 +444,7 @@
 			}
 		},
 		computed: {
-			
+
 		},
 		watch: {
 
@@ -518,13 +518,13 @@
 			},
 			handleRemove(file, fileList) {
 				if(!file) return
-				
+
 			},
 			//图片上传组件 before-upload 所对应的方法 可限制图片的格式大小数量等
 			beforeUpload(file) {
 				const isJPG = file.type === 'csv';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
-		
+
 		        if (!isJPG) {
 		          this.$message.error('上传文件只能是CSV格式!');
 		        }
@@ -595,7 +595,7 @@
 						this.copyFormData.base_info.can_share=this.copyFormData.base_info.can_share=='1'?true:false
 						this.copyFormData.base_info.date_info.begin_timestamp=this.copyFormData.base_info.date_info.begin_timestamp?Date.parse(this.copyFormData.base_info.date_info.begin_timestamp)/1000:''
 						this.copyFormData.base_info.date_info.end_timestamp=this.copyFormData.base_info.date_info.end_timestamp?Date.parse(this.copyFormData.base_info.date_info.end_timestamp)/1000:''
-						
+
 						if(this.$store.state.common.saveType){
 							if(this.copyFormData.base_info.date_info.type=='DATE_TYPE_FIX_TIME_RANGE'){
 								delete this.copyFormData.base_info.date_info.fixed_term
@@ -606,7 +606,7 @@
 							delete this.copyFormData.base_info.brand_name
 							delete this.copyFormData.base_info.sku
 							delete this.copyFormData.id
-							
+
 							para.member_info=this.copyFormData
 							let data = await self.adminApi(UserService).MemberCards.updateData(this.formData.id,para);
 							if(data) {
@@ -632,7 +632,7 @@
 			}
 		},
 		filters: {
-			
+
 		},
 		created() {
 //			this.getList(this.filters)
@@ -673,9 +673,9 @@
 	.showCard .bottom-area .state{float:right;color:#666;display: inline-block;width:auto}
 	.discountAfter:after{content:"   开卡赠送";margin-left:15px}
 	.discountsAfter:after{content:"   开卡赠送";margin-left:40px}
-	
+
 	.imgLayoutRight{
-		
+
 	}
 	.imgLayoutRight .upload{
 		padding:20px 15px 15px 0;
@@ -714,7 +714,7 @@
 	    top: 35%;
 	    left: 35%;
 	}
-	
+
 </style>
 <style>
 	.el-upload--picture-card{

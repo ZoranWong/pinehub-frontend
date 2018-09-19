@@ -1,4 +1,4 @@
-export default class category {
+export default class Category {
   constructor(category) {
     this.idx = category['index'];
     this.id = category['id'];

@@ -10,7 +10,7 @@ export default class Merchandises extends Mock {
       "data|15":[{
         "id|+1": 1,
         "name": "@CWORD(4, 7)",
-        "sell_price": "@INCREMENT(111.22)",
+        "sell_price": "@float( 1, 5000, 1, 99 )",
         "stock_num|+12": 129,
         "sell_num|+1": 78,
         "visitor_num|+2": 10,

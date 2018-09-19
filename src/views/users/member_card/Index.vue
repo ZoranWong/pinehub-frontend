@@ -1,45 +1,35 @@
 <template>
-	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<card-header :search = "search"></card-header>
-		</template>
-		<template slot = "table" slot-scope="{ data }">
-			<card-table :coupons="data"></card-table>
-		</template>
-	</table-list>
+ <el-col :span="24" class="content-scroll">
+   <el-col class="content-box">
+     <el-tabs v-model="currentTab">
+  	 	<el-tab-pane label="会员卡管理" name="first">
+  			<index></index>
+  	 	</el-tab-pane>
+  	 	<el-tab-pane label="领取记录"  name="second">
+  	 	</el-tab-pane>
+  	 	<el-tab-pane label="退卡记录"  name="third">
+  	 	</el-tab-pane>
+  	 </el-tabs>
+   </el-col>
+ </el-col>
 </template>
 
 <script>
   /* eslint-disable */
-	import Header from './Header';
-	import MemberCardTable from './Table';
-	import TableList from '@/components/TableList';
+	import Index from './index/Index'
 	export default {
 		name: 'MemberCards',
 		components: {
-			'card-header': Header,
-			'card-table': MemberCardTable,
-			'table-list': TableList
+			index: Index
 		},
 		data() {
 			return {
-				service: 'http.couponCards',
-				event: 'couponCards/setList',
-				current: 'couponCards/currentPage',
-        query: {
-          status: 0
-				}
+				currentTab: 'first'
 			};
 		},
 		computed: {
-			model() {
-				return this.$store.state.couponCards;
-			},
 		},
 		methods: {
-      search(data) {
-        this.query = _.extend(this.query, data);
-      }
 		}
 	}
 </script>
