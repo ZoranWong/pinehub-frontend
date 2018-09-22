@@ -13,12 +13,14 @@ export default class Menus extends Model {
 	      title: '微信',
 	      icon: '#icon-weixin',
 	      path: 'wechat',
-	      children: [{
-          id: '2' ,
-          title: '公众号管理',
-          icon: '',
-          path: 'index',
-	      },{
+	      children: [
+        //   {
+        //   id: '2' ,
+        //   title: '公众号管理',
+        //   icon: '',
+        //   path: 'index',
+	      // },
+        {
           id: '3',
           title: '菜单管理',
           icon:'',

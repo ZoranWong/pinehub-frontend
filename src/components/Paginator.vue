@@ -91,7 +91,7 @@ export default {
       this.updateList();
     },
     updateList() {
-      this.$command(this.command, this.service, this.event, this.search['page'], this.search);
+      this.$command(this.command, this.service, this.event, this.search['page'], this.search, this.limit);
     }
   },
   updated(){

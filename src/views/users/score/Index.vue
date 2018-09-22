@@ -1,10 +1,11 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<card-header :search = "search"></card-header>
+		<template slot = "header">
+			<card-header ></card-header>
+			<common-rule></common-rule>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<card-table :coupons="data"></card-table>
+			<card-table :rules="data"></card-table>
 		</template>
 	</table-list>
 </template>
@@ -12,20 +13,22 @@
 <script>
   /* eslint-disable */
 	import Header from './Header';
+	import CommonRule from './CommonRule';
 	import ScoreTable from './Table';
 	import TableList from '@/components/TableList';
 	export default {
-		name: 'CouponCards',
+		name: 'ScoreRules',
 		components: {
 			'card-header': Header,
 			'card-table': ScoreTable,
-			'table-list': TableList
+			'table-list': TableList,
+			'common-rule': CommonRule
 		},
 		data() {
 			return {
-				service: 'http.couponCards',
-				event: 'couponCards/setList',
-				current: 'couponCards/currentPage',
+				service: 'http.scoreRules',
+				event: 'scoreRules/setList',
+				current: 'scoreRules/currentPage',
         query: {
           status: 0
 				}
@@ -33,7 +36,7 @@
 		},
 		computed: {
 			model() {
-				return this.$store.state.couponCards;
+				return this.$store.state.scoreRules;
 			},
 		},
 		methods: {
@@ -43,3 +46,6 @@
 		}
 	}
 </script>
+<style scoped>
+.content-box{padding-top:10px}
+</style>

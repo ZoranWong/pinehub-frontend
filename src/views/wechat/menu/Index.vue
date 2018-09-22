@@ -1,29 +1,31 @@
 <template>
 	<div class="content-scroll">
 		<div class="content-box" style="padding:20px 30px">
+			<el-button size="small" type="primary" icon="el-icon-plus" @click="create()" >创建菜单</el-button>
 			<el-col class="menus-list">
 				<el-col :xl="4" :lg="6" :md="8" :sm="12" :xs="24" v-for="(menu, index) in menus" :key="index">
-					<wechat-menu :menuData = "menu"  >
-					</wechat-menu>
+					<wx-menu :menuData = "menu"  >
+					</wx-menu>
 				</el-col>
 			</el-col>
 			<paginator :totalNum = "totalNum" :service="service"
 			:event="event" :totalPage = "totalPage" :search="query"
-			:currentPage="currentPage" :command="command" style="display: flex;"></paginator>
+			:currentPage="currentPage" :command="command"
+			:limit= "12" style="display: flex;"></paginator>
 		</div>
 	</div>
 </template>
 
 <script>
-  import WechatMenu from '@/components/WechatMenuComponent';
+  import Menu from './Menu';
 	import Paginator from '@/components/Paginator';
 	import DataListCommand from '@/commands/DataListCommand';
   /* eslint-disable */
 	export default {
 		name: 'WechatMenus',
 		components: {
-			"wechat-menu": WechatMenu,
-			paginator: Paginator
+			"wx-menu": Menu,
+			"paginator": Paginator,
 		},
 		data() {
 			return {
@@ -55,6 +57,11 @@
 			},
 			command() {
 				return DataListCommand.commandName();
+			}
+		},
+		methods: {
+			create() {
+				this.$router.push({name: 'create-wx-menu', query: { projectId: this.$router.currentRoute.query.projectId }});
 			}
 		}
 	}

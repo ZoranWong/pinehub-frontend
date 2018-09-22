@@ -164,17 +164,7 @@ constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Orders.js	/^ 
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Orders.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Provinces.js	/^  constructor(application) {$/;"	function	line:4
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/Provinces.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  constructor(application) {$/;"	function	line:5
-data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  data() {$/;"	function	line:8
-computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  computed() {$/;"	function	line:223
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  constructor(application) {$/;"	function	line:18
-addModel	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  addModel(name, model) {$/;"	function	line:40
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/MemberCardService.js	/^	constructor(application) {$/;"	function	line:3
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:18
-register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:21
-constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  constructor(app) {$/;"	function	line:18
-register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  register() {$/;"	function	line:21
-boot	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  boot() {$/;"	function	line:38
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/MemberCards.js	/^  constructor(application) {$/;"	function	line:5
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/MemberCards.js	/^  data() {$/;"	function	line:9
 computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/MemberCards.js	/^  computed() {$/;"	function	line:15
@@ -183,3 +173,25 @@ listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/MemberCards.js
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/MemberCards.js	/^  constructor(application) {$/;"	function	line:4
 data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/MemberCards.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
 constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/MemberCard.js	/^  constructor(memberCard) {$/;"	function	line:2
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/ScoreRules.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/ScoreRules.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/ScoreRules.js	/^  constructor(application) {$/;"	function	line:5
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/ScoreRules.js	/^  computed() {$/;"	function	line:9
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/ScoreRules.js	/^  data() {$/;"	function	line:13
+dispatchs	/Users/wangzaron/workspace/www/pinehub-admin/src/models/ScoreRules.js	/^  dispatchs() {$/;"	function	line:18
+listeners	/Users/wangzaron/workspace/www/pinehub-admin/src/models/ScoreRules.js	/^  listeners() {$/;"	function	line:24
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  constructor(app) {$/;"	function	line:19
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  register() {$/;"	function	line:22
+boot	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/MockServiceProvider.js	/^  boot() {$/;"	function	line:40
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/services/http/ScoreRules.js	/^	constructor(application) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  constructor(app) {$/;"	function	line:19
+register	/Users/wangzaron/workspace/www/pinehub-admin/src/providers/HttpServiceProvider.js	/^  register() {$/;"	function	line:22
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  constructor(application) {$/;"	function	line:19
+addModel	/Users/wangzaron/workspace/www/pinehub-admin/src/models/index.js	/^  addModel(name, model) {$/;"	function	line:42
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/transformers/ScoreRule.js	/^  constructor(rule) {$/;"	function	line:3
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/WechatMenus.js	/^  constructor(application) {$/;"	function	line:4
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/WechatMenus.js	/^  data(page = 1, search = null, limit = 15) {$/;"	function	line:8
+let.meta	/Users/wangzaron/workspace/www/pinehub-admin/src/mocks/WechatMenus.js	/^    let rule = {$/;"	property	line:10
+constructor	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  constructor(application) {$/;"	function	line:5
+data	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  data() {$/;"	function	line:8
+computed	/Users/wangzaron/workspace/www/pinehub-admin/src/models/Menus.js	/^  computed() {$/;"	function	line:225

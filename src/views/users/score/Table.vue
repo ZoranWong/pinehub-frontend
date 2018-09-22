@@ -1,40 +1,50 @@
 <template>
-  <el-table  highlight-current-row :data="coupons">
-    <el-table-column prop="index" label="#" width="50"></el-table-column>
-    <el-table-column prop="code" label="优惠券编号" min-width="80"></el-table-column>
-    <el-table-column prop="title" label="优惠券名称" min-width="100"></el-table-column>
-    <el-table-column prop="type" label="类型" min-width="120"></el-table-column>
-    <el-table-column prop="publish" label="是否同步微信" min-width="80"></el-table-column>
-    <el-table-column prop="endAt" label="有效时间" min-width="100"></el-table-column>
-    <el-table-column prop="issuedNum" label="总发行数" min-width="80"></el-table-column>
-    <el-table-column prop="stockNum" label="库存" min-width="100"></el-table-column>
-    <el-table-column prop="receivedNum" label="已领取是数量" min-width="100"></el-table-column>
-    <el-table-column prop="useNum" label="使用数" min-width="100"></el-table-column>
-    <el-table-column prop="useRate" label="使用率" min-width="100"></el-table-column>
-    <el-table-column label="操作" width="150">
-      <template slot-scope="scope">
-        <el-button type="success" size="mini" @click="show(scope)">查看</el-button>
-        <el-button type="primary" size="mini">修改</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <el-col :span= "24" class="toolbar">
+    <div class="special-rule">
+      <p>自定义积分规则</p>
+    </div>
+    <!--工具条-->
+    <el-button size="small" type="primary" @click.native="create()" style="margin-bottom: 10px;">新建积分规则</el-button>
+    <!--列表-->
+    <el-table  highlight-current-row :data="rules">
+      <el-table-column prop="condition" label="奖励条件" min-width="180"></el-table-column>
+      <el-table-column prop="score" label="单笔奖励积分" min-width="100"></el-table-column>
+      <el-table-column prop="updatedAt" label="规则更新时间" min-width="180"></el-table-column>
+      <el-table-column prop="totalRecievedScore" label="已奖励总积分" min-width="100"></el-table-column>
+      <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
+          <el-button size="small" @click.active="edit(true, scope.row)" type="text">编辑</el-button>
+          |<el-button size="small" @click.active="delete(scope.row)" type="text">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-col>
 </template>
 <script>
-  export default {
-    props: {
-      coupons: {
-        default: null,
-        type: Array
-      }
+export default {
+  data() {
+
+  },
+  props: {
+    rules: {
+      default: null,
+      type: Array
+    }
+  },
+  methods: {
+    create() {
+
     },
-    data() {
-      return {
-      };
+    edit() {
+
     },
-    methods: {
-      show(scope) {
-        console.log(scope);
-      }
+    delete() {
+
     }
   }
+}
 </script>
+<style scoped>
+.special-rule p{border-left: 4px solid #f70;padding-left:12px}
+.special-rule{background: #f5f5f5;padding:12px;margin:10px 0;color:#000;font-size: 14px;font-weight: 700;}
+</style>

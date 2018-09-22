@@ -2,6 +2,7 @@ import Route from './Route';
 import Layout from '../views/common/Layout';
 import WechatIndex from '../views/wechat/Index';
 import WechatMenus from '../views/wechat/menu/Index';
+import CreateMenu from '../views/wechat/menu/create/Index1';
 import WechatAutoReply from '../views/wechat/AutoReply';
 import WechatMaterials from '../views/wechat/Materials';
 let route = new Route();
@@ -20,6 +21,13 @@ route.group('/wechat', {
 	  		'component': WechatMenus,
 	  		'tag': '菜单管理'
 	  	});
+
+      route.addRoute('/create/menu', {
+        'name': 'create-wx-menu',
+        'component': CreateMenu,
+        'tag': '创建菜单'
+      });
+
       route.addRoute('/autoReply', {
         'name': 'wechat-autoReply',
         'component': WechatAutoReply,

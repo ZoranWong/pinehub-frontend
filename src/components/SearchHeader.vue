@@ -1,6 +1,6 @@
 <template>
   <el-col :span="24" class="toolbar">
-    <el-form :inline="true"  label-width="125px">
+    <el-form :inline="true"  label-width="125px" v-show="formShow">
       <slot name = "searchInput"></slot>
       <el-form-item>
         <el-button size="small" >重置</el-button>
@@ -14,6 +14,12 @@
 </template>
 <script>
   export default {
+    props: {
+      formShow: {
+        default: true,
+        type: Boolean
+      }
+    },
     data() {
       return {
       };

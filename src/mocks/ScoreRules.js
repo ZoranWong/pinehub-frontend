@@ -1,13 +1,21 @@
 import Mock from './Mock';
 /* eslint-disable */
-export default class WechaMenus extends Mock {
+export default class ScoreRules extends Mock {
   constructor(application) {
     super(application);
     this.total = 150;
   }
   data(page = 1, search = null, limit = 15) {
-    let data = `data|${limit}`;
-    let rule = {
+    return {
+      "data|15":[{
+        "id|+1": 1,
+        "order_amount": "@float(100, 500, 0, 99)",
+        "order_count": "@integer(10, 100)",
+        "score": "@integer(1, 20)",
+        "total_recieved_score": "@integer(100, 200)",
+        "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
+        "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"
+      }],
       "meta": {
         "pagination":{
              "total": this.total,
@@ -19,18 +27,5 @@ export default class WechaMenus extends Mock {
          }
       }
     };
-    rule[data] = [{
-      "id|+1": 1,
-      "name": "@CWORD(4, 7)",
-      "menus|1-3":[
-        {
-          'id|+1': 1,
-          'name': "@CWORD(3, 6)"
-        }
-      ],
-      "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
-      "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"
-    }];
-    return rule;
   }
 }
