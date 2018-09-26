@@ -1,8 +1,8 @@
 <template>
   <div>
     <menu-button-item v-for="(menu, index) in menus" :idx="index" :key="index" :index="index" class="menu-button" :menu="menu"
-    :spanCol="menus.length < 4 ? menus.length : 3" :show="index < 3" :addButton="menu.addButton" @addMenu="menuClick"
-    :disabled="menu.addButton" @menuClick="menuClick" @addSubMenu="addSubMenu"></menu-button-item>
+    :spanCol="menus.length < 4 ? menus.length : 3" :show="index < 3" :addButton="menu.addButton" @addMenu="addMenu"
+    :disabled="menu.addButton" @changeMenu="changeMenu" @addSubMenu="addSubMenu" @changeSubMenu="changeSubMenu"></menu-button-item>
   </div>
 </template>
 <script>
@@ -23,11 +23,17 @@ export default {
     return {};
   },
   methods: {
-    addSubMenu(sub, index, subIndex) {
-      this.$emit('addSubMenu', sub, index, subIndex);
+    addSubMenu(index, subIndex) {
+      this.$emit('addSubMenu', index, subIndex);
     },
-    menuClick(menu, index) {
-      this.$emit('addMenu', menu, index);
+    changeSubMenu(sub) {
+      this.$emit('changeSubMenu',sub);
+    },
+    addMenu(index) {
+      this.$emit('addMenu', index);
+    },
+    changeMenu(menu) {
+      this.$emit('changeMenu', menu);
     }
   }
 }

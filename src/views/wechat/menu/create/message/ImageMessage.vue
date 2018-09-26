@@ -1,82 +1,144 @@
 <template>
   <div class="image-message">
-    <div v-if="!image" class="upload-image-opt">
+    <div v-if="!image.url" class="upload-image-opt">
       <el-button plain size="small" @click.native="selecting=true;"> 从素材库选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
-      <el-upload class="upload-menu-image" name="menuPic" :headers="headers" action="" :on-remove="remove" :data="extData" :on-success="success" :on-error="error" list-type="picture">
-        <el-button plain size="small"> 上传图片 <i class="el-icon-edit el-icon--right"></i> </el-button>
-      </el-upload>
+      <el-button size="small" @click="uploading=true;">新建素材</el-button>
     </div>
     <div v-else>
-      <img :src="image" alt="" style="width:220px"/>
-      <el-button icon="el-icon-edit" circle size="mini"></el-button>
-      <el-button icon="el-icon-delete" circle size="mini"></el-button>
+      <img :src="image.url" alt="" style="width:220px"/>
+      <el-button icon="el-icon-delete" circle size="mini" @click="deleteMaterial()"></el-button>
     </div>
+    <el-dialog :visible.sync="uploading" title="上传图片素材" width="40%" :modal="false" style="position: fixed !important;">
+      <el-form :model="uploadData" label-width="80px" size="mini">
+        <el-form-item label="图片名称">
+          <el-input v-model="uploadData.title"></el-input>
+        </el-form-item>
+        <el-form-item label="图片描述">
+          <el-input v-model="uploadData.introduction" type="textarea" ></el-input>
+        </el-form-item>
+        <el-form-item v-model="uploadData.url" label="图片上传">
+          <el-upload  class="upload-menu-image" name="image" list-type="picture-card"
+          action="" :headers="headers" :http-request="uploadRequest" :show-file-list="false"
+          :on-remove="remove" :data="extData" :on-success="success" :on-error="error" >
+            <img v-if="uploadData.url" :src="uploadData.url" class="avatar" style="width: 100%;">
+            <i v-else class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item>
+         <el-button type="primary" >立即创建</el-button>
+         <el-button>取消</el-button>
+       </el-form-item>
+      </el-form>
+    </el-dialog>
     <!--选择图片-->
-    <el-dialog :visible.sync="selecting" title="选择图片" width="80%" :modal="false" style="position: fixed !important;">
+    <el-dialog :visible.sync="selecting" title="选择图片" width="60%" :modal="false" style="position: fixed !important;">
       <div class="form-container" style="position: relative;">
         <div class="left-content">
           <div class="up-content">
-            <el-menu default-active="2" class="el-menu-vertical">
-                <el-menu-item >
-                </el-menu-item>
-              </el-menu>
+            <el-row>
+              <el-col :span="6" v-for="(material, index) in materials" :key="index">
+                <el-card :style="{ margin: '12px' }">
+                  <el-button size="mini" @click="changeMaterial(material)">{{material.mediaId == menu.editedMenu['media_id'] ? '已选择' : '选择'}}</el-button>
+                  <img :src="material.url" class="image" style="width: 100%;">
+                  <div style="padding: 14px;">
+                    <span>{{ material.title }}</span>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+            <paginator :totalNum = "totalNum" :service="service"
+            :event="event" :totalPage = "totalPage" :search="query"
+            :currentPage="currentPage" :command="command"
+            :limit= "12" style="display: flex;"></paginator>
           </div>
-          <div class="down-content">
-            <el-popover placement="bottom" width="280">
-              <div style="margin: 0;text-align: center;">
-                <el-form  label-width="120px" ref="groupFileds">
-                  <el-form-item label="创建分组" prop="group" :rules="{required: true, message: '分组名字为1-6个字符', trigger: 'blur'}">
-                    <el-input  :maxlength="6"></el-input>
-                  </el-form-item>
-                </el-form>
-                  <el-button type="primary" size="mini" >确定</el-button>
-                  <el-button size="mini" >取消</el-button>
-              </div>
-              <el-button slot="reference" @click.native="" size="small" type="text">新建分组</el-button>
-            </el-popover>
-          </div>
-        </div>
-        <div class="right-content">
-          <div class="up-content upload">
-            <el-upload class="upload-image" name="uplaodImage" :headers="headers" action="url" :on-remove="remove" :data="extData" :on-success="success"
-            :on-error="error" list-type="picture-card">
-              <el-button plain size="small">点击上传 <i class="el-icon-edit el-icon--right"></i> </el-button>
-              <div slot="tip" class="el-upload__tip">大小不超过5M， 已开启图片水印 </div>
-            </el-upload>
-          </div>
-          <div class="down-content" >
-            <div  >
-              <div class="active">
-                <p></p>
-              </div>
-              <img src="" alt="" />
-            </div>
-          </div>
-        </div>
-        <div slot="footer" class="dialog-footer" style="text-align: center;margin-top:50px;">
-          <el-button  size="small" type="success">确定</el-button>
-          <el-button  size="small">取消</el-button>
         </div>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
+import Paginator from '@/components/Paginator';
+import MaterialTranformer from '@/models/transformers/Material';
+import DataListCommand from '@/commands/DataListCommand';
 export default {
+  props: {
+    value: {
+      default: function() {return {}},
+      type: Object
+    }
+  },
+  watch: {
+    value(val) {
+      this.menu = val;
+    }
+  },
   data() {
     return {
-      image: null,
+      service: 'http.materials',
+      event: 'material.image/setList',
+      query: {
+        page: 0,
+        projectId: 0,
+        type: 'image'
+      },
+      image: {url: null},
+      uploadData: {url: null, mediaId: null, title: null, introduction: null},
       extData: {},
       headers: {},
-      selecting: false
+      selecting: false,
+      uploading: false,
+      menu: this.value,
+      projectId: null
     };
   },
-  methods: {
-    remove() {
-
+  components: {
+    'paginator': Paginator
+  },
+  computed: {
+    totalNum() {
+      return this.$store.state['material.image'].totalNum;
     },
-    success() {
-
+    totalPage() {
+      return this.$store.state['material.image'].totalPage;
+    },
+    currentPage() {
+      return this.$store.state['material.image'].currentPage ? this.$store.state['material.image'].currentPage : 15;
+    },
+    materials() {
+      console.log(this.$store.getters['material.image/currentPage']);
+      return this.$store.getters['material.image/currentPage'];
+    },
+    command() {
+      return DataListCommand.commandName();
+    }
+  },
+  created() {
+    this.projectId = this.$router.currentRoute.query.projectId;
+    let page = this.$router.currentRoute.query.page;
+    this.query.page = parseInt(!page ? 1 : page);
+  },
+  methods: {
+    changeMaterial(material) {
+      this.menu.editedMenu['media_id'] = material.mediaId;
+      this.image = material;
+      this.selecting = false;
+      this.$emit('input', this.menu);
+    },
+    async uploadRequest({file}) {
+      let result = await this.http.materials.uploadMaterial(this.projectId, 'image', 'image', file, this.uploadData.title, this.uploadData.introduction);
+      return new MaterialTranformer(result);
+    },
+    deleteMaterial() {
+      this.menu.editedMenu['media_id'] = null;
+      this.image = {url: null};
+    },
+    remove() {
+      console.log('remove');
+    },
+    success(material) {
+      this.menu.editedMenu['media_id'] = material.mediaId;
+      this.uploadData.url = material.url;
+      this.uploadData.mediaId = material.mediaId;
     },
     error() {
 

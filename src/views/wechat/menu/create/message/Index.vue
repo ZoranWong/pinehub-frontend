@@ -2,7 +2,7 @@
   <el-form-item label="" prop="key" class="el-form-layout">
     <el-tabs v-model="active" type="card">
       <el-tab-pane label="图片" name="image">
-        <image-message></image-message>
+        <image-message v-model="menu"></image-message>
       </el-tab-pane>
       <el-tab-pane label="图文" name="news">
         <news-message></news-message>
@@ -22,10 +22,22 @@ import NewsMessage from './NewsMessage';
 import VideoMessage from './VideoMessage';
 import VoiceMessage from './VoiceMessage';
 export default{
+  props:{
+    value:{
+      default: function() {return {}},
+      type: Object
+    }
+  },
   data(){
     return {
-      active: 'image'
+      active: 'image',
+      menu: this.value
     };
+  },
+  watch: {
+    value: function(val) {
+      this.menu = val;
+    }
   },
   components: {
     'image-message': ImageMessage,

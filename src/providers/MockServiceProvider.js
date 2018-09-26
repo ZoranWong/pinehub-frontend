@@ -14,6 +14,8 @@ import Customers from '@/mocks/Customers';
 import Members from '@/mocks/Members';
 import MemberCards from '@/mocks/MemberCards';
 import ScoreRules from '@/mocks/ScoreRules';
+import Materials from '@/mocks/Materials';
+import Material from '@/mocks/Material';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -35,6 +37,8 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock.members', Members);
       this.app.register('mock.memberCards', MemberCards);
       this.app.register('mock.scoreRules', ScoreRules);
+      this.app.register('mock.materials', Materials);
+      this.app.register('mock.material.upload', Material);
     }
   }
   boot() {

@@ -31,7 +31,7 @@
           edited: false,
           releaseId: null,
           title: null,
-          editedSubMenu: false,
+          editedMenu: null,
           menus:[
             {
               addButton: true,
@@ -41,9 +41,18 @@
         }
       };
     },
+    wath: {
+      menu: {
+        immediate: true,
+        deep: true,
+        handler: (value) => {
+          console.log(value);
+        }
+      }
+    },
     methods: {
 			saveMenu(){
-
+        console.log(this.menu);
 			}
     }
 	}

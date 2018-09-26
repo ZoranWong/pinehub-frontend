@@ -14,6 +14,7 @@ import Customers from './Customers';
 import Members from './Members';
 import MemberCards from './MemberCards';
 import ScoreRules from './ScoreRules';
+import Materials from './Materials';
 import _ from 'underscore';
 export default class Store {
   constructor(application) {
@@ -37,7 +38,8 @@ export default class Store {
     this.addModel('customers', Customers);
     this.addModel('members', Members);
     this.addModel('memberCards', MemberCards);
-    this.addModel('scoreRules', ScoreRules)
+    this.addModel('scoreRules', ScoreRules);
+    this.addModel('material.image', Materials);
   }
   addModel(name, model) {
     this.modules[name] = new model(this.$application);

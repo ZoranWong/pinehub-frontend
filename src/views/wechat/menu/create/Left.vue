@@ -1,7 +1,7 @@
 <template>
   <el-col class="left-mobile" :span="7">
     <div class="menu-box" ref="menus" >
-      <h4 class="title">{{ title }}</h4>
+      <h4 class="title">{{ menu.title }}</h4>
       <div class="mobile" :style = "{height: height + 'px'}">
         <div class="mobile-header">
           <p>{{headerTitle}}</p>
@@ -12,11 +12,11 @@
           <menu-button-list
             :lockAxis="'x'"
             :axis="'x'"
-            v-model="menus"
-            :menus = "menus"
+            v-model="menu.menus"
+            :menus = "menu.menus"
             class="menus-button"
             :transitionDuration="transitionDuration"
-            :lockOffset="'5%'"
+            lockOffset="0%"
             @addSubMenu="addSubMenu"
             @changeSubMenu="changeSubMenu"
             @addMenu="addMenu"
@@ -44,12 +44,9 @@
       value: {
         immediate: true,
         deep: true,
-        handler: (value) => {
+        handler: function(value) {
           if(value && this) {
-            this.edited = value['edited'];
-            this.editedMenu = value['editedMenu'];
-            this.title = value['title'];
-            this.menus = value['menus'];
+            this.menu = value;
           }
         }
       }
@@ -61,10 +58,7 @@
       return {
 				transitionDuration: 0,
         height: 0,
-        edited: false,
-        editedMenu: null,
-        title: null,
-        menus: [{addButton: true, name: '添加菜单'}]
+        menu: this.value
       };
     },
     computed: {
@@ -76,28 +70,33 @@
       this.setHeight();
     },
     methods: {
-			addSubMenu(sub, index, subIdex) {
-				this.menus[index].sub_button.unshift(sub);
-				this.editedMenu = sub;
-        this.$emit('input', {'edited': this.edited, 'editedMenu': this.editedMenu, 'title': this.title, 'menus': this.menus});
+			addSubMenu(index, subIdex) {
+        let sub={ name: `子菜单${subIdex}` , type: 'click'};
+				this.menu.menus[index].sub_button.unshift(sub);
+				this.menu.editedMenu = sub;
+        this.menu.editedSubMenu = true;
+        this.$emit('input', this.menu);
 			},
-      changeSubMenu(index, subIdex) {
-        this.editedMenu = this.menus[index].sub_button[subIdex];
-        this.$emit('input', {'edited': this.edited, 'editedMenu': this.editedMenu, 'title': this.title, 'menus': this.menus});
+      changeSubMenu(sub) {
+        this.menu.editedMenu = sub;
+        this.menu.editedSubMenu = true;
+        this.$emit('input', this.menu);
       },
       addMenu(index) {
-				if(this.menus.length === 4) {
+				if(this.menu.menus.length === 4) {
 					return null;
 				}
-        this.edited = true;
-        this.editedMenu = {name: `菜单${index}`, type: 'click', sub_button: [], url: null, appid: null, pagepath: null};
-        this.menus.unshift(this.editedMenu);
-        this.$emit('input', {'edited': this.edited, 'editedMenu': this.editedMenu, 'title': this.title, 'menus': this.menus});
+        this.menu.edited = true;
+        this.menu.editedSubMenu = false;
+        this.menu.editedMenu = {name: `菜单${index}`, type: 'click', sub_button: [], url: null, appid: null, pagepath: null};
+        this.menu.menus.unshift(this.menu.editedMenu);
+        this.$emit('input', this.menu);
       },
-      changeMenu(index) {
-        this.edited = true;
-        this.editedMenu = this.menus[index];
-        this.$emit('input', {'edited': this.edited, 'editedMenu': this.editedMenu, 'title': this.title, 'menus': this.menus});
+      changeMenu(menu) {
+        this.menu.edited = true;
+        this.menu.editedSubMenu = false;
+        this.menu.editedMenu = menu;
+        this.$emit('input', this.menu);
       },
 			sortStart() {
 				console.log(this.$refs);
@@ -155,6 +154,8 @@
   background-size: 100%;
   border: 1px solid #dfe6ec;
 }
+</style>
+<style>
 .menus-button{
   padding-left: 13.5%;
   position: relative;

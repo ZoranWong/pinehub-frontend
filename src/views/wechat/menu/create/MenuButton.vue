@@ -1,8 +1,5 @@
 <template>
   <el-col  :span="24/spanCol" class="item" :key="idx">
-    <!-- <el-tooltip class="item" effect="dark" content="Top Left 提示文字" placement="top-start" v-model="popover">
-      <el-button type="text" v-if="show" :icon="addButton ? 'el-icon-plus' : ''" @click="menuClick(menu, idx)">{{menu.name}}</el-button>
-    </el-tooltip> -->
     <el-popover
       placement="top"
       popper-class="menu-popper"
@@ -10,13 +7,12 @@
       trigger="click"
       v-if="!addButton"
       width="100%"
-      @addSubMenu="subMenu"
       :popper-options="options"
       :ref="'subMenu' + idx">
-      <sub-menu :menu="menu" :mainIndex="idx" @addSubMenu="subMenu" ref="subMenuButton"></sub-menu>
-      <el-button type="text" v-if="show" slot="reference"  @click="menuClick(menu, idx)" >{{menu.name}}</el-button>
+      <sub-menu :menu="menu" :mainIndex="idx" @addSubMenu="addSubMenu" @changeSubMenu="changeSubMenu" ref="subMenuButton"></sub-menu>
+      <el-button type="text" v-if="show" slot="reference"  @click="changeMenu(menu)" >{{menu.name}}</el-button>
     </el-popover>
-    <el-button type="text" v-if="show && addButton"  icon="el-icon-plus" @click="menuClick(menu, idx)">{{menu.name}}</el-button>
+    <el-button type="text" v-if="show && addButton"  icon="el-icon-plus" @click="addMenu(idx)">{{menu.name}}</el-button>
   </el-col>
 </template>
 <script>
@@ -61,20 +57,22 @@ export default {
     };
   },
   methods: {
-    subMenu(sub, idx, subIndex, isNew) {
-      this.$emit('addSubMenu', sub, idx, subIndex);
-      if(isNew) {
-        let transform = this.$refs[`subMenu${this.idx}`].$refs.popper.style.transform;
-        transform = /translate3d\((\d+)px, (\d+)px, (\d+)px\)/.exec(transform);
-        transform[2] = parseInt(transform[2]) - parseInt(this.$refs.subMenuButton.$refs.subButton.$el.offsetHeight);
-        this.$refs[`subMenu${this.idx}`].$refs.popper.style.transform = `translate3d(${transform[1]}px, ${transform[2]}px, ${transform[3]}px)`;
-        console.log(transform);
-      }
+    addSubMenu(idx, subIndex) {
+      this.$emit('addSubMenu', idx, subIndex);
+      let transform = this.$refs[`subMenu${this.idx}`].$refs.popper.style.transform;
+      transform = /translate3d\((\d+)px, (\d+)px, (\d+)px\)/.exec(transform);
+      transform[2] = parseInt(transform[2]) - parseInt(this.$refs.subMenuButton.$refs.subButton.$el.offsetHeight);
+      this.$refs[`subMenu${this.idx}`].$refs.popper.style.transform = `translate3d(${transform[1]}px, ${transform[2]}px, ${transform[3]}px)`;
     },
-    menuClick(menu, index) {
-      console.log(menu);
+    changeSubMenu(sub) {
+      this.$emit('changeSubMenu', sub);
+    },
+    changeMenu(menu, index) {
       this.popover = !this.popover;
-      this.$emit('addMenu', menu, index, this.idx);
+      this.$emit('changeMenu', menu);
+    },
+    addMenu(index) {
+      this.$emit('addMenu', index);
     }
   }
 }
