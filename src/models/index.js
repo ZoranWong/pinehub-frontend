@@ -40,6 +40,8 @@ export default class Store {
     this.addModel('memberCards', MemberCards);
     this.addModel('scoreRules', ScoreRules);
     this.addModel('material.image', Materials);
+    this.addModel('material.video', Materials);
+    this.addModel('material.voice', Materials);
   }
   addModel(name, model) {
     this.modules[name] = new model(this.$application);

@@ -6,26 +6,4 @@ export default class UpToCutActivities extends Model {
     super(application);
     this.transformer = UpToCutActivityTransformer;
   }
-  data() {
-    return _.extend(super.data(), {
-
-    });
-  }
-  computed() {
-    return _.extend(super.computed(), {
-
-    });
-  }
-
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
-    });
-  }
 }

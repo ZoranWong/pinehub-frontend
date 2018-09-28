@@ -2,8 +2,8 @@
   <div class="news-message">
     <div v-if = "!news" class="news-opt">
       <el-button plain size="small" @click.native="newsVisible=true;"> 从素材库选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
-        <el-button plain size="small" > 自建图文 <i class="el-icon-edit el-icon--right"></i> </el-button>
-        <el-button plain size="small" > 分享图文 <i class="el-icon-share el-icon--right"></i> </el-button>
+        <!-- <el-button plain size="small" > 自建图文 <i class="el-icon-edit el-icon--right"></i> </el-button>
+        <el-button plain size="small" > 分享图文 <i class="el-icon-share el-icon--right"></i> </el-button> -->
     </div>
     <div v-else>
       <el-card :body-style="{ padding: '0px',display:'inline-block' }">

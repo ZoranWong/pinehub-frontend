@@ -25,17 +25,19 @@ export default class Menus extends Model {
           title: '菜单管理',
           icon:'',
           path: 'menus'
-        },{
-          id: '6',
-          title: '自动回复',
-          icon: '',
-          path: 'autoReply'
-        },{
-          id: '7',
-          title: '素材管理',
-          icon: '',
-          path: 'materials'
-        }]
+        },
+        // {
+        //   id: '6',
+        //   title: '自动回复',
+        //   icon: '',
+        //   path: 'autoReply'
+        // },{
+        //   id: '7',
+        //   title: '素材管理',
+        //   icon: '',
+        //   path: 'materials'
+        // }
+      ]
       },{
         id: '8',
 	      title: '店铺',
@@ -224,21 +226,23 @@ export default class Menus extends Model {
   }
   computed() {
     return {
-      getMenuByPath :(state) => (path) => {
-        let menu = null;
-        _.map(state.list, function(value) {
-          if(value.path === path){
-            menu =   value;
-          }
-          if(value.children){
-            _.map(value.children , function(child) {
-              if((child.path.charAt(0) === '/' && child.path === path) || ('/' + value.path + '/' +child.path) === path) {
-                menu =   child;
-              }
-            });
-          }
-        });
-        return menu;
+      getMenuByPath () {
+        return (path) => {
+          let menu = null;
+          _.map(this.list, function(value) {
+            if(value.path === path){
+              menu =   value;
+            }
+            if(value.children){
+              _.map(value.children , function(child) {
+                if((child.path.charAt(0) === '/' && child.path === path) || ('/' + value.path + '/' +child.path) === path) {
+                  menu =   child;
+                }
+              });
+            }
+          });
+          return menu;
+        };
       }
     };
   }

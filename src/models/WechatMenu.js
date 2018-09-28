@@ -6,25 +6,4 @@ export default class WechaMenu extends Model {
     super(application);
     this.transformer = MenuTransformer;
   }
-  computed() {
-    return _.extend(super.computed(), {
-
-    });
-  }
-  data() {
-    return _.extend(super.data(), {
-
-    });
-  }
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
-    });
-  }
 }

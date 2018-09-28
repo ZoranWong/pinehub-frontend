@@ -11,7 +11,9 @@ export default class Projects extends Mock {
         "id|+1": 1,
         "name": "@NAME",
         "logo": "@image('125x125','#4A7BF7','Hello')",
-        "qrCode": "@image('125x125','#FF6600','QRcode')",
+        "qr_code": "@image('125x125','#FF6600','QRcode')",
+        "contact_name": "@CWORD(3, 4)",
+        "contact_phone_num": /^(135)\d{8}/,
         "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
         "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"
       }],

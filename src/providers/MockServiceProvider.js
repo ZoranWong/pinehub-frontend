@@ -3,6 +3,7 @@
 import ServiceProvider from './ServiceProvider';
 import Shops from '@/mocks/Shops';
 import Projects from '@/mocks/Projects';
+import Project from '@/mocks/Project';
 import Coupons from '@/mocks/Coupons';
 import UpToCutActivities from '@/mocks/UpToCutActivities';
 import Provinces from '@/mocks/Provinces';
@@ -16,6 +17,7 @@ import MemberCards from '@/mocks/MemberCards';
 import ScoreRules from '@/mocks/ScoreRules';
 import Materials from '@/mocks/Materials';
 import Material from '@/mocks/Material';
+import Delete from '@/mocks/Delete';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -26,6 +28,7 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock', require('mockjs'));
       this.app.register('mock.shops', Shops);
       this.app.register('mock.projects', Projects);
+      this.app.register('mock.project', Project);
       this.app.register('mock.coupons', Coupons);
       this.app.register('mock.upToCutActivities', UpToCutActivities);
       this.app.register('mock.provinces', Provinces);
@@ -39,6 +42,7 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock.scoreRules', ScoreRules);
       this.app.register('mock.materials', Materials);
       this.app.register('mock.material.upload', Material);
+      this.app.register('mock.delete', Delete );
     }
   }
   boot() {

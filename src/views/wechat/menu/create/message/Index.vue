@@ -4,15 +4,15 @@
       <el-tab-pane label="图片" name="image">
         <image-message v-model="menu"></image-message>
       </el-tab-pane>
-      <el-tab-pane label="图文" name="news">
-        <news-message></news-message>
-      </el-tab-pane>
       <el-tab-pane label="视频" name="video">
-        <video-message></video-message>
+        <video-message v-model="menu"></video-message>
       </el-tab-pane>
       <el-tab-pane label="音频" name="voice">
-        <voice-message></voice-message>
+        <voice-message v-model="menu"></voice-message>
       </el-tab-pane>
+      <!-- <el-tab-pane label="图文" name="news">
+        <news-message></news-message>
+      </el-tab-pane> -->
     </el-tabs>
   </el-form-item>
 </template>

@@ -21,28 +21,28 @@
 			</div>
 			<div class="project-cards">
 				<el-row :gutter="20">
-					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in currentPageProjects" :key="index">
+					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
 						<div class="card"  v-on:click="pathTo(project)">
 							<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 							<el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col>
 							<p class="project-name">名称：{{ project.name }}</p>
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
-								<el-button size="mini" type="text" >编辑</el-button>
+								<el-button size="mini" type="text" @click.stop="edit(project)">编辑</el-button>
 								<el-button size="mini" type="text" >授权</el-button>
-								<el-button size="mini" type="text" >删除</el-button>
+								<el-button size="mini" type="text" @click="">删除</el-button>
 							</div>
 						</div>
 					</el-col>
 				</el-row>
 			</div>
 		</div>
-		<create-project :show = "creating" @closeDialog = "closeCreateProjectDialog"></create-project>
+		<create-project :show = "creating" v-model="project" @close="creating=false;"></create-project>
 	</div>
 </template>
 <script>
-	import GetProjectsCommand from '../../commands/GetProjectsCommand';
-	import CreateProject from '../../components/CreateProject';
+	import DataListCommand from '@/commands/DataListCommand';
+	import CreateProject from './CreateOrUpdate';
 	export default {
 		name: 'Projects',
 		components:{
@@ -53,7 +53,8 @@
 				searchFields: {
 					name:''
 				},
-				creating: false
+				creating: false,
+				project: {}
 			};
 		},
 		mounted () {
@@ -63,11 +64,16 @@
 			totalNum() {
 				return this.$store.state.projects.totalNum;
 			},
-			currentPageProjects(){
+			projects(){
 				return this.$store.getters['projects/currentPage'];
 			}
 		},
 		methods:{
+			edit(project) {
+				this.project = project;
+				this.creating = true;
+				return false;
+			},
 			pathTo(item) {
 				this.$router.push({name: 'project-detial',  query: {projectId: item.id}});
 			},
@@ -79,7 +85,7 @@
 			}
 		},
 		created(){
-			this.$command(GetProjectsCommand.commandName(), 1, this.searchFields);
+			this.$command(DataListCommand.commandName(), 'http.projects', 'projects/setList', 1, this.searchFields);
 		}
 	}
 </script>

@@ -149,19 +149,19 @@
 			<!--自动回复-->
 			<el-dialog :visible.sync="replyVisible" @close="dialogClose" @open="dialogOpen" width="100%" :fullscreen="true" :modal="false" :top="scrollTop" :close-on-click-modal="false">
 				<el-tabs active-name="first" @tab-click="replyClick()">
-				    <el-tab-pane label="关键词回复" name="first" class="layout">
-				    	<el-row :gutter="10" type="flex" align="middle" class="firstLayout">
+			    <el-tab-pane label="关键词回复" name="first" class="layout">
+			    	<el-row :gutter="10" type="flex" align="middle" class="firstLayout">
 							<el-col :span="24">
 								<el-col :span="21">
-								  	<h3>自动回复</h3>
-								  	<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
+						  		<h3>自动回复</h3>
+							  	<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
 								</el-col>
 								<el-col :span="3">
-								  	<el-switch v-model="keyValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
+							  	<el-switch v-model="keyValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
 								</el-col>
 							</el-col>
 						</el-row>
-				    	<div class="form-container" v-if="keyValue && !addRule">
+			    	<div class="form-container" v-if="keyValue && !addRule">
 							<el-form :inline="true" :model="keyfilters" label-width="10px" ref="keyFileds">
 								<el-form-item prop="name">
 									<el-input size="small" v-model="filters.name" placeholder="搜索关键词/规则名称"></el-input>
@@ -209,12 +209,12 @@
 								</el-form-item>
 								<el-form-item :label="!index?'关键词：':''" v-for="(keyMain, index) in keyAddData.keyMains" :key="index" :prop="'keyMains.' + index + '.value'" :rules="{required: true, message: '关键词不能为空且最多30个字', trigger: 'blur'}">
 									<el-input placeholder="请输入关键词" v-model="keyMain.value" class="input-with-select">
-									    <el-select v-model="keyMain.selectName" slot="prepend" >
-									      <el-option label="半匹配" value="1"></el-option>
-									      <el-option label="全匹配" value="2"></el-option>
-									    </el-select>
-									    <el-tooltip content="添加" placement="top" slot="append" v-if="index==keyAddData.keyMains.length-1">
-										  <el-button icon="el-icon-circle-plus-outline" size="small" @click="addKeyMain()"></el-button>
+							    	<el-select v-model="keyMain.selectName" slot="prepend" >
+								      <el-option label="半匹配" value="1"></el-option>
+								      <el-option label="全匹配" value="2"></el-option>
+								    </el-select>
+								    <el-tooltip content="添加" placement="top" slot="append" v-if="index==keyAddData.keyMains.length-1">
+									  	<el-button icon="el-icon-circle-plus-outline" size="small" @click="addKeyMain()"></el-button>
 										</el-tooltip>
 										<el-tooltip content="删除" placement="top" slot="append" v-if="keyAddData.keyMains.length>1">
 										  <el-button icon="el-icon-remove-outline" size="small" @click.prevent="removeKeyMain(keyMain)"></el-button>
@@ -225,41 +225,41 @@
 									<div class="keyLayout">
 										<div v-if="keyImgTextUrl && keyAllContent" class="keyContent">
 											<el-card :body-style="{ padding: '0px',display:'inline-block' }">
-											 	<div style="padding: 10px;"><time class="time">{{ keyImgTextUrl.update_time }}</time></div>
-										        <img :src="IMAGE_SERVER_HOST+'/material/view?material_src='+keyImgTextUrl.content.news_item[0].thumb_url" style="width:148px" class="image">
-											    <div style="padding: 10px;"><span>{{keyImgTextUrl.content.news_item[0].title}}</span></div>
-										    </el-card>
+										 		<div style="padding: 10px;"><time class="time">{{ keyImgTextUrl.update_time }}</time></div>
+								        <img :src="IMAGE_SERVER_HOST+'/material/view?material_src='+keyImgTextUrl.content.news_item[0].thumb_url" style="width:148px" class="image">
+										    <div style="padding: 10px;"><span>{{keyImgTextUrl.content.news_item[0].title}}</span></div>
+									    </el-card>
 											<el-button icon="el-icon-edit" circle  @click="imgTextVisible=true"></el-button>
-										    <el-button icon="el-icon-delete" circle  @click="keyImgTextUrl=''"></el-button>
+									    <el-button icon="el-icon-delete" circle  @click="keyImgTextUrl=''"></el-button>
 										</div>
 										<div v-if="keyImgUrl && keyAllContent" class="keyContent">
 											<img :src="keyImgUrl" alt="" />
 											<el-button icon="el-icon-edit" circle size="mini" @click="imgVisible=true"></el-button>
-										    <el-button icon="el-icon-delete" circle size="mini" @click="keyImgUrl=''"></el-button>
+									    <el-button icon="el-icon-delete" circle size="mini" @click="keyImgUrl=''"></el-button>
 										</div>
 										<div v-if="keyText && keyAllContent" class="keyContent">
 											<span>{{keyText}}</span>
 											<el-button icon="el-icon-edit" circle size="mini" @click="textVisible=true"></el-button>
-										    <el-button icon="el-icon-delete" circle size="mini" @click="keyText=''"></el-button>
+									    <el-button icon="el-icon-delete" circle size="mini" @click="keyText=''"></el-button>
 										</div>
 										<div v-if="keyVoiceName && keyAllContent" class="keyContent">
 											<span>{{keyVoiceName}}</span>
 											<el-button icon="el-icon-edit" circle size="mini" @click="voiceVisible=true"></el-button>
-										    <el-button icon="el-icon-delete" circle size="mini" @click="keyVoiceName=''"></el-button>
+									    <el-button icon="el-icon-delete" circle size="mini" @click="keyVoiceName=''"></el-button>
 										</div>
 										<div v-if="keyVideoName && keyAllContent" class="keyContent">
 											<span>{{keyVideoName}}</span>
 											<el-button icon="el-icon-edit" circle size="mini" @click="videoVisible=true"></el-button>
-										    <el-button icon="el-icon-delete" circle size="mini" @click="keyVideoName=''"></el-button>
+									    <el-button icon="el-icon-delete" circle size="mini" @click="keyVideoName=''"></el-button>
 										</div>
 									</div>
 									<el-popover placement="right" width="250" trigger="hover">
 										<div>
 											<el-button type="text" size="small" @click.native="getImgTextMaterials('key')"> 图文消息 </el-button>
-						  					<el-button type="text" size="small" @click.native="textVisible=true;textData.content=''"> 文字 </el-button>
-						  					<el-button type="text" size="small" @click.native="getImgMaterials('key')"> 图片 </el-button>
-								  			<el-button type="text" size="small" @click.native="getVoiceMaterials('key')"> 语音 </el-button>
-								  			<el-button type="text" size="small" @click.native="getVideoMaterials('key')"> 视频</el-button>
+					  					<el-button type="text" size="small" @click.native="textVisible=true;textData.content=''"> 文字 </el-button>
+					  					<el-button type="text" size="small" @click.native="getImgMaterials('key')"> 图片 </el-button>
+							  			<el-button type="text" size="small" @click.native="getVoiceMaterials('key')"> 语音 </el-button>
+							  			<el-button type="text" size="small" @click.native="getVideoMaterials('key')"> 视频</el-button>
 										</div>
 									  <el-button slot="reference" icon="el-icon-circle-plus-outline" size="small"></el-button>
 									</el-popover>
@@ -281,20 +281,20 @@
 				    	<el-row :gutter="10" type="flex" align="middle" class="firstLayout">
 							<el-col :span="24">
 								<el-col :span="21">
-								  	<h3>自动回复</h3>
-								  	<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
+							  	<h3>自动回复</h3>
+							  	<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
 								</el-col>
 								<el-col :span="3">
-								  	<el-switch v-model="stopValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
+							  	<el-switch v-model="stopValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
 								</el-col>
 							</el-col>
 						</el-row>
 						<div class="form-container" v-if="stopValue">
 							<div class="stopLayoutUp">
-			  					<el-button plain size="small" @click.native="stopAddData.type='text'"> 文字 </el-button>
-			  					<el-button plain size="small" @click.native="stopAddData.type='image'"> 图片 </el-button>
-					  			<el-button plain size="small" @click.native="stopAddData.type='voice'"> 语音 </el-button>
-					  			<el-button plain size="small" @click.native="stopAddData.type='video'"> 视频 </el-button>
+		  					<el-button plain size="small" @click.native="stopAddData.type='text'"> 文字 </el-button>
+		  					<el-button plain size="small" @click.native="stopAddData.type='image'"> 图片 </el-button>
+				  			<el-button plain size="small" @click.native="stopAddData.type='voice'"> 语音 </el-button>
+				  			<el-button plain size="small" @click.native="stopAddData.type='video'"> 视频 </el-button>
 							</div>
 							<div class="stopLayoutText" v-if="stopAddData.type=='text'">
 								<el-form :model="stopAddData" v-loading="fLoading">
@@ -339,17 +339,17 @@
 								<div class="showImg" v-if="stopAddData.type=='image' && !stopImgShow">
 									<img :src="stopImgUrl" alt="" />
 									<el-button icon="el-icon-edit" circle size="mini" @click="imgVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="stopImgShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="stopImgShow=true"></el-button>
 								</div>
 								<div class="showImg" v-if="stopAddData.type=='voice' && !stopVoiceShow">
 									<span>{{stopVoiceName}}</span>
 									<el-button icon="el-icon-edit" circle size="mini" @click="voiceVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="stopVoiceShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="stopVoiceShow=true"></el-button>
 								</div>
 								<div class="showImg" v-if="stopAddData.type=='video' && !stopVideoShow">
 									<span>{{stopVideoName}}</span>
 									<el-button icon="el-icon-edit" circle size="mini" @click="videoVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="stopVideoShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="stopVideoShow=true"></el-button>
 								</div>
 							</div>
 							<div slot="footer" class="dialog-footer" style="margin-top:20px;">
@@ -379,10 +379,10 @@
 						</el-row>
 						<div class="form-container" v-if="followValue">
 							<div class="stopLayoutUp">
-			  					<el-button plain size="small" @click.native="followAddData.type='text'"> 文字 </el-button>
-			  					<el-button plain size="small" @click.native="followAddData.type='image'"> 图片 </el-button>
-					  			<el-button plain size="small" @click.native="followAddData.type='voice'"> 语音 </el-button>
-					  			<el-button plain size="small" @click.native="followAddData.type='video'"> 视频 </el-button>
+		  					<el-button plain size="small" @click.native="followAddData.type='text'"> 文字 </el-button>
+	  						<el-button plain size="small" @click.native="followAddData.type='image'"> 图片 </el-button>
+				  			<el-button plain size="small" @click.native="followAddData.type='voice'"> 语音 </el-button>
+				  			<el-button plain size="small" @click.native="followAddData.type='video'"> 视频 </el-button>
 							</div>
 							<div class="stopLayoutText" v-if="followAddData.type=='text'">
 								<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds">
@@ -427,17 +427,17 @@
 								<div class="showImg" v-if="followAddData.type=='image' && !followImgShow">
 									<img :src="followImgUrl" alt="" />
 									<el-button icon="el-icon-edit" circle size="mini" @click="imgVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="followImgShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="followImgShow=true"></el-button>
 								</div>
 								<div class="showImg" v-if="followAddData.type=='voice' && !followVoiceShow">
 									<span>{{followVoiceName}}</span>
 									<el-button icon="el-icon-edit" circle size="mini" @click="voiceVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="followVoiceShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="followVoiceShow=true"></el-button>
 								</div>
 								<div class="showImg" v-if="followAddData.type=='video' && !followVideoShow">
 									<span>{{followVideoName}}</span>
 									<el-button icon="el-icon-edit" circle size="mini" @click="voiceVisible=true"></el-button>
-								    <el-button icon="el-icon-delete" circle size="mini" @click="followVideoShow=true"></el-button>
+							    <el-button icon="el-icon-delete" circle size="mini" @click="followVideoShow=true"></el-button>
 								</div>
 							</div>
 							<div slot="footer" class="dialog-footer" style="margin-top:20px;">

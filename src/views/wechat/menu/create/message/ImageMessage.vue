@@ -17,16 +17,16 @@
           <el-input v-model="uploadData.introduction" type="textarea" ></el-input>
         </el-form-item>
         <el-form-item v-model="uploadData.url" label="图片上传">
-          <el-upload  class="upload-menu-image" name="image" list-type="picture-card"
-          action="" :headers="headers" :http-request="uploadRequest" :show-file-list="false"
-          :on-remove="remove" :data="extData" :on-success="success" :on-error="error" >
+          <el-upload  class="upload-menu-image" name="image" list-type="picture-card" accept="image/*"
+          action="" :http-request="uploadRequest" :show-file-list="false"
+          :on-remove="remove" :on-success="success" :on-error="error" >
             <img v-if="uploadData.url" :src="uploadData.url" class="avatar" style="width: 100%;">
             <i v-else class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
         <el-form-item>
-         <el-button type="primary" >立即创建</el-button>
-         <el-button>取消</el-button>
+         <el-button type="primary" @click="createMaterial">立即创建</el-button>
+         <el-button @click="uploading=false;">取消</el-button>
        </el-form-item>
       </el-form>
     </el-dialog>
@@ -70,6 +70,10 @@ export default {
   watch: {
     value(val) {
       this.menu = val;
+    },
+    'value.editedMenu': function(value) {
+      this.image.url = value.url;
+      console.log(this.image);
     }
   },
   data() {
@@ -83,8 +87,6 @@ export default {
       },
       image: {url: null},
       uploadData: {url: null, mediaId: null, title: null, introduction: null},
-      extData: {},
-      headers: {},
       selecting: false,
       uploading: false,
       menu: this.value,
@@ -113,15 +115,24 @@ export default {
     }
   },
   created() {
-    this.projectId = this.$router.currentRoute.query.projectId;
+    this.query.projectId = this.projectId = this.$router.currentRoute.query.projectId;
     let page = this.$router.currentRoute.query.page;
     this.query.page = parseInt(!page ? 1 : page);
   },
   methods: {
     changeMaterial(material) {
       this.menu.editedMenu['media_id'] = material.mediaId;
+      this.menu.editedMenu['url'] = material.url;
       this.image = material;
       this.selecting = false;
+      this.$emit('input', this.menu);
+    },
+    createMaterial() {
+      this.menu.editedMenu['media_id'] = this.uploadData.mediaId;
+      this.menu.editedMenu['url'] = this.uploadData.url;
+      this.image = this.uploadData;
+      this.uploadData = {url: null, mediaId: null, title: null, introduction: null};
+      this.uploading = false;
       this.$emit('input', this.menu);
     },
     async uploadRequest({file}) {
@@ -133,7 +144,7 @@ export default {
       this.image = {url: null};
     },
     remove() {
-      console.log('remove');
+      this.uploadData = {url: null, mediaId: null, title: null, introduction: null};
     },
     success(material) {
       this.menu.editedMenu['media_id'] = material.mediaId;

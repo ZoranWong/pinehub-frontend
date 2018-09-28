@@ -4,9 +4,11 @@ export default class Model {
     this.dataMap = {};
     this.$application = application;
     this.state = this.data();
-    this.getters = this.computed();
-    this.actions = this.dispatchs();
-    this.mutations = this.listeners();
+    this.getters = {};
+    this.setGetters();
+    this.actions = [];
+    this.mutations = [];
+    this.listeners();
     this.transformer = null;
   }
 
@@ -20,11 +22,22 @@ export default class Model {
     });
     return this.dataMap;
   }
+
+  setGetters() {
+    let methods = this.computed();
+    for (let key in methods) {
+      let method = methods[key];
+      this.getters[key] = (state) => {
+        return method.apply(state);
+      }
+    }
+  }
+
   computed() {
     return {
-      currentPage: (state) =>  {
-        if(state.currentPage) {
-          return state.list[state.currentPage -1];
+      currentPage(){
+        if(this.currentPage) {
+          return this.list[this.currentPage -1];
         }else{
           return null;
         }
@@ -32,47 +45,28 @@ export default class Model {
     };
   }
 
-  dispatchs() {
-    return {
-      nextPage({commit}) {
-        commit('nextPage');
-      },
-      setList({commit}, payload) {
-        commit('setList', payload);
-      }
-    };
-  }
-
   listeners() {
-    return {
-      nextPage(state) {
-        state.currentPage ++;
-      },
-      reset(state) {
-        for (var key in state) {
-          if (state.hasOwnProperty(key)) {
-            state[key] = null;
-          }
-        }
-      },
-      setList: (state, payload) => {
-        let list = payload['list'];
-        let page = payload['currentPage'];
-        let totalNum = payload['totalNum'];
-        let totalPage = payload['totalPage'];
-        let pageCount = payload['pageCount'];
-        state.currentPage = page;
-        let startIndex = (page - 1) * pageCount + 1;
-        state.list[page - 1] =  this.transform(list, this.transformer, startIndex);
-        if(totalNum !== null)
-          state.totalNum = totalNum;
-        if(totalPage !== null)
-          state.totalPage = totalPage;
-          if(pageCount !== null) {
-            state.pageCount = pageCount;
-          }
+    this.addEventListener('nextPage', function(){
+      this.currentPage ++;
+    });
+
+    this.addEventListener('reset', () => {
+      this.state = this.data();
+    });
+
+    this.addEventListener('setList', function({list, currentPage, totalNum, totalPage,pageCount}, model){
+      this.currentPage = currentPage;
+      let startIndex = (currentPage - 1) * pageCount + 1;
+      this.list[currentPage - 1] =  model.transform(list, model.transformer, startIndex);
+      if(totalNum !== null)
+        this.totalNum = totalNum;
+      if(totalPage !== null){
+          this.totalPage = totalPage;
       }
-    };
+      if(pageCount !== null) {
+        this.pageCount = pageCount;
+      }
+    });
   }
 
   services(name) {
@@ -87,6 +81,16 @@ export default class Model {
       });
     }else{
       return new transformer(data);
+    }
+  }
+
+  addEventListener(type, callback) {
+    this.actions[type] = ({commit}, payload) => {
+      commit(type, payload);
+    }
+
+    this.mutations[type] = (state, payload) => {
+      callback.call(state, payload, this);
     }
   }
 }

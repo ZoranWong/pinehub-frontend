@@ -6,26 +6,4 @@ export default class Coupons extends Model {
     super(application);
     this.transformer = CouponCardTransformer;
   }
-  data() {
-    return _.extend(super.data(), {
-
-    });
-  }
-  computed() {
-    return _.extend(super.computed(), {
-
-    });
-  }
-
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
-    });
-  }
 }

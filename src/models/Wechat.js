@@ -13,17 +13,4 @@ export default class Wechat extends Model{
       }
     };
   }
-  computed() {
-    return {
-    }
-  }
-  dispatchs() {
-    return {
-    }
-  }
-
-  listeners() {
-    return {
-    }
-  }
 }

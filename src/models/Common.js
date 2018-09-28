@@ -14,21 +14,4 @@ export default class Common extends Model{
       provinces: self.provinces,
     };
   }
-  computed() {
-    return {
-
-    };
-  }
-
-  dispatchs() {
-
-  }
-
-  listeners() {
-
-  }
-
-  services(name) {
-    return this.$application.instances[name];
-  }
 }

@@ -15,15 +15,4 @@ export default class ScoreRules extends Model{
 
     });
   }
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
-    });
-  }
 }

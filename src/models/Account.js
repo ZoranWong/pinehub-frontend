@@ -14,8 +14,8 @@ export default class Account extends Model{
   }
   computed() {
     return {
-      logined(state) {
-        return state.username;
+      logined() {
+        return this.username;
       }
     };
   }

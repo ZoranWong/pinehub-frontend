@@ -6,24 +6,4 @@ export default class Materials extends Model{
     super(application);
     this.transformer = MaterialTranformer;
   }
-  computed() {
-    return _.extend(super.computed(), {
-    });
-  }
-  data() {
-    return _.extend(super.data(), {
-
-    });
-  }
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
-    });
-  }
 }

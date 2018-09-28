@@ -8,9 +8,9 @@ export default class Orders extends Model{
   }
   computed() {
     return _.extend(super.computed(), {
-      currentPage: (state) =>  {
-        if(state.currentPage) {
-          let orders = state.list[state.currentPage -1];
+      currentPage() {
+        if(this.currentPage) {
+          let orders = this.list[this.currentPage -1];
           let list = [];
           _.each(orders, function (order){
             let items = order.orderItems;
@@ -44,21 +44,6 @@ export default class Orders extends Model{
           return null;
         }
       }
-    });
-  }
-  data() {
-    return _.extend(super.data(), {
-    });
-  }
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
     });
   }
 }

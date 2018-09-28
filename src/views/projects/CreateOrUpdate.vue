@@ -1,96 +1,108 @@
 <template>
-	<div>
-  		<el-dialog :visible.sync="formVisible" @close="$dialogClose" @open="$dialogOpen" :modal="false" :top="$store.state.scrollTop" width="50%" :close-on-click-modal="false">
-			<el-tabs active-name="first">
-				<el-tab-pane :label="$store.state.saveType ? '修改应用' : '创建应用'" name="first"></el-tab-pane>
-			</el-tabs>
-			<div class="form-container">
-				<el-form :model="formData" v-loading="isLoading" label-width="120px" :rules="formRules" ref="formFileds">
-					<el-form-item label="应用名称：" prop="name">
-						<el-input v-model="formData.name"></el-input>
-					</el-form-item>
-					<!--图片上传-->
-					<el-form-item label="logo上传：" prop="merchantpic">
-						<div v-if="logoUrl" style="padding:2px;width:155px;height:155px;border:1px dashed #ddd">
-							<img :src="logoUrl" alt="" style="width:148px;"/>
-						</div>
-						<el-upload class="upload-demo" name="merchantpic" @http-request="$command(UpLoadCommand.commandName(), 1)" :headers="headers" :data="exData" :on-success="handleSuccess" :on-remove="handleRemove" :on-error="$uploadFailed" :beforeUpload="beforeUpload" :show-file-list="false">
-							<el-button size="small" type="primary" v-if="logoUrl">重新上传</el-button>
-							<el-button size="small" type="primary" v-else>点击上传</el-button>
-							<div slot="tip" class="el-upload__tip">只能上传png文件,且大小不超过2MB的正方形图片</div>
-						</el-upload>
-					</el-form-item>
-				</el-form>
-			</div>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="formVisible = false" size="small">取消</el-button>
-				<el-button type="primary" @click.native="createSubmit()" :loading="isLoading" size="small">保存</el-button>
-			</div>
-		</el-dialog>
-	</div>
+	<el-dialog :visible.sync="dialogShow" width="45%" :close-on-click-modal="false" @close="close">
+		<el-tabs active-name="first">
+			<el-tab-pane :label="project.id ? '修改应用' : '创建应用'" name="first"></el-tab-pane>
+		</el-tabs>
+		<div class="form-container">
+			<el-form :model="project" label-width="100px" :rules="rules" ref="fields">
+				<el-form-item label="应用名称：" prop="name">
+					<el-input v-model="project.name"></el-input>
+				</el-form-item>
+				<el-form-item label="联系人：" prop="name">
+					<el-input v-model="project.contactName"></el-input>
+				</el-form-item>
+				<el-form-item label="联系电话：" prop="name">
+					<el-input v-model="project.contactPhoneNum"></el-input>
+				</el-form-item>
+				<!--图片上传-->
+				<el-form-item label="logo上传：" prop="logo">
+					<el-upload
+					  action=""
+						class="upload-logo"
+						name="logo"
+						@http-request="uploadRequest"
+						:on-success="success"
+					 	:on-remove="remove"
+						:on-error="error"
+						:file-list="files"
+						list-type="picture-card"
+						:show-file-list="false">
+						<img v-if="project.logo" :src="project.logo" class="avatar">
+  					<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+						<div slot="tip" class="el-upload__tip">只能上传png文件,且大小不超过2MB的正方形图片</div>
+					</el-upload>
+				</el-form-item>
+			</el-form>
+		</div>
+		<div slot="footer" class="dialog-footer">
+			<el-button @click.native="close" size="small">取消</el-button>
+			<el-button type="primary" @click.native="" :loading="saving" size="small">保存</el-button>
+		</div>
+</el-dialog>
 </template>
 <script>
 	export default {
 		name: 'CreateOrUpdate',
-		props:['formVisible'],
-		data() {
-		    return {
-		    	headers:{
-					Accept: 'application/vnd.pinehub.v0.0.1+json'
-				},
-				logoUrl:'',
-		    	isLoading: false,
-		    	exData: {
-					file_field: 'merchantpic',
-					affairId: '',
-					needStorage: true
-				},
-				formData: {
-					name: '',
-					logo: ''
-				},
-				formRules:{}
-		    }
-		},
-		computed:{
-		    username() {
-		    	
-				console.log(this.formVisible)
-		    }
-		},
-		methods: {
-		  	createSubmit(){
-
-		  	},
-		  	handleSuccess(response, file, fileList) {
-				if(response.status_code){
-					this.$message({ message: '图片类型或规格错误', type: 'warning' })
-				}else{
-					this.logoUrl=response.data.src
-				}
+		props: {
+			value: {
+				default: () => {return {};},
+				type: Object
 			},
-			handleRemove(file, fileList) {
-				if(!file) return;
-			},
-			//图片上传组件 before-upload 所对应的方法 可限制图片的格式大小数量等
-			beforeUpload(file) {
-				const isJPG = file.type === 'image/png';
-		        const isLt2M = file.size / 1024 / 1024 < 2;
-
-		        if (!isJPG) {
-		          this.$message.error('上传logo图片只能是 PNG格式!');
-		        }
-		        if (!isLt2M) {
-		          this.$message.error('上传logo图片大小不能超过 2MB!');
-		        }
-        		return isJPG && isLt2M;
+			show: {
+				default: false,
+				type: Boolean
 			}
 		},
+		watch: {
+			show(val) {
+				this.dialogShow = val;
+			},
+			value(val) {
+				console.log(val);
+				if(val) {
+					this.project = val;
+					this.files= [{
+						url: this.project.logo
+					}];
+				}
+			}
+		},
+		data() {
+	    return {
+				saving: false,
+				dialogShow: this.show,
+				project: this.value,
+				files: [],
+				rules: {}
+	    };
+		},
+		computed:{
+		},
+		methods: {
+			close() {
+				this.dialogShow = false;
+				this.project = {logo: null};
+				this.$emit('close');
+			},
+			async uploadRequest({file}) {
+
+	    },
+	    remove() {
+	    },
+	    success(material) {
+
+	    },
+	    error() {
+
+	    }
+		},
 		created() {
-			console.log(this.formVisible)
 		}
 	}
 </script>
 <style scoped>
-
+.avatar{
+	width: 100%;
+	height: auto;
+}
 </style>

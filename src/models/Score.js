@@ -56,27 +56,4 @@ export default class Score extends Model{
 				selectData:[{}]
     };
   }
-  computed() {
-    return {
-      orderPage: (state) => (page) => {
-        return state.orders[page];
-      }
-    }
-  }
-
-  dispatchs() {
-    return {
-      	nextPage(context) {
-        	context.commit('nextPage');
-      	}
-    }
-  }
-
-  listeners() {
-    return {
-      nextPage(state) {
-        state.currentPage ++;
-      }
-    }
-  }
 }

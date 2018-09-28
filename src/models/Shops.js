@@ -8,25 +8,11 @@ export default class Shops extends Model{
   }
   computed() {
     return _.extend(super.computed(), {
-      getShopsBuyPage: (state) => (page) => {
-        return state.orders[page -1];
+      getShopsBuyPage(){
+        return (page) => {
+          return this.orders[page -1];
+        };
       }
-    });
-  }
-  data() {
-    return _.extend(super.data(), {
-
-    });
-  }
-  dispatchs() {
-    return _.extend(super.dispatchs(), {
-
-    });
-  }
-
-  listeners() {
-    return _.extend(super.listeners(), {
-
     });
   }
 }
