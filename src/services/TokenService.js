@@ -11,7 +11,7 @@ export default class TokenService extends Service {
   }
 
   asyncToken() {
-    let token = this.services('session').get('token');
+    let token = this.service('session').get('token');
     console.log(token);
     return new Promise(function(resolve) {
       return resolve(token);

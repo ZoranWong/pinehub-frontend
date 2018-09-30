@@ -10,7 +10,7 @@ export default class MemberCardService extends ApiService{
 		let currentPage = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.memberCards').mock(page, search, limit);
+			response =  await this.service('mock.memberCards').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('memberCards', {page: page, limit: limit, searchJson: search});

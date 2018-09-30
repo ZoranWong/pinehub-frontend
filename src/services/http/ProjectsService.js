@@ -10,7 +10,7 @@ export default class ProjectsService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.projects').mock(page, search, limit);
+			response =  await this.service('mock.projects').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response =  await this.httpGet('projects', {page: page, limit: limit, searchJson: search});
@@ -26,7 +26,7 @@ export default class ProjectsService extends ApiService{
 	async delete(id) {
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.delete').mock(id);
+			response =  await this.service('mock.delete').mock(id);
 		}else{
 			//服务器交互代码
 			response =  await this.httpDelete(`project/${id}`);
@@ -37,7 +37,7 @@ export default class ProjectsService extends ApiService{
 	async create(name, logo, contactName, contactPhoneNum) {
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.project').mock(id);
+			response =  await this.service('mock.project').mock();
 		}else{
 			//服务器交互代码
 			response =  await this.httpPost(`project`, {name: name, logo: logo, contact_name: contactName, contact_phone_num: contactPhoneNum});
@@ -48,7 +48,7 @@ export default class ProjectsService extends ApiService{
 	async update (id, {name = null, logo = null, contactName = null, contactPhoneNum = null}) {
 		let response = null;
 		if(this.$application.needMock ()) {
-			response =  await this.services ('mock.project').mock (id);
+			response =  await this.service ('mock.project').mock (id);
 		}else{
 			//服务器交互代码
 			let data = {};

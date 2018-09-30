@@ -37,7 +37,7 @@ export default class Application {
   }
   command(...params) {
     let command = params.shift();
-    this.commands[command].handle.apply(this.commands[command], params);
+    return this.commands[command].handle.apply(this.commands[command], params);
   }
   instanceRegister(instance) {
     if(_.isFunction(instance)) {

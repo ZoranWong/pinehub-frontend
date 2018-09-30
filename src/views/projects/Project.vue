@@ -2,12 +2,12 @@
 <template>
 	<div class="content-scroll">
 		<div class="content-box">
-			<div class="projectName">
+			<div class="project-name">
 				<span>XX项目</span>
 				<el-button size="mini" type="primary" @click="">公众号</el-button>
 				<el-button size="mini" @click="">小程序</el-button>
 			</div>
-	  		<div class="projectInfo">
+	  		<div class="project-info">
 	  			<div>
 	  				<p>店铺</p>
 	  				<p>10</p>
@@ -29,8 +29,8 @@
 	  				<p>110</p>
 	  			</div>
 			</div>
-			<div class="projectFeatures">
-				<p class="projectTitle">常用功能</p>
+			<div class="project-features">
+				<p class="project-title">常用功能</p>
 		  		<div class="">
 		  			<el-button size="mini" @click="">微信</el-button>
 		  			<el-button size="mini" @click="">优惠券</el-button>
@@ -40,9 +40,9 @@
 		  			<el-button size="mini" @click="">会员</el-button>
 				</div>
 			</div>
-			<div class="projectCount">
-				<p class="projectTitle">七日销量统计</p>
-		  		<div class="projectImg">
+			<div class="project-count">
+				<p class="project-title">七日销量统计</p>
+		  		<div class="project-img">
 		  			<IEcharts :resizable="true" :option="bar" style="width:100%; height:100%"></IEcharts>
 				</div>
 			</div>
@@ -58,7 +58,7 @@
 		},
 		data(){
 			return {
-		        bar: {
+	      bar: {
 					tooltip: {
 						trigger: 'axis'
 					},
@@ -87,8 +87,8 @@
 				        type: 'line',
 								name: '本周'
 				    }]
-				},
-			}
+					}
+			};
 		},
 		mounted () {
 
@@ -105,14 +105,14 @@
 </script>
 <style scoped>
 	.content-box {padding: 10px 40px;}
-	.projectName{}
-	.projectTitle{padding: 15px 0 20px 0;border-top: 1px solid gainsboro;}
-	.projectFeatures{margin-bottom: 20px;padding:10px 0}
-	.projectFeatures button{width:16.2%;height:45px}
-	.projectCount{}
-	.projectInfo{margin-top: 15px;margin-bottom: 30px;border:1px solid gainsboro;padding:10px 0}
-	.projectInfo div{display:inline-block;width:20%;text-align: center;}
-	.projectInfo div p{margin: 10px 0;}
-	.projectInfo div:not(:last-child){border-right:1px solid gainsboro;}
-	.projectImg{border:1px solid gainsboro;width:100%;height:400px;}
+	.project-name{}
+	.project-title{padding: 15px 0 20px 0;border-top: 1px solid gainsboro;}
+	.project-features{margin-bottom: 20px;padding:10px 0}
+	.project-features button{width:16.2%;height:45px}
+	.project-count{}
+	.project-info{margin-top: 15px;margin-bottom: 30px;border:1px solid gainsboro;padding:10px 0}
+	.project-info div{display:inline-block;width:20%;text-align: center;}
+	.project-info div p{margin: 10px 0;}
+	.project-info div:not(:last-child){border-right:1px solid gainsboro;}
+	.project-img{border:1px solid gainsboro;width:100%;height:400px;}
 </style>

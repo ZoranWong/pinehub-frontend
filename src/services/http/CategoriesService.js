@@ -12,7 +12,7 @@ export default class CategoriesService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.categories').mock(page, search, limit);
+			response =  await this.service('mock.categories').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('categories', {page: page, limit: limit, searchJson: search});

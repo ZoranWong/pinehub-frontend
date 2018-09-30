@@ -5,7 +5,8 @@ export default class UpLoadCommand extends Command {
   constructor(app) {
     super(app);
   }
-  async handle(file) {
+  async handle (files, fileField, method) {
+    return await this.service('http.files')[method](files, fileField);
   }
   static commandName() {
     return 'UPLOAD_FILE';

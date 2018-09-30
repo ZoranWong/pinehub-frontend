@@ -19,9 +19,8 @@ import _ from 'underscore';
 export default class Store {
   constructor(application) {
     this.$application = application;
-    let common = new Common(application);
-    _.extend(this, common);
     this.modules = {};
+    this.addModel('common', Common);
     this.addModel('projects', Projects);
     this.addModel('account', Account);
     this.addModel('menus', Menus);

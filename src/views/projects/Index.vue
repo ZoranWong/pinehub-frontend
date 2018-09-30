@@ -29,30 +29,38 @@
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" @click.stop="edit(project)">编辑</el-button>
-								<el-button size="mini" type="text" >授权</el-button>
-								<el-button size="mini" type="text" @click="">删除</el-button>
+								<el-button size="mini" type="text" @click.stop="openPlatformAuthDialogShow=true;">授权</el-button>
+								<el-button size="mini" type="text" @click.stop="remove(project)">删除</el-button>
 							</div>
 						</div>
 					</el-col>
 				</el-row>
 			</div>
 		</div>
-		<create-project :show = "creating" v-model="project" @close="creating=false;"></create-project>
+		<create-project :show = "creating" v-model="project" @close="creating=false;" @openPlatformAuth="openPlatformAuthDialogShow=true;"></create-project>
+		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;" @close="openPlatformAuthDialogShow=false;"></open-platform-auth>
+		<remove-project :show="removing" @close="removing=false;" @open="removing=true;"></remove-project>
 	</div>
 </template>
 <script>
 	import DataListCommand from '@/commands/DataListCommand';
 	import CreateProject from './CreateOrUpdate';
+	import OpenPlatformAuth from './OpenPlatformAuth';
+	import RemoveProject from './RemoveProject';
 	export default {
 		name: 'Projects',
 		components:{
-			'create-project': CreateProject
+			'create-project': CreateProject,
+			'open-platform-auth': OpenPlatformAuth,
+			'remove-project': RemoveProject
 		},
 		data(){
 			return {
 				searchFields: {
 					name:''
 				},
+				openPlatformAuthDialogShow: false,
+				removing: false,
 				creating: false,
 				project: {}
 			};
@@ -66,6 +74,10 @@
 			},
 			projects(){
 				return this.$store.getters['projects/currentPage'];
+			},
+			currentPage() {
+				let page = this.$store.state.projects.currentPage;
+				return page ?  page : 1;
 			}
 		},
 		methods:{
@@ -79,13 +91,40 @@
 			},
 			createProject() {
 				this.creating = true;
+				this.project = {logo: null};
 			},
 			closeCreateProjectDialog() {
 				this.creating = false;
+			},
+			refresh() {
+				this.$store.dispatch('projects/reset');
+			},
+			getProjects(page = null) {
+				page = page ? page : this.currentPage;
+				this.$command(DataListCommand.commandName(), 'http.projects', 'projects/setList', page, this.searchFields);
+			},
+			async remove(project) {
+				this.removing = true;
+				// let result = await this.$command('DELETE_PROJECT', project.id);
+				// console.log(result);
+				// if(result) {
+				// 	this.$message({
+				// 		message: '恭喜你，项目删除成功！',
+				// 		type: 'success'
+				// 	});
+				// 	await this.$command('RELOAD');
+				// 	this.saving = false;
+				// 	this.dialogShow = false;
+				// }else{
+				// 	this.$message({
+				// 		message: '很遗憾，项目删除失败！',
+				// 		type: 'error'
+				// 	});
+				// }
 			}
 		},
 		created(){
-			this.$command(DataListCommand.commandName(), 'http.projects', 'projects/setList', 1, this.searchFields);
+			this.getProjects();
 		}
 	}
 </script>

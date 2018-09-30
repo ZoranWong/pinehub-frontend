@@ -18,6 +18,7 @@ import ScoreRules from '@/mocks/ScoreRules';
 import Materials from '@/mocks/Materials';
 import Material from '@/mocks/Material';
 import Delete from '@/mocks/Delete';
+import File from '@/mocks/File';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -43,6 +44,7 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock.materials', Materials);
       this.app.register('mock.material.upload', Material);
       this.app.register('mock.delete', Delete );
+      this.app.register('mock.file', File);
     }
   }
   boot() {

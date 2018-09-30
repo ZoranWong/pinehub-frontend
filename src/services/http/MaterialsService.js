@@ -10,7 +10,7 @@ export default class MaterialsService extends ApiService{
 		let totalPage = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.materials').mock(page, search, limit);
+			response =  await this.service('mock.materials').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('materials', {page: page, limit: limit, searchJson: search});
@@ -34,7 +34,7 @@ export default class MaterialsService extends ApiService{
 		if(introduction)
 			request.append('introduction', introduction);
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.material.upload').mock(request);
+			response =  await this.service('mock.material.upload').mock(request);
 		}else{
 			//服务器交互代码
 			response = await this.httpPost(`${type}/material`, request);

@@ -20,7 +20,7 @@
 							<!-- <keep-alive :include="includedComponents">
 								<router-view class = "page-content" :style="pageContentStyle"></router-view>
 							</keep-alive> -->
-							<router-view class = "page-content" :style="pageContentStyle"></router-view>
+							<router-view class = "page-content" :style="pageContentStyle" :key="activeDate"></router-view>
 						</el-col>
 					</div>
 				</section>
@@ -62,6 +62,10 @@
 			},
 			includedComponents() {
 				return 'Index';
+			},
+			activeDate() {
+				console.log(this.$store.state.common.activeDate);
+				return this.$store.state.common.activeDate;
 			}
 		},
 		watch: {

@@ -52,6 +52,7 @@ export default class Model {
 
     this.addEventListener('reset', () => {
       this.state = this.data();
+      console.log(this.state);
     });
 
     this.addEventListener('setList', function({list, currentPage, totalNum, totalPage,pageCount}, model){

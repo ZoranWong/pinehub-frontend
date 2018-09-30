@@ -11,7 +11,7 @@ export default class WechaMenuService extends ApiService{
 		let pageCount = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.wechatMenus').mock(page, search, limit);
+			response =  await this.service('mock.wechatMenus').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('wechat/menus', {page: page, limit: limit, searchJson: search}, true);
@@ -28,7 +28,7 @@ export default class WechaMenuService extends ApiService{
   async show(id) {
 		let response = null;
     if(this.$application.mock()) {
-			response =  await this.services('wechatMenuMock').mock(id);
+			response =  await this.service('wechatMenuMock').mock(id);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('wechat/menu/' + id, null, true);
@@ -39,7 +39,7 @@ export default class WechaMenuService extends ApiService{
   async syncMenu(id) {
 		let response = null;
     if(this.$application.mock()) {
-			response =  await this.services('wechatMenuSyncMock').mock(id);
+			response =  await this.service('wechatMenuSyncMock').mock(id);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('wechat/menu/' + id + '/sync', null, true);

@@ -4,14 +4,13 @@ export default class Common extends Model{
     super(application);
   }
   data(){
-    let self = this;
     return {
-    	saveType: 0,
-			container: '',
-			box:'',
-			containerTop: '',
-			scrollTop: '20px',
-      provinces: self.provinces,
+      activeDate: (new Date()).getTime()
     };
+  }
+  listeners() {
+    this.addEventListener('refreshDate', function() {
+      this.activeDate = (new Date()).getTime();
+    });
   }
 }

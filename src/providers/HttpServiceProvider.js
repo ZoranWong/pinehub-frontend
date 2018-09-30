@@ -16,6 +16,7 @@ import MembersService from '@/services/http/MemberService';
 import MemberCardService from '@/services/http/MemberCardService';
 import ScoreRulesService from '@/services/http/ScoreRulesService';
 import MaterialsService from '@/services/http/MaterialsService';
+import FilesService from '@/services/http/FilesService';
 export default class HttpServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -42,5 +43,6 @@ export default class HttpServiceProvider extends ServiceProvider {
       this.app.register('http.memberCards', MemberCardService);
       this.app.register('http.scoreRules', ScoreRulesService);
       this.app.register('http.materials', MaterialsService);
+      this.app.register('http.files', FilesService);
   }
 }

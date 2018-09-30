@@ -11,7 +11,7 @@ export default class UpToCutActivitiesService extends ApiService{
 		let currentPage = 0;
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.services('mock.upToCutActivities').mock(page, search, limit);
+			response =  await this.service('mock.upToCutActivities').mock(page, search, limit);
 		}else{
 			//服务器交互代码
 			response = await this.httpGet('utc/activities', {page: page, limit: limit, searchJson: search});
