@@ -3,12 +3,12 @@
 		<div class="content-box">
 			<div class="header-search">
 				<el-form :inline="true" :model="searchFields" label-width="10px" ref="searchFields" style="float:right;margin-bottom: 0;">
-					<el-form-item prop="name">
+					<!-- <el-form-item prop="name">
 						<el-input size="mini" v-model="searchFields.name" placeholder="搜索项目"></el-input>
 					</el-form-item>
 					<el-form-item>
 						<el-button size="mini" type="primary" >搜索</el-button>
-					</el-form-item>
+					</el-form-item> -->
 					<el-form-item>
 						<el-button size="mini" type="success" @click="createProject()">创建项目</el-button>
 					</el-form-item>
@@ -39,7 +39,7 @@
 		</div>
 		<create-project :show = "creating" v-model="project" @close="creating=false;" @openPlatformAuth="openPlatformAuthDialogShow=true;"></create-project>
 		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;" @close="openPlatformAuthDialogShow=false;"></open-platform-auth>
-		<remove-project :show="removing" @close="removing=false;" @open="removing=true;"></remove-project>
+		<remove-project :show="removing" :project="project" @close="removing=false;" @open="removing=true;"></remove-project>
 	</div>
 </template>
 <script>
@@ -105,22 +105,7 @@
 			},
 			async remove(project) {
 				this.removing = true;
-				// let result = await this.$command('DELETE_PROJECT', project.id);
-				// console.log(result);
-				// if(result) {
-				// 	this.$message({
-				// 		message: '恭喜你，项目删除成功！',
-				// 		type: 'success'
-				// 	});
-				// 	await this.$command('RELOAD');
-				// 	this.saving = false;
-				// 	this.dialogShow = false;
-				// }else{
-				// 	this.$message({
-				// 		message: '很遗憾，项目删除失败！',
-				// 		type: 'error'
-				// 	});
-				// }
+				this.project = project;
 			}
 		},
 		created(){

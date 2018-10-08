@@ -45,6 +45,17 @@ export default class ProjectsService extends ApiService{
 		return response.data;
 	}
 
+	async makeSure() {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.project').mock();
+		}else{
+			//服务器交互代码
+			response =  await this.httpPut(`project`);
+		}
+		return response.data;
+	}
+
 	async update (id, {name = null, logo = null, contactName = null, contactPhoneNum = null}) {
 		let response = null;
 		if(this.$application.needMock ()) {
