@@ -3,30 +3,30 @@
 	<div class="content-scroll">
 		<div class="content-box">
 			<div class="project-name">
-				<span>XX项目</span>
+				<span>{{project.name}}</span>
 				<el-button size="mini" type="primary" @click="">公众号</el-button>
 				<el-button size="mini" @click="">小程序</el-button>
 			</div>
 	  		<div class="project-info">
 	  			<div>
-	  				<p>店铺</p>
-	  				<p>10</p>
+						<p>店铺</p>
+	  				<p>{{project.shopCount}}</p>
 	  			</div>
 	  			<div>
 	  				<p>昨日订单</p>
-	  				<p>100</p>
+	  				<p>{{project.orderCount}}</p>
 	  			</div>
 	  			<div>
 	  				<p>昨日新增用户</p>
-	  				<p>100</p>
+	  				<p>{{project.newUserCount}}</p>
 	  			</div>
 	  			<div>
 	  				<p>活跃用户数</p>
-	  				<p>10</p>
+	  				<p>{{project.activeUserCount}}</p>
 	  			</div>
 	  			<div>
 	  				<p>未处理退款订单</p>
-	  				<p>110</p>
+	  				<p>{{project.refundingOrderCount}}</p>
 	  			</div>
 			</div>
 			<div class="project-features">
@@ -40,12 +40,12 @@
 		  			<el-button size="mini" @click="">会员</el-button>
 				</div>
 			</div>
-			<chart></chart>
+			<chart :projectId="project.id"></chart>
 		</div>
 	</div>
 </template>
 <script>
-	import Chart from 'SevenDaysStatics'
+	import Chart from './SevenDaysCount'
 	export default {
 		name: 'Project',
 		components: {
@@ -59,12 +59,16 @@
 
 		},
 		computed:{
-
+			project() {
+				return this.$store.state.projects.currentProject;
+			}
 		},
 		methods:{
 
 		},
 		created(){
+			let projectId = this.$router.currentRoute.query.projectId;
+			this.$command('GET_PROJECT_DETIAL', projectId);
 		}
 	}
 </script>
@@ -77,5 +81,4 @@
 	.project-info div{display:inline-block;width:20%;text-align: center;}
 	.project-info div p{margin: 10px 0;}
 	.project-info div:not(:last-child){border-right:1px solid gainsboro;}
-	/*.project-img{border:1px solid gainsboro;height:400px;}*/
 </style>

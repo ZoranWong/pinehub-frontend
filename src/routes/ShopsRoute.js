@@ -3,6 +3,7 @@ import Layout from '../views/common/Layout';
 import Index from '../views/shops/Index';
 import Closed from '../views/shops/Closed';
 import Open from '../views/shops/Open';
+import Create from '../views/shops/Create';
 let route = new Route();
 route.group('/shop',
 	{
@@ -25,6 +26,11 @@ route.group('/shop',
 		  		'component': Open,
 		  		'tag': '营业店铺'
 		  	});
+				route.addRoute('create', {
+					name: 'shop-create',
+					component: Create,
+					tag: '项目主页'
+				});
 	  	}
 	});
 export default route;

@@ -23,6 +23,17 @@ export default class ProjectsService extends ApiService{
 		return [shops, totalNum, currentPage, pageCount];
 	}
 
+	async show(id) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.project').mock(id);
+		}else{
+			//服务器交互代码
+			response =  await this.httpGet(`project/${id}`);
+		}
+		return response.data;
+	}
+
 	async delete(id) {
 		let response = null;
 		if(this.$application.needMock()) {
@@ -41,6 +52,17 @@ export default class ProjectsService extends ApiService{
 		}else{
 			//服务器交互代码
 			response =  await this.httpPost(`project`, {name: name, logo: logo, contact_name: contactName, contact_phone_num: contactPhoneNum});
+		}
+		return response.data;
+	}
+
+  async sevenDaysCount(id) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.sevenDaysCount').mock(id);
+		}else{
+			//服务器交互代码
+			response =  await this.httpGet(`project/${id}/seven_days_count`);
 		}
 		return response.data;
 	}

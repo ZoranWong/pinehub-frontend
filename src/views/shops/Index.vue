@@ -1,11 +1,11 @@
 /* eslint-disable */
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<shop-header :search = "search"></shop-header>
+		<template slot = "header" slot-scope="{ search, searchHandler }">
+			<shop-header v-model = "search" @search="searchHandler"></shop-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<shop-table :shops="data"></shop-table>
+			<shop-table :shops="data" ></shop-table>
 		</template>
 	</table-list>
 </template>

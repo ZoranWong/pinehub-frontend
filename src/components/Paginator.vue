@@ -52,6 +52,13 @@ export default {
         this.currPage = value;
       }
     },
+    search: {
+      immediate:true,
+      deep: true,
+      handler(value) {
+        this.changePage(this.page, value);
+      }
+    },
     totalNum: {
       immediate:true,
       handler(value) {
@@ -82,9 +89,9 @@ export default {
     };
   },
   methods: {
-    changePage(page) {
+    changePage(page, search = null) {
       this.$emit('change-page', page);
-      let query = this.search;
+      let query = search ? search : this.search;
       query['page'] = page;
       query['projectId'] = this.$router.currentRoute.query.projectId;
       this.$router.push({name: this.$router.currentRoute.name,  query: query});

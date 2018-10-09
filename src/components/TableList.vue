@@ -2,7 +2,7 @@
   <div class="content-scroll">
 		<div class="content-box">
 			<!--工具条-->
-			<slot name = "header" :search="searchData"></slot>
+			<slot name = "header" :search="searchJson" :searchHandler="search"></slot>
 			<!--列表-->
 			<slot name="table" :data="data"></slot>
 			<!--工具条-->
@@ -54,7 +54,7 @@
     },
 		data() {
 			return {
-        searchData: {}
+        searchJson: {}
 			};
 		},
 		mounted() {
@@ -78,19 +78,18 @@
 			},
 			command() {
 				return 'data.list';
-			},
-      searchJson() {
-        let data = _.extend(this.query, this.searchData);
-        data['page'] = this.page;
-        return data;
-      }
+			}
 		},
 		watch: {
-
+      searchJson(value) {
+        console.log(value);
+      }
 		},
 		methods: {
 			search(data) {
-				this.searchData = data;
+        data['page'] = this.page;
+        this.searchJson = Object.assign({}, data);
+        // this.searchJson = data;
 			},
 			changePage(page) {
 				this.page = page;
@@ -99,6 +98,7 @@
 		created() {
       let page = this.$router.currentRoute.query.page;
       this.page = parseInt(!page ? 1 : page);
+      this.searchJson =  Object.assign({}, this.$router.currentRoute.query,this.query);
 		}
 	}
 </script>

@@ -6,4 +6,19 @@ export default class Projects extends Model {
     super(application);
     this.transformer = ProjectTransformer;
   }
+
+  data() {
+    super.data();
+    this.dataMap = _.extend(this.dataMap, {
+      currentProject: {}
+    });
+    return this.dataMap;
+  }
+
+  listeners() {
+    super.listeners();
+    this.addEventListener('setCurrentProject', function({project}) {
+      this.currentProject = new ProjectTransformer(project);
+    });
+  }
 }

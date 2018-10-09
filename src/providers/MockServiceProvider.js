@@ -19,6 +19,7 @@ import Materials from '@/mocks/Materials';
 import Material from '@/mocks/Material';
 import Delete from '@/mocks/Delete';
 import File from '@/mocks/File';
+import SevenDaysCount from '@/mocks/SevenDaysCount';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
@@ -45,6 +46,7 @@ export default class AppServiceProvider extends ServiceProvider{
       this.app.register('mock.material.upload', Material);
       this.app.register('mock.delete', Delete );
       this.app.register('mock.file', File);
+      this.app.register('mock.sevenDaysCount', SevenDaysCount);
     }
   }
   boot() {

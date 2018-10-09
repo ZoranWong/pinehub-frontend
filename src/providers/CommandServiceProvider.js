@@ -11,6 +11,7 @@ import ReloadCommand from '@/commands/ReloadCommand';
 import CreateProjectCommand from '@/commands/CreateProjectCommand';
 import UpdateProjectCommand from '@/commands/UpdateProjectCommand';
 import RemoveProjectCommand from '@/commands/RemoveProjectCommand';
+import GetProjectDetialCommand from '@/commands/GetProjectDetialCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -19,7 +20,8 @@ export default class CommandServiceProvider extends ServiceProvider {
   register() {
     let commands = [SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
       GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
-      ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand];
+      ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
+      GetProjectDetialCommand];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);
     }
