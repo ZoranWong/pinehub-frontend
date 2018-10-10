@@ -14,7 +14,7 @@ route.group('/project', {
       menuHide: true,
       tag: '项目管理'
     });
-    child.addRoute('show', {
+    child.addRoute(':projectId', {
       name: 'project-detial',
       component: Project,
       tag: '项目主页'

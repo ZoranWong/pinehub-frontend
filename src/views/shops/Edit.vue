@@ -2,7 +2,7 @@
 	<div class="content-scroll">
 		<div class="content-box">
     	<el-tabs active-name="first">
-      	<el-tab-pane label="创建店铺" name="first"></el-tab-pane>
+      	<el-tab-pane :label="店铺编辑" name="first"></el-tab-pane>
     	</el-tabs>
       <div class="form-container">
         <el-form :model="shop" label-width="120px" :rules="formRules" ref="shopForm">

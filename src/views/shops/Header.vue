@@ -54,7 +54,7 @@
         if(search) {
           this.shopName = search['shop_name'];
           this.shopCode = search['shop_code'];
-          this.provinceId = search['project_id'];
+          this.provinceId = search['province_id'];
           this.cityId = search['city_id'];
           this.countyId = search['county_id'];
         }
@@ -66,7 +66,7 @@
       if(search) {
         this.shopName = search['shop_name'];
         this.shopCode = search['shop_code'];
-        this.provinceId = search['project_id'];
+        this.provinceId = search['province_id'];
         this.cityId = search['city_id'];
         this.countyId = search['county_id'];
       }
@@ -119,14 +119,14 @@
             delete search['city_id'];
           }
         } else {
-          delete search['project_id'];
+          delete search['province_id'];
         }
         this.$emit('search', search);
       },
       create() {
-        let query = {};
-        query['projectId'] = this.$router.currentRoute.query.projectId;
-        this.$router.push({name: 'shop-create',  query: query});
+        let params = {};
+        params['projectId'] = this.$requestInput('projectId');
+        this.$router.push({name: 'shop-create',  params: params});
       }
     }
   }

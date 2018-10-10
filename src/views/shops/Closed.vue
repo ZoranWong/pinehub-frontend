@@ -33,7 +33,6 @@
 		},
 		computed: {
 			model() {
-				console.log(this.$store.state.shops);
 				return this.$store.state.shops;
 			}
 		}

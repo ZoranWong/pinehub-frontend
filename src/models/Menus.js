@@ -12,230 +12,230 @@ export default class Menus extends Model {
         id: '1',
 	      title: '微信',
 	      icon: '#icon-weixin',
-	      path: 'wechat',
+	      routeName: 'wechat-index',
 	      children: [
         //   {
         //   id: '2' ,
         //   title: '公众号管理',
         //   icon: '',
-        //   path: 'index',
+        //   routeName: 'index',
 	      // },
         {
           id: '3',
           title: '菜单管理',
           icon:'',
-          path: 'menus'
+          routeName: 'wechat-menus'
         },
         // {
         //   id: '6',
         //   title: '自动回复',
         //   icon: '',
-        //   path: 'autoReply'
+        //   routeName: 'autoReply'
         // },{
         //   id: '7',
         //   title: '素材管理',
         //   icon: '',
-        //   path: 'materials'
+        //   routeName: 'materials'
         // }
       ]
       },{
         id: '8',
 	      title: '店铺',
 	      icon: '#icon-shangcheng',
-	      path: 'shop',
+	      routeName: 'shops',
 	      children: [{
           id: '9',
           title: '店铺管理',
           icon: '',
-          path: 'index',
+          routeName: 'shops',
 	      },{
           id: '10',
           title: '关门店铺',
           icon: '',
-          path: 'closed'
+          routeName: 'shops-closed'
         },{
           id: '40',
           title: '营业店铺',
           icon: '',
-          path: 'open'
+          routeName: 'shops-open'
         }]
       },{
         id: '11',
 	      title: '营销',
 	      icon: '#icon-icon_',
-	      path: 'marketing',
+	      routeName: 'marketing',
 	      children: [
           {
             id: '12',
             title: '营销中心',
             icon: '',
-            path: 'index',
+            routeName: 'index',
   	      },{
             id: '13',
             title: '满减/送',
             icon: '',
-            path: 'up_to_cut',
+            routeName: 'up_to_cut',
 	        },{
             id: '14',
             title: '支付有礼',
             icon: '',
-            path: 'paid_gift',
+            routeName: 'paid_gift',
 	        },{
             id: '15',
             title: '优惠券',
   	        icon: 'fa fa-ticket',
-  	        path: 'coupons',
+  	        routeName: 'coupons',
           }]
       },{
         id: '16',
 	      title: '商品',
 	      icon: '#icon-category',
-	      path: 'merchandise',
+	      routeName: 'merchandise',
 	      children: [{
           id: '17',
           title: '商品管理',
           icon: '',
-          path: 'index',
+          routeName: 'index',
 	      },{
           id: '18',
           title: '出售中',
           icon: '',
-          path: 'selling',
+          routeName: 'selling',
 	      },{
           id: '19',
           title: '仓库中',
           icon: '',
-          path: 'down',
+          routeName: 'down',
 	      },{
           id: '20',
           title: '已售罄',
           icon: '',
-          path: 'sold_out',
+          routeName: 'sold_out',
 	      },{
           id: '21',
           title: '品类管理',
           icon: '',
-          path: '/category/index',
+          routeName: '/category/index',
 	      }]
       },{
         id: '22',
 	      title: '订单',
 	      icon: '#icon-dingdanguanli',
-	      path: 'order',
+	      routeName: 'order',
 	      children: [{
           id: '23',
           title: '订单管理',
           icon: '',
-          path: 'index',
+          routeName: 'index',
 	      },{
           id: '24',
           title: '扫码付订单',
           icon: '',
-          path: 'scan_payment',
+          routeName: 'scan_payment',
         },{
           id: '25',
           title: '预定订单',
           icon: '',
-          path: 'booking',
+          routeName: 'booking',
         },{
           id: '40',
           title: '即时订单',
           icon: '',
-          path: 'immediate',
+          routeName: 'immediate',
         },
         // {
         //   id: '16',
         //   title: '采购订单',
         //   icon: '',
-        //   path: 'purchase',
+        //   routeName: 'purchase',
         // },{
         //   id: '27',
         //   title: '分销订单',
         //   icon: '',
-        //   path: 'distribution',
+        //   routeName: 'distribution',
         // }
       ]
       },{
         id: '28',
 	      title: '用户',
 	      icon: '#icon-drxx10',
-	      path: 'users',
+	      routeName: 'users',
 	      children: [{
           id: '29',
           title: '客户管理',
           icon: '',
-          path: 'customers',
+          routeName: 'customers',
 	      },
         // {
         //   id: '30',
         //   title: '会员卡',
         //   icon: '',
-        //   path: 'memberCard',
+        //   routeName: 'memberCard',
 	      // },
         {
           id: '31',
           title: '会员管理',
           icon: '',
-          path: 'members',
+          routeName: 'members',
 	      },{
           id: '32',
           title: '积分管理',
           icon: '',
-          path: 'scores',
+          routeName: 'scores',
 	      }]
       },{
         id: '33',
         title: '分销',
         icon: '#icon--',
-        path: 'distribution',
+        routeName: 'distribution',
         children:[
           {
             id: '34',
             title: '分销员管理',
             icon: '',
-            path: 'score/manage',
+            routeName: 'score/manage',
           },{
             id: '35',
             title: '订单管理',
             icon: '',
-            path: 'score/manage',
+            routeName: 'score/manage',
           },{
             id: '36',
             title: '提现管理',
             icon: '',
-            path: 'score/manage',
+            routeName: 'score/manage',
           }
         ]
       },{
         id: '37',
         title: '财务',
         icon: '#icon-fenxi',
-        path: 'finance'
+        routeName: 'finance'
       },{
         id: '38',
         title: '供应商',
         icon: '#icon-supplier',
-        path: ''
+        routeName: ''
       },{
         id: '39',
         title: '物流',
         icon: '#icon-icon_wuliuguanli',
-        path: ''
+        routeName: ''
       }]
     };
   }
   computed() {
     return {
-      getMenuByPath () {
-        return (path) => {
+      getMenuByRouteName () {
+        return (routeName) => {
           let menu = null;
           _.map(this.list, function(value) {
-            if(value.path === path){
+            if(value.routeName === routeName){
               menu =   value;
             }
             if(value.children){
               _.map(value.children , function(child) {
-                if((child.path.charAt(0) === '/' && child.path === path) || ('/' + value.path + '/' +child.path) === path) {
+                if((child.routeName.charAt(0) === '/' && child.routeName === routeName) || ('/' + value.routeName + '/' +child.routeName) === routeName) {
                   menu =   child;
                 }
               });

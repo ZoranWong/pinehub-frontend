@@ -27,6 +27,7 @@
 				event: 'shops/setList',
 				current: 'shops/currentPage',
 				query: {
+					
 				}
 			};
 		},

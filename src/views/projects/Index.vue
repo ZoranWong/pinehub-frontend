@@ -3,12 +3,6 @@
 		<div class="content-box">
 			<div class="header-search">
 				<el-form :inline="true" :model="searchFields" label-width="10px" ref="searchFields" style="float:right;margin-bottom: 0;">
-					<!-- <el-form-item prop="name">
-						<el-input size="mini" v-model="searchFields.name" placeholder="搜索项目"></el-input>
-					</el-form-item>
-					<el-form-item>
-						<el-button size="mini" type="primary" >搜索</el-button>
-					</el-form-item> -->
 					<el-form-item>
 						<el-button size="mini" type="success" @click="createProject()">创建项目</el-button>
 					</el-form-item>
@@ -87,7 +81,7 @@
 				return false;
 			},
 			pathTo(item) {
-				this.$router.push({name: 'project-detial',  query: {projectId: item.id}});
+				this.$router.push({name: 'project-detial',  params: {projectId: item.id}});
 			},
 			createProject() {
 				this.creating = true;

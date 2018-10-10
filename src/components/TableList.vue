@@ -87,18 +87,17 @@
 		},
 		methods: {
 			search(data) {
-        data['page'] = this.page;
+        data['page'] = 1;
         this.searchJson = Object.assign({}, data);
-        // this.searchJson = data;
 			},
 			changePage(page) {
 				this.page = page;
 			}
 		},
 		created() {
-      let page = this.$router.currentRoute.query.page;
+      let page = this.$requestInput('page');
       this.page = parseInt(!page ? 1 : page);
-      this.searchJson =  Object.assign({}, this.$router.currentRoute.query,this.query);
+      this.searchJson =  Object.assign({}, this.$query(), this.query);
 		}
 	}
 </script>

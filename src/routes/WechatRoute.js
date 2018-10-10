@@ -6,23 +6,23 @@ import CreateMenu from '../views/wechat/menu/create/Index1';
 import WechatAutoReply from '../views/wechat/AutoReply';
 import WechatMaterials from '../views/wechat/Materials';
 let route = new Route();
-route.group('/wechat', {
+route.group('/project/:projectId/wechat', {
   	'name': 'wechat',
   	'tag' : '微信',
   	'component': Layout,
   	'uses' : function(route) {
-	  	route.addRoute('/index', {
+	  	route.addRoute('index', {
 	  		'name': 'wechat-index',
 	  		'component': WechatIndex,
 	  		'tag': '公众号管理'
 	  	});
-      route.addRoute('/menus', {
+      route.addRoute('menus', {
 	  		'name': 'wechat-menus',
 	  		'component': WechatMenus,
 	  		'tag': '菜单管理'
 	  	});
 
-      route.addRoute('/create/menu', {
+      route.addRoute('create/menu', {
         'name': 'create-wx-menu',
         'component': CreateMenu,
         'tag': '创建菜单'

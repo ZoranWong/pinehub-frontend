@@ -5,16 +5,16 @@ import ScanPaymentOrders from '@/views/orders/scan_payment_orders/Index';
 import BookingOrders from "@/views/orders/booking_orders/Index";
 import ImmediateOrders from "@/views/orders/immediate_orders/Index";
 let route = new Route();
-route.group('/order', {
+route.addRoute('/project/:projectId/orders', {
+  'name': 'orders',
+  'component': Index,
+  'tag': '订单管理'
+});
+route.group('/project/:projectId/order', {
   	'name': 'order',
   	'tag' : '订单管理',
   	'component': Layout,
   	'uses' : function(route) {
-	  	route.addRoute('/index', {
-	  		'name': 'order-index',
-	  		'component': Index,
-	  		'tag': '订单管理'
-	  	});
 
       route.addRoute('/scan_payment', {
 	  		'name': 'order-scan-payment',

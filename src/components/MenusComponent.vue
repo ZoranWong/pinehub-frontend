@@ -13,8 +13,10 @@
           </el-tooltip>
           <span>{{ menu.title }}</span>
         </template>
-        <el-menu-item @click="routeTo( menu, child )" :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
-          <span style="padding:0 16px;">{{child.title}}</span>
+        <el-menu-item :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
+          <router-link :to="{name: child.routeName, params: { projectId: projectId }}">
+            <span style="padding:0 16px;">{{child.title}}</span>
+          </router-link>
         </el-menu-item>
       </el-submenu>
     </template>
@@ -35,20 +37,12 @@ export default {
   computed:{
     menus() {
       return this.$store.state.menus.list;
+    },
+    projectId() {
+      return this.$requestInput('projectId');
     }
   },
   methods: {
-    routeTo(menu, child) {
-      this.$store.state.menus.activeMenu = child.id;
-      let path = '';
-      if(child.path.charAt(0) === '/') {
-        path = child.path;
-      }else{
-        path += '/' + _.strip(menu.path, '/');
-        path += '/' + _.strip(child.path, '/');
-      }
-      this.$command('redirect', {path: path, query:{projectId: this.$router.currentRoute.query.projectId}});
-    },
     checkActive(id){
       return this.$store.state.menus.activeMenu === id;
     }
@@ -113,13 +107,13 @@ export default {
 	}
 	.el-menu .el-submenu .el-submenu__title:hover {
     	background: #666;
-		color: rgba(255,255,255,1);
+      color: rgba(255,255,255,1);
 	}
 	.el-menu .el-submenu .el-menu-item:focus, .el-menu-item:hover{
 		background: #666 !important;
 		color: rgba(255,255,255,1);
 	}
-	.el-menu .el-submenu div span{
+	.el-menu .el-submenu span{
 		color: rgba(255,255,255,0.65);
 	}
 	.el-menu{

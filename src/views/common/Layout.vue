@@ -17,9 +17,6 @@
 							<el-col :span="8" style="text-align:right"><router-link style = "margin-right:26px;" :to="{name: 'project-index'}">返回首页</router-link></el-col>
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
-							<!-- <keep-alive :include="includedComponents">
-								<router-view class = "page-content" :style="pageContentStyle"></router-view>
-							</keep-alive> -->
 							<router-view class = "page-content" :style="pageContentStyle" :key="activeDate"></router-view>
 						</el-col>
 					</div>
@@ -31,9 +28,9 @@
 </template>
 <script>
 /* eslint-disable */
-  import NavComponent from '../../components/NavComponent';
-	import HeaderComponent from '../../components/HeaderComponent';
-	import ResetPasswordComponent from '../../components/ResetPasswordComponent';
+  import NavComponent from '@/components/NavComponent';
+	import HeaderComponent from '@/components/HeaderComponent';
+	import ResetPasswordComponent from '@/components/ResetPasswordComponent';
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {

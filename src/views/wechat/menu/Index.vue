@@ -32,8 +32,7 @@
 				service: 'http.wechatMenus',
 				event: 'wechatMenus/setList',
 				query: {
-					page: 0,
-					projectId: 0
+					page: 0
 				}
 			};
 		},

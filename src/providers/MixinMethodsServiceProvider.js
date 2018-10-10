@@ -1,4 +1,5 @@
 import ServiceProvider from './ServiceProvider';
+import _ from 'underscore';
 export default class MixinMethodsServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -21,6 +22,20 @@ export default class MixinMethodsServiceProvider extends ServiceProvider {
       },
       $error(exception, params = null) {
         self.app.$error(exception, params);
+      },
+      $requestInput(key) {
+        let currentRoute = this.$router.currentRoute;
+        let request =  _.extend(currentRoute.query, currentRoute.params);
+        return request[key];
+      },
+      $currentRouteName() {
+        return this.$router.currentRoute.name;
+      },
+      $query() {
+        return _.omit(this.$router.currentRoute.query, _.keys(this.$router.currentRoute.params));
+      },
+      $params() {
+        return this.$router.currentRoute.params;
       }
     };
   }

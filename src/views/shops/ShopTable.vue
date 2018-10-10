@@ -17,7 +17,7 @@
         <el-button type="primary" size="mini">修改</el-button>
         <el-popover placement="top">
           <el-button type="primary" size="mini">充值记录</el-button>
-          <el-button type="primary" size="mini">销售记录</el-button>
+          <el-button type="primary" size="mini" @click="orders(scope.row.id)">销售记录</el-button>
           <el-button slot="reference" title="更多" icon="el-icon-more" size="mini"></el-button>
         </el-popover>
       </template>
@@ -39,6 +39,13 @@
     methods:{
       purchaseOrders(shopId) {
 
+      },
+      orders(shopId) {
+        let params = {
+          shopId: shopId,
+          projectId: this.$requestInput('projectId')
+        };
+        this.$router.push({name: "shop-orders", params: params});
       }
     }
   }

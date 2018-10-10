@@ -10,9 +10,12 @@ export default class RouteServiceProvider extends ServiceProvider {
     this.app.use(VueRouter);
     let routerArray = [];
     _.each(routes, function(route) {
-      route = route.getRoute();
-      routerArray.push(route);
+      let r = route.getRoute();
+      _.each(r, function(route) {
+          routerArray.push(route);
+      });
     });
+    console.log(routerArray);
     let router = this. app.register('vue-router',  new VueRouter({
       routes: routerArray,
       mode: 'history'
@@ -24,8 +27,9 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
+    console.log(to);
     if(this.app.instances['vue-store'].getters['account/logined']) {
-      let menu = this.app.instances['vue-store'].getters['menus/getMenuByPath'](to.path);
+      let menu = this.app.instances['vue-store'].getters['menus/getMenuByRouteName'](to.name);
       this.app.instances['vue-store'].state.menus.activeMenu = menu ? menu['id'] : null;
       if(to.name !== 'sign-in'){
         next();

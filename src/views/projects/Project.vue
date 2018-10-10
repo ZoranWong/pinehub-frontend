@@ -67,7 +67,7 @@
 
 		},
 		created(){
-			let projectId = this.$router.currentRoute.query.projectId;
+			let projectId = this.$requestInput('projectId');
 			this.$command('GET_PROJECT_DETIAL', projectId);
 		}
 	}
