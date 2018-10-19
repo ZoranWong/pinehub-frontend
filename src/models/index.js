@@ -9,12 +9,14 @@ import Categories from './Categories';
 import WechatMenu from './WechatMenu';
 import CouponCards from './Coupons';
 import UpToCutActivities from './UpToCutActivities';
+import PaidGiftActivities from './PaidGiftActivities';
 import Orders from './Orders';
 import Customers from './Customers';
 import Members from './Members';
 import MemberCards from './MemberCards';
 import ScoreRules from './ScoreRules';
 import Materials from './Materials';
+import Regions from './Regions';
 import _ from 'underscore';
 export default class Store {
   constructor(application) {
@@ -26,6 +28,7 @@ export default class Store {
     this.addModel('menus', Menus);
     this.addModel('shops', Shops);
     this.addModel('upToCutActivities', UpToCutActivities);
+    this.addModel('paidGiftActivities', PaidGiftActivities);
     this.addModel('merchandises', Merchandises);
     this.addModel('couponCards', CouponCards);
 		this.addModel('categories', Categories);
@@ -41,6 +44,7 @@ export default class Store {
     this.addModel('material.image', Materials);
     this.addModel('material.video', Materials);
     this.addModel('material.voice', Materials);
+    this.addModel('regions', Regions);
   }
   addModel(name, model) {
     this.modules[name] = new model(this.$application);

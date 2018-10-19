@@ -1,11 +1,11 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
 		<template slot = "header">
-			<card-header ></card-header>
+			<score-header ></score-header>
 			<common-rule></common-rule>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
-			<card-table :rules="data"></card-table>
+			<score-table :rules="data"></score-table>
 		</template>
 	</table-list>
 </template>
@@ -19,8 +19,8 @@
 	export default {
 		name: 'ScoreRules',
 		components: {
-			'card-header': Header,
-			'card-table': ScoreTable,
+			'score-header': Header,
+			'score-table': ScoreTable,
 			'table-list': TableList,
 			'common-rule': CommonRule
 		},

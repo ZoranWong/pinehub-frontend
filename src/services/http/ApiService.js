@@ -6,7 +6,7 @@ export default class ApiService extends Service{
   constructor(app) {
     super(app);
     this.axios = this.$application.axios;
-    this.gateway = '';
+    this.gateway = this.$application.config['http']['apiGateway'];
     this.middlewares = [];
   }
 
@@ -30,7 +30,7 @@ export default class ApiService extends Service{
     }
   }
   // eslint-disable-next-line
-  async httpGet (route, params = [], auth = false) {
+  async httpGet (route, params = [], auth = true) {
     if(auth) {
       let token = await this.service('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
@@ -42,7 +42,7 @@ export default class ApiService extends Service{
     return result;
   }
 
-  async httpPost(route, params = [], auth = false) {
+  async httpPost(route, params = [], auth = true) {
     if(auth) {
       let token = await this.service('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
@@ -55,7 +55,7 @@ export default class ApiService extends Service{
     return result;
   }
 
-  async httpPut(route, id, params = [], auth = false) {
+  async httpPut(route, id, params = [], auth = true) {
     if(auth) {
       let token = await this.service('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
@@ -67,7 +67,7 @@ export default class ApiService extends Service{
     return result;
   }
 
-  async httpDelete(route, params = [], auth = false) {
+  async httpDelete(route, params = [], auth = true) {
     if(auth) {
       let token = await this.service('token').getToken();
       this.headers().get['Authorization'] = 'bearer ' + token;
@@ -83,10 +83,11 @@ export default class ApiService extends Service{
   searchBuilder(searchFields) {
     let search = {};
     search = this.buildSearchStr(searchFields);
+    console.log(this.service('base64'));
     return 'searchJson=' + this.service('base64').encode(search);
   }
 
   buildSearchStr(searchFields) {
-    return '';
+    return this.service('json').encode(searchFields);
   }
 }

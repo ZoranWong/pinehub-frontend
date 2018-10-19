@@ -12,7 +12,6 @@ export default class ShopsService extends ApiService{
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.shops').mock(page, search, limit);
 		}else{
-			//服务器交互代码
 			response = await this.httpGet('shops', {page: page, limit: limit, searchJson: search});
 		}
 		shops = response.data;
@@ -21,5 +20,35 @@ export default class ShopsService extends ApiService{
 		currentPage = pagination['current_page'];
 		totalPage = pagination['total_pages'];
 		return [shops, totalNum, currentPage, totalPage];
+	}
+
+	async create(projectId, shop) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.shop.create').mock(shop);
+		} else {
+			response = await this.httpPost(`project/${projectId}/shop`, shop);
+		}
+		return response.data;
+	}
+
+	async update(projectId, shopId, shop) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.shop.update').mock(shop);
+		} else {
+			response = await this.httpPut(`project/${projectId}/shop/${shopId}`, shop);
+		}
+		return response.data;
+	}
+
+	async show(id) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.shop.show').mock(id);
+		} else {
+			response = await this.httpGet(`project/${projectId}/shop/${shopId}`);
+		}
+		return response.data;
 	}
 }

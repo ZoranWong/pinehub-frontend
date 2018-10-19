@@ -9,8 +9,8 @@
 						<el-col :span="24" class="header-bottom"  v-if="showLeftSide">
 							<el-col :span="16" class="breadcrumb-container">
 								<el-breadcrumb separator="/" class="breadcrumb-inner">
-									<el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index">
-										{{ tag(item.name) }}
+									<el-breadcrumb-item v-for="(item, index) in routes" :key="index">
+										{{ item.tag }}
 									</el-breadcrumb-item>
 								</el-breadcrumb>
 							</el-col>
@@ -48,6 +48,11 @@
 			'c-header': HeaderComponent
 		},
 		computed: {
+			routes() {
+				let route = this.routeMap[this.$route.name];
+				console.log('route', this.$route.name, this.$route, route);
+				return [route.parent, route];
+			},
 			showLeftSide() {
 				return !this.routeMap[this.$router.currentRoute.name]['menuHide'];
 			},
@@ -70,9 +75,6 @@
 		methods: {
 			toogle(){
 				this.toogleMenu=!this.toogleMenu
-			},
-			tag(name) {
-				return this.routeMap[name]['tag'];
 			}
 		},
 		created() {

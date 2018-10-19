@@ -14,7 +14,7 @@
     <el-table-column label="操作" width="220">
       <template slot-scope="scope">
         <el-button type="success" size="mini" @click="purchaseOrders(scope.row.id)">采购单</el-button>
-        <el-button type="primary" size="mini">修改</el-button>
+        <el-button type="primary" size="mini" @click="edit(scope.row.id)">修改</el-button>
         <el-popover placement="top">
           <el-button type="primary" size="mini">充值记录</el-button>
           <el-button type="primary" size="mini" @click="orders(scope.row.id)">销售记录</el-button>
@@ -46,6 +46,17 @@
           projectId: this.$requestInput('projectId')
         };
         this.$router.push({name: "shop-orders", params: params});
+      },
+      edit(shopId) {
+        let params = {
+          shopId: shopId,
+          projectId: this.$requestInput('projectId')
+        };
+
+        this.$router.push({
+          name: "shop-edit",
+          params: params
+        });
       }
     }
   }

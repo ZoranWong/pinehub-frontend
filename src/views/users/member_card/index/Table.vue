@@ -11,7 +11,7 @@
         <div class="bottom-area">
             <div class="operate">
               <el-button size="small" @click.active="" type="text">查看成员</el-button> -
-                <el-button size="small" @click.active="edit(true, item.id)" type="text">编辑</el-button>
+                <el-button size="small" @click.active="edit(item.id)" type="text">编辑</el-button>
             </div>
             <div class="state">{{item.sync}}</div>
         </div>
@@ -36,8 +36,14 @@
       };
     },
     methods: {
-      edit() {
-
+      edit(id) {
+        this.$router.push({
+          name: 'member-card-edit',
+          params: {
+            projectId: this.$requestInput('projectId'),
+            memberCardId: id
+          }
+        });
       },
       create() {
 

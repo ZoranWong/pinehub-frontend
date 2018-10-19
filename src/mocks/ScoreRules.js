@@ -10,8 +10,9 @@ export default class ScoreRules extends Mock {
       "data|15":[{
         "id|+1": 1,
         "order_amount": "@float(100, 500, 0, 99)",
-        "order_count": "@integer(10, 100)",
+        "orders_count": "@integer(10, 100)",
         "score": "@integer(1, 20)",
+        "type": "ORDERS_COUNT",
         "total_recieved_score": "@integer(100, 200)",
         "created_at": "@DATE(yyyy-MM-dd hh:mm:ss)",
         "updated_at": "@DATE(yyyy-MM-dd hh:mm:ss)"

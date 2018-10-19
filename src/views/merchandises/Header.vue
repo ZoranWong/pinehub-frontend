@@ -31,7 +31,7 @@
     </template>
     <template slot="opt">
       <div>
-        <el-button size="small" type="primary" icon="el-icon-plus">发布商品</el-button>
+        <el-button size="small" type="primary" icon="el-icon-plus" @click = "create">发布商品</el-button>
         <el-button size="small"  >导出报表</el-button>
         <el-button size="small"  >查看已生成报表</el-button>
       </div>
@@ -54,6 +54,16 @@
         maxPrice: null,
         category: null
       };
+    },
+    methods: {
+      create() {
+        this.$router.push({
+          name: 'merchandise-create',
+          params: {
+            projectId: this.$requestInput('projectId')
+          }
+        });
+      }
     }
   }
 </script>

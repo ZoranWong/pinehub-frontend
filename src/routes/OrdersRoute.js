@@ -6,12 +6,17 @@ import BookingOrders from "@/views/orders/booking_orders/Index";
 import ImmediateOrders from "@/views/orders/immediate_orders/Index";
 let route = new Route();
 route.addRoute('/project/:projectId/orders', {
-  'name': 'orders',
-  'component': Index,
-  'tag': '订单管理'
+  'tag' : '订单管理',
+  'component': Layout,
+  'uses' : function(route) {
+    route.addRoute('', {
+      name: 'orders',
+      component: Index,
+      tag: '订单列表'
+    });
+  }
 });
 route.group('/project/:projectId/order', {
-  	'name': 'order',
   	'tag' : '订单管理',
   	'component': Layout,
   	'uses' : function(route) {

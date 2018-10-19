@@ -10,13 +10,19 @@
         <p v-if="limit">获取数量限制:一个客户每天最多获取 {{ limit }} 积分</p>
       </div>
     </div>
+    <rule style ="position: fixed !important;" :show = "ruleShow" :close="closeRuleForm"></rule>
   </el-col>
 </template>
 <script>
+  import RuleForm from './CommonRuleForm';
   export default {
     props: ['search'],
+    components: {
+      rule: RuleForm
+    },
     data() {
       return {
+        ruleShow: false
       };
     },
     computed: {
@@ -29,7 +35,10 @@
     },
     methods: {
       setRule() {
-
+        this.ruleShow = true;
+      },
+      closeRuleForm() {
+        this.ruleShow = false;
       }
     }
   }

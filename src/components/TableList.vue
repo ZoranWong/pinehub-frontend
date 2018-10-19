@@ -71,7 +71,7 @@
         return this.model.pageCount ? this.model.pageCount : 15;
       },
       currentPage() {
-        return this.model.currentPage;
+        return parseInt(this.model.currentPage);
       },
 			data() {
 				return this.$store.getters[this.current];

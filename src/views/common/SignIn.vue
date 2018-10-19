@@ -13,8 +13,8 @@
 </template>
 <script>
 /* eslint-disable */
-import SignInComponent from '../../components/SignInComponent.vue';
-import SeekPasswordComponent from '../../components/SeekPasswordComponent.vue';
+import SignInComponent from '@/components/SignInComponent.vue';
+import SeekPasswordComponent from '@/components/SeekPasswordComponent.vue';
 export default {
 		name: 'login',
 		data() {
@@ -31,12 +31,6 @@ export default {
 		methods: {
 		},
 		created() {
-      this.$error('notFound', '暂无数据');
-      console.log(this.$store.state.order.currentPage);
-      this.$store.dispatch('order/nextPage');
-      console.log('change page');
-      this.$command('report', 'a block');
-      console.log(this.$store.state.order.currentPage);
 		}
 }
 </script>

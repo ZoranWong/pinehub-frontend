@@ -95,21 +95,7 @@
 				if(result) {
 					this.saving = true;
 					//上传服务
-					let result = await this.$command('UPDATE_PROJECT', this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum);
-					if(result) {
-						this.$message({
-							message: '恭喜你，应用项目更新成功！',
-							type: 'success'
-						});
-						await this.$command('RELOAD');
-						this.saving = false;
-						this.dialogShow = false;
-					}else{
-						this.$message({
-							message: '很遗憾，项目更新失败！',
-							type: 'error'
-						});
-					}
+					this.$command('UPDATE_PROJECT', this.project.id, this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
 				}
 			},
 			async save () {
@@ -118,18 +104,7 @@
 				if(result) {
 					this.saving = true;
 					//上传服务
-					let result = await this.$command('CREATE_PROJECT', this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum);
-					if(result) {
-						//授权
-						this.$emit('openPlatformAuth');
-						this.saving = false;
-						this.dialogShow = false;
-					}else{
-						this.$message({
-		          message: '很遗憾，新项目创建失败！',
-		          type: 'error'
-		        });
-					}
+					this.$command('CREATE_PROJECT', this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
 				}
 			},
 			open() {

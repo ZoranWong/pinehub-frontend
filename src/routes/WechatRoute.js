@@ -7,8 +7,7 @@ import WechatAutoReply from '../views/wechat/AutoReply';
 import WechatMaterials from '../views/wechat/Materials';
 let route = new Route();
 route.group('/project/:projectId/wechat', {
-  	'name': 'wechat',
-  	'tag' : '微信',
+  	'tag' : '微信管理',
   	'component': Layout,
   	'uses' : function(route) {
 	  	route.addRoute('index', {
