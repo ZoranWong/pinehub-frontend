@@ -1,11 +1,12 @@
-import Service from '../Service';
+import Service from '@/services/Service';
 //import _ from 'underscore';
-export default class SessionService extends Service {
+export default class LocalStorageService extends Service {
   constructor(application) {
     super(application);
   }
+
   get(key) {
-    let data = sessionStorage.getItem(key);
+    let data = localStorage.getItem(key);
     data =  this.service('json').decode(data);
     if(!data)return null;
     if(this.service('date').overDate(data['ttl'])) {
@@ -21,14 +22,14 @@ export default class SessionService extends Service {
       value: data,
       ttl: ttl
     };
-    sessionStorage.setItem(key, this.service('json').encode(json));
+    localStorage.setItem(key, this.service('json').encode(json));
   }
 
   clear() {
-    sessionStorage.clear();
+    localStorage.clear();
   }
 
   delete(key) {
-    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
   }
 }

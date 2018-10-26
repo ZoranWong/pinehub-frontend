@@ -12,7 +12,7 @@
     </el-form-item>
     <el-checkbox class="remember">记住密码</el-checkbox>
     <el-form-item>
-      <el-button type="primary" style="width:100%;" size="small" @click = "signIn">登录</el-button>
+      <el-button type="primary" style="width:100%;" size="small" @click = "signIn" v-loading = "loading" :disabled="disabled">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -24,12 +24,20 @@ export default {
       account: {
         username: null,
         password: null
-      }
+      },
+      loading: false
     };
   },
+  computed: {
+    disabled() {
+      return !this.$store.getters['account/publicKey'];
+    }
+  },
   methods: {
-    signIn() {
-      this.$command('SIGNIN', this.account['username'], this.account['password']);
+    async signIn() {
+      this.loading = true;
+      await this.$command('SIGNIN', this.account['username'], this.account['password']);
+      this.loading = false;
     }
   }
 }

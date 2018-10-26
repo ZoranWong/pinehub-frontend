@@ -6,29 +6,11 @@ import SessionService from '../services/cache/SessionService';
 import Base64Service from '../services/encrypt/Base64Service';
 import MD5Service from '../services/encrypt/MD5Service';
 import JsonService from '../services/encrypt/JsonService';
+import DateService from '@/services/DateService';
+import LocalStorageService from '@/services/cache/LocalStorageService';
 export default class AppServiceProvider extends ServiceProvider{
   constructor(app) {
     super(app);
-    Date.prototype.format = function( format ) {
-      let o = {
-        "M+" : this.getMonth()+1, //month
-        "d+" : this.getDate(), //day
-        "h+" : this.getHours(), //hour
-        "m+" : this.getMinutes(), //minute
-        "s+" : this.getSeconds(), //second
-        "q+" : Math.floor((this.getMonth()+3)/3), //quarter
-        "S" : this.getMilliseconds() //millisecond
-      };
-      if(/(y+)/.test(format)) {
-        format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-      }
-      for(let k in o) {
-        if(new RegExp("("+ k +")").test(format)) {
-          format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
-        }
-      }
-      return format;
-    }
   }
   register() {
     this.app.register('base64', Base64Service);
@@ -36,6 +18,8 @@ export default class AppServiceProvider extends ServiceProvider{
     this.app.register('json', JsonService);
     this.app.register('session', SessionService);
     this.app.register('token', TokenService);
+    this.app.register('date', DateService);
+    this.app.register('localStorage', LocalStorageService);
   }
   boot() {
 

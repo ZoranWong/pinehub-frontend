@@ -5,7 +5,7 @@ export default class CreateShopCommand extends Command {
   }
 
   async handle(projectId, shop, $vm) {
-    let result = await this.service('http.shops').create(projectId, shop);
+    let result = await this.$service('http.shops').create(projectId, shop);
     if(result) {
       $vm.$message({
         message: '恭喜你，店铺创建成功！',

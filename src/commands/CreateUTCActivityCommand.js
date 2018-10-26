@@ -21,7 +21,7 @@ export default class CreateUTCActivityCommand extends Command {
           return ;
         }
       }
-      let result = await this.service('http.upToCutActivities').create(projectId, activity);
+      let result = await this.$service('http.upToCutActivities').create(projectId, activity);
       if(result) {
         $vm.$message({
           message: '恭喜你，活动创建成功！',

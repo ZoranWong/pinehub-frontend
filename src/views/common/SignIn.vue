@@ -26,11 +26,29 @@ export default {
       'sign-in': SignInComponent,
       'seek-password': SeekPasswordComponent
     },
+    watch: {
+      $route:{
+        deep: true,
+        handle(to, from) {
+          console.log('sign-in', to);
+          if(this.$store.getters['account/logined']) {
+            this.$router.push({
+              name: 'projects'
+            });
+          }
+        }
+      }
+    },
 		computed: {
 		},
 		methods: {
 		},
 		created() {
+      if(this.$store.getters['account/logined']) {
+        this.$router.push({
+          name: 'projects'
+        });
+      }
 		}
 }
 </script>

@@ -7,4 +7,8 @@ export default class Service {
   service(name = null) {
     return name ? this.$application[name] : this.$application.instances;
   }
+
+  command(...params) {
+    this.$application.vueApp.$command.apply(this.$application.vueApp, params);
+  }
 }

@@ -10,6 +10,6 @@ export default class ModelServiceProvider extends ServiceProvider {
     this.app.register('vue-store', new Vuex.Store(new Models(this.app)));
   }
   boot() {
-
+    console.log('model boot');
   }
 }

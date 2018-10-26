@@ -1,4 +1,5 @@
 import Service from '../Service';
+import _ from 'underscore';
 export default class JsonService extends Service{
   constructor(application) {
     super(application);

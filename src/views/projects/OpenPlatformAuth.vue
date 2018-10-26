@@ -1,13 +1,13 @@
 <template>
   <el-dialog
-		title="公众号/小程序授权"
+		:title="title"
 		:visible.sync="dialogShow"
 		width="80%"
     @open="open"
     @close="close"
 		center>
 		<div class="web-site">
-			<iframe class="open-platform-auth" scrolling="no" src="http://www.youzan.com/v2/shop/weixin/binding" id="open_platform_auth" name="open_platform_auth" style="width: 100%;" ></iframe>
+			<iframe class="open-platform-auth" scrolling="no" :src="authUrl" id="open_platform_auth" name="open_platform_auth" style="width: 100%;" ></iframe>
 		</div>
 		<span slot="footer" class="dialog-footer">
 			<el-button @click="close">取 消</el-button>
@@ -18,9 +18,17 @@
 <script>
 export default {
   props: {
+    title: {
+      default: '',
+      type: String
+    },
     show: {
       default: false,
       type: Boolean
+    },
+    authUrl: {
+      default: null,
+      type: String
     }
   },
   watch: {

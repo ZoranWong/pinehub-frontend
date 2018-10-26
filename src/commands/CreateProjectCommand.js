@@ -6,7 +6,7 @@ export default class CreateProjectCommand extends Command {
   }
 
   async handle(name, logo, contactName, contactPhoneNum, $vm) {
-    let result =  await this.service('http.projects').create(name, logo, contactName, contactPhoneNum);
+    let result =  await this.$service('http.projects').create(name, logo, contactName, contactPhoneNum);
     if(result) {
       //授权
       $vm.$emit('openPlatformAuth');

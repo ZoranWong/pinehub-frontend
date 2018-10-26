@@ -5,7 +5,7 @@ export default class UpdateShopCommand extends Command {
   }
 
   async handle(projectId, shopId, shop, $vm) {
-    let result = await this.service('http.shops').create(projectId, shopId, shop);
+    let result = await this.$service('http.shops').create(projectId, shopId, shop);
     if(result) {
       $vm.$message({
         message: '恭喜你，店铺修改成功！',

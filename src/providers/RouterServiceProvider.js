@@ -15,40 +15,32 @@ export default class RouteServiceProvider extends ServiceProvider {
           routerArray.push(route);
       });
     });
-    console.log(routerArray);
-    let router = this. app.register('vue-router',  new VueRouter({
+    this.router = this. app.register('vue-router',  new VueRouter({
       routes: routerArray,
       mode: 'history'
     }));
     this.app.register('routeMap', routeMap);
     let self = this;
-    router.beforeEach((to, from, next) => {
+    this.router.beforeEach((to, from, next) => {
       self.beforeEach(to, from, next);
     });
   }
   beforeEach(to, from, next) {
-    console.log(to);
     if(this.app.instances['vue-store'].getters['account/logined']) {
       let menu = this.app.instances['vue-store'].getters['menus/getMenuByRouteName'](to.name);
       this.app.instances['vue-store'].state.menus.activeMenu = menu ? menu['id'] : null;
-      if(to.name !== 'sign-in'){
+      if(!to.redirect){
         next();
       }else{
-        next({
-          name: from.name,
-          query: {
-            redirect: from.fullPath
-          }
-          });
+        this.router.push(to.redirect);
       }
     }else if(to.name !== 'sign-in'){
-      next({
-        name: 'sign-in',
-        query: {
-          redirect: to.fullPath
-        }
+      this.router.replace({
+        name: 'sign-in'
       });
+    }else{
+      next();
     }
-    next();
+
   }
 }

@@ -17,13 +17,14 @@
 				<el-row :gutter="20">
 					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
 						<div class="card"  v-on:click="pathTo(project)">
-							<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
-							<el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col>
+							<el-col :span="24"><img :src="project.logo" alt="" class="project-logo"/></el-col>
+							<!-- <el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col> -->
 							<p class="project-name">名称：{{ project.name }}</p>
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" @click.stop="edit(project)">编辑</el-button>
-								<el-button size="mini" type="text" @click.stop="openPlatformAuthDialogShow=true;">授权</el-button>
+								<el-button size="mini" type="text" @click.stop="openPlatformAuthDialogShow=true;
+								authUrl=project.openPlatformAuthUrl;">授权</el-button>
 								<el-button size="mini" type="text" @click.stop="remove(project)">删除</el-button>
 							</div>
 						</div>
@@ -32,7 +33,8 @@
 			</div>
 		</div>
 		<create-project :show = "creating" v-model="project" @close="creating=false;" @openPlatformAuth="openPlatformAuthDialogShow=true;"></create-project>
-		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;" @close="openPlatformAuthDialogShow=false;"></open-platform-auth>
+		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;"
+		@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" title="公众号/小程序授权"></open-platform-auth>
 		<remove-project :show="removing" :project="project" @close="removing=false;" @open="removing=true;"></remove-project>
 	</div>
 </template>
@@ -56,7 +58,8 @@
 				openPlatformAuthDialogShow: false,
 				removing: false,
 				creating: false,
-				project: {}
+				project: {},
+				authUrl: null
 			};
 		},
 		mounted () {

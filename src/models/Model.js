@@ -70,7 +70,7 @@ export default class Model {
     });
   }
 
-  services(name) {
+  service(name) {
     return this.$application.instances[name];
   }
 

@@ -6,7 +6,7 @@ export default class GetCouponCommand extends Command {
     super(app);
   }
   async handle(page, search = null, limit = 10) {
-    let [coupon, totalNum, currentPage, totalPage ] = await this.service('coupon').coupon(page, search, limit);
+    let [coupon, totalNum, currentPage, totalPage ] = await this.$service('coupon').coupon(page, search, limit);
     this.store().dispatch({
       type: 'coupon/setCoupon',
       coupon: coupon,

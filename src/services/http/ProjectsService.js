@@ -9,18 +9,24 @@ export default class ProjectsService extends ApiService{
 		let currentPage = 0;
 		let pageCount = 0;
 		let response = null;
-		if(this.$application.needMock()) {
-			response =  await this.service('mock.projects').mock(page, search, limit);
-		}else{
-			//服务器交互代码
-			response =  await this.httpGet('projects', {page: page, limit: limit, searchJson: search});
+		try{
+			if(this.$application.needMock()) {
+				response =  await this.service('mock.projects').mock(page, search, limit);
+			}else{
+				//服务器交互代码
+				response =  await this.httpGet('apps', {page: page, limit: limit, searchJson: search});
+			}
+			shops = response.data;
+			let pagination = response.meta.pagination;
+			totalNum = pagination.total;
+			currentPage = pagination['current_page'];
+			pageCount = pagination['total_pages'];
+			return [shops, totalNum, currentPage, pageCount];
+		}catch(error) {
+			this.$application.$error(error.data.message);
+			this.tokenExpired(error);
+			throw new Error();
 		}
-		shops = response.data;
-		let pagination = response.meta.pagination;
-		totalNum = pagination.total;
-		currentPage = pagination['current_page'];
-		pageCount = pagination['total_pages'];
-		return [shops, totalNum, currentPage, pageCount];
 	}
 
 	async show(id) {
@@ -29,7 +35,7 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.project').mock(id);
 		}else{
 			//服务器交互代码
-			response =  await this.httpGet(`project/${id}`);
+			response =  await this.httpGet(`app/${id}`);
 		}
 		return response.data;
 	}
@@ -40,7 +46,7 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.delete').mock(id);
 		}else{
 			//服务器交互代码
-			response =  await this.httpDelete(`project/${id}`);
+			response =  await this.httpDelete(`app/${id}`);
 		}
 		return response.data['delete_count'] > 0;
 	}
@@ -51,7 +57,7 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.project').mock();
 		}else{
 			//服务器交互代码
-			response =  await this.httpPost(`project`, {name: name, logo: logo, contact_name: contactName, contact_phone_num: contactPhoneNum});
+			response =  await this.httpPost(`app`, {name: name, logo: logo, contact_name: contactName, contact_phone_num: contactPhoneNum});
 		}
 		return response.data;
 	}
@@ -62,7 +68,7 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.sevenDaysCount').mock(id);
 		}else{
 			//服务器交互代码
-			response =  await this.httpGet(`project/${id}/seven_days_count`);
+			response =  await this.httpGet(`app/${id}/seven_days_count`);
 		}
 		return response.data;
 	}
@@ -89,7 +95,7 @@ export default class ProjectsService extends ApiService{
 			if (logo) data['logo'] = logo;
 			if (contactName) data['contact_name'] = contactName;
 			if (contactPhoneNum) data['contact_phone_num'] = contactPhoneNum;
-			response =  await this.httpPost (`project/${id}`, data);
+			response =  await this.httpPost (`app/${id}`, data);
 		}
 		return response.data;
 	}

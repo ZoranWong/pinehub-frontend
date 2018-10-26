@@ -18,6 +18,7 @@ import LoadCountiesCommand from '@/commands/LoadCountiesCommand';
 import CreateShopCommand from '@/commands/CreateShopCommand';
 import UpdateShopCommand from '@/commands/UpdateShopCommand';
 import CreateUTCActivityCommand from '@/commands/CreateUTCActivityCommand';
+import GetPublicKeyCommand from '@/commands/GetPublicKeyCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -28,7 +29,7 @@ export default class CommandServiceProvider extends ServiceProvider {
       GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
       ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
       GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
-      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand];
+      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);
     }

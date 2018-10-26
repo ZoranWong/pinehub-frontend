@@ -6,7 +6,7 @@ export default class UpdateProjectCommand extends Command {
   }
 
   async handle(id, name, logo, contactName, contactPhoneNum, $vm) {
-    let result = await this.service('http.projects').update(id, {name: name, logo: logo, contactName: contactName,
+    let result = await this.$service('http.projects').update(id, {name: name, logo: logo, contactName: contactName,
        contactPhoneNum: contactPhoneNum});
        if(result) {
          $vm.$message({
