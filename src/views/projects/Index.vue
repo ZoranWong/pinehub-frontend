@@ -17,7 +17,7 @@
 				<el-row :gutter="20">
 					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
 						<div class="card"  v-on:click="pathTo(project)">
-							<el-col :span="24"><img :src="project.logo" alt="" class="project-logo"/></el-col>
+							<el-col :span="12" :style = "{height: height}" ref="logo"><img :src="project.logo" alt="" class="project-logo"/></el-col>
 							<!-- <el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col> -->
 							<p class="project-name">名称：{{ project.name }}</p>
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
@@ -75,6 +75,9 @@
 			currentPage() {
 				let page = this.$store.state.projects.currentPage;
 				return page ?  page : 1;
+			},
+			height() {
+				let h = this.$refs['logo'];
 			}
 		},
 		methods:{
@@ -107,6 +110,7 @@
 		},
 		created(){
 			this.getProjects();
+			console.log(this.$refs['logo']);
 		}
 	}
 </script>
@@ -124,7 +128,17 @@
 	.project-cards .card div{margin-bottom: 20px;}
 	.project-cards .card div:first-child{padding-left:0 !important}
 	.project-cards .card div:nth-child(2){padding-right:0 !important}
-	.project-cards .card .project-logo{color: #ff6e6e;display: block;
-    margin: 0 auto;border-radius: 2px;width:100%;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
+	.project-cards .card .project-logo{
+		color: #ff6e6e;
+		display: block;
+    margin: 0 auto;
+		border-radius: 2px;
+		width:100%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;box-sizing:
+		 border-box;
+		 line-height: 12px;
+		 padding: 3px;
+		 font-size: 12px;}
 	.project-cards .card p.project-name{margin-top: 15px;clear: both;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
 </style>

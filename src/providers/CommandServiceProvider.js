@@ -19,17 +19,21 @@ import CreateShopCommand from '@/commands/CreateShopCommand';
 import UpdateShopCommand from '@/commands/UpdateShopCommand';
 import CreateUTCActivityCommand from '@/commands/CreateUTCActivityCommand';
 import GetPublicKeyCommand from '@/commands/GetPublicKeyCommand';
+import ClearAccountCommand from '@/commands/ClearAccountCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
     this.commands = [];
   }
   register() {
-    let commands = [SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
+    let commands = [
+      SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
       GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
       ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
       GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
-      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand];
+      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
+      ClearAccountCommand
+    ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);
     }

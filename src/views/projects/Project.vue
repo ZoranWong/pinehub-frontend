@@ -5,7 +5,7 @@
 			<div class="project-name">
 				<span>{{project.name}}</span>
 				<el-button size="mini" type="primary" @click="openAuthDialog(project, 0)" >{{!project.officalAccountAppId ? '公众号授权' : '公众号重新授权'}}</el-button>
-				<el-button size="mini" @click="openAuthDialog(project, 1)" >{{!project.miniProgramAppId ? '小程序授权' : '小程序重新授权'}}</el-button>
+				<el-button size="mini" @click="openMpConfigDialog(project)" >{{!project.miniProgramAppId ? '绑定小程序' : '小程序重新设置'}}</el-button>
 			</div>
   		<div class="project-info">
   			<div>
@@ -29,37 +29,30 @@
   				<p>{{project.refundingOrderCount}}</p>
   			</div>
 			</div>
-			<!-- <div class="project-features">
-				<p class="project-title">常用功能</p>
-		  		<div class="">
-		  			<el-button size="mini" @click="">微信</el-button>
-		  			<el-button size="mini" @click="">优惠券</el-button>
-		  			<el-button size="mini" @click="">会员卡</el-button>
-		  			<el-button size="mini" @click="">分销</el-button>
-		  			<el-button size="mini" @click="">发布商品</el-button>
-		  			<el-button size="mini" @click="">会员</el-button>
-				</div>
-			</div> -->
 			<chart :projectId="project.id"></chart>
 		</div>
 		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;"
 		@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" :title="title"></open-platform-auth>
+		<mp-config :show = "mpConfigShow" @open = "mpConfigShow=true;" @close = "mpConfigShow=false;"></mp-config>
 	</div>
 </template>
 <script>
 	import Chart from './SevenDaysCount';
 	import OpenPlatformAuth from './OpenPlatformAuth';
+	import MpConfig from './MPConfig';
 	export default {
 		name: 'Project',
 		components: {
 			"chart": Chart,
-			'open-platform-auth': OpenPlatformAuth
+			'open-platform-auth': OpenPlatformAuth,
+			"mp-config": MpConfig
 		},
 		data(){
 			return {
 				openPlatformAuthDialogShow: false,
 				authType: 0,
-				authUrl: null
+				authUrl: null,
+				mpConfigShow: false
 			};
 		},
 		mounted () {
@@ -105,6 +98,9 @@
 					}
 					this.authUrl = project.miniProgramAuthUrl;
 				}
+			},
+			openMpConfigDialog(project) {
+				this.mpConfigShow = true;
 			}
 		},
 		created(){

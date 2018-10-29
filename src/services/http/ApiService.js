@@ -135,6 +135,7 @@ export default class ApiService extends Service{
     if(error.data.code === AUTH_TOKEN_EXPIRES) {
       this.service('localStorage').delete('token');
       let token = this.service('localStorage').get('refresh_token');
+      this.command('CLEAR_ACCOUNT');
       this.command('REDIRECT', {
         name: 'sign-in'
       });

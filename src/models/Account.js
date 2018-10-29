@@ -45,5 +45,20 @@ export default class Account extends Model{
     this.addEventListener('setPublicKey', function({key}) {
       this.publicKey = key;
     });
+
+    this.addEventListener('reset', function() {
+      let storage = this.service('localStorage');
+      storage.delete('account');
+      storage.delete('token');
+      _.extend(this.state, {
+        username: null,
+        password: null,
+        roles:  null,
+        mobile: null,
+        nickname:  null,
+        publicKey: null,
+        token: null
+      });
+    });
   }
 }

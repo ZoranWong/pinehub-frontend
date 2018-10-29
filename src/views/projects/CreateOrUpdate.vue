@@ -8,13 +8,13 @@
 				<el-form :model="newData" label-width="100px" ref="projectForm">
 					<el-form-item label="应用名称：" prop="name" :rules = "[
 						{ required: true, message: '请输入项目名称', trigger: 'blur' },
-						{ min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
+						{ min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
 					]">
 						<el-input v-model="newData.name"></el-input>
 					</el-form-item>
 					<el-form-item label="联系人：" prop="contactName" :rules = "[
 						{ required: true, message: '请输入项目联系人姓名', trigger: 'blur'},
-						{ min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur'}
+						{ min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur'}
 					]">
 						<el-input v-model="newData.contactName"></el-input>
 					</el-form-item>
@@ -141,7 +141,7 @@
 <style scoped>
 .avatar{
 	width: 100%;
-	height: auto;
+	height: 100%;
 }
 </style>
 <style>
