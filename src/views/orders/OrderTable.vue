@@ -1,8 +1,8 @@
 <template>
   <div class="tab-pane">
     <el-table highlight-current-row v-loading="isLoading" class="table-header" :data="orders" :span-method="spanMethod">
-      <el-table-column label="#" prop="idx" min-width="20"></el-table-column>
-      <el-table-column label="订单" >
+      <el-table-column label="#" prop="idx" min-width="20" indx = "0"></el-table-column>
+      <el-table-column label="订单" min-width = "120" prop="code" indx = "1" >
         <template slot-scope="scope">
           订单号: {{scope.row.code}}
           <p>
@@ -13,7 +13,7 @@
           </p>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="商品">
+      <el-table-column prop="" label="商品" indx = "2">
         <template slot-scope="scope">
           <el-row :gutter="20" type="block" align="middle" v-if="scope.row.item.merchandiseId">
               <el-col style="width: 64px; height: 64px;">
@@ -28,13 +28,13 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="单价X数量(应付金额)">
+      <el-table-column prop="" label="单价X数量(应付金额)" indx = "3">
         <template slot-scope="scope">
           <span style="color: red;"> {{scope.row.item.sellPrice}} 元 </span> X {{scope.row.item.quality}}
           <p>（  <span style="color: red;"> {{scope.row.item.totalAmount}}元</span>）</p>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="售后" min-width="80">
+      <el-table-column prop="" label="售后" min-width="80" indx = "4">
         <template slot-scope="scope">
           <el-row style="display: flex;" v-if="scope.row.item.status == REFUNDING">
             <el-button  @click="refund(scope.row)" type="success" size="mini" style="width: 50%;" plain>同意退款</el-button>
@@ -52,7 +52,7 @@
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="卖家" >
+      <el-table-column prop="" label="卖家" indx = "5" >
         <template slot-scope="scope">
           <div v-if="scope.row.item.shop.name">
             <p>{{scope.row.item.shop.name}}</p>
@@ -62,7 +62,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="买家" >
+      <el-table-column prop="" label="买家" indx = "6" >
         <template slot-scope="scope">
           <div v-if="scope.row.item.customer.nickname">
             <p>{{scope.row.item.customer.nickname}}</p>
@@ -73,16 +73,16 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="item.statusStr" label="订单状态" >
+      <el-table-column prop="item.statusStr" label="订单状态" indx = "7" >
       </el-table-column>
-      <el-table-column prop="createdAt" label="下单时间"></el-table-column>
-      <el-table-column prop="typeStr" label="订单类型"></el-table-column>
-      <el-table-column prop="" label="优惠金额" >
+      <el-table-column prop="createdAt" label="下单时间" indx = "8"></el-table-column>
+      <el-table-column prop="typeStr" label="订单类型" indx = "9"></el-table-column>
+      <el-table-column prop="" label="优惠金额"  indx = "10">
         <template slot-scope="scope">
           <span style="color: red;"> {{scope.row.discountAmount}} 元 </span>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="合计" >
+      <el-table-column prop="" label="合计"  indx = "11">
         <template slot-scope="scope">
           <span style="color: red;"> {{scope.row.paymentAmount}} 元 </span>
         </template>
@@ -118,6 +118,7 @@ export default {
     spanMethod({ row, column, rowIndex, columnIndex }) {
       if(columnIndex === 0 || columnIndex === 1 || columnIndex === 8 || columnIndex === 9 || columnIndex === 10 || columnIndex === 11){
         if(row.needSpan){
+          console.log(row.span);
           return row.span;
         }else{
           return {
