@@ -7,7 +7,7 @@ export default class LoadProvincesCommand extends Command {
 
   async handle() {
     let provinces = await this.$service('http.regions').provinces();
-    this.store().dispatch({
+    this.$store.dispatch({
       type: 'regions/append',
       list: provinces,
       key: 'provinces'

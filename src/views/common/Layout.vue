@@ -14,7 +14,7 @@
 									</el-breadcrumb-item>
 								</el-breadcrumb>
 							</el-col>
-							<el-col :span="8" style="text-align:right"><router-link style = "margin-right:26px;" :to="{name: 'project-index'}">返回首页</router-link></el-col>
+							<el-col :span="8" style="text-align:right"><router-link style = "margin-right:26px;" :to="{name: 'projects'}">返回首页</router-link></el-col>
 						</el-col>
 						<el-col :span="24" class="content-wrapper">
 							<router-view class = "page-content" :style="pageContentStyle" :key="activeDate"></router-view>

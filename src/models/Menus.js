@@ -47,17 +47,19 @@ export default class Menus extends Model {
           id: '9',
           title: '店铺管理',
           icon: '',
-          routeName: 'shops',
+          routeName: 'shops'
 	      },{
           id: '10',
           title: '关门店铺',
           icon: '',
-          routeName: 'shops-closed'
+          routeName: 'shops-closed',
+          query: {status: 2}
         },{
           id: '40',
           title: '营业店铺',
           icon: '',
-          routeName: 'shops-open'
+          routeName: 'shops-open',
+          query: {status: 1}
         }]
       },{
         id: '11',
@@ -131,7 +133,7 @@ export default class Menus extends Model {
           id: '24',
           title: '扫码付订单',
           icon: '',
-          routeName: 'orders-scan_payment',
+          routeName: 'orders-scan-payment',
         },{
           id: '25',
           title: '预定订单',

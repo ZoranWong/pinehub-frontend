@@ -30,11 +30,25 @@ export default {
 				if(!result) {
 					console.log('validate fail');
 				} else {
-					this.$command('UPDATE_SHOP', this.$requestInput('projectId'), this.$requestInput('shopId'), this.shop, this);
+					let shop = {
+						name: this.shop['name'],
+						manager_name: this.shop['manager_name'],
+						code: this.shop['code'],
+						address: this.shop['address'],
+						lat: this.shop['lat'],
+						lng: this.shop['lng'],
+						description: this.shop['description'],
+						manager_mobile: this.shop['manager_mobile'],
+						city_id: this.shop['city_id'],
+						country_id: this.shop['country_id'],
+						province_id: this.shop['province_id'],
+						county_id: this.shop['county_id'],
+					};
+					this.$command('UPDATE_SHOP', this.$requestInput('projectId'), this.$requestInput('shopId'), shop);
 				}
 	  	},
 			async getShop() {
-				let shop = await this.http.shops.show(this.$requestInput('shopId'));
+				let shop = await this.http.shops.show(this.$requestInput('projectId'), this.$requestInput('shopId'));
 				this.shop = shop;
 			}
 		},

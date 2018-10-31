@@ -27,7 +27,7 @@ export default class ShopsService extends ApiService{
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.shop.create').mock(shop);
 		} else {
-			response = await this.httpPost(`project/${projectId}/shop`, shop);
+			response = await this.header({'ProjectId': projectId}).httpPost(`shop`, shop);
 		}
 		return response.data;
 	}
@@ -35,19 +35,25 @@ export default class ShopsService extends ApiService{
 	async update(projectId, shopId, shop) {
 		let response = null;
 		if(this.$application.needMock()) {
+<<<<<<< HEAD
 			response = await this.service('mock.shop.update').mock(shop);
 		}else {
 			response = await this.httpPut(`project/${projectId}/shop/${shopId}`, shop);
+=======
+			response =  await this.service('mock.shop.update').mock(shop);
+		} else {
+			response = await this.header({'ProjectId': projectId}).httpPut(`/shop`, shopId, shop);
+>>>>>>> 7461f317ea18f7887a8ce00dbf156baf884587e3
 		}
 		return response.data;
 	}
 
-	async show(id) {
+	async show(projectId, shopId) {
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.service('mock.shop.show').mock(id);
+			response =  await this.service('mock.shop.show').mock(shopId);
 		} else {
-			response = await this.httpGet(`project/${projectId}/shop/${shopId}`);
+			response = await this.header({'ProjectId': projectId}).httpGet(`shop/${shopId}`);
 		}
 		return response.data;
 	}

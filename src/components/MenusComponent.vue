@@ -14,7 +14,7 @@
           <span>{{ menu.title }}</span>
         </template>
         <el-menu-item :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
-          <router-link :to="{name: child.routeName, params: { projectId: projectId }}">
+          <router-link :to="{name: child.routeName, params: { projectId: projectId }, query: child.query}">
             <span style="padding:0 16px;">{{child.title}}</span>
           </router-link>
         </el-menu-item>
@@ -49,8 +49,6 @@ export default {
   },
   created() {
     this.scrollStyle='height:'+(window.innerHeight-36.66)+'px';
-
-    console.log(this.scrollStyle);
   },
   mounted() {
     console.log('menus mounted');

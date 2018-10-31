@@ -20,6 +20,8 @@ import UpdateShopCommand from '@/commands/UpdateShopCommand';
 import CreateUTCActivityCommand from '@/commands/CreateUTCActivityCommand';
 import GetPublicKeyCommand from '@/commands/GetPublicKeyCommand';
 import ClearAccountCommand from '@/commands/ClearAccountCommand';
+import CreateMpConfigCommand from '@/commands/CreateMpConfigCommand';
+import UpdateMpConfigCommand from '@/commands/UpdateMpConfigCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -32,7 +34,7 @@ export default class CommandServiceProvider extends ServiceProvider {
       ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
       GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
       CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
-      ClearAccountCommand
+      ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand
     ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);

@@ -33,7 +33,7 @@
 		</div>
 		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;"
 		@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" :title="title"></open-platform-auth>
-		<mp-config :show = "mpConfigShow" @open = "mpConfigShow=true;" @close = "mpConfigShow=false;"></mp-config>
+		<mp-config :project = "project" :show = "mpConfigShow" @open = "mpConfigShow=true;" @close = "mpConfigShow=false;"></mp-config>
 	</div>
 </template>
 <script>
@@ -59,7 +59,7 @@
 		},
 		computed:{
 			project() {
-				return this.$store.state.projects.currentProject;
+				return this.$store.getters['projects/currentProject'];
 			},
 			title() {
 				switch (this.authType) {
@@ -112,10 +112,10 @@
 <style scoped>
 	.content-box {padding: 10px 40px;}
 	.project-title{padding: 15px 0 20px 0;border-top: 1px solid gainsboro;}
-	.project-features{margin-bottom: 20px;padding:10px 0}
-	.project-features button{width:16.2%;height:45px}
-	.project-info{margin-top: 15px;margin-bottom: 30px;border:1px solid gainsboro;padding:10px 0}
-	.project-info div{display:inline-block;width:20%;text-align: center;}
+	.project-features{margin-bottom: 20px;padding: 10px 0}
+	.project-features button{width: 16.2%; height: 45px}
+	.project-info{margin-top: 15px; margin-bottom: 30px; border: 1px solid gainsboro; padding: 10px 0}
+	.project-info div{display: inline-block; width: 20%; text-align: center;}
 	.project-info div p{margin: 10px 0;}
-	.project-info div:not(:last-child){border-right:1px solid gainsboro;}
+	.project-info div:not(:last-child){border-right: 1px solid gainsboro;}
 </style>

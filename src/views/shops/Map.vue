@@ -8,12 +8,25 @@ export default {
     address: {
       default: '',
       type: String
+    },
+    value: {
+      default: null,
+      type: Object
     }
   },
   watch: {
     address(value) {
       if(value)
         this.geocoder.getLocation(value);
+    },
+    value: {
+      deep: true,
+      handler(position) {
+        if(position) {
+          this.center['lat'] = position['lat'];
+          this.center['lng'] = position['lng'];
+        }
+      }
     }
   },
   data() {
@@ -27,6 +40,8 @@ export default {
     }
   },
   mounted() {
+    if(this.value['lat']) this.center['lat'] = this.value['lat'];
+    if(this.value['lng']) this.center['lng'] = this.value['lng']; 
     (async function($this) {
       await $this.map.tencent.importMap();
       $this.map.tencent.initMap($this.$refs['shopMap'], $this.center);

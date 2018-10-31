@@ -5,6 +5,7 @@
 		width="80%"
     @open="open"
     @close="close"
+    :style="{'position': 'fixed !important', 'top': '-10vh'}"
 		center>
 		<div class="web-site">
 			<iframe class="open-platform-auth" scrolling="no" :src="authUrl" id="open_platform_auth" name="open_platform_auth" style="width: 100%;" ></iframe>
