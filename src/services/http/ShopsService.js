@@ -35,8 +35,8 @@ export default class ShopsService extends ApiService{
 	async update(projectId, shopId, shop) {
 		let response = null;
 		if(this.$application.needMock()) {
-			response =  await this.service('mock.shop.update').mock(shop);
-		} else {
+			response = await this.service('mock.shop.update').mock(shop);
+		}else {
 			response = await this.httpPut(`project/${projectId}/shop/${shopId}`, shop);
 		}
 		return response.data;
