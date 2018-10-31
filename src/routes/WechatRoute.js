@@ -2,7 +2,7 @@ import Route from './Route';
 import Layout from '../views/common/Layout';
 import WechatIndex from '../views/wechat/Index';
 import WechatMenus from '../views/wechat/menu/Index';
-import CreateMenu from '../views/wechat/menu/create/Index1';
+import CreateMenu from '../views/wechat/menu/create/Index';
 import WechatAutoReply from '../views/wechat/AutoReply';
 import WechatMaterials from '../views/wechat/Materials';
 let route = new Route();

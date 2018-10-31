@@ -114,7 +114,7 @@
               search['city_id'] = this.cityId;
               delete search['county_id'];
             }
-          } else {
+          }else {
             search['province_id'] = this.provinceId;
             delete search['city_id'];
           }
