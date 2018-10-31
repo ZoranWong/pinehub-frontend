@@ -35,7 +35,8 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.project').mock(id);
 		}else{
 			//服务器交互代码
-			response =  await this.httpGet(`app/${id}`);
+			console.log('project', id);
+			response =  await this.header({'ProjectId': id}).httpGet(`app/${id}`);
 		}
 		return response.data;
 	}
@@ -68,7 +69,7 @@ export default class ProjectsService extends ApiService{
 			response =  await this.service('mock.sevenDaysCount').mock(id);
 		}else{
 			//服务器交互代码
-			response =  await this.httpGet(`app/${id}/seven_days_count`);
+			response =  await this.header({'ProjectId': id}).httpGet(`app/statistics/seven_days`);
 		}
 		return response.data;
 	}
@@ -95,7 +96,29 @@ export default class ProjectsService extends ApiService{
 			if (logo) data['logo'] = logo;
 			if (contactName) data['contact_name'] = contactName;
 			if (contactPhoneNum) data['contact_phone_num'] = contactPhoneNum;
-			response =  await this.httpPost (`app/${id}`, data);
+			response =  await this.httpPut(`app`, id, data);
+		}
+		return response.data;
+	}
+
+	async addMpConfig(projectId, config) {
+		let response = null;
+		if(this.$application.needMock ()) {
+			response =  await this.service ('mock.mpConfig').mock (id);
+		}else{
+			//服务器交互代码
+			response =  await this.header({'ProjectId': projectId}).httpPost (`app/mp/config`, config);
+		}
+		return response.data;
+	}
+
+	async updateMpConfig(projectId, id, config) {
+		let response = null;
+		if(this.$application.needMock ()) {
+			response =  await this.service ('mock.mpConfig').mock (id);
+		}else{
+			//服务器交互代码
+			response =  await this.header({'ProjectId': projectId}).httpPut (`app/mp/config`, id, config);
 		}
 		return response.data;
 	}

@@ -6,9 +6,16 @@ export default class DataListCommand extends Command {
     super(app);
   }
   async handle(service, event, page, search = null, limit = 15) {
+    console.log('command handle', Date.now());
     search = this.json.encode(search);
     search = this.base64.encode(search);
-    let [list, totalNum, currentPage,  totalPage ] = await this.$service(service).list(page, search, limit);
+    let headers = {};
+    if(this.$requestInput('projectId')) {
+      headers = {'ProjectId': this.$requestInput('projectId')}
+    }
+    let [list, totalNum, currentPage,  totalPage ] = await this.$service(service)
+    .header(headers)
+    .list(page, search, limit);
     this.$store.dispatch({
       type: event,
       list: list,

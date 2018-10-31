@@ -32,7 +32,6 @@
 		},
 		computed: {
 			model() {
-				console.log(this.$store.state.merchandises);
 				return this.$store.state.merchandises;
 			},
 		},

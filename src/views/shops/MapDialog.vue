@@ -24,7 +24,7 @@
   				坐标获取结果：
   			</div>
   			<div class="result-map-view">
-  				<el-form :model="position" :inline="true" ref="position">
+  				<el-form v-model="position" :inline="true" ref="position">
   					<el-form-item class="fr">
   						<el-button class="position-btn" type="primary" size="small" @click="submit">确 定</el-button>
   					</el-form-item>
@@ -62,9 +62,13 @@ export default {
     show(v) {
       this.mapShow = v;
     },
-    value(position) {
-      if(position) {
-        this.position = position;
+    value: {
+      deep: true,
+      handler(position) {
+        if(position) {
+          this.position['lat'] = position['lat'];
+          this.position['lng'] = position['lng'];
+        }
       }
     }
   },
@@ -75,8 +79,8 @@ export default {
     return {
       mapShow: false,
       position: {
-        lat: 31.866942,
-        lng: 117.282699
+        lat: null,
+        lng: null
       },
       address: null,
       searchAddress: null

@@ -19,7 +19,6 @@ export default class CreateShopCommand extends Command {
       });
     }
   }
-
   static commandName() {
     return 'CREATE_SHOP';
   }

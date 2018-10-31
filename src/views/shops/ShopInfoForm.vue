@@ -96,6 +96,8 @@ export default {
       handler: function(shop) {
         if(shop) {
             this.shop = shop;
+            this.position['lat'] = shop['lat'];
+            this.position['lng'] = shop['lng'];
             if(this.shop['province_id']) {
               this.$store.dispatch({
                 type: 'regions/setCurrentProvince',
@@ -134,7 +136,10 @@ export default {
   data() {
     return {
       mapShow: false,
-      position: null,
+      position: {
+        'lat': null,
+        'lng': null
+      },
       shop: {
         manager_name: '',
         code: '',
@@ -147,7 +152,6 @@ export default {
         country_id: '1',
         province_id: '',
         county_id: '',
-        content: '',
         name: ''
       }
     };

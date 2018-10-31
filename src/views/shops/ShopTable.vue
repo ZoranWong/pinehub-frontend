@@ -1,16 +1,16 @@
 <template>
   <el-table  highlight-current-row :data="shops">
     <el-table-column prop="index" label="#" width="50"></el-table-column>
-    <el-table-column prop="code" label="店铺编号" min-width="80"></el-table-column>
-    <el-table-column prop="boss" label="车主" min-width="100"></el-table-column>
+    <el-table-column prop="code" label="店铺编号" min-width="100"></el-table-column>
+    <el-table-column prop="boss" label="车主" min-width="180"></el-table-column>
     <el-table-column prop="address" label="地址" min-width="180"></el-table-column>
-    <el-table-column prop="num" label="订单数" min-width="60"></el-table-column>
-    <el-table-column prop="money" label="销售金额" min-width="100"></el-table-column>
-    <el-table-column prop="goods" label="商品数" min-width="80"></el-table-column>
-    <el-table-column prop="turnover" label="本月营业额" min-width="100"></el-table-column>
-    <el-table-column prop="sells" label="本月销售费用" min-width="100"></el-table-column>
-    <el-table-column prop="actual" label="上月实际收入" min-width="100"></el-table-column>
-    <el-table-column prop="shopTurnover" label="店铺余额" min-width="100"></el-table-column>
+    <el-table-column prop="orderCount" label="订单数" min-width="60"></el-table-column>
+    <el-table-column prop="sellAmount" label="销售金额" min-width="100"></el-table-column>
+    <el-table-column prop="merchandiseCount" label="商品数" min-width="80"></el-table-column>
+    <el-table-column prop="thisMonthAmount" label="本月营业额" min-width="100"></el-table-column>
+    <!-- <el-table-column prop="monthSellCost" label="本月销售费用" min-width="100"></el-table-column> -->
+    <el-table-column prop="lastMonthAmount" label="上月实际收入" min-width="100"></el-table-column>
+    <el-table-column prop="balance" label="店铺余额" min-width="100"></el-table-column>
     <el-table-column label="操作" width="220">
       <template slot-scope="scope">
         <el-button type="success" size="mini" @click="purchaseOrders(scope.row.id)">采购单</el-button>

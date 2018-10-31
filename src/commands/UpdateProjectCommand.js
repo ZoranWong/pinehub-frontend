@@ -5,25 +5,24 @@ export default class UpdateProjectCommand extends Command {
     super(app);
   }
 
-  async handle(id, name, logo, contactName, contactPhoneNum, $vm) {
+  async handle(id, name, logo, contactName, contactPhoneNum) {
     let result = await this.$service('http.projects').update(id, {name: name, logo: logo, contactName: contactName,
        contactPhoneNum: contactPhoneNum});
        if(result) {
-         $vm.$message({
+         this.$message({
            message: '恭喜你，应用项目更新成功！',
            type: 'success'
          });
-         await $vm.$command('RELOAD');
-         $vm.saving = false;
-         $vm.dialogShow = false;
+         this.saving = false;
+         this.dialogShow = false;
+         this.$parent.getProjects();
        }else{
-         $vm.$message({
+         this.$message({
            message: '很遗憾，项目更新失败！',
            type: 'error'
          });
        }
   }
-
   static commandName() {
     return 'UPDATE_PROJECT';
   }

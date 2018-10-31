@@ -1,4 +1,5 @@
 import Model from './Model'
+import _ from 'underscore';
 export default class Account extends Model{
   constructor(application) {
     super(application);
@@ -46,17 +47,16 @@ export default class Account extends Model{
       this.publicKey = key;
     });
 
-    this.addEventListener('reset', function() {
-      let storage = this.service('localStorage');
+    this.addEventListener('reset', function(payload, model) {
+      let storage = model.service('localStorage');
       storage.delete('account');
       storage.delete('token');
-      _.extend(this.state, {
+      _.extend(this, {
         username: null,
         password: null,
         roles:  null,
         mobile: null,
         nickname:  null,
-        publicKey: null,
         token: null
       });
     });

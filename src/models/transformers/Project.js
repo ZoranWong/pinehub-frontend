@@ -15,6 +15,8 @@ export default class Project {
     this.openPlatformAuthUrl = project['open_platform_auth_url'];
     this.officalAccountAppId = project['wechat_app_id'];
     this.miniProgramAppId = project['mini_app_id'];
+    this.officalAccount = project['official_account'];
+    this.miniProgram = project['mini_program'];
     this.officialAccountAuthUrl = project['official_account_auth_url'];
     this.miniProgramAuthUrl = project['mini_program_auth_url'];
     let createdAt = '';
@@ -24,6 +26,6 @@ export default class Project {
       createdAt = project['created_at'];
     }
     createdAt = new Date(createdAt);
-    this.createdAt = createdAt.format('yyyy-MM-dd hh:mm:ss');
+    this.createdAt = createdAt.format('yyyy-MM-dd');
   }
 }

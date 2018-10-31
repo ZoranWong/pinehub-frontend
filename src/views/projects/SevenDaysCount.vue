@@ -48,19 +48,30 @@
 				    }]
 					},
           options: {
-            
+
           }
 			};
 		},
+    watch: {
+      project(value) {
+        if(value) {
+          this.sevenDaysCount();
+        }
+      }
+    },
 		mounted () {
 
 		},
 		computed:{
-
+      project() {
+        return this.$store.getters['projects/currentProject'];
+      }
 		},
 		methods:{
       async sevenDaysCount() {
-        let result = await this.http.projects.sevenDaysCount(this.projectId);
+        let id = this.project ? this.project.id : null;
+        if(!id) return;
+        let result = await this.http.projects.sevenDaysCount(id);
         this.options =  _.extend(this.default, {
           series: [{
               data: result['last_week'],
@@ -75,7 +86,6 @@
       }
 		},
 		created(){
-      this.sevenDaysCount();
 		}
 	}
 </script>

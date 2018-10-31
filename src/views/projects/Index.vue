@@ -15,9 +15,9 @@
 			</div>
 			<div class="project-cards">
 				<el-row :gutter="20">
-					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
+					<el-col :xl="3" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
 						<div class="card"  v-on:click="pathTo(project)">
-							<el-col :span="12" :style = "{height: height}" ref="logo"><img :src="project.logo" alt="" class="project-logo"/></el-col>
+							<el-col :span="12"  ref="logo"><img :src="project.logo" alt="" :style = "{height: '64px', width: '64px'}" class="project-logo"/></el-col>
 							<!-- <el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col> -->
 							<p class="project-name">名称：{{ project.name }}</p>
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
@@ -75,9 +75,6 @@
 			currentPage() {
 				let page = this.$store.state.projects.currentPage;
 				return page ?  page : 1;
-			},
-			height() {
-				let h = this.$refs['logo'];
 			}
 		},
 		methods:{
@@ -100,7 +97,7 @@
 				this.$store.dispatch('projects/reset');
 			},
 			getProjects(page = null) {
-				page = page ? page : this.currentPage;
+				page = page !== null ? page : this.currentPage;
 				this.$command(DataListCommand.commandName(), 'http.projects', 'projects/setList', page, this.searchFields);
 			},
 			async remove(project) {
@@ -110,7 +107,6 @@
 		},
 		created(){
 			this.getProjects();
-			console.log(this.$refs['logo']);
 		}
 	}
 </script>

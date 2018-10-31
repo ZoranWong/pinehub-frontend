@@ -52,8 +52,8 @@
       value(search) {
         console.log(search);
         if(search) {
-          this.shopName = search['shop_name'];
-          this.shopCode = search['shop_code'];
+          this.shopName = search['name'];
+          this.shopCode = search['code'];
           this.provinceId = search['province_id'];
           this.cityId = search['city_id'];
           this.countyId = search['county_id'];
@@ -64,8 +64,8 @@
       console.log(this.value);
       let search = this.value;
       if(search) {
-        this.shopName = search['shop_name'];
-        this.shopCode = search['shop_code'];
+        this.shopName = search['name'];
+        this.shopCode = search['code'];
         this.provinceId = search['province_id'];
         this.cityId = search['city_id'];
         this.countyId = search['county_id'];
@@ -95,15 +95,15 @@
       search() {
         let search = this.value;
         if(this.shopCode) {
-          search['shop_code'] = this.shopCode;
+          search['code'] = this.shopCode;
         } else {
-          delete search['shop_code'];
+          delete search['code'];
         }
 
         if(this.shopName) {
-          search['shop_name'] = this.shopName;
+          search['name'] = this.shopName;
         }else{
-          delete search['shop_name'];
+          delete search['name'];
         }
 
         if(this.provinceId) {

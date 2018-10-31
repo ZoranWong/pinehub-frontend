@@ -4,17 +4,17 @@ export default class UpdateShopCommand extends Command {
     super(app);
   }
 
-  async handle(projectId, shopId, shop, $vm) {
-    let result = await this.$service('http.shops').create(projectId, shopId, shop);
+  async handle(projectId, shopId, shop) {
+    let result = await this.$service('http.shops').update(projectId, shopId, shop);
     if(result) {
-      $vm.$message({
+      this.$message({
         message: '恭喜你，店铺修改成功！',
         type: 'success'
       });
-      $vm.$router.push({
+      this.$router.push({
         name: 'shops',
         params: {
-          projectId: $vm.$requestInput('projectId')
+          projectId: this.$requestInput('projectId')
         }
       });
     }

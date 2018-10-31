@@ -1,6 +1,6 @@
 <template>
   <div class = "create-update-form">
-    <el-dialog :visible.sync = "dialogShow" width = "60%" :close-on-click-modal = "false" @close = "close" @open = "open">
+    <el-dialog :style="{'display': 'fixed'}" :visible.sync = "dialogShow" width = "60%"  @close = "close" @open = "open">
       <el-tabs active-name = "first">
         <el-tab-pane :label="config.id ? '修改小城程序配置' : '创建小城程序配置'" name = "first"></el-tab-pane>
       </el-tabs>
@@ -32,17 +32,26 @@
   </div>
 </template>
 <script>
+  import _ from 'underscore';
   export default {
     name: 'mpConfig',
     props: {
       show: {
         default: false,
         type: Boolean
+      },
+      project: {
+        default: null,
+        type: Object
       }
     },
     watch: {
       show(value) {
         this.dialogShow = value
+      },
+      project(v) {
+        _.extend(this.config, v['miniProgram']);
+        console.log(v);
       }
     },
     data() {
@@ -60,13 +69,23 @@
       };
     },
     methods: {
+      getConfig() {
+        return {
+          'type': 'WECHAT_MINI_PROGRAM',
+          'app_id': this.config['app_id'],
+          'app_name': this.config['app_name'],
+          'app_secret': this.config['app_secret'],
+          'aes_key': this.config['aes_key'],
+          'token': this.config['token']
+        };
+      },
       create() {
-        let config = {
-          type: 'MINI_PROGRAM'
-        }
+        let config = this.getConfig();
+        this.$command('CREATE_MP_CONFIG', this.project['id'], config);
       },
       update() {
-
+        let config = this.getConfig();
+        this.$command('UPDATE_MP_CONFIG', this.project['id'], this.config['id'], config);
       },
       close() {
         this.$emit('close');
