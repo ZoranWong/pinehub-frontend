@@ -6,7 +6,8 @@
 			<!--列表-->
 			<slot name="table" :data="data"></slot>
 			<!--工具条-->
-			<paginator :totalNum = "totalNum"
+			<paginator
+        :totalNum = "totalNum"
         :service="service"
         :event="event"
         :totalPage = "totalPage"
@@ -65,13 +66,15 @@
 				return this.model.totalNum;
 			},
 			totalPage() {
+        console.log('total page', this.model.totalPage);
 				return this.model.totalPage;
 			},
       pageCount() {
+        console.log('page Count', this.model.pageCount);
         return this.model.pageCount ? this.model.pageCount : 15;
       },
       currentPage() {
-        return this.model.currentPage;
+        return parseInt(this.model.currentPage);
       },
 			data() {
 				return this.$store.getters[this.current];

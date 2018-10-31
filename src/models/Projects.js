@@ -15,6 +15,14 @@ export default class Projects extends Model {
     return this.dataMap;
   }
 
+  computed() {
+    return _.extend(super.computed(), {
+      currentProject() {
+        return this.currentProject;
+      }
+    });
+  }
+
   listeners() {
     super.listeners();
     this.addEventListener('setCurrentProject', function({project}) {

@@ -12,16 +12,30 @@ import CreateProjectCommand from '@/commands/CreateProjectCommand';
 import UpdateProjectCommand from '@/commands/UpdateProjectCommand';
 import RemoveProjectCommand from '@/commands/RemoveProjectCommand';
 import GetProjectDetialCommand from '@/commands/GetProjectDetialCommand';
+import LoadProvincesCommand from '@/commands/LoadProvincesCommand';
+import LoadCitiesCommand from '@/commands/LoadCitiesCommand';
+import LoadCountiesCommand from '@/commands/LoadCountiesCommand';
+import CreateShopCommand from '@/commands/CreateShopCommand';
+import UpdateShopCommand from '@/commands/UpdateShopCommand';
+import CreateUTCActivityCommand from '@/commands/CreateUTCActivityCommand';
+import GetPublicKeyCommand from '@/commands/GetPublicKeyCommand';
+import ClearAccountCommand from '@/commands/ClearAccountCommand';
+import CreateMpConfigCommand from '@/commands/CreateMpConfigCommand';
+import UpdateMpConfigCommand from '@/commands/UpdateMpConfigCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
     this.commands = [];
   }
   register() {
-    let commands = [SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
+    let commands = [
+      SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
       GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
       ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
-      GetProjectDetialCommand];
+      GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
+      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
+      ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand
+    ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);
     }

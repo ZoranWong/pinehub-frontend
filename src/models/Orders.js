@@ -14,11 +14,19 @@ export default class Orders extends Model{
           let list = [];
           _.each(orders, function (order){
             let items = order.orderItems;
-            if(items) {
-              order.span={
-                colspan: items.length>1 ? 1 : 0,
-                rowspan: items.length > 1 ? items.length : 0
-              };
+            if(items && items.length > 0) {
+              if(items.length > 0) {
+                order.span={
+                  colspan: 1,
+                  rowspan: items.length
+                };
+              }else{
+                order.span={
+                  colspan: 0,
+                  rowspan: 0
+                };
+              }
+
               let needSpan = false;
               _.each(items, function (item){
                 if(!needSpan){
@@ -38,7 +46,7 @@ export default class Orders extends Model{
             }
 
           });
-
+          console.log('orders', list, this.list);
           return list;
         }else{
           return null;

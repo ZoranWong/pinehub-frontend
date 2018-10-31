@@ -4,5 +4,6 @@ const application = new Application();
 application.run(async function(app) {
   app.use(VueResize);
 }, async function (app) {
-  app.http.app.publicKey();
+  this.$command('GET_PUBLIC_KEY');
 });
+console.log(application);

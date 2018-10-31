@@ -7,7 +7,11 @@
     <el-button size="small" type="primary" @click.native="create()" style="margin-bottom: 10px;">新建积分规则</el-button>
     <!--列表-->
     <el-table  highlight-current-row :data="rules">
-      <el-table-column prop="condition" label="奖励条件" min-width="180"></el-table-column>
+      <el-table-column prop="condition" label="奖励条件" min-width="180">
+        <template slot-scope = "scope">
+          {{ condition(scope.row) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="score" label="单笔奖励积分" min-width="100"></el-table-column>
       <el-table-column prop="updatedAt" label="规则更新时间" min-width="180"></el-table-column>
       <el-table-column prop="totalRecievedScore" label="已奖励总积分" min-width="100"></el-table-column>
@@ -23,7 +27,9 @@
 <script>
 export default {
   data() {
+    return {
 
+    };
   },
   props: {
     rules: {
@@ -31,15 +37,35 @@ export default {
       type: Array
     }
   },
+  computed: {
+  },
   methods: {
     create() {
-
+      this.$router.push({
+        name: 'rule-create',
+        params: {
+          projectId: this.$requestInput('projectId')
+        }
+      });
     },
     edit() {
 
     },
     delete() {
 
+    },
+    condition(condition) {
+      switch (condition['type']) {
+        case 'FOLLOW':
+          return '关注我的微信';
+          break;
+        case 'ORDERS_COUNT':
+          return `每成功交易${condition['ordersCount']}笔`;
+          break;
+        case 'ORDER_AMOUNT':
+          return `每购买金额${condition['orderAmount']}元`;
+          break;
+      }
     }
   }
 }

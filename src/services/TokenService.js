@@ -5,28 +5,30 @@ export default class TokenService extends Service {
     this.token = null;
   }
   // eslint-disable-next-line
-  async getToken(self = this) {
-    let token = await self.asyncToken();
-    return  token;
-  }
-
-  asyncToken() {
-    let token = this.service('session').get('token');
-    console.log(token);
-    return new Promise(function(resolve) {
-      return resolve(token);
-    }).then(function (token) {
-      return  token;
-    });
+  async getToken() {
+    let token = this.service('localStorage').get('token');
+    if(!token) {
+      token = await this.refresh();
+    }
+    return token;
   }
 
   getRefreshToken() {
-
+    return this.service('localStorage').get('refresh_token');
   }
-  refresh() {
-
+  
+  async refresh() {
+    this.command('CLEAR_ACCOUNT');
+    this.service('localStorage').delete('token')
+    let token = this.getRefreshToken();
+    if(token) {
+      token = await this.service('http.account').refreshToken(token);
+      this.setToken(token);
+    }
+    return token['value'];
   }
-  setToken() {
-
+  setToken(token) {
+    this.service('localStorage').set('token', token['value'], token['ttl']);
+    this.service('localStorage').set('refresh_token', token['value'], token['refresh_ttl']);
   }
 }

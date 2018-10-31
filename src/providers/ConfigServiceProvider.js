@@ -1,6 +1,6 @@
 import ServiceProvider from './ServiceProvider';
-import appConfig from '../configs/app';
-import httpConfig from '../configs/http';
+import appConfig from '@/configs/app';
+import httpConfig from '@/configs/http';
 export default class ConfigServiceProvider extends ServiceProvider {
   constructor(application) {
     super(application);

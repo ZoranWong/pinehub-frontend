@@ -5,6 +5,7 @@ export default class Route {
     this.route = [];
     this.parent = null;
     this.currentRoute = null;
+    this.tag = null;
   }
   addRoute(route, component = [], name = null) {
     if(_.isArray(component) || _.isObject(component)) {
@@ -18,8 +19,10 @@ export default class Route {
         route['name'] = name;
       }
     }
+    this.tag = route['tag'];
     if(typeof Route.routeMap === 'undefined')
       Route.routeMap = {};
+    route['parent'] = this.parent;
     Route.routeMap[route['name']] = route;
     this.route.push(route);
   }
@@ -45,14 +48,13 @@ export default class Route {
     if(typeof group['tag'] !== 'undefined') {
       $route['tag'] = group['tag'];
     }
-
+    this.tag = $route['tag'];
     if(typeof Route.routeMap === 'undefined')
       Route.routeMap = {};
     Route.routeMap[$route['name']] = $route;
     this.route.push( $route );
     callback(children);
     let list = children.getRoute();
-    list = list.length > 1 ? list : [list];
     $route['children'] = list;
   }
 

@@ -6,18 +6,29 @@ export default class SessionService extends Service {
   }
   get(key) {
     let data = sessionStorage.getItem(key);
-    return this.service('json').decode(data);
+    data =  this.service('json').decode(data);
+    if(!data)return null;
+    if(this.service('date').overDate(data['ttl'])) {
+      this.delete(key);
+      return null;
+    }else {
+      return data['value'];
+    }
   }
 
-  put() {
-
+  put(key, data, ttl) {
+    let json = {
+      value: data,
+      ttl: ttl
+    };
+    sessionStorage.setItem(key, this.service('json').encode(json));
   }
 
   clear() {
-
+    sessionStorage.clear();
   }
 
-  delete() {
-
+  delete(key) {
+    sessionStorage.removeItem(key);
   }
 }

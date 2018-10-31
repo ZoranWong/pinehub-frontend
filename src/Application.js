@@ -36,8 +36,12 @@ export default class Application {
     return (this.commands[name]  = new command(this));
   }
   command(...params) {
-    let command = params.shift();
-    return this.commands[command].handle.apply(this.commands[command], params);
+    try{
+      let command = params.shift();
+      return this.commands[command].handle.apply(this, params);
+    }catch(error) {
+      console.log(error);
+    }
   }
   instanceRegister(instance) {
     if(_.isFunction(instance)) {
@@ -130,8 +134,12 @@ export default class Application {
     this.vueApp.$emit(event, params);
   }
 
-  $error(exception, params = null) {
-    this.$emit(exception, params);
+  error(exception) {
+    this.vueApp.$message({
+        showClose: true,
+        message: exception,
+        type: 'error'
+      });
   }
 
   vueMixin() {
@@ -139,7 +147,7 @@ export default class Application {
     let self = this;
     this.$vm.mixin({
       data(){
-        return _.extend(self.instances, {config: self.config, application: self, env: self.env});
+        return _.extend(self.instances, {config: self.config, application: self, env: self.env, commands: self.commands});
       },
       methods: self.mixinMethods
     });
@@ -160,9 +168,6 @@ export default class Application {
     let store = this.instances['vue-store'];
     let router = this.instances['vue-router'];
     this.vueMixin();
-    if(created && _.isFunction(created)) {
-      created(self);
-    }
     self.vueApp = new Vue({
       router: router,
       store: store,
@@ -189,5 +194,9 @@ export default class Application {
         console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
       }
     }).$mount('#app');
+
+    if(created && _.isFunction(created)) {
+      created.call(this.vueApp, self);
+    }
   }
 }

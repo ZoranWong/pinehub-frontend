@@ -8,8 +8,10 @@ export default class ScoreRules extends Model{
   }
   computed() {
     return _.extend(super.computed(), {
+      
     });
   }
+
   data() {
     return _.extend(super.data(), {
 

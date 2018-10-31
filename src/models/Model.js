@@ -15,7 +15,7 @@ export default class Model {
   data() {
     this.dataMap = _.extend(this.dataMap, {
         list:[],
-        pageCount: 1,
+        pageCount: 0,
         currentPage: 0,
         totalNum:1,
         totalPage: 0
@@ -58,7 +58,8 @@ export default class Model {
     this.addEventListener('setList', function({list, currentPage, totalNum, totalPage,pageCount}, model){
       this.currentPage = currentPage;
       let startIndex = (currentPage - 1) * pageCount + 1;
-      this.list[currentPage - 1] =  model.transform(list, model.transformer, startIndex);
+      let pageList =  model.transform(list, model.transformer, startIndex);
+      model.$application.$vm.set(this.list, currentPage - 1, pageList);
       if(totalNum !== null)
         this.totalNum = totalNum;
       if(totalPage !== null){
@@ -70,7 +71,7 @@ export default class Model {
     });
   }
 
-  services(name) {
+  service(name) {
     return this.$application.instances[name];
   }
 

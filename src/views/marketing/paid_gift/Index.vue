@@ -1,7 +1,8 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<act-header :search = "search"></act-header>
+		<template slot = "header" slot-scope="{ search, searchHandler }">
+			<el-button type="success" class="new-activity" @click="createActivity">创建新活动</el-button>
+			<act-header v-model = "search" @search = "searchHandler"></act-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<act-table :activities="data"></act-table>
@@ -39,7 +40,29 @@
 		methods: {
       search(data) {
         this.query = _.extend(this.query, data);
-      }
+      },
+			createActivity() {
+				this.$router.push({
+					name: 'pay-gift-create',
+					params: {
+						projectId: this.$requestInput('projectId')
+					}
+				});
+			}
 		}
 	}
 </script>
+<style scoped>
+.new-activity{
+	margin: 6px 12px 6px 6px !important;
+	float: right;
+	position: absolute;
+	right: 0;
+	z-index: 1000;
+}
+</style>
+<style>
+.content-box {
+    padding: 10px !important;
+}
+</style>

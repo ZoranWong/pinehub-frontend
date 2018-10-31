@@ -7,6 +7,10 @@ export default class Mock {
     return this.application.instances['mock'].mock(data);
   }
 
+  service(name) {
+    return this.application.instances[name];
+  }
+
   data() {
     return {
 

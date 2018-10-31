@@ -23,4 +23,24 @@ export default class UpToCutActivitiesService extends ApiService{
 		totalPage = pagination['total_pages'];
 		return [activities, totalNum, currentPage,  totalPage];
 	}
+
+	async create(projectId, activity) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.activity.utc.create').mock(activity);
+		} else {
+			response = await this.httpPost(`project/${projectId}/activity/utc`, activity);
+		}
+		return response.data;
+	}
+
+	async show(id) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.activity.utc.show').mock();
+		} else {
+			response = await this.httpGet(`activity/utc`);
+		}
+		return response.data;
+	}
 }

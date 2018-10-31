@@ -48,7 +48,8 @@
     },
     methods: {
       memberCards() {
-        this.$router.push({name: 'member-cards',  query: {projectId: this.$router.currentRoute.query.projectId}});
+        console.log(this.$requestInput('projectId'));
+        this.$router.push({name: 'member-cards',  params: {projectId: this.$requestInput('projectId')}});
       }
     }
   }

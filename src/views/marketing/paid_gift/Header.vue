@@ -1,26 +1,36 @@
 <template>
   <el-col :span="24" class="toolbar">
-    <el-tabs type="card">
-      <el-tab-pane label="所有支付礼包" name="first">
+    <el-tabs  type = "card" v-model="tab">
+      <el-tab-pane label="所有支付礼包" name="all" >
       </el-tab-pane>
-      <el-tab-pane label="未开始"  name="second">
-
+      <el-tab-pane label="未开始"  name="wait" >
       </el-tab-pane>
-      <el-tab-pane label="进行中"  name="third">
-
+      <el-tab-pane label="进行中"  name="runing">
       </el-tab-pane>
-      <el-tab-pane label="已结束"  name="forth">
-
+      <el-tab-pane label="已结束"  name="end" >
       </el-tab-pane>
     </el-tabs>
   </el-col>
 </template>
 <script>
   export default {
-    props: ['search'],
+    props: {
+      value: {
+        default: ()=> {return {};},
+        type: Object
+      }
+    },
     data() {
       return {
+        tab: "all"
       };
+    },
+    watch: {
+      tab(tab) {
+        let search = this.value;
+        search['status'] = tab;
+        this.$emit('search', search);
+      }
     }
   }
 </script>

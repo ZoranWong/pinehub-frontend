@@ -3,17 +3,22 @@ import Layout from '../views/common/Layout';
 import Index from '../views/projects/Index';
 import Project from '../views/projects/Project';
 let route = new Route();
-route.group('/project', {
-  'name': 'project',
+route.group('/projects', {
   'component': Layout,
-  'tag': '项目',
+  'tag': '项目管理',
   'uses': (child) => {
-    child.addRoute('index', {
-      name: 'project-index',
+    child.addRoute('', {
+      name: 'projects',
       component: Index,
       menuHide: true,
-      tag: '项目管理'
+      tag: '项目列表'
     });
+  }
+});
+route.group('/project', {
+  'component': Layout,
+  'tag': '项目管理',
+  'uses': (child) => {
     child.addRoute(':projectId', {
       name: 'project-detial',
       component: Project,

@@ -14,7 +14,7 @@ export default class MerchandisesService extends ApiService{
 			response =  await this.service('mock.merchandises').mock(page, search, limit);
 		}else{
 			//服务器交互代码
-			response = await this.httpGet('shops', {page: page, limit: limit, searchJson: search});
+			response = await this.httpGet('merchandises', {page: page, limit: limit, searchJson: search});
 		}
 		merchandises = response.data;
 		let pagination = response.meta.pagination;

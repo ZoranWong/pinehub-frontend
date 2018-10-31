@@ -9,14 +9,13 @@ import Orders from '@/views/orders/Index';
 let route = new Route();
 route.group('/project/:projectId/shops',
 	{
-	  	'tag': '店铺',
-	  	'name': 'shops',
+	  	'tag': '店铺管理',
 	  	'component': Layout,
 	  	'uses': function(route) {
 		  	route.addRoute('', {
 		  		'name': 'shops',
 		  		'component': Index,
-		  		'tag': '店铺管理'
+		  		'tag': '店铺列表'
 		  	});
 				route.addRoute('closed', {
 		  		'name': 'shops-closed',
@@ -33,19 +32,18 @@ route.group('/project/:projectId/shops',
 
 	route.group('/project/:projectId/shop',
 		{
-		  	'tag': '店铺',
-		  	'name': 'shop',
+		  	'tag': '店铺管理',
 		  	'component': Layout,
 		  	'uses': function(route) {
 					route.addRoute('create', {
 						name: 'shop-create',
 						component: Create,
-						tag: '项目主页'
+						tag: '店铺创建'
 					});
 					route.addRoute(':shopId/edit', {
 						name: 'shop-edit',
-						component: Create,
-						tag: '项目主页'
+						component: Edit,
+						tag: '店铺修改'
 					});
 					route.addRoute(':shopId/orders', {
 						name: 'shop-orders',

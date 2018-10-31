@@ -6,7 +6,7 @@ export default class GetFullReduceCommand extends Command {
     super(app);
   }
   async handle(page, search = null, limit = 10) {
-    let [fullReduce, totalNum, currentPage, totalPage ] = await this.service('fullReduce').fullReduce(page, search, limit);
+    let [fullReduce, totalNum, currentPage, totalPage ] = await this.$service('fullReduce').fullReduce(page, search, limit);
     this.store().dispatch({
       type: 'fullReduce/setFullReduce',
       fullReduce: fullReduce,

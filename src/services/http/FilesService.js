@@ -17,6 +17,6 @@ export default class FilesService extends ApiService {
 	}
 
 	async projectLogoUpload (files, fileField) {
-		return await this.upload(files, fileField, '/project/logo/cloud');
+		return await this.upload(files, fileField, '/app/logo/cloud');
 	}
 }

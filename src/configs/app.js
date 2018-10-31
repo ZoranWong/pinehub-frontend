@@ -1,3 +1,4 @@
 export default {
-  mock: true
+  mock: false,
+  version: '0.0.1'
 }

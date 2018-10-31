@@ -47,17 +47,19 @@ export default class Menus extends Model {
           id: '9',
           title: '店铺管理',
           icon: '',
-          routeName: 'shops',
+          routeName: 'shops'
 	      },{
           id: '10',
           title: '关门店铺',
           icon: '',
-          routeName: 'shops-closed'
+          routeName: 'shops-closed',
+          query: {status: 2}
         },{
           id: '40',
           title: '营业店铺',
           icon: '',
-          routeName: 'shops-open'
+          routeName: 'shops-open',
+          query: {status: 1}
         }]
       },{
         id: '11',
@@ -69,17 +71,17 @@ export default class Menus extends Model {
             id: '12',
             title: '营销中心',
             icon: '',
-            routeName: 'index',
+            routeName: 'marketing',
   	      },{
             id: '13',
             title: '满减/送',
             icon: '',
-            routeName: 'up_to_cut',
+            routeName: 'up-to-cut',
 	        },{
             id: '14',
             title: '支付有礼',
             icon: '',
-            routeName: 'paid_gift',
+            routeName: 'pay-gift',
 	        },{
             id: '15',
             title: '优惠券',
@@ -90,58 +92,58 @@ export default class Menus extends Model {
         id: '16',
 	      title: '商品',
 	      icon: '#icon-category',
-	      routeName: 'merchandise',
+	      routeName: 'merchandises',
 	      children: [{
           id: '17',
           title: '商品管理',
           icon: '',
-          routeName: 'index',
+          routeName: 'merchandises',
 	      },{
           id: '18',
           title: '出售中',
           icon: '',
-          routeName: 'selling',
+          routeName: 'merchandises-selling',
 	      },{
           id: '19',
           title: '仓库中',
           icon: '',
-          routeName: 'down',
+          routeName: 'merchandises-down',
 	      },{
           id: '20',
           title: '已售罄',
           icon: '',
-          routeName: 'sold_out',
+          routeName: 'merchandises-sold-out',
 	      },{
           id: '21',
           title: '品类管理',
           icon: '',
-          routeName: '/category/index',
+          routeName: 'categories',
 	      }]
       },{
         id: '22',
 	      title: '订单',
 	      icon: '#icon-dingdanguanli',
-	      routeName: 'order',
+	      routeName: 'orders',
 	      children: [{
           id: '23',
           title: '订单管理',
           icon: '',
-          routeName: 'index',
+          routeName: 'orders',
 	      },{
           id: '24',
           title: '扫码付订单',
           icon: '',
-          routeName: 'scan_payment',
+          routeName: 'orders-scan-payment',
         },{
           id: '25',
           title: '预定订单',
           icon: '',
-          routeName: 'booking',
+          routeName: 'orders-booking',
         },{
           id: '40',
           title: '即时订单',
           icon: '',
-          routeName: 'immediate',
+          routeName: 'orders-immediate',
         },
         // {
         //   id: '16',

@@ -40,8 +40,7 @@
 				event: 'categories/setList',
 				isLoading: false,
 				query: {
-					page: 1,
-					projectId: 0,
+					page: null
 				}
 			};
 		},

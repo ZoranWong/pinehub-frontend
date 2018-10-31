@@ -15,15 +15,16 @@
 			</div>
 			<div class="project-cards">
 				<el-row :gutter="20">
-					<el-col :xl="4.8" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
+					<el-col :xl="3" :lg="4" :md="6" :sm="8" :xs="12" v-for="(project , index) in projects" :key="index">
 						<div class="card"  v-on:click="pathTo(project)">
-							<el-col :span="12"><img :src="project.logo" alt="" class="project-logo"/></el-col>
-							<el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col>
+							<el-col :span="12"  ref="logo"><img :src="project.logo" alt="" :style = "{height: '64px', width: '64px'}" class="project-logo"/></el-col>
+							<!-- <el-col :span="12"><img :src="project.qrCode" alt="" class="project-logo"/></el-col> -->
 							<p class="project-name">名称：{{ project.name }}</p>
 							<p class="project-name">创建时间：{{ project.createdAt }}</p>
 							<div class="card-opt">
 								<el-button size="mini" type="text" @click.stop="edit(project)">编辑</el-button>
-								<el-button size="mini" type="text" @click.stop="openPlatformAuthDialogShow=true;">授权</el-button>
+								<el-button size="mini" type="text" @click.stop="openPlatformAuthDialogShow=true;
+								authUrl=project.openPlatformAuthUrl;">授权</el-button>
 								<el-button size="mini" type="text" @click.stop="remove(project)">删除</el-button>
 							</div>
 						</div>
@@ -32,7 +33,8 @@
 			</div>
 		</div>
 		<create-project :show = "creating" v-model="project" @close="creating=false;" @openPlatformAuth="openPlatformAuthDialogShow=true;"></create-project>
-		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;" @close="openPlatformAuthDialogShow=false;"></open-platform-auth>
+		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;"
+		@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" title="公众号/小程序授权"></open-platform-auth>
 		<remove-project :show="removing" :project="project" @close="removing=false;" @open="removing=true;"></remove-project>
 	</div>
 </template>
@@ -56,7 +58,8 @@
 				openPlatformAuthDialogShow: false,
 				removing: false,
 				creating: false,
-				project: {}
+				project: {},
+				authUrl: null
 			};
 		},
 		mounted () {
@@ -94,7 +97,7 @@
 				this.$store.dispatch('projects/reset');
 			},
 			getProjects(page = null) {
-				page = page ? page : this.currentPage;
+				page = page !== null ? page : this.currentPage;
 				this.$command(DataListCommand.commandName(), 'http.projects', 'projects/setList', page, this.searchFields);
 			},
 			async remove(project) {
@@ -121,7 +124,17 @@
 	.project-cards .card div{margin-bottom: 20px;}
 	.project-cards .card div:first-child{padding-left:0 !important}
 	.project-cards .card div:nth-child(2){padding-right:0 !important}
-	.project-cards .card .project-logo{color: #ff6e6e;display: block;
-    margin: 0 auto;border-radius: 2px;width:100%;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;line-height: 12px;padding: 3px;font-size: 12px;}
+	.project-cards .card .project-logo{
+		color: #ff6e6e;
+		display: block;
+    margin: 0 auto;
+		border-radius: 2px;
+		width:100%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;box-sizing:
+		 border-box;
+		 line-height: 12px;
+		 padding: 3px;
+		 font-size: 12px;}
 	.project-cards .card p.project-name{margin-top: 15px;clear: both;font-size: 14px;height: 20px;line-height: 20px;padding-bottom: 5px;color: #111;}
 </style>

@@ -6,7 +6,7 @@
       </el-form-item>
     </template>
     <template slot="opt">
-      <el-button size="small" type="primary" icon="el-icon-plus" >创建会员卡</el-button>
+      <el-button size="small" type="primary" icon="el-icon-plus" @click = "createMemberCard">创建会员卡</el-button>
     </template>
   </search-header>
 </template>
@@ -25,6 +25,14 @@
       }, UserDict);
     },
     methods: {
+      createMemberCard() {
+        this.$router.push({
+          name: 'member-card-create',
+          params: {
+            projectId: this.$requestInput('projectId')
+          }
+        });
+      }
     }
   }
 </script>

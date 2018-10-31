@@ -1,7 +1,7 @@
 <template>
   <el-col :span="24" class="toolbar">
-    <el-tabs  type = "card">
-      <el-tab-pane label="所有促销" name="all" >
+    <el-tabs  type = "card" v-model="tab">
+      <el-tab-pane label="所有满减/送促销" name="all" >
       </el-tab-pane>
       <el-tab-pane label="未开始"  name="wait" >
       </el-tab-pane>
@@ -14,10 +14,23 @@
 </template>
 <script>
   export default {
-    props: ['search'],
+    props: {
+      value: {
+        default: ()=> {return {};},
+        type: Object
+      }
+    },
     data() {
       return {
+        tab: "all"
       };
+    },
+    watch: {
+      tab(tab) {
+        let search = this.value;
+        search['status'] = tab;
+        this.$emit('search', search);
+      }
     }
   }
 </script>

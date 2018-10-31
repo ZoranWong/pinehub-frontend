@@ -9,7 +9,7 @@
     <el-table-column prop="userNum" label="参与活动人数" min-width="100"></el-table-column>
     <el-table-column label="操作" width="100">
       <template slot-scope="scope">
-        <el-button size="small"  :click="show(scope)" type="text">编辑</el-button> -
+        <el-button size="small"  @click="edit(scope.row.id)" type="text">编辑</el-button> -
         <el-button size="small"  type="text" disabled>删除</el-button>
       </template>
     </el-table-column>
@@ -28,8 +28,14 @@
       };
     },
     methods: {
-      show(scope) {
-        console.log(scope);
+      edit(id) {
+        this.$router.push({
+          name: 'up-to-cut-edit',
+          params: {
+            projectId: this.$requestInput('projectId'),
+            activityId: id
+          }
+        });
       }
     }
   }

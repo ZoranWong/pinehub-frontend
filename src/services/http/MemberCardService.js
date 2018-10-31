@@ -22,4 +22,15 @@ export default class MemberCardService extends ApiService{
 		totalPage = pagination['total_pages'];
 		return [memberCards, totalNum, currentPage,  totalPage];
 	}
+
+	async show(id) {
+		let response = null;
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.memberCard').mock(id);
+		}else{
+			//服务器交互代码
+			response = await this.httpGet(`memberCard/${id}`);
+		}
+		return response.data;
+	}
 }

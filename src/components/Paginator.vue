@@ -5,7 +5,8 @@
       :total="total"
       :page-size="pageSize"
       :current-page = "currPage"
-      :page-count ="pageCount" ref="paginator">
+      :page-count ="pageCount"
+      ref="paginator">
     </el-pagination>
   </div>
 </template>
@@ -91,7 +92,6 @@ export default {
   methods: {
     changePage(page, search = null) {
       this.$emit('change-page', page);
-      console.log(search, this.search);
       let query = search ? search : this.search;
       let params = {};
       query['page'] = page;
@@ -100,16 +100,20 @@ export default {
       this.updateList();
     },
     updateList() {
-      this.$command(this.command, this.service, this.event, this.search['page'], this.search, this.limit);
+      console.log('update list');
+      let page = !this.search['page'] ? 1 : this.search['page']
+      let search = this.search;
+      delete search['page'];
+      this.$command(this.command, this.service, this.event, page, search, this.limit);
     }
   },
   updated(){
-    this.updateList();
+    //this.updateList();
   },
   beforeCreate() {
   },
   created() {
-    this.updateList();
+    //this.updateList();
   },
   mounted() {
 
