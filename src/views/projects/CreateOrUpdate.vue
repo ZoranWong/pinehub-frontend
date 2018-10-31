@@ -169,24 +169,3 @@
 	height: auto;
 }
 </style>
-<style>
-iframe{
-	width: 340px;
-	margin: 12px 0;
-	height: 480px;
-	position: relative;
-	overflow: hidden;
-	border: 1px solid #a0a0a0;
-}
-iframe html{
-	margin: -219px -150px 0 -150px;
-	height: 480px;
-}
-
-iframe html .mp-body{
-	padding-bottom: 0;
-}
-iframe html .mp-foot{
-	display: none;
-}
-</style>
