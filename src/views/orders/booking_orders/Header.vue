@@ -1,5 +1,5 @@
 <template>
-  <search-header>
+  <search-header @search = 'search'>
     <template slot = "searchInput">
       <el-form-item prop="orderCode" label="订单号" >
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
@@ -36,39 +36,128 @@
   </search-header>
 </template>
 <script>
-  import SearchHeader from '@/components/SearchHeader';
-  export default {
-    components: {
-      'search-header': SearchHeader
-    },
-    data() {
-      return {
-        recieverName: null,
-        orderCode: null,
-        recieverMobile: null,
-        beginAt: null,
-        endAt: null,
-        merchandiseName: null,
-        orderStatus: 0,
-        payType: 0,
-        payTypes: [
-          '全部',
-          '未知支付',
-          '支付宝',
-          '微信支付'
-        ],
-        statusDict: [
-          "全部",
-          "未支付",
-          "待发货",
-          "待签收",
-          "已完成",
-          "退款中",
-          "拒绝退款",
-          "退款成功",
-          "订单关闭"
-        ]
-      };
+    import SearchHeader from '@/components/SearchHeader';
+    import ORDER_STATUS from '../OrderStatus';
+    import PAYMENT_TYPES from '../Payment';
+    import _ from 'underscore';
+    export default {
+        components: {
+            'search-header': SearchHeader
+        },
+        props: {
+            value: {
+                default: null,
+                type: Object
+            }
+        },
+        data() {
+            return {
+                receiverName: null,
+                orderCode: null,
+                receiverMobile: null,
+                beginAt: null,
+                endAt: null,
+                orderStatus: 'ALL',
+                payType: 'ALL',
+                payTypes: {
+                    "ALL": '全部',
+                    "UNKNOWN": '未知支付',
+                    "ALI_PAY": '支付宝',
+                    "WECHAT_PAY": '微信支付'
+                },
+                statusDict: {
+                    "ALL": "全部",
+                    "WAIT_PAY": "未支付",
+                    "WAIT_SEND": "待发货",
+                    "WAIT_SIGNED": "待签收",
+                    "COMPLETED": "已完成",
+                    "REFUNDING": "退款中",
+                    "REFUSE_REFUND": "拒绝退款",
+                    "REFUNDED": "退款成功",
+                    "ORDER_CANCEL": "订单关闭"
+                }
+            };
+        },
+        watch: {
+            value: {
+                deep: true,
+                handler(search) {
+                    if(search) {
+                        this.initSearchData(search);
+                    }
+                }
+            }
+        },
+        created() {
+            if(this.value) {
+                this.initSearchData(this.value);
+            }
+        },
+        methods: {
+            search () {
+                let search = this.buildSearchData();
+                this.$emit('search', search);
+            },
+            initSearchData(search) {
+                this.receiverName  =  search['receiver_name'] ;
+                this.receiverMobile  =  search['receiver_mobile'] ;
+                this.orderCode   =   search['code'];
+                this.beginAt =  search['paid_at'][0]['value'] ;
+                this.endAt = search['paid_at'][1]['value'] ;
+                this.merchandiseName  = search['orderItems.name'] ;
+                let $this = this;
+                _.map(ORDER_STATUS, function (value, index) {
+                    if(value == search['status']) {
+                        $this.orderStatus = index;
+                        if(index === 'WAIT_SEND' || index === 'PAID') {
+                            $this.orderStatus = 'WAIT_SEND';
+                        }
+
+                        if(index === 'WAIT_SIGNED' || index === 'SEND') {
+                            $this.orderStatus = 'WAIT_SIGNED';
+                        }
+                    }
+                });
+                _.map(PAYMENT_TYPES, function (value, index) {
+                    if(value == search['pay_type']) {
+                        $this.payType = index;
+                        return index;
+                    }
+                    return null;
+                });
+            },
+            buildSearchData() {
+                let search = {
+                    "paid_at": [
+                        {
+                            'opt': '>='
+                        },
+                        {
+                            'join': 'and',
+                            'opt': '<'
+                        }
+                    ],
+                    "type": [1, 2]
+                };
+                if(this.merchandiseName)
+                    search['orderItems.name'] = this.merchandiseName;
+                if(this.receiverName)
+                    search['receiver_name'] = this.receiverName;
+                if(this.receiverMobile)
+                    search['receiver_mobile'] = this.receiverMobile;
+                if(this.orderCode)
+                    search['code'] = this.orderCode;
+                if(this.beginAt) {
+                    search['paid_at'][0]['value'] = this.beginAt;
+                }
+                if(this.endAt)
+                    search['paid_at'][1]['value'] =  this.endAt;
+                if(this.orderStatus && ORDER_STATUS[this.orderStatus])
+                    search['status'] = ORDER_STATUS[this.orderStatus];
+                if(this.payType && PAYMENT_TYPES[this.payType])
+                    search['pay_type'] = PAYMENT_TYPES[this.payType];
+                return search;
+            }
+        }
     }
-  }
 </script>
