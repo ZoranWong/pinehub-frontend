@@ -1,7 +1,7 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<order-header :search = "search"></order-header>
+		<template slot = "header" slot-scope="{ search , searchHandler}">
+			<order-header v-model = "search" @search = "searchHandler"></order-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<order-table :orders="data"></order-table>
@@ -13,6 +13,7 @@
 	import OrderTable from './OrderTable';
 	import Header from './Header';
 	import TableList from '@/components/TableList';
+	import _ from 'underscore';
 	export default {
 		name: 'Orders',
 		components:{
@@ -25,7 +26,8 @@
 				service: 'http.orders',
 				event: 'orders/setList',
 				current: 'orders/currentPage',
-        query: {
+				query: {
+
 				}
 			};
 		},

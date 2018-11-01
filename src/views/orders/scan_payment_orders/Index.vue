@@ -25,12 +25,10 @@
 				service: 'http.orders',
 				event: 'scanPaymentOrders/setList',
 				current: 'scanPaymentOrders/currentPage',
-        query: {
+				query: {
+					type: 0
 				}
 			};
-		},
-		mounted() {
-
 		},
 		computed: {
 			model() {
@@ -45,8 +43,6 @@
 				this.query = _.extend(this.query, data);
 			}
 		},
-		created() {
-		}
 	}
 </script>
 

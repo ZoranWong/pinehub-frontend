@@ -1,5 +1,4 @@
 import Route from './Route';
-import Layout from '../views/common/Layout';
 let route = new Route();
 route.addRoute('', {
   'name': 'home',

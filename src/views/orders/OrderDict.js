@@ -1,7 +1,7 @@
 export default {
   orderStatusDict: {
     CANCEL: 0,
-    WAITCOMMIT:1,
+    WAITCOMMIT: 1,
     WAITPAY: 2,
     WAITSEND: 3,
     WAITSIGNED: 4,

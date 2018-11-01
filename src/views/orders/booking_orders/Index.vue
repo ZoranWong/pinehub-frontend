@@ -13,6 +13,7 @@
 	import OrderTable from './OrderTable';
 	import Header from './Header';
 	import TableList from '@/components/TableList';
+	import _ from 'underscore';
 	export default {
 		name: 'Orders',
 		components:{
@@ -25,7 +26,8 @@
 				service: 'http.orders',
 				event: 'bookingOrders/setList',
 				current: 'bookingOrders/currentPage',
-        query: {
+				query: {
+				    type: [1, 2]
 				}
 			};
 		},

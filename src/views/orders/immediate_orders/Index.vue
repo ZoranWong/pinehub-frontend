@@ -25,7 +25,8 @@
 				service: 'http.orders',
 				event: 'immediateOrders/setList',
 				current: 'immediateOrders/currentPage',
-        query: {
+				query: {
+				    type: [3, 4]
 				}
 			};
 		},
