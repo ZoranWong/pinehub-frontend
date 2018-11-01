@@ -7,35 +7,35 @@ import WechatAutoReply from '../views/wechat/AutoReply';
 import WechatMaterials from '../views/wechat/Materials';
 let route = new Route();
 route.group('/project/:projectId/wechat', {
-  	'tag' : '微信管理',
-  	'component': Layout,
-  	'uses' : function(route) {
-	  	route.addRoute('index', {
-	  		'name': 'wechat-index',
-	  		'component': WechatIndex,
-	  		'tag': '公众号管理'
-	  	});
+    'tag' : '微信管理',
+    'component': Layout,
+    'uses' : function(route) {
+        route.addRoute('index', {
+            'name': 'wechat-index',
+            'component': WechatIndex,
+            'tag': '公众号管理'
+        });
       route.addRoute('menus', {
-	  		'name': 'wechat-menus',
-	  		'component': WechatMenus,
-	  		'tag': '菜单管理'
-	  	});
+            'name': 'wechat-menus',
+            'component': WechatMenus,
+            'tag': '菜单管理'
+      });
 
       route.addRoute('create/menu', {
-        'name': 'create-wx-menu',
-        'component': CreateMenu,
-        'tag': '创建菜单'
+            'name': 'create-wx-menu',
+            'component': CreateMenu,
+            'tag': '创建菜单'
       });
 
       route.addRoute('/autoReply', {
-        'name': 'wechat-autoReply',
-        'component': WechatAutoReply,
-        'tag': '自动回复'
+            'name': 'wechat-autoReply',
+            'component': WechatAutoReply,
+            'tag': '自动回复'
       });
       route.addRoute('/materials', {
-        'name': 'wechat-materials',
-        'component': WechatMaterials,
-        'tag': '素材管理'
+            'name': 'wechat-materials',
+            'component': WechatMaterials,
+            'tag': '素材管理'
       });
 	}
 });
