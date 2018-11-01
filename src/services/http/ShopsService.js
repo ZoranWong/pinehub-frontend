@@ -1,54 +1,55 @@
 import ApiService from './ApiService';
 export default class ShopsService extends ApiService{
-	constructor(application) {
+	constructor (application) {
 		super(application);
 	}
-	async list(page = 1, search = null, limit = 15) {
-		let shops = null;
-		let totalNum = 0;
-		let totalPage = 0;
-		let currentPage = 0;
-		let response = null;
+	async list (page = 1, search = null, limit = 15) {
+		let  response = null;
+
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.shops').mock(page, search, limit);
 		}else{
 			response = await this.httpGet('shops', {page: page, limit: limit, searchJson: search});
 		}
-		shops = response.data;
+
+		let shops = response.data;
+
 		let pagination = response.meta.pagination;
-		totalNum = pagination.total;
-		currentPage = pagination['current_page'];
-		totalPage = pagination['total_pages'];
+
+		let totalNum = pagination.total;
+
+		let currentPage = pagination['current_page'];
+
+		let totalPage = pagination['total_pages'];
+
 		return [shops, totalNum, currentPage, totalPage];
 	}
 
-	async create(projectId, shop) {
+	async create (projectId, shop) {
 		let response = null;
+
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.shop.create').mock(shop);
 		} else {
 			response = await this.header({'ProjectId': projectId}).httpPost(`shop`, shop);
 		}
+
 		return response.data;
 	}
 
-	async update(projectId, shopId, shop) {
+	async update (projectId, shopId, shop) {
 		let response = null;
+
 		if(this.$application.needMock()) {
-<<<<<<< HEAD
-			response = await this.service('mock.shop.update').mock(shop);
-		}else {
-			response = await this.httpPut(`project/${projectId}/shop/${shopId}`, shop);
-=======
 			response =  await this.service('mock.shop.update').mock(shop);
 		} else {
 			response = await this.header({'ProjectId': projectId}).httpPut(`/shop`, shopId, shop);
->>>>>>> 7461f317ea18f7887a8ce00dbf156baf884587e3
 		}
+
 		return response.data;
 	}
 
-	async show(projectId, shopId) {
+	async show (projectId, shopId) {
 		let response = null;
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.shop.show').mock(shopId);

@@ -12,111 +12,98 @@
 </template>
 <script>
 export default {
-  name: 'Paginator',
-  props:{
-    currentPage: {
-      default: 0,
-      type: Number
+    name: 'Paginator',
+    props:{
+        currentPage: {
+            default: 0,
+            type: Number
+        },
+        totalNum: {
+            default: 0,
+            type: Number
+        },
+        command: {
+            default: '',
+            type: String
+        },
+        search:{
+            default: function(){return {}},
+            type: Object
+        },
+        limit: {
+            default: 15,
+            type: Number
+        },
+        totalPage: {
+            default: 0,
+            type: Number
+        },
+        service: {
+            default: null,
+            type: String
+        },
+        event: {
+            default: null,
+            type: String
+        },
     },
-    totalNum: {
-      default: 0,
-      type: Number
+    watch: {
+        currentPage:{
+            immediate: true,
+            handler (value) {
+                this.currPage = value;
+            }
+        },
+        search: {
+            immediate: true,
+            deep: true,
+            handler (value) {
+                this.changePage(this.search['page'], value);
+            }
+        },
+        totalNum: {
+            immediate: true,
+            handler (value) {
+                this.total = value;
+            }
+        },
+        limit: {
+            immediate: true,
+            handler (value) {
+                this.pageSize = value;
+            }
+        },
+        totalPage: {
+            immediate: true,
+            handler (value) {
+                this.pageCount = value;
+            }
+        }
     },
-    command: {
-      default: '',
-      type: String
+    data () {
+        return {
+            currPage: this.currentPage,
+            total: this.totalNum,
+            pageCount: this.totalPage,
+            pageSize: this.limit
+        };
     },
-    search:{
-      default: function(){return {}}
-    },
-    limit: {
-      default: 15,
-      type: Number
-    },
-    totalPage: {
-      default: 0,
-      type: Number
-    },
-    service: {
-      default: null,
-      type: String
-    },
-    event: {
-      default: null,
-      type: String
-    },
-  },
-  watch: {
-    currentPage:{
-      immediate:true,
-      handler(value) {
-        this.currPage = value;
-      }
-    },
-    search: {
-      immediate:true,
-      deep: true,
-      handler(value) {
-        this.changePage(this.search['page'], value);
-      }
-    },
-    totalNum: {
-      immediate:true,
-      handler(value) {
-        this.total = value;
-      }
-    },
-    limit: {
-      immediate:true,
-      handler(value) {
-        this.pageSize = value;
-      }
-    },
-    totalPage: {
-      immediate:true,
-      handler(value) {
-        this.pageCount = value;
-      }
+    methods: {
+        changePage (page, search = null) {
+            this.$emit('change-page', page);
+            let query = search ? search : this.search;
+            let params = {};
+            query['page'] = page;
+            params['projectId'] = this.$requestInput('projectId');
+            this.$router.push({name: this.$currentRouteName(), params: params, query: query});
+            this.updateList();
+        },
+        updateList () {
+            let page = !this.search['page'] ? 1 : this.search['page'];
+            let search = this.search;
+            delete search['page'];
+            this.$command(this.command, this.service, this.event, page, search, this.limit);
+        }
     }
-  },
-  computed:{
-  },
-  data() {
-    return {
-      currPage: this.currentPage,
-      total: this.totalNum,
-      pageCount: this.totalPage,
-      pageSize: this.limit
-    };
-  },
-  methods: {
-    changePage(page, search = null) {
-      this.$emit('change-page', page);
-      let query = search ? search : this.search;
-      let params = {};
-      query['page'] = page;
-      params['projectId'] = this.$requestInput('projectId');
-      this.$router.push({name: this.$currentRouteName(), params: params, query: query});
-      this.updateList();
-    },
-    updateList() {
-      console.log('update list');
-      let page = !this.search['page'] ? 1 : this.search['page']
-      let search = this.search;
-      delete search['page'];
-      this.$command(this.command, this.service, this.event, page, search, this.limit);
-    }
-  },
-  updated(){
-    //this.updateList();
-  },
-  beforeCreate() {
-  },
-  created() {
-    //this.updateList();
-  },
-  mounted() {
-
-  }
 }
 </script>
