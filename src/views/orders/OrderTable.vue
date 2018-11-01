@@ -1,14 +1,15 @@
 <template>
   <div class="tab-pane">
     <el-table highlight-current-row v-loading="isLoading" class="table-header" :data="orders" :span-method="spanMethod">
-      <el-table-column label="#" prop="idx" min-width="20" indx = "0"></el-table-column>
+      <el-table-column label="#" prop="idx" min-width="20" indx = "0">
+      </el-table-column>
       <el-table-column label="订单" min-width = "120" prop="code" indx = "1" >
         <template slot-scope="scope">
           订单号: {{scope.row.code}}
-          <p>
+          <p class="transaction-id">
             支付流水号: <span style="color:gray">{{scope.row.transactionId}}</span>
           </p>
-          <p>
+          <p class="payment-type">
             支付方式: <el-tag  size="small" :class="[{'alipay-tag': scope.row.isAliPay}, {'wechatpay-tag': scope.row.isWechatPay}]"> {{ scope.row.payTypeStr}}</el-tag>
           </p>
         </template>
@@ -36,15 +37,15 @@
       </el-table-column>
       <el-table-column prop="" label="售后" min-width="80" indx = "4">
         <template slot-scope="scope">
-          <el-row style="display: flex;" v-if="scope.row.item.status == REFUNDING">
+          <el-row style="display: flex;" v-if="scope.row.item.status === REFUNDING">
             <el-button  @click="refund(scope.row)" type="success" size="mini" style="width: 50%;" plain>同意退款</el-button>
             <el-button  @click="refund(scope.row)" type="danger" size="mini" style="width: 50%;" plain>拒绝退款</el-button>
           </el-row>
-          <el-row v-else-if="scope.row.item.status == WAITSEND">
+          <el-row v-else-if = "scope.row.item.status === WAITSEND">
             <el-button  @click="refund(scope.row)" type="success" size="mini" plain>去发货</el-button>
           </el-row>
 
-          <el-row v-else-if="scope.row.item.status == REFUNDED">
+          <el-row v-else-if="scope.row.item.status === REFUNDED">
             <el-button  @click="refund(scope.row)" type="success" size="mini" plain>查看退款</el-button>
           </el-row>
           <el-row v-else>
@@ -75,8 +76,10 @@
       </el-table-column>
       <el-table-column prop="item.statusStr" label="订单状态" indx = "7" >
       </el-table-column>
-      <el-table-column prop="createdAt" label="下单时间" indx = "8"></el-table-column>
-      <el-table-column prop="typeStr" label="订单类型" indx = "9"></el-table-column>
+      <el-table-column prop="createdAt" label="下单时间" indx = "8">
+      </el-table-column>
+      <el-table-column prop="typeStr" label="订单类型" indx = "9">
+      </el-table-column>
       <el-table-column prop="" label="优惠金额"  indx = "10">
         <template slot-scope="scope">
           <span style="color: red;"> {{scope.row.discountAmount}} 元 </span>

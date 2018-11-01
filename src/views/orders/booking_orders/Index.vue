@@ -26,7 +26,8 @@
 				service: 'http.orders',
 				event: 'bookingOrders/setList',
 				current: 'bookingOrders/currentPage',
-        query: {
+				query: {
+				    type: [1, 2]
 				}
 			};
 		},

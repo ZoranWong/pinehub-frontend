@@ -17,7 +17,7 @@ import MemberCards from './MemberCards';
 import ScoreRules from './ScoreRules';
 import Materials from './Materials';
 import Regions from './Regions';
-import _ from 'underscore';
+
 export default class Store {
   constructor(application) {
     this.$application = application;
