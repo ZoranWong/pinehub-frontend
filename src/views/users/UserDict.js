@@ -1,11 +1,11 @@
 export default {
-  sex: {
-    "UNKOWN": '未知',
-    "MALE": '男',
-    "FEMALE": '女'
-  },
+//sex: {
+//  "UNKOWN": '未知',
+//  "MALE": '男',
+//  "FEMALE": '女'
+//},
   //渠道：0-未知 1-微信 2-支付宝'
-  channels: ['全部', '未知', '微信', '支付宝'],
+  channels: ['未知', '微信', '支付宝'],
   userTypes: ['全部', '非会员', '会员'],
   ordersCountDict: [
     "所有",

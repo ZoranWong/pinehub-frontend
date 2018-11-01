@@ -1,5 +1,5 @@
 <template>
-  <search-header>
+  <search-header @search="search">
     <template slot = "searchInput">
       <el-form-item prop="name" label="">
         <el-input size="small" v-model.lazy ="shopName" placeholder="商店名称"></el-input>
@@ -41,8 +41,31 @@
 <script>
   import SearchHeader from '@/components/SearchHeader';
   export default {
+  	props: {
+      value: {
+        default: null,
+        type: Object
+      }
+   },
     components: {
       'search-header': SearchHeader
+    },
+    watch: {
+      value(search) {
+        console.log(search);
+        if(search) {
+          this.shopName = search['name'];
+          this.merchandiseName = search['merchandise_name'];
+        }
+      }
+    },
+    created() {
+      console.log(this.value);
+      let search = this.value;
+      if(search) {
+        this.shopName = search['name'];
+        this.merchandiseName = search['merchandise_name'];
+      }
     },
     data() {
       return {
@@ -63,6 +86,9 @@
             projectId: this.$requestInput('projectId')
           }
         });
+      },
+      search(){
+      	this.$emit('search', search);
       }
     }
   }

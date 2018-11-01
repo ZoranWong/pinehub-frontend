@@ -5,9 +5,10 @@ export default class ScoreRule  {
     this.id = rule['id'];
     this.score = rule['score'];
     this.type = rule['type'];
-    this.orderAmount = rule['order_amount'].toFixed(2);
-    this.ordersCount = rule['orders_count'];
-    this.totalRecievedScore = rule['total_recieved_score'];
+//  console.log(rule['rule'],"sdddddddddddddd")
+    this.orderAmount = rule['rule']['order_amount'];
+    this.ordersCount = rule['rule']['order_count'];
+    this.totalRecievedScore = rule['total_score'];
     let updatedAt = '';
     if(_.isObject(rule['updated_at'])) {
       updatedAt = rule['updated_at']['date'];
