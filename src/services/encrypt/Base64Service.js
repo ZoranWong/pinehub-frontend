@@ -14,6 +14,11 @@ export default class Base64Service extends Service{
   encodeURI(data) {
     return Base64.encodeURI(data);
   }
+
+  decodeURI(data) {
+    return Base64.decode(data);
+  }
+
   decode(str) {
     return Base64.decode(str);
   }

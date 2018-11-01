@@ -27,7 +27,7 @@
 				event: 'bookingOrders/setList',
 				current: 'bookingOrders/currentPage',
 				query: {
-				    type: [1, 2]
+				    "type": [1, 2]
 				}
 			};
 		},
