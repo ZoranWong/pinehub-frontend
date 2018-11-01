@@ -5,10 +5,10 @@
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
       </el-form-item>
       <el-form-item prop="receiverName" label="收货人姓名" >
-        <el-input size="small" v-model="recieverName" placeholder="收货人姓名"></el-input>
+        <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
       </el-form-item>
       <el-form-item prop="receiverMobile" label="收货人手机号" >
-        <el-input size="small" v-model="recieverMobile" placeholder="收货人手机号"></el-input>
+        <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
       </el-form-item>
       <el-form-item prop="beginAt" label="下单时间">
         <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
@@ -77,9 +77,12 @@
         };
       },
       watch: {
-          value(search) {
-              if(search) {
-                 this.initSearchData(search);
+          value: {
+              deep: true,
+              handler(search) {
+                  if(search) {
+                      this.initSearchData(search);
+                  }
               }
           }
       },
@@ -91,14 +94,14 @@
       methods: {
           search () {
               let search = this.buildSearchData();
-              console.log(search);
               this.$emit('search', search);
           },
           initSearchData(search) {
+              console.log(search);
               this.receiverName  =  search['receiver_name'] ;
               this.receiverMobile  =  search['receiver_mobile'] ;
               this.orderCode   =   search['code'];
-              this.merchandiseName  = search['orderItem.name'] ;
+              this.merchandiseName  = search['orderItems.name'] ;
               this.beginAt =  search['paid_at'][0]['value'] ;
               this.endAt = search['paid_at'][1]['value'] ;
               this.orderStatus = search['status']  ;
@@ -112,7 +115,7 @@
                       },
                       {
                           'join': 'and',
-                          'opt': '>='
+                          'opt': '<'
                       }
                   ]
               };
@@ -123,7 +126,7 @@
               if(this.orderCode)
                   search['code'] = this.orderCode;
               if(this.merchandiseName)
-                  search['orderItem.name'] = this.merchandiseName;
+                  search['orderItems.name'] = this.merchandiseName;
               if(this.beginAt) {
                   search['paid_at'][0]['value'] = this.beginAt;
               }
