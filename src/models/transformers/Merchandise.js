@@ -4,7 +4,7 @@ export default class Merchandise{
     this.statusDict = ['仓储中', '出售中', '已售罄'];
     this.id = merchandise['id'];
     this.idx = merchandise['index'];
-    this.sellPrice = merchandise['sell_price'].toFixed(2);
+    this.sellPrice = merchandise['sell_price'];
     this.name = merchandise['name'];
     this.stockNum = merchandise['stock_num'];
     this.sellNum = merchandise['sell_num'];

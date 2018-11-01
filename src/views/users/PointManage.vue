@@ -45,7 +45,7 @@
 						<span>{{scope.row.updated_at?scope.row.updated_at.date.substr(0,19):''}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="num" label="已奖励总积分" min-width="100"></el-table-column>
+				<el-table-column prop="totalRecievedScore" label="已奖励总积分" min-width="100"></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template slot-scope="scope">
 						<el-button size="small" @click.active="getUpdate(true,scope.row)" type="text">编辑</el-button>

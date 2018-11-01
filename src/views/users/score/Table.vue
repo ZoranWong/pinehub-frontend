@@ -18,13 +18,16 @@
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button size="small" @click.active="edit(true, scope.row)" type="text">编辑</el-button>
-          |<el-button size="small" @click.active="delete(scope.row)" type="text">删除</el-button>
+          <el-button size="small" @click.active="delete(scope.row)" type="text">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
   </el-col>
 </template>
 <script>
+const FOLLOW = 9;
+const ORDER_COUNT = 11;
+const ORDER_AMOUNT = 10;
 export default {
   data() {
     return {
@@ -55,14 +58,15 @@ export default {
 
     },
     condition(condition) {
+    	console.log(condition,"是多少都是")
       switch (condition['type']) {
-        case 'FOLLOW':
+        case FOLLOW:
           return '关注我的微信';
           break;
-        case 'ORDERS_COUNT':
+        case ORDER_COUNT:
           return `每成功交易${condition['ordersCount']}笔`;
           break;
-        case 'ORDER_AMOUNT':
+        case ORDER_AMOUNT:
           return `每购买金额${condition['orderAmount']}元`;
           break;
       }
