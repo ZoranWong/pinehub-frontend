@@ -43,7 +43,8 @@
 		},
 		methods: {
 			search(data) {
-				this.query = _.extend(this.query, data);
+				let search = _.extend(this.query, data);
+                this.$emit('search', search);
 			}
 		},
 		created() {

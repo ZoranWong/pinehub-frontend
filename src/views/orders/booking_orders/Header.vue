@@ -1,5 +1,5 @@
 <template>
-  <search-header>
+  <search-header @search = "search">
     <template slot = "searchInput">
       <el-form-item prop="orderCode" label="订单号" >
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
@@ -38,37 +38,42 @@
 <script>
   import SearchHeader from '@/components/SearchHeader';
   export default {
-    components: {
-      'search-header': SearchHeader
-    },
-    data() {
-      return {
-        recieverName: null,
-        orderCode: null,
-        recieverMobile: null,
-        beginAt: null,
-        endAt: null,
-        merchandiseName: null,
-        orderStatus: 0,
-        payType: 0,
-        payTypes: [
-          '全部',
-          '未知支付',
-          '支付宝',
-          '微信支付'
-        ],
-        statusDict: [
-          "全部",
-          "未支付",
-          "待发货",
-          "待签收",
-          "已完成",
-          "退款中",
-          "拒绝退款",
-          "退款成功",
-          "订单关闭"
-        ]
-      };
-    }
+      components: {
+        'search-header': SearchHeader
+      },
+      data() {
+        return {
+          recieverName: null,
+          orderCode: null,
+          recieverMobile: null,
+          beginAt: null,
+          endAt: null,
+          merchandiseName: null,
+          orderStatus: 0,
+          payType: 0,
+          payTypes: [
+            '全部',
+            '未知支付',
+            '支付宝',
+            '微信支付'
+          ],
+          statusDict: [
+            "全部",
+            "未支付",
+            "待发货",
+            "待签收",
+            "已完成",
+            "退款中",
+            "拒绝退款",
+            "退款成功",
+            "订单关闭"
+          ]
+        };
+      },
+      methods: {
+          search() {
+              console.log('search');
+          }
+      }
   }
 </script>
