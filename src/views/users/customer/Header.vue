@@ -1,5 +1,5 @@
 <template>
-  <search-header>
+  <search-header @search = 'search'>
     <template slot = "searchInput">
       <el-form-item prop="nickname" label="关键词">
         <el-input size="small" v-model="nickname" placeholder="昵称"></el-input>
@@ -9,20 +9,20 @@
           <el-option v-for="(value, key) in channels" :value="key" :label="value" :key="value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="ordersCount" label="购次">
+      <!--<el-form-item prop="ordersCount" label="购次">
         <el-select size="small" v-model="ordersCount">
           <el-option v-for="(value, key) in ordersCountDict" :value="key" :label="value" :key="value"></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item>-->
       <el-form-item prop="isMember" label="客户身份">
         <el-select size="small" v-model="isMember">
           <el-option v-for="(value, key) in userTypes" :value="key" :label="value" :key="value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="card" label="会员卡">
+      <!--<el-form-item prop="card" label="会员卡">
         <el-select size="small" v-model="card">
         </el-select>
-      </el-form-item>
+      </el-form-item>-->
     </template>
     <template slot="opt">
       <div>
@@ -34,21 +34,99 @@
 </template>
 <script>
   import SearchHeader from '@/components/SearchHeader';
-  import UserDict from '../UserDict';
+  import RECV_CHANNELS from '../RecvChannels';
+  import USER_TYPES from '../UserTypes';
   import _ from 'underscore';
   export default {
-    props: ['search'],
+    props: {
+            value: {
+                default: null,
+                type: Object
+            }
+        },
     components: {
       'search-header': SearchHeader
     },
     data() {
-      return _.extend({
+      return{
         nickname: null,
-        channel: 0,
+        channel:"All",
         card: null,
-        isMember: 0,
+        isMember: 'All',
+        userTypes:{
+            "ALL": '全部',
+            "NON_MEMBER": '非会员',
+            "MEMBER": '会员'
+        },
+        channels:{
+        	  "All":"全部",
+        	  "WX":"微信",
+        	  "ZHIFUBAO":"支付宝"
+        },
         ordersCount: 0
-      }, UserDict);
+      }
+    },
+    watch: {
+        value: {
+            deep: true,
+            handler(search) {
+                if(search) {
+                    this.initSearchData(search);
+                }
+            }
+        }
+    },
+    created() {
+        if(this.value) {
+
+            this.initSearchData(this.value);
+        }
+    },
+    methods: {
+        search () {
+            let search = this.buildSearchData();
+            this.$emit('search', search);
+        },
+        initSearchData(search) {
+            this.nickname  =  search['nickname'] ;
+            let $this=this;
+             _.map(RECV_CHANNELS, function (value, index) {
+                    if(value == search['channel']) {
+                        $this.channel = index;
+                        return index;
+                    }
+                    return null;
+               });
+            if(typeof search['member_id'] === 'undefined') {
+            	this.isMember = 'ALL';
+            }else if(search['member_id']['opt'] === '!=') {
+            	this.isMember = 'MEMBER';
+            }else{
+            	this.isMember = 'NON_MEMBER';
+            }
+            console.log(this.isMember, search);
+        },
+        buildSearchData() {
+            let search = {
+            };
+            if(this.nickname)
+                search['nickname'] = this.nickname;
+            if(this.isMember === 'NON_MEMBER') {
+            	 search['member_id'] = {
+                	'opt': '=',
+                	'value': null 
+                	};
+            }else if(this.isMember === 'MEMBER') {
+            	 search['member_id'] = {
+                	'opt': '!=',
+                	'value': null 
+                	};
+            }
+            if(this.channel && RECV_CHANNELS[this.channel])
+               search['channel'] = RECV_CHANNELS[this.channel];  
+//          console.log(this.isMember,search)
+            return search;
+        }
     }
   }
 </script>

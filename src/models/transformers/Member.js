@@ -9,7 +9,7 @@ export default class Member {
     this.canUseScore =member['can_use_score'];
     this.score = member['score'];
     this.channel = member['channel'];
-    this.isMember = member['is_member'] ? "是" : "否";
+    this.isMember = member['is_member'] ? "会员" : "非会员";
     this.sex = member['sex'];
     this.tags = member['tags'];
     this.card = member['card'];

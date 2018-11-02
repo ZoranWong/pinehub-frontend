@@ -1,7 +1,7 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<member-header :search = "search"></member-header>
+		<template slot = "header" slot-scope="{ search, searchHandler }">
+			<member-header v-model = "search" @search="searchHandler"></member-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<member-table :members="data"></member-table>

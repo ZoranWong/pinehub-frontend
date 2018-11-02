@@ -23,4 +23,15 @@ export default class MerchandisesService extends ApiService{
 		totalPage = pagination['total_pages'];
 		return [merchandises, totalNum, currentPage,  totalPage];
 	}
+	async create (projectId, merchandise) {
+		let response = null;
+
+		if(this.$application.needMock()) {
+			response =  await this.service('mock.merchandise.create').mock(merchandise);
+		} else {
+			response = await this.header({'ProjectId': projectId}).httpPost(`merchandise`, merchandise);
+		}
+
+		return response.data;
+	}
 }

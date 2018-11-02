@@ -2,14 +2,14 @@
   <search-header @search="search">
     <template slot = "searchInput">
       <el-form-item prop="name" label="">
-        <el-input size="small" v-model.lazy ="shopName" placeholder="商店名称"></el-input>
+        <el-input size="small" v-model.lazy ="shopName" placeholder="商品名"></el-input>
       </el-form-item>
-      <el-form-item prop="name" label="">
+      <!--<el-form-item prop="name" label="">
         <el-input size="small" v-model.lazy ="merchandiseName" placeholder="商品名"></el-input>
       </el-form-item>
       <el-form-item prop="type" label="">
         <el-input size="small" v-model.lazy ="category" placeholder="品类"></el-input>
-      </el-form-item>
+      </el-form-item>-->
       <el-form-item prop="begin_at" label="">
         <el-input size="small" v-model.number="minSellNum"  placeholder="最低销量" type="number"></el-input>
       </el-form-item>
@@ -54,17 +54,14 @@
       value(search) {
         console.log(search);
         if(search) {
-          this.shopName = search['name'];
-          this.merchandiseName = search['merchandise_name'];
-        }
+	         this.initSearchData(search);
+	      }
       }
     },
     created() {
       console.log(this.value);
-      let search = this.value;
-      if(search) {
-        this.shopName = search['name'];
-        this.merchandiseName = search['merchandise_name'];
+      if(this.value) {
+          this.initSearchData(this.value);
       }
     },
     data() {
@@ -88,7 +85,50 @@
         });
       },
       search(){
+      	let search = this.buildSearchData();
+      	console.log(search,"lllllllllllllllll")
       	this.$emit('search', search);
+      },
+      initSearchData(search) {
+      	  console.log(search,"kkkkkkkkkkkkkkk")
+//    	  this.buildSearchData()
+          this.shopName  =  search['name'] ;
+//        this.minSellNum =  search['sell_num'][0]['value'] ; 
+//        this.maxSellNum = search['sell_num'][1]['value'] ;
+      },
+      buildSearchData() {
+          let search = {
+              "sell_num": [
+                  {
+                      'opt': '>='
+                  },
+                  {
+                      'join': 'and',
+                      'opt': '<'
+                  }
+              ],
+              "sell_price": [
+                  {
+                      'opt': '>='
+                  },
+                  {
+                      'join': 'and',
+                      'opt': '<'
+                  }
+              ]
+          };
+          if(this.shopName)
+              search['name'] = this.shopName;
+          if(this.minSellNum)
+              search['sell_num'][0]['value'] = this.minSellNum;
+          if(this.maxSellNum)
+              search['sell_num'][1]['value'] =  this.maxSellNum;
+          if(this.minPrice)
+              search['sell_price'][0]['value'] = this.minPrice;
+          if(this.maxPrice)
+              search['sell_price'][1]['value'] =  this.maxPrice;
+              
+              return search;
       }
     }
   }

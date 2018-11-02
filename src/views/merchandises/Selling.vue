@@ -1,7 +1,7 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<merchandise-header :search = "search"></merchandise-header>
+		<template slot = "header" slot-scope="{ search, searchHandler  }">
+			<merchandise-header v-model = "search" @search="searchHandler"></merchandise-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<merchandise-table :merchandises="data"></merchandise-table>
@@ -38,9 +38,9 @@
 			},
 		},
 		methods: {
-      search(data) {
-        this.query = _.extend(this.query, data);
-      }
+	      search(data) {
+	        this.query = _.extend(this.query, data);
+	      }
 		}
 	}
 </script>
