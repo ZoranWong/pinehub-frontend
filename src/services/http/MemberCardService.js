@@ -13,7 +13,7 @@ export default class MemberCardService extends ApiService{
 			response =  await this.service('mock.memberCards').mock(page, search, limit);
 		}else{
 			//服务器交互代码
-			response = await this.httpGet('memberCards', {page: page, limit: limit, searchJson: search});
+			response = await this.httpGet('member/cards', {page: page, limit: limit, searchJson: search});
 		}
 		memberCards = response.data;
 		let pagination = response.meta.pagination;
@@ -29,7 +29,7 @@ export default class MemberCardService extends ApiService{
 			response =  await this.service('mock.memberCard').mock(id);
 		}else{
 			//服务器交互代码
-			response = await this.httpGet(`memberCard/${id}`);
+			response = await this.httpGet(`member/card/${id}`);
 		}
 		return response.data;
 	}
