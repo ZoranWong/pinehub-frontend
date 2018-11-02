@@ -86,10 +86,12 @@
       },
       search(){
       	let search = this.buildSearchData();
+      	console.log(search,"lllllllllllllllll")
       	this.$emit('search', search);
       },
       initSearchData(search) {
       	  console.log(search,"kkkkkkkkkkkkkkk")
+//    	  this.buildSearchData()
           this.shopName  =  search['name'] ;
 //        this.minSellNum =  search['sell_num'][0]['value'] ; 
 //        this.maxSellNum = search['sell_num'][1]['value'] ;
@@ -98,23 +100,34 @@
           let search = {
               "sell_num": [
                   {
-                      'opt': '>=',
-                      'value':''
+                      'opt': '>='
                   },
                   {
                       'join': 'and',
-                      'opt': '>=',
-                      'value':''
+                      'opt': '<'
+                  }
+              ],
+              "sell_price": [
+                  {
+                      'opt': '>='
+                  },
+                  {
+                      'join': 'and',
+                      'opt': '<'
                   }
               ]
           };
           if(this.shopName)
               search['name'] = this.shopName;
-          if(this.minSellNum) {
+          if(this.minSellNum)
               search['sell_num'][0]['value'] = this.minSellNum;
-          }
           if(this.maxSellNum)
-              search['sel_num'][1]['value'] =  this.maxSellNum;
+              search['sell_num'][1]['value'] =  this.maxSellNum;
+          if(this.minPrice)
+              search['sell_price'][0]['value'] = this.minPrice;
+          if(this.maxPrice)
+              search['sell_price'][1]['value'] =  this.maxPrice;
+              
               return search;
       }
     }
