@@ -35,20 +35,20 @@ route.group('/project/:projectId/marketing', {
 			'tag': '更新满减/送活动'
 		});
 
-		route.addRoute('/paid_gift', {
+		route.addRoute('paid_gift', {
 			'name': 'pay-gift',
 			'component': PaidGift,
 			'tag': '支付有礼'
 		});
 
-		route.addRoute('/paid_gift/create', {
+		route.addRoute('paid_gift/create', {
 			'name': 'pay-gift-create',
 			'component': PaidGiftCreate,
 			'tag': '创建支付礼包'
 		});
 
 
-		route.addRoute('/coupons', {
+		route.addRoute('coupons', {
 			'name': 'coupons',
 			'component': Coupons,
 			'tag': '优惠券'
