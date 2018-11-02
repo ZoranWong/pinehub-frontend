@@ -37,6 +37,9 @@
 </template>
 <script>
   import SearchHeader from '@/components/SearchHeader';
+  import ORDER_STATUS from './OrderStatus';
+  import PAYMENT_TYPES from './Payment';
+  import _ from 'underscore';
   export default {
       components: {
           'search-header': SearchHeader
@@ -55,8 +58,8 @@
             beginAt: null,
             endAt: null,
             merchandiseName: null,
-            orderStatus: 0,
-            payType: 0,
+            orderStatus: 'ALL',
+            payType: 'ALL',
             payTypes: {
                 "ALL": '全部',
                 "UNKNOWN": '未知支付',
@@ -97,15 +100,28 @@
               this.$emit('search', search);
           },
           initSearchData(search) {
-              console.log(search);
               this.receiverName  =  search['receiver_name'] ;
               this.receiverMobile  =  search['receiver_mobile'] ;
               this.orderCode   =   search['code'];
               this.merchandiseName  = search['orderItems.name'] ;
               this.beginAt =  search['paid_at'][0]['value'] ;
               this.endAt = search['paid_at'][1]['value'] ;
-              this.orderStatus = search['status']  ;
-              this.payType =  search['pay_type'];
+              let $this = this;
+              _.map(ORDER_STATUS, function (value, index) {
+                  if(value == search['status']) {
+                      $this.orderStatus = index;
+                      if(index === 'WAIT_SEND' || index === 'PAID') {
+                          $this.orderStatus = 'WAIT_SEND';
+                      }
+                  }
+              });
+              _.map(PAYMENT_TYPES, function (value, index) {
+                  if(value == search['pay_type']) {
+                      $this.payType = index;
+                      return index;
+                  }
+                  return null;
+              });
           },
           buildSearchData() {
               let search = {
@@ -132,10 +148,10 @@
               }
               if(this.endAt)
                   search['paid_at'][1]['value'] =  this.endAt;
-              if(this.orderStatus)
-                  search['status'] = this.orderStatus;
-              if(this.payType)
-                  search['pay_type'] = this.payType;
+              if(this.orderStatus && ORDER_STATUS[this.orderStatus])
+                  search['status'] = ORDER_STATUS[this.orderStatus];
+              if(this.payType && PAYMENT_TYPES[this.payType])
+                  search['pay_type'] = PAYMENT_TYPES[this.payType];
               return search;
           }
       }

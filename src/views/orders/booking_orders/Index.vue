@@ -1,7 +1,7 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<order-header :search = "search"></order-header>
+		<template slot = "header" slot-scope="{ search, searchHandler }">
+			<order-header v-model = "search" @search = "searchHandler"></order-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<order-table :orders="data"></order-table>
@@ -21,16 +21,16 @@
 			'order-header': Header,
 			'table-list': TableList
 		},
-		data() {
-			return {
-				service: 'http.orders',
-				event: 'bookingOrders/setList',
-				current: 'bookingOrders/currentPage',
-				query: {
-				    "type": [1, 2]
-				}
-			};
-		},
+        data: function () {
+            return {
+                service: 'http.orders',
+                event: 'bookingOrders/setList',
+                current: 'bookingOrders/currentPage',
+                query: {
+                    "type": [1, 2]
+                }
+            };
+        },
 		mounted() {
 
 		},

@@ -25,7 +25,7 @@
 <script>
   /* eslint-disable */
 	import Paginator from '@/components/Paginator';
-  import _ from 'underscore';
+    import _ from 'underscore';
 	export default {
 		name: 'TableList',
 		components: {
@@ -58,9 +58,6 @@
 				searchJson: {}
 			};
 		},
-		mounted() {
-
-		},
 		computed: {
 			totalNum() {
 				return this.model.totalNum;
@@ -83,11 +80,6 @@
 				return 'data.list';
 			}
 		},
-		watch: {
-		  searchJson(value) {
-			console.log(value);
-		  }
-		},
 		methods: {
 			search(data) {
 				data['page'] = 1;
@@ -103,7 +95,12 @@
 			  let query = this.$query();
 			  let q = {};
 			  for(let key in query) {
-			      q[key] = this.json.decode(this.base64.decodeURI(query[key]));
+			      let value = this.json.decode(this.base64.decodeURI(query[key]));
+			      if(_.isObject(value) || _.isArray(value)) {
+			          q[key] = value;
+				  }else{
+			          q[key] = query[key];
+				  }
 			  }
 			  this.searchJson =  Object.assign({}, q, this.query);
 		}
