@@ -13,7 +13,7 @@ route.group('/project/:projectId/marketing', {
 	'tag': '营销',
 	'component': Layout,
 	'uses': function(route) {
-			route.addRoute('', {
+		route.addRoute('', {
 			'name': 'marketing',
 			'component': Index,
 			'tag': '营销中心'
@@ -23,7 +23,7 @@ route.group('/project/:projectId/marketing', {
 			'component': UpToCut,
 			'tag': '满减/送'
 		});
-		route.addRoute('up_to_cut/create', {
+		route.addRoute('up_to_cut/menuForm', {
 			'name': 'up-to-cut-create',
 			'component': UpToCutCreate,
 			'tag': '新建满减/送活动'
@@ -41,8 +41,8 @@ route.group('/project/:projectId/marketing', {
 			'tag': '支付有礼'
 		});
 
-		route.addRoute('paid_gift/create', {
-			'name': 'pay-gift-create',
+		route.addRoute('paid_gift/menuForm', {
+			'name': 'pay-gift-menuForm',
 			'component': PaidGiftCreate,
 			'tag': '创建支付礼包'
 		});
@@ -54,7 +54,7 @@ route.group('/project/:projectId/marketing', {
 			'tag': '优惠券'
 		});
 
-		route.addRoute('/coupon/create', {
+		route.addRoute('/coupon/menuForm', {
 			'name': 'coupon-create',
 			'component': CouponCreate,
 			'tag': '新建优惠券'

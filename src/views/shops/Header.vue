@@ -124,7 +124,7 @@
       create() {
         let params = {};
         params['projectId'] = this.$requestInput('projectId');
-        this.$router.push({name: 'shop-create',  params: params});
+        this.$router.push({name: 'shop-menuForm',  params: params});
       }
     }
   }

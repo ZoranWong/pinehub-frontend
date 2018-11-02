@@ -42,7 +42,7 @@
 			},
 			createActivity() {
 				this.$router.push({
-					name: 'pay-gift-create',
+					name: 'pay-gift-menuForm',
 					params: {
 						projectId: this.$requestInput('projectId')
 					}

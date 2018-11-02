@@ -45,7 +45,7 @@ export default {
   methods: {
     create() {
       this.$router.push({
-        name: 'rule-create',
+        name: 'rule-menuForm',
         params: {
           projectId: this.$requestInput('projectId')
         }

@@ -67,27 +67,28 @@ export default class Menus extends Model {
 	      icon: '#icon-icon_',
 	      routeName: 'marketing',
 	      children: [
-          {
-            id: '12',
-            title: '营销中心',
-            icon: '',
-            routeName: 'marketing',
-  	      },{
-            id: '13',
-            title: '满减/送',
-            icon: '',
-            routeName: 'up-to-cut',
-	        },{
-            id: '14',
-            title: '支付有礼',
-            icon: '',
-            routeName: 'pay-gift',
-	        },{
-            id: '15',
-            title: '优惠券',
-  	        icon: 'fa fa-ticket',
-  	        routeName: 'coupons',
-          }]
+          // {
+          //   id: '12',
+          //   title: '营销中心',
+          //   icon: '',
+          //   routeName: 'marketing',
+          //   },
+            {
+              id: '13',
+              title: '满减/送',
+              icon: '',
+              routeName: 'up-to-cut',
+            },{
+              id: '14',
+              title: '支付有礼',
+              icon: '',
+              routeName: 'pay-gift',
+            },{
+              id: '15',
+              title: '优惠券',
+              icon: 'fa fa-ticket',
+              routeName: 'coupons',
+            }]
       },{
         id: '16',
 	      title: '商品',

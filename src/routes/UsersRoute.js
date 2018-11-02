@@ -46,7 +46,7 @@ route.group('/project/:projectId/rule', {
 	'component': Layout,
 	'uses': function(route) {
 		route.addRoute('create', {
-			'name': 'rule-create',
+			'name': 'rule-menuForm',
 			'component': Rule,
 			'tag': '新建特殊积分规则'
 		});
@@ -62,7 +62,7 @@ route.group('/project/:projectId/member', {
 			'tag': '会员卡管理'
 		});
 
-		route.addRoute('card/create', {
+		route.addRoute('card/menuForm', {
 			'name': 'member-card-create',
 			'component': MemberCardCreate,
 			'tag': '新建会员卡'
