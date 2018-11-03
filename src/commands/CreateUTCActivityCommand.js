@@ -4,17 +4,17 @@ export default class CreateUTCActivityCommand extends Command {
     super(app);
   }
 
-  async handle(projectId, activity, $vm) {
-    if( !activity ||  !activity['gifts'] || activity['gifts'].length === 0 ){
-      $vm.$message({
+  async handle(projectId, activity) {
+    if( !activity ||  !activity['items'] || activity['items'].length === 0 ){
+      this.$message({
         message: '未添加支付礼包',
         type: 'error'
       });
     }else{
-      for(let i = 0; i < activity['gifts'].length; i++) {
-        let gift = activity['gifts'][i];
+      for(let i = 0; i < activity['items'].length; i++) {
+        let gift = activity['items'][i];
         if(!gift['cost'] && !gift['discount'] && !gift['score'] && !gift['ticket_id']) {
-          $vm.$message({
+          this.$message({
             message: '支付礼包没有选择填写礼包信息',
             type: 'error'
           });
@@ -23,14 +23,14 @@ export default class CreateUTCActivityCommand extends Command {
       }
       let result = await this.$service('http.upToCutActivities').create(projectId, activity);
       if(result) {
-        $vm.$message({
+        this.$message({
           message: '恭喜你，活动创建成功！',
           type: 'success'
         });
-        $vm.$router.push({
+        this.$router.push({
           name: 'up-to-cut',
           params: {
-            projectId: $vm.$requestInput('projectId')
+            projectId: this.$requestInput('projectId')
           }
         });
       }

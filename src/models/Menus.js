@@ -78,12 +78,14 @@ export default class Menus extends Model {
               title: '满减/送',
               icon: '',
               routeName: 'up-to-cut',
-            },{
-              id: '14',
-              title: '支付有礼',
-              icon: '',
-              routeName: 'pay-gift',
-            },{
+            },
+            //   {
+            //   id: '14',
+            //   title: '支付有礼',
+            //   icon: '',
+            //   routeName: 'pay-gift',
+            // },
+              {
               id: '15',
               title: '优惠券',
               icon: 'fa fa-ticket',

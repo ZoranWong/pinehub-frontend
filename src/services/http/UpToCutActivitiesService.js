@@ -25,7 +25,7 @@ export default class UpToCutActivitiesService extends ApiService{
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.activity.utc.create').mock(activity);
 		} else {
-			response = await this.httpPost(`project/${projectId}/activity/utc`, activity);
+			response = await this.header({'ProjectId': projectId}).httpPost(`payment_activity/coupon`, activity);
 		}
 		return response.data;
 	}

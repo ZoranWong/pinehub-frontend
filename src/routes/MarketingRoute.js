@@ -4,9 +4,9 @@ import UpToCut from '@/views/marketing/up_to_cut/Index';
 import PaidGift from '@/views/marketing/paid_gift/Index';
 import Coupons from '@/views/marketing/coupon/Index';
 import Index from '@/views/marketing/Index';
-import UpToCutCreate from '@/views/marketing/up_to_cut/Create';
+import UpToCutCreate from '@/views/marketing/up_to_cut/UpToCutCreate';
 import UpToCutUpdate from '@/views/marketing/up_to_cut/Edit';
-import PaidGiftCreate from '@/views/marketing/paid_gift/Create';
+import PaidGiftCreate from '@/views/marketing/paid_gift/PaidGiftCreate';
 import CouponCreate from '@/views/marketing/coupon/Create';
 let route = new Route();
 route.group('/project/:projectId/marketing', {
