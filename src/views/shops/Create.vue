@@ -25,14 +25,14 @@ export default {
 	    };
 		},
 		methods: {
-	  	async submit(){
-				let result = await this.$refs['shopInfo'].$refs['shopForm'].validate();
-				if(!result) {
-					console.log('validate fail');
-				} else {
-					this.$command('CREATE_SHOP', this.$requestInput('projectId'), this.shop, this);
-				}
-	  	}
+		  	async submit(){
+					let result = await this.$refs['shopInfo'].$refs['shopForm'].validate();
+					if(!result) {
+						console.log('validate fail');
+					} else {
+						this.$command('CREATE_SHOP', this.$requestInput('projectId'), this.shop, this);
+					}
+		  	}
 		},
 		created() {
 		}

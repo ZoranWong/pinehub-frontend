@@ -21,10 +21,7 @@
       </template>
     </el-table-column>
     <el-table-column prop="isMember" label="客户身份"></el-table-column>
-    <el-table-column label="性别">
-      <template slot-scope="scope">
-        {{sex[scope.row.sex]}}
-      </template>
+    <el-table-column prop = 'sex' label="性别">
     </el-table-column>
     <el-table-column label="操作" >
       <template slot-scope="scope" >

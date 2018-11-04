@@ -27,7 +27,6 @@
 				event: 'members/setList',
 				current: 'members/currentPage',
         query: {
-          status: 0
 				}
 			};
 		},

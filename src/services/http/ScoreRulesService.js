@@ -14,7 +14,7 @@ export default class ScoreRulesService extends ApiService{
 			response =  await this.service('mock.scoreRules').mock(page, search, limit);
 		}else{
 			//服务器交互代码
-			response = await this.httpGet('score/rules', {page: page, limit: limit, searchJson: search});
+			response = await this.httpGet('score-rules', {page: page, limit: limit, searchJson: search});
 		}
 		rules = response.data;
 		let pagination = response.meta.pagination;

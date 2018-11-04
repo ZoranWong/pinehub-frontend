@@ -1,14 +1,14 @@
 <template>
-  <search-header>
+  <search-header @search = "search">
     <template slot = "searchInput">
       <el-form-item prop="orderCode" label="订单号" >
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverName" label="收货人姓名" >
-        <el-input size="small" v-model="recieverName" placeholder="收货人姓名"></el-input>
+      <el-form-item prop="receiverName" label="客户姓名" >
+        <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverMobile" label="收货人手机号" >
-        <el-input size="small" v-model="recieverMobile" placeholder="收货人手机号"></el-input>
+      <el-form-item prop="receiverMobile" label="客户手机号" >
+        <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
       </el-form-item>
       <el-form-item prop="beginAt" label="下单时间">
         <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
@@ -18,9 +18,6 @@
       </el-form-item>
       <el-form-item prop="endAt" label="" >
         <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"></el-date-picker>
-      </el-form-item>
-      <el-form-item prop="merchandiseName" label="商品名称">
-        <el-input size="small" v-model="merchandiseName" placeholder="商品名称"></el-input>
       </el-form-item>
       <el-form-item prop="orderStatus" label="订单状态">
         <el-select size="small" v-model="orderStatus" placeholder="订单状态">
@@ -36,34 +33,120 @@
   </search-header>
 </template>
 <script>
-  import SearchHeader from '@/components/SearchHeader';
-  export default {
-    components: {
-      'search-header': SearchHeader
-    },
-    data() {
-      return {
-        recieverName: null,
-        orderCode: null,
-        recieverMobile: null,
-        beginAt: null,
-        endAt: null,
-        merchandiseName: null,
-        orderStatus: 0,
-        payType: 0,
-        payTypes: [
-          '全部',
-          '未知支付',
-          '支付宝',
-          '微信支付'
-        ],
-        statusDict: [
-          "全部",
-          "未支付",
-          "已完成",
-          "订单关闭"
-        ]
-      };
+    import SearchHeader from '@/components/SearchHeader';
+    import ORDER_STATUS from '../OrderStatus';
+    import PAYMENT_TYPES from '../Payment';
+    import _ from 'underscore';
+    export default {
+        components: {
+            'search-header': SearchHeader
+        },
+        props: {
+            value: {
+                default: null,
+                type: Object
+            }
+        },
+        data() {
+            return {
+                receiverName: null,
+                orderCode: null,
+                receiverMobile: null,
+                beginAt: null,
+                endAt: null,
+                orderStatus: 'ALL',
+                payType: 'ALL',
+                payTypes: {
+                    "ALL": '全部',
+                    "UNKNOWN": '未知支付',
+                    "ALI_PAY": '支付宝',
+                    "WECHAT_PAY": '微信支付'
+                },
+                statusDict: {
+                    "ALL": "全部",
+                    "WAIT_PAY": "未支付",
+                    "PAID": "已支付",
+                    "COMPLETED": "已完成",
+                    "REFUNDING": "退款中",
+                    "REFUSE_REFUND": "拒绝退款",
+                    "REFUNDED": "退款成功",
+                    "ORDER_CANCEL": "订单关闭"
+                }
+            };
+        },
+        watch: {
+            value: {
+                deep: true,
+                handler(search) {
+                    if(search) {
+                        this.initSearchData(search);
+                    }
+                }
+            }
+        },
+        created() {
+            if(this.value) {
+                this.initSearchData(this.value);
+            }
+        },
+        methods: {
+            search () {
+                let search = this.buildSearchData();
+                this.$emit('search', search);
+            },
+            initSearchData(search) {
+                this.receiverName  =  search['receiver_name'] ;
+                this.receiverMobile  =  search['receiver_mobile'] ;
+                this.orderCode   =   search['code'];
+                this.beginAt =  search['paid_at'][0]['value'] ;
+                this.endAt = search['paid_at'][1]['value'] ;
+                let $this = this;
+                _.map(ORDER_STATUS, function (value, index) {
+                    if(value == search['status']) {
+                        $this.orderStatus = index;
+                        if(index === 'WAIT_SEND' || index === 'PAID') {
+                            $this.orderStatus = 'PAID';
+                        }
+                    }
+                });
+                _.map(PAYMENT_TYPES, function (value, index) {
+                    if(value == search['pay_type']) {
+                        $this.payType = index;
+                        return index;
+                    }
+                    return null;
+                });
+            },
+            buildSearchData() {
+                let search = {
+                    "paid_at": [
+                        {
+                            'opt': '>='
+                        },
+                        {
+                            'join': 'and',
+                            'opt': '<'
+                        }
+                    ],
+                    "type": 0
+                };
+                if(this.receiverName)
+                    search['receiver_name'] = this.receiverName;
+                if(this.receiverMobile)
+                    search['receiver_mobile'] = this.receiverMobile;
+                if(this.orderCode)
+                    search['code'] = this.orderCode;
+                if(this.beginAt) {
+                    search['paid_at'][0]['value'] = this.beginAt;
+                }
+                if(this.endAt)
+                    search['paid_at'][1]['value'] =  this.endAt;
+                if(this.orderStatus && ORDER_STATUS[this.orderStatus])
+                    search['status'] = ORDER_STATUS[this.orderStatus];
+                if(this.payType && PAYMENT_TYPES[this.payType])
+                    search['pay_type'] = PAYMENT_TYPES[this.payType];
+                return search;
+            }
+        }
     }
-  }
 </script>

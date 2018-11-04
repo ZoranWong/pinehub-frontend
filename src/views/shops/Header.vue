@@ -50,7 +50,6 @@
     },
     watch: {
       value(search) {
-        console.log(search);
         if(search) {
           this.shopName = search['name'];
           this.shopCode = search['code'];
@@ -61,7 +60,6 @@
       }
     },
     created() {
-      console.log(this.value);
       let search = this.value;
       if(search) {
         this.shopName = search['name'];

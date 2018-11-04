@@ -8,7 +8,8 @@ export default class DataListCommand extends Command {
   async handle(service, event, page, search = null, limit = 15) {
     console.log('command handle', Date.now());
     search = this.json.encode(search);
-    search = this.base64.encode(search);
+    search = encodeURIComponent(search);
+    search = this.base64.encodeURI(search);
     let headers = {};
     if(this.$requestInput('projectId')) {
       headers = {'ProjectId': this.$requestInput('projectId')}
