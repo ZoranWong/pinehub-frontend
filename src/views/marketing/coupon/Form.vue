@@ -59,8 +59,23 @@
               <el-date-picker size = "mini" v-model = "ticket['base_info']['date_info']['end_timestamp']"></el-date-picker>
             </el-form-item>
           </div>
-          <el-radio label = "DATETYPE_FIX_TERM_0">领到券当日开始N天内有效</el-radio>
-          <el-radio label = "DATETYPE_FIX_TERM_1">领到券次日开始N天内有效</el-radio>
+          <el-radio label = "DATETYPE_FIX_TERM_0">
+            <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATETYPE_FIX_TERM_0'">
+              领到券当日开始N天内有效
+            </span>
+            <span v-else>
+              领到券当日开始<el-input-number></el-input-number>天内有效
+            </span>
+          </el-radio>
+          <el-radio label = "DATETYPE_FIX_TERM_1">
+            <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATETYPE_FIX_TERM_1'">
+              领到券次日开始N天内有效
+            </span>
+            <span v-else>
+              领到券次日开始<el-input-number></el-input-number>天内有效
+            </span>
+
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label = "分享设置:" prop = "base_info.can_share">

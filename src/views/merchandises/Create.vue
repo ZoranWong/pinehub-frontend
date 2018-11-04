@@ -26,9 +26,14 @@ export default {
     };
   },
   methods: {
-    async create() {
-
-    }
+    async create(){
+					let result = await this.$refs['merchandise'].$refs['merchandise'].validate();
+					if(!result) {
+						console.log('validate fail');
+					} else {
+						this.$command('CREATE_SHOP', this.$requestInput('projectId'), this.shop, this);
+					}
+		  	}
   }
 }
 </script>

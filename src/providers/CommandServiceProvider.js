@@ -22,19 +22,23 @@ import GetPublicKeyCommand from '@/commands/GetPublicKeyCommand';
 import ClearAccountCommand from '@/commands/ClearAccountCommand';
 import CreateMpConfigCommand from '@/commands/CreateMpConfigCommand';
 import UpdateMpConfigCommand from '@/commands/UpdateMpConfigCommand';
+import CreateWechatMenuCommand from '@/commands/CreateWechatMenuCommand';
+import UpdateWechatMenuCommand from '@/commands/UpdateWechatMenuCommand';
+
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
-    this.commands = [];
   }
+
   register() {
     let commands = [
-      SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
-      GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
-      ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
-      GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
-      CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
-      ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand
+        SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
+        GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
+        ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
+        GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
+        CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
+        ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
+        UpdateWechatMenuCommand
     ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);

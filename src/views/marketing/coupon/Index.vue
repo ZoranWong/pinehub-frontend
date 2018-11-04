@@ -27,8 +27,7 @@
 				service: 'http.couponCards',
 				event: 'couponCards/setList',
 				current: 'couponCards/currentPage',
-        query: {
-          status: 0
+				query: {
 				}
 			};
 		},

@@ -60,7 +60,7 @@
 		},
 		methods: {
 			create() {
-				this.$router.push({name: 'create-wx-menu', query: { projectId: this.$router.currentRoute.query.projectId }});
+				this.$router.push({name: 'create-wx-menu', query: { projectId: this.$requestInput('projectId') }});
 			}
 		}
 	}

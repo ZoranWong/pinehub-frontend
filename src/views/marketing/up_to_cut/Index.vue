@@ -27,8 +27,7 @@
 				service: 'http.upToCutActivities',
 				event: 'upToCutActivities/setList',
 				current: 'upToCutActivities/currentPage',
-        query: {
-          status: 'all'
+				query: {
 				}
 			};
 		},

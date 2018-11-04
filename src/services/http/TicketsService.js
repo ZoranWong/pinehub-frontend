@@ -5,14 +5,16 @@ export default class TicketsService extends ApiService{
 	}
 
   async list(projectId) {
-    let tickets = null;
-		let response = null;
-    if(this.$application.needMock()) {
-      response =  await this.service('mock.tickets').mock();
-    }else{
-      response = await this.httpGet(`project/${projectId}/tickets`);
-    }
-    tickets = response.data;
-    return tickets;
+     let response = null;
+
+     if(this.$application.needMock()) {
+         response =  await this.service('mock.tickets').mock();
+     }else{
+         response = await this.header({'ProjectId': projectId}).httpGet(`tickets`);
+     }
+
+     let tickets = response.data;
+
+     return tickets;
   }
 }

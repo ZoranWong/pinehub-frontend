@@ -27,8 +27,7 @@
 				service: 'http.paidGiftActivities',
 				event: 'paidGiftActivities/setList',
 				current: 'paidGiftActivities/currentPage',
-        query: {
-          status: 0
+				query: {
 				}
 			};
 		},
@@ -38,12 +37,12 @@
 			},
 		},
 		methods: {
-      search(data) {
-        this.query = _.extend(this.query, data);
-      },
+			search(data) {
+				this.query = _.extend(this.query, data);
+			},
 			createActivity() {
 				this.$router.push({
-					name: 'pay-gift-create',
+					name: 'pay-gift-menuForm',
 					params: {
 						projectId: this.$requestInput('projectId')
 					}

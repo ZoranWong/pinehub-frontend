@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import Form from './Form';
+import Form from './UpToCutForm';
 export default {
   name: 'UpToCutEdit',
   components: {

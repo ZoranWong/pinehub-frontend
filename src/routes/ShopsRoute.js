@@ -34,7 +34,7 @@ route.group('/project/:projectId/shop', {
 	'component': Layout,
 	'uses': function(route) {
 			route.addRoute('create', {
-				name: 'shop-create',
+				name: 'shop-menuForm',
 				component: Create,
 				tag: '店铺创建'
 			});

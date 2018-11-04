@@ -13,7 +13,7 @@ export default class Customer {
     this.canUseScore =customer['can_use_score'];
     this.score = customer['score'];
     this.channel = customer['channel'];
-    this.isMember = customer['is_member'] ? "是" : "否";
+    this.isMember = customer['is_member']?"会员":"非会员";
     this.sex = sex[customer['sex']];
     this.tags = customer['tags'];
   }

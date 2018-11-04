@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-box" ref="wechatMenu" >
+  <div class="menu-box" ref="wechatMenu" @click="edit(menuData)">
     <h4 class="title">{{menuName}}</h4>
     <div class="mobile" :style = "{height: height + 'px'}">
       <div class="mobile-header">
@@ -9,7 +9,7 @@
       </div>
       <div class="mobile-footer">
         <div class="menus-button">
-          <el-col  :span="24 / menus.length" class="menu-button" slot="reference" v-for="(menu, index) in menus" :key="index">
+          <el-col  :span="24 / menus.length" class="menu-button" slot="reference" v-for="(menu, index) in menus" :key="index"  >
             <el-button type="text">{{menu.name}}</el-button>
           </el-col>
         </div>
@@ -31,7 +31,7 @@ export default{
   },
   computed: {
     menus() {
-      return this.menuData['menus'];
+        return this.menuData['menus']['button'];
     },
     headerTitle() {
       return '福年来';
@@ -49,6 +49,9 @@ export default{
     },
     handleResize() {
       this.setHeight();
+    },
+    edit(menu) {
+        this.$command('REDIRECT', {name: 'update-wx-menu', params: { projectId: this.$requestInput('projectId'), id: menu.id}, query: {menu: this.base64.encodeURI(this.json.encode(menu))}});
     }
   },
   created() {

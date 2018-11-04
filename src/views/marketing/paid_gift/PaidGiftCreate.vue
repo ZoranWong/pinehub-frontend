@@ -5,7 +5,7 @@
         <el-tab-pane label="新建满减送活动" name="first"></el-tab-pane>
       </el-tabs>
       <div class="form-container">
-        <create-form v-model="activity" ref="activity"></create-form>
+        <create-form v-model = "activity" ref = "activity"></create-form>
       </div>
       <div class="dialog-footer">
         <el-button class="submit-button" type="primary" size="small" @click="create">提交</el-button>
@@ -14,9 +14,9 @@
   </div>
 </template>
 <script>
-import Form from './Form';
+import Form from './PaidGiftForm';
 export default {
-  name: 'UpToCutCreate',
+  name: 'PaidGiftCreate',
   components: {
     'create-form': Form
   },
@@ -35,7 +35,7 @@ export default {
         });
       } else {
         console.log(this.activity);
-        this.$command('CREATE_UTC_ACTIVITY',this.$requestInput('projectId'), this.activity, this);
+        this.$command('CREATE_PAID_GIFT_ACTIVITY',this.$requestInput('projectId'), this.activity, this);
       }
     }
   }

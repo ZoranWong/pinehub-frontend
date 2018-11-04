@@ -14,7 +14,7 @@ export default class PaidGiftActivitiesService extends ApiService{
 			response =  await this.service('mock.payGiftActivities').mock(page, search, limit);
 		}else{
 			//服务器交互代码
-			response = await this.httpGet('pay_gift/activities', {page: page, limit: limit, searchJson: search});
+			response = await this.httpGet('payment_activities/gift', {page: page, limit: limit, searchJson: search});
 		}
 		activities = response.data;
 		let pagination = response.meta.pagination;

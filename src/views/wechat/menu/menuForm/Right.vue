@@ -18,7 +18,7 @@
             </el-form-item>
             <el-form-item :label="!menu.editedSubMenu ? '菜单内容' :'子菜单内容'" prop="type">
               <el-radio-group v-model="menu.editedMenu.type" @change="synchronizeMenuType">
-                <el-radio label="click">发送消息</el-radio>
+                <!--<el-radio label="click">发送消息</el-radio>-->
                 <el-radio label="view">跳转网页</el-radio>
                 <el-radio label="miniprogram">跳转小程序</el-radio>
                </el-radio-group>
@@ -77,21 +77,21 @@
 
       },
       async synchronizeMenuType(type) {
-				this.menu.editedMenu.type = type;
+        this.menu.editedMenu.type = type;
         this.$emit('input', this.menu);
       },
-			mpAppIdChange(appId) {
-				this.menu.editedMenu['appid'] = appId;
+      mpAppIdChange(appId) {
+        this.menu.editedMenu['appid'] = appId;
         this.$emit('input', this.menu);
-			},
-			h5PathChange( path ) {
-				this.menu.editedMenu['url'] = path;
+      },
+      h5PathChange( path ) {
+        this.menu.editedMenu['url'] = path;
         this.$emit('input', this.menu);
-			},
-			mpPathChange(path) {
-				this.menu.editedMenu['pagepath'] = path;
+      },
+      mpPathChange(path) {
+        this.menu.editedMenu['pagepath'] = path;
         this.$emit('input', this.menu);
-			}
+      }
     }
 	}
 </script>
