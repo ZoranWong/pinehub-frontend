@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import Form from './Form';
+import Form from './CouponForm';
 export default {
   name: 'CouponCreate',
   components: {
@@ -22,21 +22,23 @@ export default {
   },
   data() {
     return {
-      ticket: null
+      ticket: {}
     };
   },
   methods: {
     async create() {
-      let result = await this.$refs['activity'].$refs['activity'].validate();
-      if(!result) {
-        this.$message({
-          message: '有必要参数未填写或者格式错误，请填写后再提交',
-          type: 'error'
-        });
-      } else {
-        console.log(this.activity);
-        this.$command('CREATE_PAID_GIFT_ACTIVITY',this.$requestInput('projectId'), this.activity, this);
-      }
+      this.$refs['ticket'].$refs['ticketForm'].validate(function (res) {
+          console.log(res);
+      });
+      // if(!result) {
+      //   this.$message({
+      //     message: '有必要参数未填写或者格式错误，请填写后再提交',
+      //     type: 'error'
+      //   });
+      // } else {
+      //   console.log(this.activity);
+      //   this.$command('CREATE_PAID_GIFT_ACTIVITY',this.$requestInput('projectId'), this.activity, this);
+      // }
     }
   }
 }

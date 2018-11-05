@@ -7,7 +7,7 @@ import Index from '@/views/marketing/Index';
 import UpToCutCreate from '@/views/marketing/up_to_cut/UpToCutCreate';
 import UpToCutUpdate from '@/views/marketing/up_to_cut/Edit';
 import PaidGiftCreate from '@/views/marketing/paid_gift/PaidGiftCreate';
-import CouponCreate from '@/views/marketing/coupon/Create';
+import CouponCreate from '@/views/marketing/coupon/CouponCreate';
 let route = new Route();
 route.group('/project/:projectId/marketing', {
 	'tag': '营销',
