@@ -7,27 +7,27 @@
 				<el-button size="mini" type="primary" @click="openAuthDialog(project, 0)" >{{!project.officalAccountAppId ? '公众号授权' : '公众号重新授权'}}</el-button>
 				<el-button size="mini" @click="openMpConfigDialog(project)" >{{!project.miniProgramAppId ? '绑定小程序' : '小程序重新设置'}}</el-button>
 			</div>
-  		<div class="project-info">
-  			<div>
+			<div class="project-info">
+				<div>
 					<p>店铺</p>
-  				<p>{{project.shopCount}}</p>
-  			</div>
-  			<div>
-  				<p>昨日订单</p>
-  				<p>{{project.orderCount}}</p>
-  			</div>
-  			<div>
-  				<p>昨日新增用户</p>
-  				<p>{{project.newUserCount}}</p>
-  			</div>
-  			<div>
-  				<p>活跃用户数</p>
-  				<p>{{project.activeUserCount}}</p>
-  			</div>
-  			<div>
-  				<p>未处理退款订单</p>
-  				<p>{{project.refundingOrderCount}}</p>
-  			</div>
+					<p>{{project.shopCount}}</p>
+				</div>
+				<div>
+					<p>昨日订单</p>
+					<p>{{project.orderCount}}</p>
+				</div>
+				<div>
+					<p>昨日新增用户</p>
+					<p>{{project.newUserCount}}</p>
+				</div>
+				<div>
+					<p>活跃用户数</p>
+					<p>{{project.activeUserCount}}</p>
+				</div>
+				<div>
+					<p>未处理退款订单</p>
+					<p>{{project.refundingOrderCount}}</p>
+				</div>
 			</div>
 			<chart :projectId="project.id"></chart>
 		</div>

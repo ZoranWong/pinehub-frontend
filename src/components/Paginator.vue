@@ -102,10 +102,10 @@
               query['page'] = page;
               params['projectId'] = this.$requestInput('projectId');
               this.$router.push({name: this.$currentRouteName(), params: params, query: query});
-              this.updateList();
+              this.updateList(page);
           },
-          updateList () {
-              let page = !this.search['page'] ? 1 : this.search['page'];
+          updateList (page = null) {
+              page = page ? page : 1;
               let search = this.search;
               delete search['page'];
               this.$command(this.command, this.service, this.event, page, search, this.limit);

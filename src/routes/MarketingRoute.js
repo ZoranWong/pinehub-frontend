@@ -23,7 +23,7 @@ route.group('/project/:projectId/marketing', {
 			'component': UpToCut,
 			'tag': '满减/送'
 		});
-		route.addRoute('up_to_cut/menuForm', {
+		route.addRoute('up_to_cut/create', {
 			'name': 'up-to-cut-create',
 			'component': UpToCutCreate,
 			'tag': '新建满减/送活动'
@@ -41,8 +41,8 @@ route.group('/project/:projectId/marketing', {
 			'tag': '支付有礼'
 		});
 
-		route.addRoute('paid_gift/menuForm', {
-			'name': 'pay-gift-menuForm',
+		route.addRoute('paid_gift/create', {
+			'name': 'pay-gift-create',
 			'component': PaidGiftCreate,
 			'tag': '创建支付礼包'
 		});
@@ -54,7 +54,7 @@ route.group('/project/:projectId/marketing', {
 			'tag': '优惠券'
 		});
 
-		route.addRoute('/coupon/menuForm', {
+		route.addRoute('coupon/create', {
 			'name': 'coupon-create',
 			'component': CouponCreate,
 			'tag': '新建优惠券'

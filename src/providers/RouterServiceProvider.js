@@ -26,7 +26,7 @@ export default class RouteServiceProvider extends ServiceProvider {
     });
   }
   beforeEach(to, from, next) {
-    if(this.app.instances['vue-store'].getters['account/logined']) {
+    if(this.app.token.getToken()) {
       let menu = this.app.instances['vue-store'].getters['menus/getMenuByRouteName'](to.name);
       this.app.instances['vue-store'].state.menus.activeMenu = menu ? menu['id'] : null;
       if(!to.redirect){

@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import Form from './Form';
+import Form from './MemberCardForm';
 export default {
   name: 'MemberCardCreate',
   components: {
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     async create() {
-      console.log(this.card);
+        this.$command('CREATE_MEMBER_CARD', this.card)
     }
   }
 }

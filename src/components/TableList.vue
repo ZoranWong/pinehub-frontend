@@ -77,7 +77,7 @@
 				return this.$store.getters[this.current];
 			},
 			command() {
-				return 'data.list';
+				return 'DATA_LIST';
 			}
 		},
 		methods: {

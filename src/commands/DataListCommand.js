@@ -27,6 +27,6 @@ export default class DataListCommand extends Command {
     });
   }
   static commandName() {
-    return 'data.list';
+    return 'DATA_LIST';
   }
 }

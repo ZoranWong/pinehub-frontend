@@ -10,7 +10,7 @@ export default class Merchandise{
     this.sellNum = merchandise['sell_num'];
     this.visitTime = merchandise['visit_time'];
     this.visitorNum = merchandise['visitor_num'];
-    this.status = this.statusDict[parseInt(Math.random() * 100 % 3)];
+    this.status = this.statusDict[merchandise.status];
     let createdAt = '';
     if(_.isObject(merchandise['created_at'])) {
       createdAt = merchandise['created_at']['date'];

@@ -26,9 +26,7 @@
 				service: 'http.memberCards',
 				event: 'memberCards/setList',
 				current: 'memberCards/currentPage',
-        query: {
-          status: 0
-				}
+				query: {}
 			};
 		},
 		computed: {
@@ -37,9 +35,9 @@
 			},
 		},
 		methods: {
-      search(data) {
-        this.query = _.extend(this.query, data);
-      }
+		    search(data) {
+		        this.query = _.extend(this.query, data);
+		    }
 		}
 	}
 </script>

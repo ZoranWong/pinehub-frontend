@@ -26,19 +26,17 @@
 						<el-input v-model="newData.contactPhoneNum"></el-input>
 					</el-form-item>
 					<!--图片上传-->
-					<el-form-item label="logo上传：" prop="logo" :rules="[
-						{ required: true, message: '请上传图片', trigger: 'blur'}
-					]">
+					<el-form-item label="logo上传：" prop="logo" :rules="[{ required: true, message: '请上传图片', trigger: 'blur'}]">
 						<el-upload
-						  action=""
-							class="upload-logo"
-							name="logo"
-							:http-request="uploadRequest"
-							:on-success="success"
-						 	:on-remove="remove"
-							:on-error="error"
-							list-type="picture-card"
-							:show-file-list="false">
+								action=""
+								class="upload-logo"
+								name="logo"
+								:http-request="uploadRequest"
+								:on-success="success"
+								:on-remove="remove"
+								:on-error="error"
+								list-type="picture-card"
+								:show-file-list="false">
 							<img v-if="newData.logo" :src="newData.logo" class="avatar">
 							<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 							<div slot="tip" class="el-upload__tip">只能上传png文件,且大小不超过2MB的正方形图片</div>
@@ -79,12 +77,12 @@
 			}
 		},
 		data() {
-	    return {
+			return {
 				saving: false,
 				dialogShow: this.show,
 				project: this.value,
 				newData: {}
-	    };
+			};
 		},
 		computed:{
 		},
@@ -123,15 +121,15 @@
 					console.log(result);
 					this.newData.logo = result.src;
 				}
-	    },
-	    remove() {
-	    },
-	    success(material) {
+			},
+			remove() {
+			},
+			success() {
 
-	    },
-	    error() {
+			},
+			error() {
 
-	    }
+			}
 		},
 		created() {
 

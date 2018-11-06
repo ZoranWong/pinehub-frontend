@@ -31,7 +31,7 @@ export default class Store {
     this.addModel('paidGiftActivities', PaidGiftActivities);
     this.addModel('merchandises', Merchandises);
     this.addModel('couponCards', CouponCards);
-		this.addModel('categories', Categories);
+    this.addModel('categories', Categories);
     this.addModel('wechatMenus', WechatMenu);
     this.addModel('orders', Orders);
     this.addModel('bookingOrders', Orders);

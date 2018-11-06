@@ -24,7 +24,11 @@ import CreateMpConfigCommand from '@/commands/CreateMpConfigCommand';
 import UpdateMpConfigCommand from '@/commands/UpdateMpConfigCommand';
 import CreateWechatMenuCommand from '@/commands/CreateWechatMenuCommand';
 import UpdateWechatMenuCommand from '@/commands/UpdateWechatMenuCommand';
-
+import CreateTicketCommand from '@/commands/CreateTicketCommand';
+import CreateMerchandiseCommand from '@/commands/CreateMerchandiseCommand';
+import UpdateMerchandiseCommand from '@/commands/UpdateMerchandiseCommand';
+import CreateMemberCardCommand from '@/commands/CreateMemberCardCommand';
+import UpdateMemberCardCommand from '@/commands/UpdateMemberCardCommand';
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -38,7 +42,8 @@ export default class CommandServiceProvider extends ServiceProvider {
         GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
         CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
         ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
-        UpdateWechatMenuCommand
+        UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
+        CreateMemberCardCommand, UpdateMemberCardCommand
     ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);

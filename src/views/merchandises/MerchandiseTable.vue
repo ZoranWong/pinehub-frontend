@@ -20,7 +20,7 @@
     <el-table-column  label="创建时间" min-width="100" prop="createdAt"></el-table-column>
     <el-table-column label="操作" width="100">
       <template slot-scope="scope">
-        <el-button type="text" size="mini" >编辑</el-button> |
+        <el-button type="text" size="mini" @click="edit(scope.row.id)">编辑</el-button> |
         <el-popover placement="top">
           <p><el-button type="text" size="mini" v-if="scope.row.status==1">下架</el-button></p>
           <p><el-button type="text" size="mini" disabled>会员价</el-button></p>
@@ -34,15 +34,20 @@
 </template>
 <script>
   export default {
-    props: {
-      merchandises: {
-        default: null,
-        type: Array
+      props: {
+          merchandises: {
+              default: null,
+              type: Array
+          }
+      },
+      data() {
+          return {
+          };
+      },
+      methods: {
+          edit(id) {
+              this.$router.push({name: 'merchandise-editor', params: {'projectId': this.$requestInput('projectId'), 'merchandiseId': id}});
+          }
       }
-    },
-    data() {
-      return {
-      };
-    }
   }
 </script>

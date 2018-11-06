@@ -5,11 +5,17 @@ export default class CouponCard {
       'DISCOUNT': '折扣券',
       'CASH': '现金券'
     };
+
+    const SYNC = [
+        '同步失败',
+        '同步中',
+        '同步成功'
+    ];
     this.id = coupon['id'];
     this.index=coupon['index'];
     this.title = coupon['title'];
     this.type = CARD_TYPES[coupon['card_type']];
-    this.publish = coupon['is_publish'] ? '是' : '否';
+    this.publish = SYNC[coupon['sync']];
     this.code = coupon['code'];
     this.issuedNum = coupon['issue_count'] ? coupon['issue_count'] : '无限制';
     this.stockNum = coupon['quantity'];
@@ -30,6 +36,8 @@ export default class CouponCard {
         endAt = coupon['end_at'];
     }
     endAt = new Date(endAt);
-    this.activeTime  = startAt.format('yyyy-MM-dd hh:mm:ss') + '-' + endAt.format('yyyy-MM-dd hh:mm:ss');
+    this.startAt = startAt.format('yyyy-MM-dd hh:mm:ss');
+    this.endAt = endAt.format('yyyy-MM-dd hh:mm:ss');
+    this.activeTime = coupon['active_time'];
   }
 }

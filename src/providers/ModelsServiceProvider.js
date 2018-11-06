@@ -1,6 +1,6 @@
 import ServiceProvider from './ServiceProvider';
 import Vuex from 'vuex';
-import Models from '../models'
+import Models from '@/models'
 export default class ModelServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);

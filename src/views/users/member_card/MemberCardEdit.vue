@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import Form from './Form';
+import Form from './MemberCardForm';
 export default {
   name: 'MemberCardEdit',
   components: {
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     async update() {
-      console.log(this.card);
+        this.$command('UPDATE_MEMBER_CARD', this.$requestInput('memberCardId'), this.card)
     },
     async loadMemberCard() {
       let memberCard = await this.http.memberCards.show(this.$requestInput('memberCardId'));

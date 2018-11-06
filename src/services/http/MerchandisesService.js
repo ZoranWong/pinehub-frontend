@@ -5,10 +5,6 @@ export default class MerchandisesService extends ApiService{
 	}
 
 	async list(page = 1, search = null, limit = 15) {
-		let merchandises = null;
-		let totalNum = 0;
-		let totalPage = 0;
-		let currentPage = 0;
 		let response = null;
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.merchandises').mock(page, search, limit);
@@ -16,11 +12,11 @@ export default class MerchandisesService extends ApiService{
 			//服务器交互代码
 			response = await this.httpGet('merchandises', {page: page, limit: limit, searchJson: search});
 		}
-		merchandises = response.data;
+		let merchandises = response.data;
 		let pagination = response.meta.pagination;
-		totalNum = pagination.total;
-		currentPage = pagination['current_page'];
-		totalPage = pagination['total_pages'];
+		let totalNum = pagination.total;
+		let currentPage = pagination['current_page'];
+		let totalPage = pagination['total_pages'];
 		return [merchandises, totalNum, currentPage,  totalPage];
 	}
 	async create (projectId, merchandise) {
@@ -32,6 +28,23 @@ export default class MerchandisesService extends ApiService{
 			response = await this.header({'ProjectId': projectId}).httpPost(`merchandise`, merchandise);
 		}
 
+		return response.data;
+	}
+
+    async update (projectId, id, merchandise) {
+        let response = null;
+
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.merchandise.create').mock(merchandise);
+        } else {
+            response = await this.header({'ProjectId': projectId}).httpPut(`merchandise`, id, merchandise);
+        }
+
+        return response.data;
+    }
+
+	async show(id) {
+		let response = await this.httpGet(`merchandise/${id}`);
 		return response.data;
 	}
 }

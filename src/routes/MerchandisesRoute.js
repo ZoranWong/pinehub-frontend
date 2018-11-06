@@ -5,7 +5,8 @@ import Index from '../views/merchandises/Index';
 import Selling from '../views/merchandises/Selling';
 import Down from '../views/merchandises/Down';
 import SoldOut from '../views/merchandises/SoldOut';
-import Create from '../views/merchandises/Create';
+import Create from '../views/merchandises/MerchandiseCreate';
+import Editor from '../views/merchandises/MerchandiseEditor';
 let route = new Route();
 route.group('/project/:projectId/merchandises', {
     'tag' : '商品管理',
@@ -39,11 +40,16 @@ route.group('/project/:projectId/merchandise', {
     'tag' : '商品管理',
     'component': Layout,
     uses : function(route) {
-      route.addRoute('create', {
-        'name': 'merchandise-create',
-        'component': Create,
-        'tag': '新建商品'
-      });
+        route.addRoute('create', {
+            'name': 'merchandise-create',
+            'component': Create,
+            'tag': '新建商品'
+        });
+        route.addRoute('edit/:merchandiseId', {
+            'name': 'merchandise-editor',
+            'component': Editor,
+            'tag': '编辑商品'
+        });
     }
   });
 export default route;

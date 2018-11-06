@@ -5,6 +5,7 @@ export default class CouponsService extends ApiService{
 	}
 	async list(page = 1, search = null, limit = 10) {
 		let response = null;
+		console.log(this);
 		if(this.$application.needMock()) {
 			response =  await this.service('mock.tickets').mock(page, search, limit);
 		}else{

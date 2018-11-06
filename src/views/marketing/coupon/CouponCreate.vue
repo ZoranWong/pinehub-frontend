@@ -1,13 +1,13 @@
 <template>
   <div class="content-scroll">
-		<div class="content-box" style="padding:20px 30px">
+    <div class="content-box" style="padding:20px 30px">
       <el-tabs active-name="first">
         <el-tab-pane label="新建优惠券" name="first"></el-tab-pane>
       </el-tabs>
       <div class="form-container">
         <create-form v-model="ticket" ref="ticket"></create-form>
       </div>
-      <div class="dialog-footer">
+      <div class="dialog-footer" style="margin-bottom: 64px">
         <el-button class="submit-button" type="primary" size="small" @click="create">提交</el-button>
       </div>
     </div>
@@ -20,26 +20,24 @@ export default {
   components: {
     'create-form': Form
   },
-  data() {
-    return {
-      ticket: {}
-    };
-  },
   methods: {
     async create() {
-      this.$refs['ticket'].$refs['ticketForm'].validate(function (res) {
-          console.log(res);
-      });
-      // if(!result) {
-      //   this.$message({
-      //     message: '有必要参数未填写或者格式错误，请填写后再提交',
-      //     type: 'error'
-      //   });
-      // } else {
-      //   console.log(this.activity);
-      //   this.$command('CREATE_PAID_GIFT_ACTIVITY',this.$requestInput('projectId'), this.activity, this);
-      // }
+      let result = await this.$refs['ticket'].$refs['ticketForm'].validate();
+      if(!result) {
+        this.$message({
+          message: '有必要参数未填写或者格式错误，请填写后再提交',
+          type: 'error'
+        });
+      } else {
+          console.log(this.ticket);
+        this.$command('CREATE_TICKET',this.$requestInput('projectId'), this.ticket);
+      }
     }
+  },
+  data() {
+    return {
+      ticket: null
+    };
   }
 }
 </script>
