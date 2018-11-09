@@ -5,7 +5,6 @@ export default class ScoreRule  {
     this.id = rule['id'];
     this.score = rule['score'];
     this.type = rule['type'];
-//  console.log(rule['rule'],"sdddddddddddddd")
     this.orderAmount = rule['rule']['order_amount'];
     this.orderCount = rule['rule']['order_count'];
     this.focus = rule['rule']['focus'];
