@@ -23,6 +23,9 @@
           <div v-if="scope.row.item.shop">
             <p>{{scope.row.item.shop.name}}</p>
           </div>
+          <div v-else-if="scope.row.item.activity">
+            <p>活动：{{scope.row.item.activity.name}}</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="" label="买家" >

@@ -5,15 +5,15 @@ export default class GetPublicKeyCommand extends Command {
   }
 
   async handle() {
-    try{
-      let result = await this.http.account.publicKey();
-      console.log(result);
-      this.$store.dispatch('account/setPublicKey', {
-        key: result['public_key']
-      });
-    }catch(error) {
-
-    }
+      try{
+          let result = await this.http.account.publicKey();
+          console.log(result);
+          this.$store.dispatch('account/setPublicKey', {
+              key: result['public_key']
+          });
+      }catch(error) {
+          console.log(error);
+      }
   }
 
   static commandName() {

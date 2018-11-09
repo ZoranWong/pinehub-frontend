@@ -11,7 +11,7 @@
 
 <script>
 	import OrderTable from './OrderTable';
-	import Header from './Header';
+	import Header from './OrderHeader';
 	import TableList from '@/components/TableList';
 	import _ from 'underscore';
 	export default {
@@ -26,9 +26,7 @@
 				service: 'http.orders',
 				event: 'orders/setList',
 				current: 'orders/currentPage',
-				query: {
-
-				}
+				query: {}
 			};
 		},
 		mounted() {

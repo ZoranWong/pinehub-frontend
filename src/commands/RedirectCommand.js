@@ -6,7 +6,7 @@ export default class RedirectCommand extends Command {
     super(app);
   }
   handle(params) {
-    this.$router.push(params);
+      this.$router.push(params);
   }
   static commandName() {
     return 'REDIRECT';

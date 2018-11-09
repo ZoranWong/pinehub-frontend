@@ -29,8 +29,8 @@
 				service: 'http.scoreRules',
 				event: 'scoreRules/setList',
 				current: 'scoreRules/currentPage',
-        query: {
-          status: 0
+				query: {
+				  	status: 0
 				}
 			};
 		},
@@ -40,9 +40,9 @@
 			},
 		},
 		methods: {
-      search(data) {
-        this.query = _.extend(this.query, data);
-      }
+			  search(data) {
+					this.query = _.extend(this.query, data);
+			  }
 		}
 	}
 </script>

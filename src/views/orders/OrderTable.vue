@@ -55,8 +55,11 @@
       </el-table-column>
       <el-table-column prop="" label="卖家" indx = "5" >
         <template slot-scope="scope">
-          <div v-if="scope.row.item.shop.name">
-            <p>{{scope.row.item.shop.name}}</p>
+          <div v-if="scope.row.item.shop">
+            <p>店铺：{{scope.row.item.shop.name}}</p>
+          </div>
+          <div v-else-if="scope.row.item.activity">
+            <p>活动：{{scope.row.item.activity.name}}</p>
           </div>
           <div v-else>
             <p>匿名支付</p>
@@ -121,7 +124,6 @@ export default {
     spanMethod({ row, column, rowIndex, columnIndex }) {
       if(columnIndex === 0 || columnIndex === 1 || columnIndex === 8 || columnIndex === 9 || columnIndex === 10 || columnIndex === 11){
         if(row.needSpan){
-          console.log(row.span);
           return row.span;
         }else{
           return {

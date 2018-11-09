@@ -14,10 +14,10 @@
       </el-table-column>
       <el-table-column prop="score" label="单笔奖励积分" min-width="100"></el-table-column>
       <el-table-column prop="updatedAt" label="规则更新时间" min-width="180"></el-table-column>
-      <el-table-column prop="totalRecievedScore" label="已奖励总积分" min-width="100"></el-table-column>
+      <el-table-column prop="totalReceivedScore" label="已奖励总积分" min-width="100"></el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
-          <el-button size="small" @click.active="edit(true, scope.row)" type="text">编辑</el-button>
+          <el-button size="small" @click.active="edit(scope.row.id)" type="text">编辑</el-button>
           <el-button size="small" @click.active="delete(scope.row)" type="text">删除</el-button>
         </template>
       </el-table-column>
@@ -45,30 +45,32 @@ export default {
   methods: {
     create() {
       this.$router.push({
-        name: 'rule-menuForm',
+        name: 'rule-create',
         params: {
           projectId: this.$requestInput('projectId')
         }
       });
     },
-    edit() {
-
+    edit(id) {
+        this.$router.push({
+            name: 'rule-editor',
+            params: {
+                'projectId': this.$requestInput('projectId'),
+                'scoreRuleId': id
+            }
+        })
     },
-    delete() {
-
+    delete(id) {
+        this.$command('DELETE_SCORE_RULE', id);
     },
     condition(condition) {
-    	console.log(condition,"是多少都是")
-      switch (condition['type']) {
-        case FOLLOW:
-          return '关注我的微信';
-          break;
-        case ORDER_COUNT:
-          return `每成功交易${condition['ordersCount']}笔`;
-          break;
-        case ORDER_AMOUNT:
-          return `每购买金额${condition['orderAmount']}元`;
-          break;
+        switch (condition['type']) {
+            case FOLLOW:
+                return '关注我的微信';
+            case ORDER_COUNT:
+                return `每成功交易${condition['orderCount']}笔`;
+            case ORDER_AMOUNT:
+                return `每购买金额${condition['orderAmount']}元`;
       }
     }
   }

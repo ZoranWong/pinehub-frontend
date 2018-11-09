@@ -51,17 +51,17 @@
         ordersCount: 0,
         registerChannel:"All",
         channels:{
-        	  "All":"全部",
-        	  "WX":"微信",
-        	  "ZHIFUBAO":"支付宝"
+            "All":"全部",
+            "WX":"微信",
+            "ZHIFUBAO":"支付宝"
         },
         registerChannels:{
-        	  "All":"全部",
-        	  "WX_PUBLIC":'微信公众号',
-        	  "WX_PROGRAM":"微信小程序",
-        	  "H5_PAGES":"h5页面",
-        	  "ALIPAY_PROGRAM":"支付宝小程序",
-        	  "APP":"APP"
+            "All":"全部",
+            "WX_PUBLIC":'微信公众号',
+            "WX_PROGRAM":"微信小程序",
+            "H5_PAGES":"h5页面",
+            "ALIPAY_PROGRAM":"支付宝小程序",
+            "APP":"APP"
         }
       };
     },
@@ -81,48 +81,45 @@
         }
     },
     methods: {
-    	search () {
+        search () {
             let search = this.buildSearchData();
             this.$emit('search', search);
             console.log(search,"...........")
-      },
-      initSearchData(search) {
-        this.mobile  =  search['mobile'] ;
-        this.nickname  =  search['nickname'] ;
-        let $this=this;
-        _.map(RECV_CHANNELS, function (value, index) {
-            if(value == search['channel']) {
-                $this.channel = index;
-                return index;
+        },
+        initSearchData(search) {
+            this.mobile  =  search['mobile'] ;
+            this.nickname  =  search['nickname'] ;
+            for (let index in RECV_CHANNELS) {
+                let value = RECV_CHANNELS[index];
+                if(value == search['channel']) {
+                    this.channel = index;
+                }
             }
-            return null;
-        });
-        _.map(REG_CHANNELS, function (value, index) {
-            if(value == search['register_channel']) {
-                $this.registerChannel = index;
-                return index;
+
+            for (let index in REG_CHANNELS) {
+                let value = REG_CHANNELS[index];
+                if(value == search['register_channel']) {
+                    this.registerChannel = index;
+                }
             }
-            return null;
-        });
-        console.log(this.isMember, search);
-      },
-      buildSearchData() {
-        let search = {
-        };
-        if(this.mobile)
-            search['mobile']=this.mobile;
-        if(this.nickname)
-            search['nickname'] = this.nickname;
-        if(this.channel && RECV_CHANNELS[this.channel])
-           search['channel'] = RECV_CHANNELS[this.channel]; 
-        if(this.registerChannel && REG_CHANNELS[this.registerChannel])
-           search['register_channel'] = REG_CHANNELS[this.registerChannel]; 
-        return search;
-      },
-      memberCards() {
-        console.log(this.$requestInput('projectId'));
-        this.$router.push({name: 'member-cards',  params: {projectId: this.$requestInput('projectId')}});
-      }
+        },
+        buildSearchData() {
+          let search = {
+          };
+          if(this.mobile)
+              search['mobile']=this.mobile;
+          if(this.nickname)
+              search['nickname'] = this.nickname;
+          if(this.channel && RECV_CHANNELS[this.channel])
+             search['channel'] = RECV_CHANNELS[this.channel];
+          if(this.registerChannel && REG_CHANNELS[this.registerChannel])
+             search['register_channel'] = REG_CHANNELS[this.registerChannel];
+          return search;
+        },
+        memberCards() {
+          console.log(this.$requestInput('projectId'));
+          this.$router.push({name: 'member-cards',  params: {projectId: this.$requestInput('projectId')}});
+        }
     }
   }
 </script>

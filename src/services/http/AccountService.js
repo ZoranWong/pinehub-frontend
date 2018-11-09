@@ -43,9 +43,7 @@ export default class AccountService extends ApiService {
       let response = await this.httpGet('refresh_token', {'token': token}, false);
       return response.data;
     }catch(error) {
-      this.command('REDIRECT', {
-        name: 'sign-in'
-      });
+      return false;
     }
   }
 }

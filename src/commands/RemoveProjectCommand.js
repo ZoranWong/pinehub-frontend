@@ -6,7 +6,11 @@ export default class RemoveProjectCommand extends Command {
   }
 
   async handle(id) {
-    return await this.$service('http.projects').delete(id);
+      try{
+          return await this.$service('http.projects').delete(id);
+      }catch (e) {
+          console.log(e);
+      }
   }
 
   static commandName() {

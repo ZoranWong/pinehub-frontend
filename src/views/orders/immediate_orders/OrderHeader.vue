@@ -4,11 +4,11 @@
       <el-form-item prop="orderCode" label="订单号" >
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverName" label="收货人姓名" >
-        <el-input size="small" v-model="recieverName" placeholder="收货人姓名"></el-input>
+      <el-form-item prop="receiverName" label="收货人姓名" >
+        <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverMobile" label="收货人手机号" >
-        <el-input size="small" v-model="recieverMobile" placeholder="收货人手机号"></el-input>
+      <el-form-item prop="receiverMobile" label="收货人手机号" >
+        <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
       </el-form-item>
       <el-form-item prop="beginAt" label="下单时间">
         <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
@@ -89,7 +89,7 @@
             }
         },
         created() {
-            if(this.value) {
+            if(this.value && !_.isEmpty(this.value)) {
                 this.initSearchData(this.value);
             }
         },
@@ -102,29 +102,30 @@
                 this.receiverName  =  search['receiver_name'] ;
                 this.receiverMobile  =  search['receiver_mobile'] ;
                 this.orderCode   =   search['code'];
-                this.beginAt =  search['paid_at'][0]['value'] ;
-                this.endAt = search['paid_at'][1]['value'] ;
+                this.beginAt =  search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][0]['value'] : null;
+                this.endAt = search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][1]['value'] : null;
                 this.merchandiseName  = search['orderItems.name'] ;
-                let $this = this;
-                _.map(ORDER_STATUS, function (value, index) {
+
+                for(let index in ORDER_STATUS) {
+                    let value = ORDER_STATUS[index];
                     if(value == search['status']) {
-                        $this.orderStatus = index;
+                        this.orderStatus = index;
                         if(index === 'WAIT_SEND' || index === 'PAID') {
-                            $this.orderStatus = 'PAID';
+                            this.orderStatus = 'PAID';
                         }
 
                         if(index === 'WAIT_SIGNED' || index === 'SEND') {
-                            $this.orderStatus = 'SEND';
+                            this.orderStatus = 'SEND';
                         }
                     }
-                });
-                _.map(PAYMENT_TYPES, function (value, index) {
+                }
+
+                for (let index in PAYMENT_TYPES) {
+                    let value = PAYMENT_TYPES[index];
                     if(value == search['pay_type']) {
-                        $this.payType = index;
-                        return index;
+                        this.payType = index;
                     }
-                    return null;
-                });
+                }
             },
             buildSearchData() {
                 let search = {

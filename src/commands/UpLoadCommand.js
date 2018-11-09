@@ -6,8 +6,12 @@ export default class UpLoadCommand extends Command {
     super(app);
   }
   async handle (files, fileField, method, callback) {
-    let result = await this.$service('http.files')[method](this.$requestInput('projectId'), files, fileField);
-    callback(result);
+      try{
+          let result = await this.$service('http.files')[method](this.$requestInput('projectId'), files, fileField);
+          callback(result);
+      }catch (e) {
+          console.log(e);
+      }
   }
   static commandName() {
     return 'UPLOAD_FILE';

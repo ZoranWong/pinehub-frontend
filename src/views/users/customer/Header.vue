@@ -35,7 +35,6 @@
 <script>
   import SearchHeader from '@/components/SearchHeader';
   import RECV_CHANNELS from '../RecvChannels';
-  import USER_TYPES from '../UserTypes';
   import _ from 'underscore';
   export default {
     props: {
@@ -59,9 +58,9 @@
             "MEMBER": '会员'
         },
         channels:{
-        	  "All":"全部",
-        	  "WX":"微信",
-        	  "ZHIFUBAO":"支付宝"
+            "All":"全部",
+            "WX":"微信",
+            "ZHIFUBAO":"支付宝"
         },
         ordersCount: 0
       }
@@ -88,23 +87,20 @@
             this.$emit('search', search);
         },
         initSearchData(search) {
-            this.nickname  =  search['nickname'] ;
-            let $this=this;
-             _.map(RECV_CHANNELS, function (value, index) {
-                    if(value == search['channel']) {
-                        $this.channel = index;
-                        return index;
-                    }
-                    return null;
-               });
+             this.nickname  =  search['nickname'] ;
+             for(let index in RECV_CHANNELS) {
+                 let value = RECV_CHANNELS[index];
+                 if(value == search['channel']) {
+                     this.channel = index;
+                 }
+             }
             if(typeof search['member_id'] === 'undefined') {
-            	this.isMember = 'ALL';
+                this.isMember = 'ALL';
             }else if(search['member_id']['opt'] === '!=') {
-            	this.isMember = 'MEMBER';
+                this.isMember = 'MEMBER';
             }else{
-            	this.isMember = 'NON_MEMBER';
+                this.isMember = 'NON_MEMBER';
             }
-            console.log(this.isMember, search);
         },
         buildSearchData() {
             let search = {
@@ -112,18 +108,18 @@
             if(this.nickname)
                 search['nickname'] = this.nickname;
             if(this.isMember === 'NON_MEMBER') {
-            	 search['member_id'] = {
-                	'opt': '=',
-                	'value': null 
-                	};
+               search['member_id'] = {
+                  'opt': '=',
+                  'value': null
+                };
             }else if(this.isMember === 'MEMBER') {
-            	 search['member_id'] = {
-                	'opt': '!=',
-                	'value': null 
-                	};
+               search['member_id'] = {
+                  'opt': '!=',
+                  'value': null
+               };
             }
             if(this.channel && RECV_CHANNELS[this.channel])
-               search['channel'] = RECV_CHANNELS[this.channel];  
+               search['channel'] = RECV_CHANNELS[this.channel];
 //          console.log(this.isMember,search)
             return search;
         }

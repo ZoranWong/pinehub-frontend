@@ -4,11 +4,11 @@
       <el-form-item prop="orderCode" label="订单号" >
         <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverName" label="收货人姓名" >
-        <el-input size="small" v-model="recieverName" placeholder="收货人姓名"></el-input>
+      <el-form-item prop="receiverName" label="收货人姓名" >
+        <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
       </el-form-item>
-      <el-form-item prop="recieverMobile" label="收货人手机号" >
-        <el-input size="small" v-model="recieverMobile" placeholder="收货人手机号"></el-input>
+      <el-form-item prop="receiverMobile" label="收货人手机号" >
+        <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
       </el-form-item>
       <el-form-item prop="beginAt" label="下单时间">
         <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
@@ -43,9 +43,9 @@
     },
     data() {
       return {
-        recieverName: null,
+        receiverName: null,
         orderCode: null,
-        recieverMobile: null,
+        receiverMobile: null,
         beginAt: null,
         endAt: null,
         merchandiseName: null,

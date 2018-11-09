@@ -29,6 +29,9 @@ import CreateMerchandiseCommand from '@/commands/CreateMerchandiseCommand';
 import UpdateMerchandiseCommand from '@/commands/UpdateMerchandiseCommand';
 import CreateMemberCardCommand from '@/commands/CreateMemberCardCommand';
 import UpdateMemberCardCommand from '@/commands/UpdateMemberCardCommand';
+import CreateScoreRuleCommand from '@/commands/CreateScoreRuleCommand';
+import UpdateScoreRuleCommand from '@/commands/UpdateScoreRuleCommand';
+
 export default class CommandServiceProvider extends ServiceProvider {
   constructor(app) {
     super(app);
@@ -43,7 +46,7 @@ export default class CommandServiceProvider extends ServiceProvider {
         CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
         ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
         UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
-        CreateMemberCardCommand, UpdateMemberCardCommand
+        CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand
     ];
     for (let key in commands) {
       this.app.registerCommand(commands[key].commandName(), commands[key]);

@@ -46,8 +46,8 @@ export default class MemberCardService extends ApiService{
         let cardInfo = {
             auto_activate: card['auto_activate'],
             prerogative:  card['prerogative'],
-            supply_balance: !!card['bonus_rule']['init_increase_bonus'],
-            supply_bonus: card['base_info'][''],
+            supply_balance: card['supply_balance'],
+            supply_bonus: !!card['bonus_rule']['init_increase_bonus'],
             base_info: {
                 brand_name: card['base_info']['brand_name'],
                 title: card['base_info']['title'],

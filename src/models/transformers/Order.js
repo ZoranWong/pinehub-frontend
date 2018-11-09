@@ -20,6 +20,7 @@ export default class Order{
     this.transactionId = order['transaction_id'];
 
     this.orderItems =[];
+    this.acitvity = order['activity'];
 
     let self = this;
 
@@ -82,7 +83,5 @@ export default class Order{
     createdAt = new Date(createdAt);
 
     this.createdAt = createdAt.format('yyyy-MM-dd hh:mm:ss');
-
-    console.log(this);
   }
 }

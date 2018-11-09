@@ -6,14 +6,18 @@ export default class GetCouponCommand extends Command {
     super(app);
   }
   async handle(page, search = null, limit = 10) {
-    let [coupon, totalNum, currentPage, totalPage ] = await this.$service('coupon').coupon(page, search, limit);
-    this.store().dispatch({
-      type: 'coupon/setCoupon',
-      coupon: coupon,
-      totalNum: totalNum,
-      currentPage: currentPage,
-      totalPage: totalPage
-    });
+      try{
+          let [coupon, totalNum, currentPage, totalPage ] = await this.$service('coupon').coupon(page, search, limit);
+          this.store().dispatch({
+              type: 'coupon/setCoupon',
+              coupon: coupon,
+              totalNum: totalNum,
+              currentPage: currentPage,
+              totalPage: totalPage
+          });
+      }catch (e) {
+          console.log(e);
+      }
   }
   static commandName() {
     return 'get-coupon';

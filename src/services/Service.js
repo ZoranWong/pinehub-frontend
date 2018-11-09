@@ -9,6 +9,6 @@ export default class Service {
   }
 
   command(...params) {
-    this.$application.vueApp.$command.apply(this.$application.vueApp, params);
+      this.$application.vueApp && this.$application.vueApp.$command.apply(this.$application.vueApp, params);
   }
 }

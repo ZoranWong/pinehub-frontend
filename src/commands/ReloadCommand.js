@@ -6,7 +6,7 @@ export default class ReloadCommand extends Command {
   }
 
   async handle() {
-    this.store().dispatch('common/refreshDate');
+      this.store().dispatch('common/refreshDate');
   }
 
   static commandName() {

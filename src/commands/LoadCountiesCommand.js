@@ -5,12 +5,16 @@ export default class LoadCountiesCommand extends Command {
   }
 
   async handle(cityId) {
-    let counties = await this.$service('http.regions').counties(cityId);
-    this.$store.dispatch({
-      type: 'regions/append',
-      list: counties,
-      key: 'counties'
-    });
+      try {
+          let counties = await this.$service('http.regions').counties(cityId);
+          this.$store.dispatch({
+              type: 'regions/append',
+              list: counties,
+              key: 'counties'
+          });
+      }catch (e) {
+          console.log(e);
+      }
   }
 
   static commandName() {

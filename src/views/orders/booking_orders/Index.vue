@@ -11,7 +11,7 @@
 
 <script>
 	import OrderTable from './OrderTable';
-	import Header from './Header';
+	import Header from './OrderHeader';
 	import TableList from '@/components/TableList';
 	import _ from 'underscore';
 	export default {

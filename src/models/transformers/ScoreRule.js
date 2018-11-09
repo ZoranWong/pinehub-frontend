@@ -7,8 +7,9 @@ export default class ScoreRule  {
     this.type = rule['type'];
 //  console.log(rule['rule'],"sdddddddddddddd")
     this.orderAmount = rule['rule']['order_amount'];
-    this.ordersCount = rule['rule']['order_count'];
-    this.totalRecievedScore = rule['total_score'];
+    this.orderCount = rule['rule']['order_count'];
+    this.focus = rule['rule']['focus'];
+    this.totalReceivedScore = rule['total_score'];
     let updatedAt = '';
     if(_.isObject(rule['updated_at'])) {
       updatedAt = rule['updated_at']['date'];

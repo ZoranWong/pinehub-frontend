@@ -4,7 +4,13 @@ export default class UpdateMpConfigCommand extends Command {
     super();
   }
   async handle(projectId, id, config) {
-    let result = await this.http.projects.updateMpConfig(projectId, id, config);
+      try{
+          let result = await this.http.projects.updateMpConfig(projectId, id, config);
+          console.log(result);
+      }catch (e) {
+          console.log(e);
+      }
+
   }
 
   static commandName() {

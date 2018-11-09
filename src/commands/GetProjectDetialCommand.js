@@ -4,11 +4,15 @@ export default class GetProjectDetialCommand extends Command {
     super(app);
   }
   async handle(id) {
-    let project = await this.$service('http.projects').show(id);
-    this.$store.dispatch({
-      type: 'projects/setCurrentProject',
-      project: project
-    });
+      try{
+          let project = await this.$service('http.projects').show(id);
+          this.$store.dispatch({
+              type: 'projects/setCurrentProject',
+              project: project
+          });
+      }catch (e) {
+          console.log(e);
+      }
   }
   static commandName() {
     return 'GET_PROJECT_DETIAL';

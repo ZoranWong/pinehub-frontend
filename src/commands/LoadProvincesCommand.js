@@ -6,12 +6,16 @@ export default class LoadProvincesCommand extends Command {
   }
 
   async handle() {
-    let provinces = await this.$service('http.regions').provinces();
-    this.$store.dispatch({
-      type: 'regions/append',
-      list: provinces,
-      key: 'provinces'
-    });
+      try {
+          let provinces = await this.$service('http.regions').provinces();
+          this.$store.dispatch({
+              type: 'regions/append',
+              list: provinces,
+              key: 'provinces'
+          });
+      }catch (e) {
+          console.log(e);
+      }
   }
 
   static commandName() {

@@ -90,7 +90,7 @@
           }
       },
       created() {
-          if(this.value) {
+          if(this.value && !_.isEmpty(this.value)) {
               this.initSearchData(this.value);
           }
       },
@@ -104,24 +104,24 @@
               this.receiverMobile  =  search['receiver_mobile'] ;
               this.orderCode   =   search['code'];
               this.merchandiseName  = search['orderItems.name'] ;
-              this.beginAt =  search['paid_at'][0]['value'] ;
-              this.endAt = search['paid_at'][1]['value'] ;
-              let $this = this;
-              _.map(ORDER_STATUS, function (value, index) {
+              this.beginAt =  search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][0]['value'] : null;
+              this.endAt = search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][1]['value'] : null;
+              for(let index in ORDER_STATUS) {
+                  let value = ORDER_STATUS[index];
                   if(value == search['status']) {
-                      $this.orderStatus = index;
+                      this.orderStatus = index;
                       if(index === 'WAIT_SEND' || index === 'PAID') {
-                          $this.orderStatus = 'WAIT_SEND';
+                          this.orderStatus = 'WAIT_SEND';
                       }
                   }
-              });
-              _.map(PAYMENT_TYPES, function (value, index) {
+              }
+
+              for (let index in PAYMENT_TYPES) {
+                  let value = PAYMENT_TYPES[index];
                   if(value == search['pay_type']) {
-                      $this.payType = index;
-                      return index;
+                      this.payType = index;
                   }
-                  return null;
-              });
+              }
           },
           buildSearchData() {
               let search = {
