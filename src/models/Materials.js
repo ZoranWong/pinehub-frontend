@@ -1,9 +1,8 @@
 import Model from './Model'
-import MaterialTranformer from './transformers/Material';
-import _ from 'underscore';
+import MaterialTransformer from './transformers/Material';
 export default class Materials extends Model{
-  constructor(application) {
-    super(application);
-    this.transformer = MaterialTranformer;
-  }
+    constructor(application) {
+        super(application);
+        this.transformer = MaterialTransformer;
+    }
 }

@@ -1,16 +1,16 @@
 <template>
-    <table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-        <template slot = "header" slot-scope="{ search, searchHandler }">
+    <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query">
+        <template slot = "header" slot-scope = "{ search, searchHandler }">
             <merchandise-header v-model = "search" @search = "searchHandler">
-                <template slot="opt-buttons">
-                    <div class="opt-buttons">
-                        <el-button size="small" type="primary" icon="el-icon-plus" @click = "create">发布商品</el-button>
+                <template slot = "opt-buttons">
+                    <div class = "opt-buttons">
+                        <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "addMerchandise">添加活动商品</el-button>
                     </div>
                 </template>
             </merchandise-header>
         </template>
-        <template slot = "table" slot-scope="{ data }">
-            <merchandise-table :merchandises="data"></merchandise-table>
+        <template slot = "table" slot-scope = "{ data }">
+            <merchandise-table :merchandises = "data"></merchandise-table>
         </template>
     </table-list>
 </template>
@@ -45,13 +45,8 @@
             search(data) {
                 this.query = _.extend(this.query, data);
             },
-            create() {
-                this.$router.push({
-                    name: 'merchandise-create',
-                    params: {
-                        projectId: this.$requestInput('projectId')
-                    }
-                });
+            addMerchandise() {
+
             }
         }
     }

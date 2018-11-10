@@ -33,7 +33,7 @@ export default class RouteServiceProvider extends ServiceProvider {
             if(!to.redirect){
                 next();
             }else{
-               this.router.push(to.redirect);
+                this.router.push(to.redirect);
             }
         }else if(to.name !== 'sign-in'){
             let redirectTo = from.fullPath;
@@ -47,7 +47,7 @@ export default class RouteServiceProvider extends ServiceProvider {
                 }
             });
         }else{
-          next();
+            next();
         }
     }
 }

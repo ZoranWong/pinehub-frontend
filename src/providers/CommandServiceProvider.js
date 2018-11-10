@@ -33,23 +33,23 @@ import CreateScoreRuleCommand from '@/commands/CreateScoreRuleCommand';
 import UpdateScoreRuleCommand from '@/commands/UpdateScoreRuleCommand';
 
 export default class CommandServiceProvider extends ServiceProvider {
-  constructor(app) {
-    super(app);
-  }
-
-  register() {
-    let commands = [
-        SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
-        GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
-        ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
-        GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
-        CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
-        ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
-        UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
-        CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand
-    ];
-    for (let key in commands) {
-      this.app.registerCommand(commands[key].commandName(), commands[key]);
+    constructor(app) {
+        super(app);
     }
-  }
+
+    register() {
+        let commands = [
+            SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
+            GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
+            ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
+            GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
+            CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
+            ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
+            UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
+            CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand
+        ];
+        for (let key in commands) {
+            this.app.registerCommand(commands[key].commandName(), commands[key]);
+        }
+    }
 }

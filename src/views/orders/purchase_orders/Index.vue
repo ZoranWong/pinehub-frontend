@@ -10,44 +10,45 @@
 </template>
 
 <script>
-	import OrderTable from './OrderTable';
-	import Header from './Header';
-	import TableList from '@/components/TableList';
-	export default {
-		name: 'Orders',
-		components:{
-			'order-table': OrderTable,
-			'order-header': Header,
-			'table-list': TableList
-		},
-		data() {
-			return {
-				service: 'http.orders',
-				event: 'orders/setList',
-				current: 'orders/currentPage',
-        query: {
-				}
-			};
-		},
-		mounted() {
+    import OrderTable from './OrderTable';
+    import Header from './Header';
+    import TableList from '@/components/TableList';
+    import _ from 'underscore';
+    export default {
+        name: 'Orders',
+        components:{
+            'order-table': OrderTable,
+            'order-header': Header,
+            'table-list': TableList
+        },
+        data() {
+            return {
+                service: 'http.orders',
+                event: 'orders/setList',
+                current: 'orders/currentPage',
+                query: {
+                }
+            };
+        },
+        mounted() {
 
-		},
-		computed: {
-			model() {
-				return this.$store.state.orders;
-			},
-		},
-		watch: {
+        },
+        computed: {
+            model() {
+                return this.$store.state.orders;
+            },
+        },
+        watch: {
 
-		},
-		methods: {
-			search(data) {
-				this.query = _.extend(this.query, data);
-			}
-		},
-		created() {
-		}
-	}
+        },
+        methods: {
+            search(data) {
+                this.query = _.extend(this.query, data);
+            }
+        },
+        created() {
+        }
+    }
 </script>
 
 <style scoped>

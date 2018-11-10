@@ -7,8 +7,8 @@
             </el-row>
             <el-row class="content-bottom">
                 <div class="footer" v-if="menu.edited">
-                    <el-button @click.native="saveMenu()" size="small" type="success" v-if="menu.releaseId">保存并发布</el-button>
-                    <el-button @click.native="saveMenu()" size="small" type="success" v-else>保存</el-button>
+                    <el-button @click="saveMenu()" size="small" type="success" v-if="menu.releaseId">保存并发布</el-button>
+                    <el-button @click="saveMenu()" size="small" type="success" v-else>保存</el-button>
                 </div>
             </el-row>
         </div>

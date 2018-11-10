@@ -10,17 +10,17 @@
 </template>
 
 <script>
-	import OrderTable from './OrderTable';
-	import Header from './OrderHeader';
-	import TableList from '@/components/TableList';
-	import _ from 'underscore';
-	export default {
-		name: 'Orders',
-		components:{
-			'order-table': OrderTable,
-			'order-header': Header,
-			'table-list': TableList
-		},
+    import OrderTable from './OrderTable';
+    import Header from './OrderHeader';
+    import TableList from '@/components/TableList';
+    import _ from 'underscore';
+    export default {
+        name: 'Orders',
+        components:{
+            'order-table': OrderTable,
+            'order-header': Header,
+            'table-list': TableList
+        },
         data: function () {
             return {
                 service: 'http.orders',
@@ -31,26 +31,26 @@
                 }
             };
         },
-		mounted() {
+        mounted() {
 
-		},
-		computed: {
-			model() {
-				return this.$store.state.bookingOrders;
-			},
-		},
-		watch: {
+        },
+        computed: {
+            model() {
+                return this.$store.state.bookingOrders;
+            },
+        },
+        watch: {
 
-		},
-		methods: {
-			search(data) {
-				let search = _.extend(this.query, data);
+        },
+        methods: {
+            search(data) {
+                let search = _.extend(this.query, data);
                 this.$emit('search', search);
-			}
-		},
-		created() {
-		}
-	}
+            }
+        },
+        created() {
+        }
+    }
 </script>
 
 <style scoped>

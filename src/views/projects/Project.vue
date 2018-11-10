@@ -32,82 +32,78 @@
 			<chart :projectId="project.id"></chart>
 		</div>
 		<open-platform-auth :show="openPlatformAuthDialogShow" @open="openPlatformAuthDialogShow=true;"
-		@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" :title="title"></open-platform-auth>
+							@close="openPlatformAuthDialogShow=false;" :authUrl= "authUrl" :title="title"></open-platform-auth>
 		<mp-config :project = "project" :show = "mpConfigShow" @open = "mpConfigShow=true;" @close = "mpConfigShow=false;"></mp-config>
 	</div>
 </template>
 <script>
-	import Chart from './SevenDaysCount';
-	import OpenPlatformAuth from './OpenPlatformAuth';
-	import MpConfig from './MPConfig';
-	export default {
-		name: 'Project',
-		components: {
-			"chart": Chart,
-			'open-platform-auth': OpenPlatformAuth,
-			"mp-config": MpConfig
-		},
-		data(){
-			return {
-				openPlatformAuthDialogShow: false,
-				authType: 0,
-				authUrl: null,
-				mpConfigShow: false
-			};
-		},
-		mounted () {
-		},
-		computed:{
-			project() {
-				return this.$store.getters['projects/currentProject'];
-			},
-			title() {
-				switch (this.authType) {
-					case 0:
-						return '微信公众号授权';
-						break;
-					case 1:
-						return '微信公众号重授权';
-						break;
-					case 2:
-						return '微信小程序授权';
-						break;
-					case 3:
-						return '微信小程序重授权';
-						break;
-					default:
-						break;
-				}
-			}
-		},
-		methods:{
-			openAuthDialog(project, type) {
-				this.openPlatformAuthDialogShow = true;
-				if(type === 0) {
-					if(project.officialAccountAppId) {
-						this.authType = 1;
-					}else{
-						this.authType = 0;
-					}
-					this.authUrl = project.officialAccountAuthUrl;
-				}else if (type === 1) {
-					if(project.miniProgramAppId) {
-						this.authType = 3;
-					}else{
-						this.authType = 2;
-					}
-					this.authUrl = project.miniProgramAuthUrl;
-				}
-			},
-			openMpConfigDialog(project) {
-				this.mpConfigShow = true;
-			}
-		},
-		created(){
-			let projectId = this.$requestInput('projectId');
-			this.$command('GET_PROJECT_DETIAL', projectId);
-		}
-	}
+    import Chart from './SevenDaysCount';
+    import OpenPlatformAuth from './OpenPlatformAuth';
+    import MpConfig from './MPConfig';
+    export default {
+        name: 'Project',
+        components: {
+            "chart": Chart,
+            'open-platform-auth': OpenPlatformAuth,
+            "mp-config": MpConfig
+        },
+        data(){
+            return {
+                openPlatformAuthDialogShow: false,
+                authType: 0,
+                authUrl: null,
+                mpConfigShow: false
+            };
+        },
+        mounted () {
+        },
+        computed:{
+            project() {
+                return this.$store.getters['projects/currentProject'];
+            },
+            title() {
+                switch (this.authType) {
+                    case 0:
+                        return '微信公众号授权';
+                    case 1:
+                        return '微信公众号重授权';
+                    case 2:
+                        return '微信小程序授权';
+                    case 3:
+                        return '微信小程序重授权';
+                    default:
+                        break;
+                }
+            }
+        },
+        methods:{
+            openAuthDialog(project, type) {
+                this.openPlatformAuthDialogShow = true;
+                if(type === 0) {
+                    if(project.officialAccountAppId) {
+                        this.authType = 1;
+                    }else{
+                        this.authType = 0;
+                    }
+                    this.authUrl = project.officialAccountAuthUrl;
+                }else if (type === 1) {
+                    if(project.miniProgramAppId) {
+                        this.authType = 3;
+                    }else{
+                        this.authType = 2;
+                    }
+                    this.authUrl = project.miniProgramAuthUrl;
+                }
+            },
+            openMpConfigDialog() {
+                this.mpConfigShow = true;
+            }
+        },
+        created(){
+            let projectId = this.$requestInput('projectId');
+            this.$command('GET_PROJECT_DETIAL', projectId);
+        }
+    }
 </script>
 <style scoped>
 	.content-box {padding: 10px 40px;}

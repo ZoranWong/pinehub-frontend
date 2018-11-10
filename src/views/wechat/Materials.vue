@@ -5,10 +5,10 @@
 	</div>
 </template>
 <script>
-/* eslint-disable */
-	export default {
-		name: 'WechatMaterials',
-	}
+    /* eslint-disable */
+    export default {
+        name: 'WechatMaterials',
+    }
 </script>
 
 <style scoped>

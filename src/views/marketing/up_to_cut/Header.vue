@@ -1,16 +1,16 @@
 <template>
-  <el-col :span="24" class="toolbar">
-    <el-tabs  type = "card" v-model="tab">
-      <el-tab-pane label="所有满减/送促销" name="all" >
-      </el-tab-pane>
-      <el-tab-pane label="未开始"  name="wait" >
-      </el-tab-pane>
-      <el-tab-pane label="进行中"  name="running">
-      </el-tab-pane>
-      <el-tab-pane label="已结束"  name="end" >
-      </el-tab-pane>
-    </el-tabs>
-  </el-col>
+    <el-col :span="24" class="toolbar">
+        <el-tabs  type = "card" v-model="tab">
+            <el-tab-pane label="所有满减/送促销" name="all" >
+            </el-tab-pane>
+            <el-tab-pane label="未开始"  name="wait" >
+            </el-tab-pane>
+            <el-tab-pane label="进行中"  name="running">
+            </el-tab-pane>
+            <el-tab-pane label="已结束"  name="end" >
+            </el-tab-pane>
+        </el-tabs>
+    </el-col>
 </template>
 <script>
     export default {
@@ -59,7 +59,7 @@
     }
 </script>
 <style >
-  .el-tabs--top .el-tabs__item.is-top:last-child {
-    font-size: 14px !important;
-  }
+    .el-tabs--top .el-tabs__item.is-top:last-child {
+        font-size: 14px !important;
+    }
 </style>

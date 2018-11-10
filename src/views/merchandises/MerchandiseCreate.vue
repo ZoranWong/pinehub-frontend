@@ -1,18 +1,18 @@
 <template>
-  <div class="content-scroll">
-      <div class="content-box" style="padding:20px 30px">
-          <el-tabs active-name="first">
-              <el-tab-pane label="新建商品" name="first"></el-tab-pane>
-          </el-tabs>
-          <div class="form-container">
-              <merchandise-form v-model="merchandise" ref="merchandise" @addCategory = "open" :refreshCategories = "refreshCategories"></merchandise-form>
-          </div>
-          <div class="dialog-footer">
-              <el-button class="submit-button" type="primary" size="small" @click="create">提交</el-button>
-          </div>
-      </div>
-      <category-form :show="formShow" @open="open" @close="close" v-model = "category" :refreshCategories = "refreshCategories"></category-form>
-  </div>
+    <div class="content-scroll">
+        <div class="content-box" style="padding:20px 30px">
+            <el-tabs active-name="first">
+                <el-tab-pane label="新建商品" name="first"></el-tab-pane>
+            </el-tabs>
+            <div class="form-container">
+                <merchandise-form v-model="merchandise" ref="merchandise" @addCategory = "open" :refreshCategories = "refreshCategories"></merchandise-form>
+            </div>
+            <div class="dialog-footer">
+                <el-button class="submit-button" type="primary" size="small" @click="create">提交</el-button>
+            </div>
+        </div>
+        <category-form :show="formShow" @open="open" @close="close" v-model = "category" :refreshCategories = "refreshCategories"></category-form>
+    </div>
 </template>
 <script>
     import MerchandiseForm from './MerchandiseForm';
@@ -53,9 +53,9 @@
     }
 </script>
 <style scoped>
-.submit-button{
-	margin: auto !important;
-	width: 64px;
-	display: block !important;
-}
+    .submit-button{
+        margin: auto !important;
+        width: 64px;
+        display: block !important;
+    }
 </style>

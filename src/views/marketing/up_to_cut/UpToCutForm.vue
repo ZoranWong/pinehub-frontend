@@ -107,12 +107,12 @@
                 }
             },
             activity: {
-              deep: true,
-              handler(nv) {
+                deep: true,
+                handler(nv) {
                     let data = nv;
                     data['gifts'] = this.gifts;
                     this.$emit('input', data);
-              }
+                }
             }
         },
         data() {
@@ -138,118 +138,118 @@
                     }
                 }
             };
-          },
-          computed: {
+        },
+        computed: {
 
-          },
-          methods: {
-                async loadTickets() {
-                    let tickets = await this.http.tickets.list(this.$requestInput('projectId'));
-                    this.tickets = tickets;
-                },
-                 validateGifts() {
-                    return async (rule, value, callback) => {
-                        if(this.gifts.length === 0) {
-                            callback(new Error('请添加优惠'));
-                        }else{
-                            return true;
-                        }
-                    };
-                },
-                leastAmountValidate(index) {
-                    let minLeastAmount = this.minLeastAmount(index);
-                    let maxLeastAmount = this.maxLeastAmount(index);
-                    let leastAmount = this.gifts[index]['least_amount'];
-                    return async (rule, value, callback) => {
-                        if(index > 0 && leastAmount <= minLeastAmount) {
-                            callback(new Error('输入金额需要大于上一级消费额度'));
-                        }else if(leastAmount >= maxLeastAmount) {
-                            callback(new Error('输入金额需要小于下一级消费额度'));
-                        }else{
-                             return true;
-                        }
-                    };
-                },
-                giftValidate(index) {
-                    let gift = this.gifts[index];
-                    return async (rule, value, callback) => {
-                        if(gift['gift_types'].length === 0 || !gift['cost'] && !gift['score'] && !gift['discount'] && !(gift['ticket_id'] && gift['ticket_number'])) {
-                            callback(new Error('请选择至少一种礼包，并填写好相关信息'));
-                        }else{
-                            return true;
-                        }
+        },
+        methods: {
+            async loadTickets() {
+                let tickets = await this.http.tickets.list(this.$requestInput('projectId'));
+                this.tickets = tickets;
+            },
+            validateGifts() {
+                return async (rule, value, callback) => {
+                    if(this.gifts.length === 0) {
+                        callback(new Error('请添加优惠'));
+                    }else{
+                        return true;
                     }
-                },
-                minLeastAmount(index) {
-                    let beforeGift = index > 0 ? this.gifts[index - 1] : null;
-                    if(beforeGift) {
-                        return beforeGift['least_amount'];
-                    } else {
-                        return 0;
+                };
+            },
+            leastAmountValidate(index) {
+                let minLeastAmount = this.minLeastAmount(index);
+                let maxLeastAmount = this.maxLeastAmount(index);
+                let leastAmount = this.gifts[index]['least_amount'];
+                return async (rule, value, callback) => {
+                    if(index > 0 && leastAmount <= minLeastAmount) {
+                        callback(new Error('输入金额需要大于上一级消费额度'));
+                    }else if(leastAmount >= maxLeastAmount) {
+                        callback(new Error('输入金额需要小于下一级消费额度'));
+                    }else{
+                        return true;
                     }
-                },
-                maxLeastAmount(index) {
-                    let nextGift = this.gifts.length - index > 1 ? this.gifts[index + 1] : null;
-                    if(nextGift) {
-                        return nextGift['least_amount'] ? nextGift['least_amount'] : 100000;
-                    } else {
-                        return 100000;
+                };
+            },
+            giftValidate(index) {
+                let gift = this.gifts[index];
+                return async (rule, value, callback) => {
+                    if(gift['gift_types'].length === 0 || !gift['cost'] && !gift['score'] && !gift['discount'] && !(gift['ticket_id'] && gift['ticket_number'])) {
+                        callback(new Error('请选择至少一种礼包，并填写好相关信息'));
+                    }else{
+                        return true;
                     }
-                },
-                isSelected(gift, type) {
-                    let types = gift['gift_types'];
-                    let selected = types.indexOf(type) > -1
-                    if(!selected) {
-                        gift[type] = null;
-                    }
-                    return selected;
-                },
-                deleteGift(index) {
-                    this.gifts.splice(index, 1);
-                },
-                addGift() {
-                    this.gifts.push({
-                        level: this.gifts.length + 1,
-                        cost: null,
-                        least_amount: null,
-                        discount: null,
-                        ticket_id: null,
-                        gift_types: [],
-                        ticket_number: null
-                    });
                 }
-          },
-          created() {
-              this.loadTickets();
-          }
+            },
+            minLeastAmount(index) {
+                let beforeGift = index > 0 ? this.gifts[index - 1] : null;
+                if(beforeGift) {
+                    return beforeGift['least_amount'];
+                } else {
+                    return 0;
+                }
+            },
+            maxLeastAmount(index) {
+                let nextGift = this.gifts.length - index > 1 ? this.gifts[index + 1] : null;
+                if(nextGift) {
+                    return nextGift['least_amount'] ? nextGift['least_amount'] : 100000;
+                } else {
+                    return 100000;
+                }
+            },
+            isSelected(gift, type) {
+                let types = gift['gift_types'];
+                let selected = types.indexOf(type) > -1
+                if(!selected) {
+                    gift[type] = null;
+                }
+                return selected;
+            },
+            deleteGift(index) {
+                this.gifts.splice(index, 1);
+            },
+            addGift() {
+                this.gifts.push({
+                    level: this.gifts.length + 1,
+                    cost: null,
+                    least_amount: null,
+                    discount: null,
+                    ticket_id: null,
+                    gift_types: [],
+                    ticket_number: null
+                });
+            }
+        },
+        created() {
+            this.loadTickets();
+        }
     }
 </script>
 <style>
     .gift-input{
-      width: 86px !important;
+        width: 86px !important;
     }
     h4 {
-      margin: 6px;
+        margin: 6px;
     }
     .gift-box{
-      display: inline-flex;
+        display: inline-flex;
     }
     .ticket-gift-form-item {
-      margin-bottom: 0 !important;
+        margin-bottom: 0 !important;
     }
     .ticket-check-box span{
-      line-height: 40px !important;
+        line-height: 40px !important;
     }
     .inline-block {
-      display: inline-block;
-      margin-bottom:0
+        display: inline-block;
+        margin-bottom:0
     }
     .ticket-gift-id .gift-input{
-      width: 100% !important;
+        width: 100% !important;
     }
 </style>
 <style scoped>
-.ticket-gift-form-item .item_content{
-  line-height: 14px !important;
-}
+    .ticket-gift-form-item .item_content{
+        line-height: 14px !important;
+    }
 </style>

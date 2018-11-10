@@ -1,21 +1,21 @@
 import Service from '../Service';
 import _ from 'underscore';
 export default class JsonService extends Service{
-  constructor(application) {
-    super(application);
-  }
-  encode(data) {
-    if(_.isArray(data) || _.isObject(data)){
-      return JSON.stringify(data);
-    }else{
-      return null;
+    constructor(application) {
+        super(application);
     }
-  }
-  decode(str) {
-    try {
-      return JSON.parse(str);
-    } catch (e) {
-      return str;
+    encode(data) {
+        if(_.isArray(data) || _.isObject(data)){
+            return JSON.stringify(data);
+        }else{
+            return null;
+        }
     }
-  }
+    decode(str) {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+            return str;
+        }
+    }
 }

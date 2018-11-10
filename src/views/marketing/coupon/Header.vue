@@ -1,16 +1,16 @@
 <template>
-  <el-col :span="24" class="toolbar">
-    <el-tabs  type = "card" v-model="tab">
-      <el-tab-pane label="所有优惠券" name="all" >
-      </el-tab-pane>
-      <el-tab-pane label="审核中"  name="applying" >
-      </el-tab-pane>
-      <el-tab-pane label="审核通过"  name="pass">
-      </el-tab-pane>
-      <el-tab-pane label="审核失败"  name="fail" >
-      </el-tab-pane>
-    </el-tabs>
-  </el-col>
+    <el-col :span="24" class="toolbar">
+        <el-tabs  type = "card" v-model="tab">
+            <el-tab-pane label="所有优惠券" name="all" >
+            </el-tab-pane>
+            <el-tab-pane label="审核中"  name="applying" >
+            </el-tab-pane>
+            <el-tab-pane label="审核通过"  name="pass">
+            </el-tab-pane>
+            <el-tab-pane label="审核失败"  name="fail" >
+            </el-tab-pane>
+        </el-tabs>
+    </el-col>
 </template>
 <script>
     export default {
@@ -59,7 +59,7 @@
     }
 </script>
 <style >
-  .el-tabs--top .el-tabs__item.is-top:last-child {
-    font-size: 14px !important;
-  }
+    .el-tabs--top .el-tabs__item.is-top:last-child {
+        font-size: 14px !important;
+    }
 </style>

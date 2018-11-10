@@ -1,9 +1,9 @@
 <template>
-    <div id="login">
+	<div id="login">
 		<div class="login-container">
 			<transition name="fade">
 				<sign-in v-if="login" > </sign-in>
-        <seek-password v-else ></seek-password>
+				<seek-password v-else ></seek-password>
 			</transition>
 		</div>
 		<div class="login-footer">
@@ -12,45 +12,45 @@
 	</div>
 </template>
 <script>
-/* eslint-disable */
-import SignInComponent from '@/components/SignInComponent.vue';
-import SeekPasswordComponent from '@/components/SeekPasswordComponent.vue';
-export default {
-		name: 'login',
-		data() {
-			return {
-				login: true,
-			}
-		},
-    components: {
-      'sign-in': SignInComponent,
-      'seek-password': SeekPasswordComponent
-    },
-    watch: {
-      $route:{
-        deep: true,
-        handle(to, from) {
-          console.log('sign-in', to);
-          if(this.$store.getters['account/logined']) {
-            this.$router.push({
-              name: 'projects'
-            });
-          }
+    /* eslint-disable */
+    import SignInComponent from '@/components/SignInComponent.vue';
+    import SeekPasswordComponent from '@/components/SeekPasswordComponent.vue';
+    export default {
+        name: 'login',
+        data() {
+            return {
+                login: true,
+            }
+        },
+        components: {
+            'sign-in': SignInComponent,
+            'seek-password': SeekPasswordComponent
+        },
+        watch: {
+            $route:{
+                deep: true,
+                handle(to, from) {
+                    console.log('sign-in', to);
+                    if(this.$store.getters['account/logined']) {
+                        this.$router.push({
+                            name: 'projects'
+                        });
+                    }
+                }
+            }
+        },
+        computed: {
+        },
+        methods: {
+        },
+        created() {
+            if(this.$store.getters['account/logined']) {
+                this.$router.push({
+                    name: 'projects'
+                });
+            }
         }
-      }
-    },
-		computed: {
-		},
-		methods: {
-		},
-		created() {
-      if(this.$store.getters['account/logined']) {
-        this.$router.push({
-          name: 'projects'
-        });
-      }
-		}
-}
+    }
 </script>
 <style>
 	#login{
@@ -86,17 +86,17 @@ export default {
 	}
 	#login .login-bg{
 		width: 450px;
-			height: 500px;
-			background-size: cover;
-			background-repeat: no-repeat;
-			position: absolute;
-			z-index: 999;
-			left: 0px;
-			/*top: 0px;*/
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
+		height: 500px;
+		background-size: cover;
+		background-repeat: no-repeat;
+		position: absolute;
+		z-index: 999;
+		left: 0px;
+		/*top: 0px;*/
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
 	}
 	#login .login-bg .logo{
 		/*width: 48%;*/

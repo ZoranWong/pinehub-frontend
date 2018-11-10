@@ -8,7 +8,7 @@ export default class CreateScoreRuleCommand extends Command {
     async handle(rule) {
         try{
             if(rule['type'] === 'GENERAL') {
-               rule = this.buildGeneralRule(rule);
+                rule = this.buildGeneralRule(rule);
             }else  {
                 rule = this.buildSpecialRule(rule);
             }

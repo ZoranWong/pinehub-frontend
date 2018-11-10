@@ -26,38 +26,34 @@
 </template>
 
 <script>
-	import QRCode from 'qrcodejs2'
-	import MainService from '../services/MainService';
-	import TokenService from '../services/TokenService';
-//	import IEcharts from 'vue-echarts-v3'
-	import { mapGetters } from 'vuex'
-	export default {
-		name: 'index',
-		data(){
-			return {
-				secretShow: false
-			}
-		},
-		mounted () {
+    import TokenService from '../services/TokenService';
+    export default {
+        name: 'index',
+        data(){
+            return {
+                secretShow: false
+            }
+        },
+        mounted () {
 
-		},
-		computed:{
-		    appInfo() {
-		        let info = sessionStorage.getItem('appInfo');
-		        if(!!info) {
-		            info = JSON.parse(info);
-				}
-		        return info;
-			}
-		},
-		methods: {
+        },
+        computed:{
+            appInfo() {
+                let info = sessionStorage.getItem('appInfo');
+                if (info) {
+                    info = JSON.parse(info);
+                }
+                return info;
+            }
+        },
+        methods: {
 
-		},
-		created(){
-			this.tokens= TokenService.getToken();
-			this.useAppId=true
-		}
-	}
+        },
+        created(){
+            this.tokens= TokenService.getToken();
+            this.useAppId=true
+        }
+    }
 
 </script>
 

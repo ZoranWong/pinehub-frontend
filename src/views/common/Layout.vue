@@ -27,62 +27,62 @@
 	</el-row>
 </template>
 <script>
-/* eslint-disable */
-  import NavComponent from '@/components/NavComponent';
-	import HeaderComponent from '@/components/HeaderComponent';
-	import ResetPasswordComponent from '@/components/ResetPasswordComponent';
-	import { mapGetters } from 'vuex'
-	export default {
-		data() {
-			return {
-				toogleMenu: false,
-				pageContentStyle: {
-					height: document.documentElement.clientHeight - 115 + 'px',
-					width: '100%'
-				},
-			};
-		},
-		components: {
-			'layout-nav': NavComponent,
-			'reset-password': ResetPasswordComponent,
-			'c-header': HeaderComponent
-		},
-		computed: {
-			routes() {
-				let route = this.routeMap[this.$route.name];
-				console.log('route', this.$route.name, this.$route, route);
-				return [route.parent, route];
-			},
-			showLeftSide() {
-				return !this.routeMap[this.$router.currentRoute.name]['menuHide'];
-			},
-			contentWight(){
-				return "width:"+(document.documentElement.clientWidth - 180) + 'px'
-			},
-			pageContentHeight() {
-				return document.documentElement.clientHeight - 158;
-			},
-			includedComponents() {
-				return 'Index';
-			},
-			activeDate() {
-				console.log(this.$store.state.common.activeDate);
-				return this.$store.state.common.activeDate;
-			}
-		},
-		watch: {
-		},
-		methods: {
-			toogle(){
-				this.toogleMenu=!this.toogleMenu
-			}
-		},
-		created() {
+    /* eslint-disable */
+    import NavComponent from '@/components/NavComponent';
+    import HeaderComponent from '@/components/HeaderComponent';
+    import ResetPasswordComponent from '@/components/ResetPasswordComponent';
+    import { mapGetters } from 'vuex'
+    export default {
+        data() {
+            return {
+                toogleMenu: false,
+                pageContentStyle: {
+                    height: document.documentElement.clientHeight - 115 + 'px',
+                    width: '100%'
+                },
+            };
+        },
+        components: {
+            'layout-nav': NavComponent,
+            'reset-password': ResetPasswordComponent,
+            'c-header': HeaderComponent
+        },
+        computed: {
+            routes() {
+                let route = this.routeMap[this.$route.name];
+                console.log('route', this.$route.name, this.$route, route);
+                return [route.parent, route];
+            },
+            showLeftSide() {
+                return !this.routeMap[this.$router.currentRoute.name]['menuHide'];
+            },
+            contentWight(){
+                return "width:"+(document.documentElement.clientWidth - 180) + 'px'
+            },
+            pageContentHeight() {
+                return document.documentElement.clientHeight - 158;
+            },
+            includedComponents() {
+                return 'Index';
+            },
+            activeDate() {
+                console.log(this.$store.state.common.activeDate);
+                return this.$store.state.common.activeDate;
+            }
+        },
+        watch: {
+        },
+        methods: {
+            toogle(){
+                this.toogleMenu=!this.toogleMenu
+            }
+        },
+        created() {
 
-		},
-		mounted() {
-		}
-	}
+        },
+        mounted() {
+        }
+    }
 </script>
 <style scoped>
 	.container {
@@ -91,10 +91,10 @@
 		bottom: 0px;
 		width: 100%;
 		overflow: hidden;
-		}
+	}
 
 	.container .toogle-content {
-	    left: 40px !important;
+		left: 40px !important;
 	}
 	.right-content{
 		position: absolute;
@@ -115,13 +115,13 @@
 		display: inline-block; margin:0px 10%;width: 80%;line-height: 60px;
 	}
 	.right-content .header-bottom, .right-content .el-breadcrumb{
-	    font-size: 14px;
-	    height: 40px;
-			font-color: #606266;
-	    line-height: 40px !important;
-	    background: #fff;
-	    padding-left:10px;
-	    border-bottom: 1px solid #e9e9e9;
+		font-size: 14px;
+		height: 40px;
+		font-color: #606266;
+		line-height: 40px !important;
+		background: #fff;
+		padding-left:10px;
+		border-bottom: 1px solid #e9e9e9;
 	}
 	.left-content{
 		left: 120px !important;

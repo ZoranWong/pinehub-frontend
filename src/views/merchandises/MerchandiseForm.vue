@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="merchandise" label-width="120px"  ref="merchandise">
+	<el-form :model="merchandise" label-width="120px"  ref="merchandise">
 		<h4>基本信息</h4>
 		<el-form-item label="商品名：" prop="name" :rules = "[{required: true, message: '请填写商品名称', trigger: 'blur'}]">
 			<el-input v-model="merchandise['name']" style="width: 256px"></el-input>
@@ -99,28 +99,28 @@
 	</el-form>
 </template>
 <script>
-	import _ from 'underscore';
-	export default {
-		name: 'MerchandiseForm',
-		props: {
-			refreshCategories: {
-				default: null,
-				type: Function
-			},
-			value: {
-				default: null,
-				type: Object
-			}
-		},
-		watch: {
-			merchandise: {
-				deep: true,
-				handler() {
-					this.$emit('input', this.merchandise);
-				}
-			},
-			value: {
-			    deep: true,
+    import _ from 'underscore';
+    export default {
+        name: 'MerchandiseForm',
+        props: {
+            refreshCategories: {
+                default: null,
+                type: Function
+            },
+            value: {
+                default: null,
+                type: Object
+            }
+        },
+        watch: {
+            merchandise: {
+                deep: true,
+                handler() {
+                    this.$emit('input', this.merchandise);
+                }
+            },
+            value: {
+                deep: true,
                 handler: function (nv, ov) {
                     if (nv !== ov) {
                         this.merchandise = nv;
@@ -133,59 +133,59 @@
                     }
                 }
             }
-		},
-		data() {
-			return {
-				imageList: [],
-				merchandise: {
-					name: null,
-					preview: null,
-					status: 1,
-					images: [],
-					categories: [],
-					main_image: null,
-					sell_price: null,
-					cost_price: null,
-					origin_price: null,
-					factory_price: null,
-					stock_num: null,
-					member_discount: false
-				}
-			};
-		},
-		created() {
-			this.refreshCategories();
-		},
-		computed: {
-			mainImage() {
-				return this.merchandise['main_image'];
-			},
-			categories() {
-				return this.$store.getters['categories/currentPage'];
-			}
-		},
-		methods: {
-			async uploadImages({ file }) {
-				this.$command('UPLOAD_FILE', file, 'merchandiseImage', 'merchandiseImage', (result) => {
-					if(result) {
-						this.merchandise['images'].push(result.src);
-						this.imageList.push({
-							uid: file.uid,
-							url: result.src
-						});
-					}
-				});
-			},
-			async uploadMainImage({ file }) {
-				this.$command('UPLOAD_FILE', file, 'mainImage', 'merchandiseImage', (result) => {
-					if(result) {
-						this.merchandise['main_image'] = result.src;
-					}
-				});
-			},
-			uploadImagesSuccess() {
+        },
+        data() {
+            return {
+                imageList: [],
+                merchandise: {
+                    name: null,
+                    preview: null,
+                    status: 1,
+                    images: [],
+                    categories: [],
+                    main_image: null,
+                    sell_price: null,
+                    cost_price: null,
+                    origin_price: null,
+                    factory_price: null,
+                    stock_num: null,
+                    member_discount: false
+                }
+            };
+        },
+        created() {
+            this.refreshCategories();
+        },
+        computed: {
+            mainImage() {
+                return this.merchandise['main_image'];
+            },
+            categories() {
+                return this.$store.getters['categories/currentPage'];
+            }
+        },
+        methods: {
+            async uploadImages({ file }) {
+                this.$command('UPLOAD_FILE', file, 'merchandiseImage', 'merchandiseImage', (result) => {
+                    if(result) {
+                        this.merchandise['images'].push(result.src);
+                        this.imageList.push({
+                            uid: file.uid,
+                            url: result.src
+                        });
+                    }
+                });
+            },
+            async uploadMainImage({ file }) {
+                this.$command('UPLOAD_FILE', file, 'mainImage', 'merchandiseImage', (result) => {
+                    if(result) {
+                        this.merchandise['main_image'] = result.src;
+                    }
+                });
+            },
+            uploadImagesSuccess() {
 
-			},
+            },
             removeImages: function (rfile) {
                 _.map(this.imageList, (file, index) => {
                     if (file.uid === rfile.uid) {
@@ -194,19 +194,19 @@
                     }
                 })
             },
-			uploadImagesError() {
-			},
-			removeMainImage() {
-			},
-			uploadMainImageSuccess() {
-			},
-			uploadMainImageError() {
-			},
-			createCategory() {
-				this.$emit('addCategory');
-			}
-		}
-	}
+            uploadImagesError() {
+            },
+            removeMainImage() {
+            },
+            uploadMainImageSuccess() {
+            },
+            uploadMainImageError() {
+            },
+            createCategory() {
+                this.$emit('addCategory');
+            }
+        }
+    }
 </script>
 <style scoped>
 	.prompt{

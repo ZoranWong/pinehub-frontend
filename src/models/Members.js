@@ -1,9 +1,8 @@
 import Model from './Model';
-import MemberTranformer from './transformers/Member';
-import _ from 'underscore';
+import MemberTransformer from './transformers/Member';
 export default class Members extends Model{
-  constructor(application) {
-    super(application);
-    this.transformer = MemberTranformer;
-  }
+    constructor(application) {
+        super(application);
+        this.transformer = MemberTransformer;
+    }
 }

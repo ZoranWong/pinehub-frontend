@@ -10,31 +10,31 @@
 	</table-list>
 </template>
 <script>
-/* eslint-disable */
-  import Header from './Header';
-	import ShopTable from './ShopTable';
-	import TableList from '@/components/TableList';
-	export default {
-		name: 'OpenedShops',
-		components: {
-			'shop-table': ShopTable,
-			'shop-header': Header,
-			'table-list': TableList
-		},
-		data() {
-			return {
-				service: 'http.shops',
-				event: 'shops/setList',
-				current: 'shops/currentPage',
-				query: {
-					status: 1
-				}
-			};
-		},
-		computed: {
-			model() {
-				return this.$store.state.shops;
-			}
-		}
-	}
+    /* eslint-disable */
+    import Header from './Header';
+    import ShopTable from './ShopTable';
+    import TableList from '@/components/TableList';
+    export default {
+        name: 'OpenedShops',
+        components: {
+            'shop-table': ShopTable,
+            'shop-header': Header,
+            'table-list': TableList
+        },
+        data() {
+            return {
+                service: 'http.shops',
+                event: 'shops/setList',
+                current: 'shops/currentPage',
+                query: {
+                    status: 1
+                }
+            };
+        },
+        computed: {
+            model() {
+                return this.$store.state.shops;
+            }
+        }
+    }
 </script>

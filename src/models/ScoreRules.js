@@ -1,10 +1,10 @@
 import Model from './Model'
-import ScoreRuleTranformer from './transformers/ScoreRule';
+import ScoreRuleTransformer from './transformers/ScoreRule';
 import _ from 'underscore';
 export default class ScoreRules extends Model{
     constructor(application) {
         super(application);
-        this.transformer = ScoreRuleTranformer;
+        this.transformer = ScoreRuleTransformer;
     }
     computed() {
         return _.extend(super.computed(), {

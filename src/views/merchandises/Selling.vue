@@ -10,37 +10,37 @@
 </template>
 
 <script>
-  /* eslint-disable */
-	import Header from './Header';
-	import MerchandiseTable from './MerchandiseTable';
-	import TableList from '@/components/TableList';
-	export default {
-		name: 'MerchandiseSelling',
-		components: {
-			'merchandise-header': Header,
-			'merchandise-table': MerchandiseTable,
-			'table-list': TableList
-		},
-		data() {
-			return {
-				service: 'http.merchandises',
-				event: 'merchandises/setList',
-				current: 'merchandises/currentPage',
-        query: {
-          status: 1
-				}
-			};
-		},
-		computed: {
-			model() {
-				console.log(this.$store.state.merchandises);
-				return this.$store.state.merchandises;
-			},
-		},
-		methods: {
-	      search(data) {
-	        this.query = _.extend(this.query, data);
-	      }
-		}
-	}
+    /* eslint-disable */
+    import Header from '../../components/MerchandisesHeader';
+    import MerchandiseTable from '../../components/MerchandisesTable';
+    import TableList from '@/components/TableList';
+    export default {
+        name: 'MerchandiseSelling',
+        components: {
+            'merchandise-header': Header,
+            'merchandise-table': MerchandiseTable,
+            'table-list': TableList
+        },
+        data() {
+            return {
+                service: 'http.merchandises',
+                event: 'merchandises/setList',
+                current: 'merchandises/currentPage',
+                query: {
+                    status: 1
+                }
+            };
+        },
+        computed: {
+            model() {
+                console.log(this.$store.state.merchandises);
+                return this.$store.state.merchandises;
+            },
+        },
+        methods: {
+            search(data) {
+                this.query = _.extend(this.query, data);
+            }
+        }
+    }
 </script>

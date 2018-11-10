@@ -11,21 +11,21 @@
 </template>
 
 <script>
-  /* eslint-disable */
-	import Index from './index/Index'
-	export default {
-		name: 'MemberCards',
-		components: {
-			index: Index
-		},
-		data() {
-			return {
-				currentTab:'first'
-			};
-		},
-		computed: {
-		},
-		methods: {
-		}
-	}
+    /* eslint-disable */
+    import Index from './index/Index'
+    export default {
+        name: 'MemberCards',
+        components: {
+            index: Index
+        },
+        data() {
+            return {
+                currentTab:'first'
+            };
+        },
+        computed: {
+        },
+        methods: {
+        }
+    }
 </script>
