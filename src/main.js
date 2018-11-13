@@ -6,4 +6,3 @@ application.run((async ( app ) => {
 }), async function () {
     this.$command('GET_PUBLIC_KEY');
 });
-console.log(application);

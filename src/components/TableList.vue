@@ -48,6 +48,10 @@
                 default: '',
                 type: String
             },
+            listCommand: {
+                default: 'DATA_LIST',
+                type: [String, Function]
+            },
             query: {
                 default:function(){ return {};},
                 type: Object
@@ -77,7 +81,7 @@
                 return this.$store.getters[this.current];
             },
             command() {
-                return 'DATA_LIST';
+                return this.listCommand;
             }
         },
         methods: {

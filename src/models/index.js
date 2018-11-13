@@ -30,6 +30,7 @@ export default class Store {
         this.addModel('upToCutActivities', UpToCutActivities);
         this.addModel('paidGiftActivities', PaidGiftActivities);
         this.addModel('merchandises', Merchandises);
+        this.addModel('activityMerchandises', Merchandises);
         this.addModel('couponCards', CouponCards);
         this.addModel('categories', Categories);
         this.addModel('wechatMenus', WechatMenu);

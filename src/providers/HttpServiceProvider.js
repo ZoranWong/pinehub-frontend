@@ -19,6 +19,9 @@ import FilesService from '@/services/http/FilesService';
 import RegionsService from '@/services/http/RegionsService';
 import TicketsService from '@/services/http/TicketsService';
 import PaidGiftActivitiesService from '@/services/http/PaidGiftActivitiesService';
+import MarketingService from '@/services/http/MarketingService';
+import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesService';
+
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
@@ -54,5 +57,7 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.regions', RegionsService);
         this.app.register('http.tickets', TicketsService);
         this.app.register('http.paidGiftActivities', PaidGiftActivitiesService);
+        this.app.register('http.marketing', MarketingService);
+        this.app.register('http.activityMerchandises', ActivityMerchandisesService);
     }
 }

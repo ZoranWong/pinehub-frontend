@@ -25,7 +25,7 @@
             },
             command: {
                 default: '',
-                type: String
+                type: [String, Function]
             },
             search:{
                 default: function(){return {}},
@@ -108,7 +108,11 @@
                 page = page ? page : 1;
                 let search = this.search;
                 delete search['page'];
-                this.$command(this.command, this.service, this.event, page, search, this.limit);
+                if(_.isFunction(this.command)) {
+                    this.command(this.event, page, search, this.limit);
+                }else{
+                    this.$command(this.command, this.service, this.event, page, search, this.limit);
+                }
             }
         }
     }

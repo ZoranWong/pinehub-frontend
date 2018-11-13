@@ -41,6 +41,9 @@ export default class Model {
                 }else{
                     return null;
                 }
+            },
+            limit() {
+                return this.pageCount;
             }
         };
     }
@@ -56,13 +59,15 @@ export default class Model {
         });
 
         this.addEventListener('setList', function({list, currentPage, totalNum, totalPage,pageCount}, model){
-            this.currentPage = currentPage;
+            if(totalNum !== null && totalNum !== 0){
+                this.currentPage = currentPage;
+            }
             let startIndex = (currentPage - 1) * pageCount + 1;
             let pageList =  model.transform(list, model.transformer, startIndex);
             model.$application.$vm.set(this.list, currentPage - 1, pageList);
-            if(totalNum !== null)
+            if(totalNum !== null && totalNum !== 0)
                 this.totalNum = totalNum;
-            if(totalPage !== null){
+            if(totalPage !== null && totalNum !== 0){
                 this.totalPage = totalPage;
             }
             if(pageCount !== null) {

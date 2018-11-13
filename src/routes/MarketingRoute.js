@@ -8,6 +8,7 @@ import UpToCutCreate from '@/views/marketing/up_to_cut/UpToCutCreate';
 import UpToCutUpdate from '@/views/marketing/up_to_cut/Edit';
 import PaidGiftCreate from '@/views/marketing/paid_gift/PaidGiftCreate';
 import CouponCreate from '@/views/marketing/coupon/CouponCreate';
+import ActivityMerchandises from '@/views/marketing/new_events/ActivityMerchandises';
 let route = new Route();
 route.group('/project/:projectId/marketing', {
 	'tag': '营销',
@@ -59,6 +60,12 @@ route.group('/project/:projectId/marketing', {
 			'component': CouponCreate,
 			'tag': '新建优惠券'
 		});
+
+        route.addRoute('new/merchandise/activity', {
+            'name': 'new-merchandise-activity',
+            'component': ActivityMerchandises,
+            'tag': '新品活动'
+        });
 	}
 });
 export default route;

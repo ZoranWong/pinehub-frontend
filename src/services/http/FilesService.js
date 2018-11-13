@@ -23,4 +23,8 @@ export default class FilesService extends ApiService {
     async merchandiseImage (projectId, files, fileField) {
         return await this.upload(projectId, files, fileField, '/merchandise/image/cloud');
     }
+
+    async activityPosterImage(projectId, files, fileField) {
+        return await this.upload(projectId, files, fileField, 'new/merchandise/activity/upload/image/cloud');
+    }
 }

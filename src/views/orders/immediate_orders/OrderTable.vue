@@ -74,7 +74,6 @@
     </div>
 </template>
 <script>
-    import _ from 'underscore';
     export default {
         name: 'OrderTable',
         props:{

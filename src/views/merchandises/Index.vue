@@ -10,7 +10,18 @@
             </merchandise-header>
         </template>
         <template slot = "table" slot-scope="{ data }">
-            <merchandise-table :merchandises="data"></merchandise-table>
+            <merchandise-table :merchandises="data">
+                <template slot = "tableOpt" slot-scope = "{merchandise}">
+                    <el-button type="text" size="mini" @click="edit(merchandise.id)">编辑</el-button> |
+                    <el-popover placement="top">
+                        <p><el-button type="text" size="mini" v-if="merchandise.status == 1">下架</el-button></p>
+                        <p><el-button type="text" size="mini" disabled>会员价</el-button></p>
+                        <p><el-button type="text" size="mini" disabled>推广商品</el-button></p>
+                        <p><el-button type="text" size="mini" disabled>删除</el-button></p>
+                        <el-button slot="reference" title="更多" type="text" icon="el-icon-more" size="mini"></el-button>
+                    </el-popover>
+                </template>
+            </merchandise-table>
         </template>
     </table-list>
 </template>
@@ -52,6 +63,9 @@
                         projectId: this.$requestInput('projectId')
                     }
                 });
+            },
+            edit(id) {
+                this.$router.push({name: 'merchandise-editor', params: {'projectId': this.$requestInput('projectId'), 'merchandiseId': id}});
             }
         }
     }
