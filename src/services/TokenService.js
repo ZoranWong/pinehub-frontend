@@ -19,7 +19,7 @@ export default class TokenService extends Service {
 
     async refresh() {
         this.command('CLEAR_ACCOUNT');
-        this.service('localStorage').delete('token')
+        this.service('localStorage').delete('token');
         let token = this.getRefreshToken();
         if(token) {
             token = await this.service('http.account').refreshToken(token);

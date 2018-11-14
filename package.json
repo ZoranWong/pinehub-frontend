@@ -71,10 +71,9 @@
       "no-unused-vars":  "off",
       "no-trailing-spaces":  "off",
       "eqeqeq":  "off",
-      "vue/max-attributes-per-line": [2, {
+      "vue/max-attributes-per-line": [0, {
         "singleline": 1,
         "multiline": {
-          "max": 1,
           "allowFirstLine": false
         }
       }]

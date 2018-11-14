@@ -8,8 +8,9 @@ export default class Merchandise{
         this.name = merchandise['name'];
         this.stockNum = merchandise['stock_num'];
         this.sellNum = merchandise['sell_num'];
-        this.visitTime = merchandise['visit_time'];
-        this.visitorNum = merchandise['visitor_num'];
+        this.visitTime = merchandise['visit_time'] ? merchandise['visit_time'] : 0;
+        this.visitorNum = merchandise['visitor_num'] ? merchandise['visitor_num'] : 0;
+        this.tags = merchandise['tags'];
         this.status = this.statusDict[merchandise.status];
         let createdAt = '';
         if(_.isObject(merchandise['created_at'])) {

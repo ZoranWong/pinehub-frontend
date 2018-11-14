@@ -1,29 +1,10 @@
 <template>
     <div class = "create-update-form">
-        <el-dialog
-            :visible.sync = "dialogShow"
-            width = "45%"
-            :close-on-click-modal = "false"
-            @close = "close"
-            @open = "open">
-            <activity-form
-                ref="activityForm"
-                v-model = "activity" />
-            <div
-                slot="footer"
-                class="dialog-footer">
-                <el-button
-                    size="small"
-                    @click="close">
-                    取消
-                </el-button>
-                <el-button
-                    type="primary"
-                    :loading="saving"
-                    size="small"
-                    @click="save">
-                    保存
-                </el-button>
+        <el-dialog :visible.sync = "dialogShow" width = "45%" :close-on-click-modal = "false" @close = "close" @open = "open">
+            <activity-form ref="activityForm" v-model = "activity" />
+            <div slot="footer" class="dialog-footer">
+                <el-button size="small" @click="close">取消</el-button>
+                <el-button type="primary" :loading="saving" size="small" @click="save">保存</el-button>
             </div>
         </el-dialog>
     </div>
@@ -79,7 +60,6 @@ export default {
     },
     methods: {
         async save () {
-            console.log(this.activity, this.value);
             let result = await this.$refs['activityForm'].$refs['activity'].validate();
             if(result) {
                 let activity = {};

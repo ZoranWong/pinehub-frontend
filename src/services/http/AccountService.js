@@ -23,7 +23,7 @@ export default class AccountService extends ApiService {
     async publicKey() {
         let response = null;
         if(this.$application.needMock()) {
-            response =  await this.service('pulicKeyMock').mock(id);
+            response =  await this.service('pulicKeyMock').mock();
         }else{
             //服务器交互代码
             response = await this.httpGet('public/key', [], false);
@@ -40,7 +40,7 @@ export default class AccountService extends ApiService {
 
     async refreshToken(token) {
         try{
-            let response = await this.httpGet('refresh_token', {'token': token}, false);
+            let response = await this.httpGet('refresh/token', {'token': token}, false);
             return response.data;
         }catch(error) {
             return false;

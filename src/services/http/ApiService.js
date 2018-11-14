@@ -93,7 +93,7 @@ export default class ApiService extends Service{
 
     error(error) {
         let result = error.response;
-        if(this.showError)  this.$application.$error(result.data.message);
+        if(this.showError && this.app.$route && this.app.$route.name !== 'sign-in')  this.$application.$error(result.data.message);
         let exception = new Error();
         exception['data'] = result.data;
         throw exception;
@@ -122,7 +122,7 @@ export default class ApiService extends Service{
                 .delete(route + '/' + id);
             return result.data;
         }catch(error) {
-            this.tokenExpired(error.response);
+            await this.tokenExpired(error.response);
             this.error(error);
         }
     }
@@ -138,13 +138,16 @@ export default class ApiService extends Service{
         return this.service('json').encode(searchFields);
     }
 
-    tokenExpired(error) {
+    async tokenExpired(error) {
         if(error.data.code === AUTH_TOKEN_EXPIRES) {
             this.service('localStorage').delete('token');
-            let token = this.service('localStorage').get('refresh_token');
-            this.command('CLEAR_ACCOUNT');
+            this.service('localStorage').delete('refresh_token');
+            await this.command('CLEAR_ACCOUNT');
             this.command('REDIRECT', {
-                name: 'sign-in'
+                name: 'sign-in',
+                query: {
+                    'from': 'sign-in'
+                }
             });
         }
     }

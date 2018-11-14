@@ -58,4 +58,20 @@ export default class ShopsService extends ApiService{
         }
         return response.data;
     }
+
+    async skuMerchandises (shopId, page = 1, search = null, limit = 15) {
+        let  response = await this.httpGet(`shop/${shopId}/merchandises`, {page: page, limit: limit, searchJson: search});
+
+        let skuMerchandises = response.data;
+
+        let pagination = response.meta.pagination;
+
+        let totalNum = pagination.total;
+
+        let currentPage = pagination['current_page'];
+
+        let totalPage = pagination['total_pages'];
+
+        return [skuMerchandises, totalNum, currentPage, totalPage];
+    }
 }

@@ -1,17 +1,17 @@
 /* eslint-disable */
 <template>
-    <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :listCommand = "loadMerchandises">
+    <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :list-command = "loadMerchandises">
         <template slot = "header" slot-scope = "{ search, searchHandler }">
-            <merchandise-header  v-model = "search" @search = "searchHandler">
+            <merchandise-header v-model = "search" @search = "searchHandler">
                 <template slot = "opt-buttons">
                     <div class = "opt-buttons">
-                        <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "createActivity" v-if = "!activity">新品活动</el-button>
-                        <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "updateActivity" v-else>更新活动</el-button>
-                        <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "addMerchandise" :disabled="!activity">添加活动商品</el-button>
+                        <el-button v-if = "!activity" size = "small" type = "primary" icon = "el-icon-plus" @click = "createActivity">新品活动</el-button>
+                        <el-button v-else size = "small" type = "primary" icon = "el-icon-plus" @click = "updateActivity">更新活动</el-button>
+                        <el-button size = "small" type = "primary" icon = "el-icon-plus" :disabled="!activity" @click = "addMerchandise">添加活动商品</el-button>
                     </div>
-                    <activity-create :show = "creating"  @close="creating=false;" v-if = "!activity"></activity-create>
-                    <activity-update :data = "activity" :show = "updating"  @close="updating=false;" v-else></activity-update>
-                    <add-merchandise :show = "showAddMerchandise"  @close="closeMerchandiseForm" :activity = "activity" ></add-merchandise>
+                    <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
+                    <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
+                    <add-merchandise :show = "showAddMerchandise" :activity = "activity" @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    /* eslint-disable */
+/* eslint-disable */
     import Header from '@/components/MerchandisesHeader';
     import MerchandiseTable from '@/components/MerchandisesTable';
     import TableList from '@/components/TableList';

@@ -26,6 +26,10 @@ export default class RouteServiceProvider extends ServiceProvider {
         });
     }
     async beforeEach(to, from, next) {
+        this.app['$route'] = to;
+        if(to.query['from'] === 'sign-in') {
+            next();
+        }
         let isLogin = await this.app.token.getToken();
         if(isLogin) {
             let menu = this.app.instances['vue-store'].getters['menus/getMenuByRouteName'](to.name);
