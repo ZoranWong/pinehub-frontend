@@ -19,44 +19,44 @@
   </div>
 </template>
 <script>
-export default{
-  name: 'Menu',
-  props: [
-    'menuData'
-  ],
-  data(){
-    return {
-      height: 0
-    };
-  },
-  computed: {
-    menus() {
-        return this.menuData['menus']['button'];
-    },
-    headerTitle() {
-      return '福年来';
-    },
-    menuName() {
-      return  this.menuData['name'];
+    export default{
+        name: 'Menu',
+        props: [
+            'menuData'
+        ],
+        data(){
+            return {
+                height: 0
+            };
+        },
+        computed: {
+            menus() {
+                return this.menuData['menus']['button'];
+            },
+            headerTitle() {
+                return '福年来';
+            },
+            menuName() {
+                return  this.menuData['name'];
+            }
+        },
+        mounted() {
+            this.setHeight();
+        },
+        methods: {
+            setHeight() {
+                this.height = this.$refs['wechatMenu'].offsetWidth * 667 / 375;
+            },
+            handleResize() {
+                this.setHeight();
+            },
+            edit(menu) {
+                this.$command('REDIRECT', {name: 'update-wx-menu', params: { projectId: this.$requestInput('projectId'), id: menu.id}, query: {menu: this.base64.encodeURI(this.json.encode(menu))}});
+            }
+        },
+        created() {
+        }
     }
-  },
-  mounted() {
-    this.setHeight();
-  },
-  methods: {
-    setHeight() {
-      this.height = this.$refs['wechatMenu'].offsetWidth * 667 / 375;
-    },
-    handleResize() {
-      this.setHeight();
-    },
-    edit(menu) {
-        this.$command('REDIRECT', {name: 'update-wx-menu', params: { projectId: this.$requestInput('projectId'), id: menu.id}, query: {menu: this.base64.encodeURI(this.json.encode(menu))}});
-    }
-  },
-  created() {
-  }
-}
 </script>
 <style scoped>
   .menu-box{

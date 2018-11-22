@@ -17,7 +17,7 @@
           <el-input size="small" v-model="filters.name" placeholder="搜索关键词/规则名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" @click="">查询</el-button>
+          <el-button size="small" type="primary" >查询</el-button>
         </el-form-item>
         <el-form-item style="float:right">
           <el-button size="small" type="success" @click="keyListEdit(false)">添加回复</el-button>
@@ -105,19 +105,19 @@
           </div>
           <el-popover placement="right" width="250" trigger="hover">
             <div>
-              <el-button type="text" size="small" @click.native="getImgTextMaterials('key')"> 图文消息 </el-button>
-              <el-button type="text" size="small" @click.native="textVisible=true;textData.content=''"> 文字 </el-button>
-              <el-button type="text" size="small" @click.native="getImgMaterials('key')"> 图片 </el-button>
-              <el-button type="text" size="small" @click.native="getVoiceMaterials('key')"> 语音 </el-button>
-              <el-button type="text" size="small" @click.native="getVideoMaterials('key')"> 视频</el-button>
+              <el-button type="text" size="small" @click="getImgTextMaterials('key')"> 图文消息 </el-button>
+              <el-button type="text" size="small" @click="textVisible=true;textData.content=''"> 文字 </el-button>
+              <el-button type="text" size="small" @click="getImgMaterials('key')"> 图片 </el-button>
+              <el-button type="text" size="small" @click="getVoiceMaterials('key')"> 语音 </el-button>
+              <el-button type="text" size="small" @click="getVideoMaterials('key')"> 视频</el-button>
             </div>
             <el-button slot="reference" icon="el-icon-circle-plus-outline" size="small"></el-button>
           </el-popover>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="text-align: center;margin-top:20px;">
-        <el-button type="success" size="small" @click.native="ruleSubmit(keyAddData)">保存</el-button>
-        <el-button @click.native="keyValue = true;addRule=false" size="small" plain>取消</el-button>
+        <el-button type="success" size="small" @click="ruleSubmit(keyAddData)">保存</el-button>
+        <el-button @click="keyValue = true;addRule=false" size="small" plain>取消</el-button>
       </div>
     </div>
   </el-row>

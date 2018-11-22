@@ -55,12 +55,28 @@
   "eslintConfig": {
     "root": true,
     "extends": [
+      "eslint:recommended",
       "plugin:vue/essential",
-      "eslint:recommended"
+      "plugin:vue/strongly-recommended",
+      "plugin:vue/recommended"
     ],
     "rules": {
-      "no-console": "off",
-      "generator-star-spacing": "off"
+      "arrow-parens": "off",
+      "generator-star-spacing":  "off",
+      "no-tabs":  "off",
+      "no-mixed-spaces-and-tabs":  "off",
+      "indent": ["error", 4],
+      "vue/html-indent": ["error", 4],
+      "vue/script-indent": ["error", 4],
+      "no-unused-vars":  "off",
+      "no-trailing-spaces":  "off",
+      "eqeqeq":  "off",
+      "vue/max-attributes-per-line": [0, {
+        "singleline": 1,
+        "multiline": {
+          "allowFirstLine": false
+        }
+      }]
     }
   },
   "postcss": {

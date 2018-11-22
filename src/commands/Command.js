@@ -1,15 +1,15 @@
 export default class Command {
-  constructor(app) {
+    constructor(app) {
 
-  }
+    }
 
-  handle(params) {
+    handle(params) {
 
-  }
-  static commandName() {
-    return '';
-  }
-  store() {
-    return this.$store;
-  }
+    }
+    static commandName() {
+        return '';
+    }
+    store() {
+        return this.$store;
+    }
 }

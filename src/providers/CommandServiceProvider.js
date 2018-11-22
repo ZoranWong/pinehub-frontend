@@ -29,24 +29,30 @@ import CreateMerchandiseCommand from '@/commands/CreateMerchandiseCommand';
 import UpdateMerchandiseCommand from '@/commands/UpdateMerchandiseCommand';
 import CreateMemberCardCommand from '@/commands/CreateMemberCardCommand';
 import UpdateMemberCardCommand from '@/commands/UpdateMemberCardCommand';
-export default class CommandServiceProvider extends ServiceProvider {
-  constructor(app) {
-    super(app);
-  }
+import CreateScoreRuleCommand from '@/commands/CreateScoreRuleCommand';
+import UpdateScoreRuleCommand from '@/commands/UpdateScoreRuleCommand';
+import ActivityMerchandisesLoadCommand from '@/commands/ActivityMerchandisesLoadCommand';
+import LoadShopSkuCommand from '@/commands/LoadShopSkuCommand';
 
-  register() {
-    let commands = [
-        SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
-        GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
-        ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
-        GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
-        CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
-        ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
-        UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
-        CreateMemberCardCommand, UpdateMemberCardCommand
-    ];
-    for (let key in commands) {
-      this.app.registerCommand(commands[key].commandName(), commands[key]);
+export default class CommandServiceProvider extends ServiceProvider {
+    constructor(app) {
+        super(app);
     }
-  }
+
+    register() {
+        let commands = [
+            SignInCommand, ReportCommand, RedirectCommand, DataListCommand,
+            GetProjectsCommand, UpLoadCommand, GetCouponCommand, GetFullReduceCommand,
+            ReloadCommand, CreateProjectCommand, UpdateProjectCommand, RemoveProjectCommand,
+            GetProjectDetialCommand, LoadProvincesCommand, LoadCitiesCommand, LoadCountiesCommand,
+            CreateShopCommand, UpdateShopCommand, CreateUTCActivityCommand, GetPublicKeyCommand,
+            ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
+            UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
+            CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand,
+            ActivityMerchandisesLoadCommand, LoadShopSkuCommand
+        ];
+        for (let key in commands) {
+            this.app.registerCommand(commands[key].commandName(), commands[key]);
+        }
+    }
 }

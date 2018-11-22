@@ -10,40 +10,41 @@
 </template>
 
 <script>
-	import OrderTable from './OrderTable';
-	import Header from './Header';
-	import TableList from '@/components/TableList';
-	export default {
-		name: 'Orders',
-		components:{
-			'order-table': OrderTable,
-			'order-header': Header,
-			'table-list': TableList
-		},
-		data() {
-			return {
-				service: 'http.orders',
-				event: 'scanPaymentOrders/setList',
-				current: 'scanPaymentOrders/currentPage',
-				query: {
-					type: 0
-				}
-			};
-		},
-		computed: {
-			model() {
-				return this.$store.state.scanPaymentOrders;
-			},
-		},
-		watch: {
+    import OrderTable from './OrderTable';
+    import Header from './OrderHeader';
+    import TableList from '@/components/TableList';
+    import _ from 'underscore';
+    export default {
+        name: 'Orders',
+        components:{
+            'order-table': OrderTable,
+            'order-header': Header,
+            'table-list': TableList
+        },
+        data() {
+            return {
+                service: 'http.orders',
+                event: 'scanPaymentOrders/setList',
+                current: 'scanPaymentOrders/currentPage',
+                query: {
+                    type: 0
+                }
+            };
+        },
+        computed: {
+            model() {
+                return this.$store.state.scanPaymentOrders;
+            },
+        },
+        watch: {
 
-		},
-		methods: {
-			search(data) {
-				this.query = _.extend(this.query, data);
-			}
-		},
-	}
+        },
+        methods: {
+            search(data) {
+                this.query = _.extend(this.query, data);
+            }
+        },
+    }
 </script>
 
 <style scoped>

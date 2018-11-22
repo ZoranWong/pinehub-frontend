@@ -5,18 +5,22 @@ export default class UpdateMerchandiseCommand extends Command {
     }
 
     async handle(projectId, id, merchandise) {
-        let result = await this.$service('http.merchandises').update(projectId, id, merchandise);
-        if(result) {
-            this.$message({
-                message: '恭喜你，商品修改成功！',
-                type: 'success'
-            });
-            this.$router.push({
-                name: 'merchandises',
-                params: {
-                    projectId: this.$requestInput('projectId')
-                }
-            });
+        try{
+            let result = await this.$service('http.merchandises').update(projectId, id, merchandise);
+            if(result) {
+                this.$message({
+                    message: '恭喜你，商品修改成功！',
+                    type: 'success'
+                });
+                this.$router.push({
+                    name: 'merchandises',
+                    params: {
+                        projectId: this.$requestInput('projectId')
+                    }
+                });
+            }
+        }catch (e) {
+            console.log(e);
         }
     }
     static commandName() {

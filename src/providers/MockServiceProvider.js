@@ -30,45 +30,45 @@ import MemberCard from '@/mocks/MemberCard';
 import Account from '@/mocks/Account';
 /* eslint-disable */
 export default class AppServiceProvider extends ServiceProvider{
-  constructor(app) {
-    super(app);
-  }
-  register() {
-    if(this.app.needMock()) {
-      this.app.register('mock', require('mockjs'));
-      this.app.register('mock.shops', Shops);
-      this.app.register('mock.projects', Projects);
-      this.app.register('mock.project', Project);
-      this.app.register('mock.coupons', Coupons);
-      this.app.register('mock.upToCutActivities', UpToCutActivities);
-      this.app.register('mock.provinces', Provinces);
-      this.app.register('mock.cities', Cities);
-      this.app.register('mock.counties', Counties);
-      this.app.register('mock.wechatMenus', WechatMenus);
-      this.app.register('mock.merchandises', Merchandises);
-      this.app.register('mock.categories', Categories);
-      this.app.register('mock.orders', Orders);
-      this.app.register('mock.customers', Customers);
-      this.app.register('mock.members', Members);
-      this.app.register('mock.memberCards', MemberCards);
-      this.app.register('mock.scoreRules', ScoreRules);
-      this.app.register('mock.materials', Materials);
-      this.app.register('mock.material.upload', Material);
-      this.app.register('mock.delete', Delete );
-      this.app.register('mock.file', File);
-      this.app.register('mock.sevenDaysCount', SevenDaysCount);
-      this.app.register('mock.shop.create', Shop);
-      this.app.register('mock.shop.update', Shop);
-      this.app.register('mock.shop.show', Shop);
-      this.app.register('mock.activity.utc.create', UpToCut);
-      this.app.register('mock.activity.utc.show', UpToCut);
-      this.app.register('mock.tickets', Tickets);
-      this.app.register('mock.payGiftActivities', PayGiftActivities);
-      this.app.register('mock.memberCard', MemberCard);
-      this.app.register('mock.account', Account);
+    constructor(app) {
+        super(app);
     }
-  }
-  boot() {
+    register() {
+        if(this.app.needMock()) {
+            this.app.register('mock', require('mockjs'));
+            this.app.register('mock.shops', Shops);
+            this.app.register('mock.projects', Projects);
+            this.app.register('mock.project', Project);
+            this.app.register('mock.coupons', Coupons);
+            this.app.register('mock.upToCutActivities', UpToCutActivities);
+            this.app.register('mock.provinces', Provinces);
+            this.app.register('mock.cities', Cities);
+            this.app.register('mock.counties', Counties);
+            this.app.register('mock.wechatMenus', WechatMenus);
+            this.app.register('mock.merchandises', Merchandises);
+            this.app.register('mock.categories', Categories);
+            this.app.register('mock.orders', Orders);
+            this.app.register('mock.customers', Customers);
+            this.app.register('mock.members', Members);
+            this.app.register('mock.memberCards', MemberCards);
+            this.app.register('mock.scoreRules', ScoreRules);
+            this.app.register('mock.materials', Materials);
+            this.app.register('mock.material.upload', Material);
+            this.app.register('mock.delete', Delete );
+            this.app.register('mock.file', File);
+            this.app.register('mock.sevenDaysCount', SevenDaysCount);
+            this.app.register('mock.shop.create', Shop);
+            this.app.register('mock.shop.update', Shop);
+            this.app.register('mock.shop.show', Shop);
+            this.app.register('mock.activity.utc.create', UpToCut);
+            this.app.register('mock.activity.utc.show', UpToCut);
+            this.app.register('mock.tickets', Tickets);
+            this.app.register('mock.payGiftActivities', PayGiftActivities);
+            this.app.register('mock.memberCard', MemberCard);
+            this.app.register('mock.account', Account);
+        }
+    }
+    boot() {
 
-  }
+    }
 }

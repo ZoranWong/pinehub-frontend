@@ -7,7 +7,7 @@
       <el-form-item>
     </template>
     <template slot="opt">
-      <el-button size="small" type="success" @click="">添加回复</el-button>
+      <el-button size="small" type="success" >添加回复</el-button>
     </template>
   </search-header>
 </template>

@@ -1,53 +1,53 @@
 import ApiService from './ApiService';
 export default class MemberCardService extends ApiService{
-	constructor(application) {
-		super(application);
-	}
-	async list(page = 1, search = null, limit = 15) {
-		let response = null;
-		if(this.$application.needMock()) {
-			response =  await this.service('mock.memberCards').mock(page, search, limit);
-		}else{
-			//服务器交互代码
-			response = await this.httpGet('member/cards', {page: page, limit: limit, searchJson: search});
-		}
-		let memberCards = response.data;
-		let pagination = response.meta.pagination;
-		let totalNum = pagination.total;
-		let currentPage = pagination['current_page'];
-		let totalPage = pagination['total_pages'];
-		return [memberCards, totalNum, currentPage,  totalPage];
-	}
+    constructor(application) {
+        super(application);
+    }
+    async list(page = 1, search = null, limit = 15) {
+        let response = null;
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.memberCards').mock(page, search, limit);
+        }else{
+            //服务器交互代码
+            response = await this.httpGet('member/cards', {page: page, limit: limit, searchJson: search});
+        }
+        let memberCards = response.data;
+        let pagination = response.meta.pagination;
+        let totalNum = pagination.total;
+        let currentPage = pagination['current_page'];
+        let totalPage = pagination['total_pages'];
+        return [memberCards, totalNum, currentPage,  totalPage];
+    }
 
-	async show(id) {
-		let response = null;
-		if(this.$application.needMock()) {
-			response =  await this.service('mock.memberCard').mock(id);
-		}else{
-			//服务器交互代码
-			response = await this.httpGet(`member/card/${id}`);
-		}
-		return response.data;
-	}
+    async show(id) {
+        let response = null;
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.memberCard').mock(id);
+        }else{
+            //服务器交互代码
+            response = await this.httpGet(`member/card/${id}`);
+        }
+        return response.data;
+    }
 
-	async create(projectId, memberCard) {
-		let cardInfo = this.buildMemberCardInfo(memberCard);
-		let response = await this.header({"ProjectId": projectId}).httpPost('member/card', cardInfo);
-		return response.data;
-	}
+    async create(projectId, memberCard) {
+        let cardInfo = this.buildMemberCardInfo(memberCard);
+        let response = await this.header({"ProjectId": projectId}).httpPost('member/card', cardInfo);
+        return response.data;
+    }
 
-	async update(projectId, id, memberCard) {
+    async update(projectId, id, memberCard) {
         let cardInfo = this.buildMemberCardInfo(memberCard);
         let response = await this.header({"ProjectId": projectId}).httpPut('member/card', id, cardInfo);
         return response.data;
-	}
+    }
 
-	buildMemberCardInfo(card) {
+    buildMemberCardInfo(card) {
         let cardInfo = {
             auto_activate: card['auto_activate'],
             prerogative:  card['prerogative'],
-            supply_balance: !!card['bonus_rule']['init_increase_bonus'],
-            supply_bonus: card['base_info'][''],
+            supply_balance: card['supply_balance'],
+            supply_bonus: !!card['bonus_rule']['init_increase_bonus'],
             base_info: {
                 brand_name: card['base_info']['brand_name'],
                 title: card['base_info']['title'],
@@ -59,7 +59,7 @@ export default class MemberCardService extends ApiService{
                 sku: {
                     quantity: 100000000
                 },
-				date_info: {}
+                date_info: {}
             }
         };
         if(card['base_info']['date_info']['type'] === "DATE_TYPE_PERMANENT") {
@@ -88,5 +88,5 @@ export default class MemberCardService extends ApiService{
             member_card_info: cardInfo,
             sync: card['sync']
         };
-	}
+    }
 }

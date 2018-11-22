@@ -17,7 +17,6 @@
 <script>
     import MerchandiseForm from './MerchandiseForm';
     import CategoryForm from '@/components/CategoryForm';
-    import _ from 'underscore';
     export default {
         name: 'MerchandiseEditor',
         components: {

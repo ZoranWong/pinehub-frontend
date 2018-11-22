@@ -1,9 +1,8 @@
 import Model from './Model'
-import CustomerTranformer from './transformers/Customer';
-import _ from 'underscore';
+import CustomerTransformer from './transformers/Customer';
 export default class Customers extends Model{
-  constructor(application) {
-    super(application);
-    this.transformer = CustomerTranformer;
-  }
+    constructor(application) {
+        super(application);
+        this.transformer = CustomerTransformer;
+    }
 }

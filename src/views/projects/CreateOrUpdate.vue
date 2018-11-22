@@ -45,100 +45,100 @@
 				</el-form>
 			</div>
 			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="close" size="small">取消</el-button>
-				<el-button type="primary" v-if="project.id" @click.native="update" :loading="saving" size="small">保存</el-button>
-				<el-button type="primary" v-else @click.native="save" :loading="saving" size="small">保存</el-button>
+				<el-button @click="close" size="small">取消</el-button>
+				<el-button type="primary" v-if="project.id" @click="update" :loading="saving" size="small">保存</el-button>
+				<el-button type="primary" v-else @click="save" :loading="saving" size="small">保存</el-button>
 			</div>
 		</el-dialog>
 	</div>
 </template>
 <script>
-	import _ from 'underscore';
-	export default {
-		name: 'CreateOrUpdate',
-		props: {
-			value: {
-				default: () => {return {};},
-				type: Object
-			},
-			show: {
-				default: false,
-				type: Boolean
-			}
-		},
-		watch: {
-			show(val) {
-				this.dialogShow = val;
-			},
-			value(val) {
-				if(val) {
-					this.project = val;
-				}
-			}
-		},
-		data() {
-			return {
-				saving: false,
-				dialogShow: this.show,
-				project: this.value,
-				newData: {}
-			};
-		},
-		computed:{
-		},
-		methods: {
-			async update () {
-				let result = await this.$refs['projectForm'].validate();
+    import _ from 'underscore';
+    export default {
+        name: 'CreateOrUpdate',
+        props: {
+            value: {
+                default: () => {return {};},
+                type: Object
+            },
+            show: {
+                default: false,
+                type: Boolean
+            }
+        },
+        watch: {
+            show(val) {
+                this.dialogShow = val;
+            },
+            value(val) {
+                if(val) {
+                    this.project = val;
+                }
+            }
+        },
+        data() {
+            return {
+                saving: false,
+                dialogShow: this.show,
+                project: this.value,
+                newData: {}
+            };
+        },
+        computed:{
+        },
+        methods: {
+            async update () {
+                let result = await this.$refs['projectForm'].validate();
 
-				if(result) {
-					this.saving = true;
-					//上传服务
-					this.$command('UPDATE_PROJECT', this.project.id, this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
-				}
-			},
-			async save () {
-				let result = await this.$refs['projectForm'].validate();
+                if(result) {
+                    this.saving = true;
+                    //上传服务
+                    this.$command('UPDATE_PROJECT', this.project.id, this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
+                }
+            },
+            async save () {
+                let result = await this.$refs['projectForm'].validate();
 
-				if(result) {
-					this.saving = true;
-					//上传服务
-					this.$command('CREATE_PROJECT', this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
-				}
-			},
-			open() {
-				this.$set(this, 'newData', _.clone(this.project));
-			},
-			close() {
-				this.dialogShow = false;
-				this.saving = false;
-				//this.project = {logo: null};
-				this.$refs['projectForm'].resetFields();
-				this.$emit('close');
-			},
-			async uploadRequest({file}) {
-				let result = await this.$command('UPLOAD_FILE', file, 'logo', 'projectLogoUpload');
-				if(result) {
-					console.log(result);
-					this.newData.logo = result.src;
-				}
-			},
-			remove() {
-			},
-			success() {
+                if(result) {
+                    this.saving = true;
+                    //上传服务
+                    this.$command('CREATE_PROJECT', this.newData.name, this.newData.logo, this.newData.contactName, this.newData.contactPhoneNum, this);
+                }
+            },
+            open() {
+                this.$set(this, 'newData', _.clone(this.project));
+            },
+            close() {
+                this.dialogShow = false;
+                this.saving = false;
+                //this.project = {logo: null};
+                this.$refs['projectForm'].resetFields();
+                this.$emit('close');
+            },
+            async uploadRequest({file}) {
+                let result = await this.$command('UPLOAD_FILE', file, 'logo', 'projectLogoUpload');
+                if(result) {
+                    console.log(result);
+                    this.newData.logo = result.src;
+                }
+            },
+            remove() {
+            },
+            success() {
 
-			},
-			error() {
+            },
+            error() {
 
-			}
-		},
-		created() {
+            }
+        },
+        created() {
 
-		}
-	}
+        }
+    }
 </script>
 <style scoped>
-.avatar{
-	width: 100%;
-	height: 100%;
-}
+	.avatar{
+		width: 100%;
+		height: 100%;
+	}
 </style>

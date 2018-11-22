@@ -46,12 +46,25 @@ route.group('/project/:projectId/rule', {
 	'component': Layout,
 	'uses': function(route) {
 		route.addRoute('create', {
-			'name': 'rule-menuForm',
+			'name': 'rule-create',
 			'component': Rule,
 			'tag': '新建特殊积分规则'
 		});
 	}
 });
+
+route.group('/project/:projectId/rule/:scoreRuleId', {
+    'tag': '用户管理',
+    'component': Layout,
+    'uses': function(route) {
+        route.addRoute('editor', {
+            'name': 'rule-editor',
+            'component': Rule,
+            'tag': '更新特殊积分规则'
+        });
+    }
+});
+
 route.group('/project/:projectId/member', {
 	'tag': '用户管理',
 	'component': Layout,

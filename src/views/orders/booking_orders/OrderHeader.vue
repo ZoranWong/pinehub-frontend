@@ -1,36 +1,39 @@
 <template>
-  <search-header @search = "search">
-    <template slot = "searchInput">
-      <el-form-item prop="orderCode" label="订单号" >
-        <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
-      </el-form-item>
-      <el-form-item prop="receiverName" label="客户姓名" >
-        <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
-      </el-form-item>
-      <el-form-item prop="receiverMobile" label="客户手机号" >
-        <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
-      </el-form-item>
-      <el-form-item prop="beginAt" label="下单时间">
-        <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
-      </el-form-item>
-      <el-form-item label="" label-width="0px">
-        至
-      </el-form-item>
-      <el-form-item prop="endAt" label="" >
-        <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"></el-date-picker>
-      </el-form-item>
-      <el-form-item prop="orderStatus" label="订单状态">
-        <el-select size="small" v-model="orderStatus" placeholder="订单状态">
-          <el-option v-for="(value, key) in statusDict" :value="key" :label="value" :key="value"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="payType" label="付款方式">
-        <el-select size="small" v-model="payType" placeholder="付款方式">
-          <el-option v-for="(value, key) in payTypes" :value="key" :label="value" :key="value"></el-option>
-        </el-select>
-      </el-form-item>
-    </template>
-  </search-header>
+    <search-header @search = "search">
+        <template slot = "searchInput">
+            <el-form-item prop="orderCode" label="订单号" >
+                <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
+            </el-form-item>
+            <el-form-item prop="receiverName" label="收货人姓名" >
+                <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
+            </el-form-item>
+            <el-form-item prop="receiverMobile" label="收货人手机号" >
+                <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
+            </el-form-item>
+            <el-form-item prop="beginAt" label="下单时间">
+                <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="" label-width="0px">
+                至
+            </el-form-item>
+            <el-form-item prop="endAt" label="" >
+                <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"></el-date-picker>
+            </el-form-item>
+            <el-form-item prop="merchandiseName" label="商品名称">
+                <el-input size="small" v-model="merchandiseName" placeholder="商品名称"></el-input>
+            </el-form-item>
+            <el-form-item prop="orderStatus" label="订单状态">
+                <el-select size="small" v-model="orderStatus" placeholder="订单状态">
+                    <el-option v-for="(value, key) in statusDict" :value="key" :label="value" :key="value"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="payType" label="付款方式">
+                <el-select size="small" v-model="payType" placeholder="付款方式">
+                    <el-option v-for="(value, key) in payTypes" :value="key" :label="value" :key="value"></el-option>
+                </el-select>
+            </el-form-item>
+        </template>
+    </search-header>
 </template>
 <script>
     import SearchHeader from '@/components/SearchHeader';
@@ -65,7 +68,8 @@
                 statusDict: {
                     "ALL": "全部",
                     "WAIT_PAY": "未支付",
-                    "PAID": "已支付",
+                    "WAIT_SEND": "待发货",
+                    "WAIT_SIGNED": "待签收",
                     "COMPLETED": "已完成",
                     "REFUNDING": "退款中",
                     "REFUSE_REFUND": "拒绝退款",
@@ -85,7 +89,7 @@
             }
         },
         created() {
-            if(this.value) {
+            if(this.value && !_.isEmpty(this.value)) {
                 this.initSearchData(this.value);
             }
         },
@@ -95,27 +99,34 @@
                 this.$emit('search', search);
             },
             initSearchData(search) {
+                console.log('search ', search);
                 this.receiverName  =  search['receiver_name'] ;
                 this.receiverMobile  =  search['receiver_mobile'] ;
                 this.orderCode   =   search['code'];
-                this.beginAt =  search['paid_at'][0]['value'] ;
-                this.endAt = search['paid_at'][1]['value'] ;
-                let $this = this;
-                _.map(ORDER_STATUS, function (value, index) {
+                this.beginAt =  search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][0]['value'] : null;
+                this.endAt = search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][1]['value'] : null;
+                this.merchandiseName  = search['orderItems.name'] ;
+
+                for(let index in ORDER_STATUS) {
+                    let value = ORDER_STATUS[index];
                     if(value == search['status']) {
-                        $this.orderStatus = index;
+                        this.orderStatus = index;
                         if(index === 'WAIT_SEND' || index === 'PAID') {
-                            $this.orderStatus = 'PAID';
+                            this.orderStatus = 'WAIT_SEND';
+                        }
+
+                        if(index === 'WAIT_SIGNED' || index === 'SEND') {
+                            this.orderStatus = 'WAIT_SIGNED';
                         }
                     }
-                });
-                _.map(PAYMENT_TYPES, function (value, index) {
+                }
+
+                for (let index in PAYMENT_TYPES) {
+                    let value = PAYMENT_TYPES[index];
                     if(value == search['pay_type']) {
-                        $this.payType = index;
-                        return index;
+                        this.payType = index;
                     }
-                    return null;
-                });
+                }
             },
             buildSearchData() {
                 let search = {
@@ -128,8 +139,10 @@
                             'opt': '<'
                         }
                     ],
-                    "type": 0
+                    "type": [1, 2]
                 };
+                if(this.merchandiseName)
+                    search['orderItems.name'] = this.merchandiseName;
                 if(this.receiverName)
                     search['receiver_name'] = this.receiverName;
                 if(this.receiverMobile)

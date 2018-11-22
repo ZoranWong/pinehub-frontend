@@ -1,34 +1,34 @@
 import ApiService from './ApiService';
 export default class TicketsService extends ApiService{
-	constructor(application) {
-		super(application);
-	}
+    constructor(application) {
+        super(application);
+    }
 
-  async list(projectId) {
-     let response = null;
+    async list(projectId) {
+        let response = null;
 
-     if(this.$application.needMock()) {
-         response =  await this.service('mock.tickets').mock();
-     }else{
-         response = await this.header({'ProjectId': projectId}).httpGet(`tickets`);
-     }
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.tickets').mock();
+        }else{
+            response = await this.header({'ProjectId': projectId}).httpGet(`tickets`);
+        }
 
-     let tickets = response.data;
+        let tickets = response.data;
 
-     return tickets;
-  }
+        return tickets;
+    }
 
-  async create(projectId, ticketInfo) {
-      let response = null;
+    async create(projectId, ticketInfo) {
+        let response = null;
 
-      if(this.$application.needMock()) {
-          response =  await this.service('mock.tickets').mock();
-      }else{
-          response = await this.header({'ProjectId': projectId}).httpPost(`ticket`, ticketInfo);
-      }
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.tickets').mock();
+        }else{
+            response = await this.header({'ProjectId': projectId}).httpPost(`ticket`, ticketInfo);
+        }
 
-      let ticket = response.data;
+        let ticket = response.data;
 
-      return ticket;
-  }
+        return ticket;
+    }
 }

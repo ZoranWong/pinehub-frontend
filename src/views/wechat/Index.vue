@@ -6,10 +6,10 @@
 </template>
 
 <script>
-  /* eslint-disable */
-	export default {
-		name: 'WechatIndex'
-	}
+    /* eslint-disable */
+    export default {
+        name: 'WechatIndex'
+    }
 </script>
 
 <style scoped>

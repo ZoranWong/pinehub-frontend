@@ -20,7 +20,7 @@
 								<el-input size="small" v-model="filters.name" placeholder="搜索关键词/规则名称"></el-input>
 							</el-form-item>
 							<el-form-item>
-								<el-button size="small" type="primary" @click="">查询</el-button>
+								<el-button size="small" type="primary" >查询</el-button>
 							</el-form-item>
 							<el-form-item style="float:right">
 								<el-button size="small" type="success" @click="keyListEdit(false)">添加回复</el-button>
@@ -43,8 +43,8 @@
 								<span v-text="keyLists.name"></span>
 							</el-form-item>
 							<el-form-item label="关键词：">
-								<p class="keyDetail" v-for="(prefectKey, index) in keyLists.prefect_match_keywords" >{{prefectKey}} <span class="grayText">(全匹配)</span></p>
-								<p class="keyDetail" v-for="(semiKey, index) in keyLists.semi_match_keywords">{{semiKey}} <span class="grayText">(半匹配)</span></p>
+								<p class="keyDetail" v-for="(prefectKey, index) in keyLists.prefect_match_keywords" :key = "index">{{prefectKey}} <span class="grayText">(全匹配)</span></p>
+								<p class="keyDetail" v-for="(semiKey, index) in keyLists.semi_match_keywords" :key = "index">{{semiKey}} <span class="grayText">(半匹配)</span></p>
 							</el-form-item>
 							<el-form-item label="回复内容：">
 								<span v-text="keyLists.content"></span>
@@ -108,25 +108,19 @@
 								</div>
 								<el-popover placement="right" width="250" trigger="hover">
 									<div>
-										<el-button type="text" size="small" @click.native="getImgTextMaterials('key')"> 图文消息 </el-button>
-										<el-button type="text" size="small" @click.native="textVisible=true;textData.content=''"> 文字 </el-button>
-										<el-button type="text" size="small" @click.native="getImgMaterials('key')"> 图片 </el-button>
-										<el-button type="text" size="small" @click.native="getVoiceMaterials('key')"> 语音 </el-button>
-										<el-button type="text" size="small" @click.native="getVideoMaterials('key')"> 视频</el-button>
+										<el-button type="text" size="small" @click="getImgTextMaterials('key')"> 图文消息 </el-button>
+										<el-button type="text" size="small" @click="textVisible=true;textData.content=''"> 文字 </el-button>
+										<el-button type="text" size="small" @click="getImgMaterials('key')"> 图片 </el-button>
+										<el-button type="text" size="small" @click="getVoiceMaterials('key')"> 语音 </el-button>
+										<el-button type="text" size="small" @click="getVideoMaterials('key')"> 视频</el-button>
 									</div>
 									<el-button slot="reference" icon="el-icon-circle-plus-outline" size="small"></el-button>
 								</el-popover>
 							</el-form-item>
-							<!--<el-form-item label="回复方式：" prop="type">
-								<el-radio-group v-model="keyAddData.type">
-										<el-radio :label="0">回复全部</el-radio>
-										<el-radio :label="1">随机回复一条</el-radio>
-								 </el-radio-group>
-							</el-form-item>-->
 						</el-form>
 						<div slot="footer" class="dialog-footer" style="text-align: center;margin-top:20px;">
-							<el-button type="success" size="small" @click.native="ruleSubmit(keyAddData)">保存</el-button>
-							<el-button @click.native="keyValue = true;addRule=false" size="small" plain>取消</el-button>
+							<el-button type="success" size="small" @click="ruleSubmit(keyAddData)">保存</el-button>
+							<el-button @click="keyValue = true;addRule=false" size="small" plain>取消</el-button>
 						</div>
 					</div>
 				</el-tab-pane>
@@ -144,10 +138,10 @@
 					</el-row>
 					<div class="form-container" v-if="stopValue">
 						<div class="stopLayoutUp">
-							<el-button plain size="small" @click.native="stopAddData.type='text'"> 文字 </el-button>
-							<el-button plain size="small" @click.native="stopAddData.type='image'"> 图片 </el-button>
-							<el-button plain size="small" @click.native="stopAddData.type='voice'"> 语音 </el-button>
-							<el-button plain size="small" @click.native="stopAddData.type='video'"> 视频 </el-button>
+							<el-button plain size="small" @click="stopAddData.type='text'"> 文字 </el-button>
+							<el-button plain size="small" @click="stopAddData.type='image'"> 图片 </el-button>
+							<el-button plain size="small" @click="stopAddData.type='voice'"> 语音 </el-button>
+							<el-button plain size="small" @click="stopAddData.type='video'"> 视频 </el-button>
 						</div>
 						<div class="stopLayoutText" v-if="stopAddData.type=='text'">
 							<el-form :model="stopAddData" v-loading="fLoading">
@@ -158,13 +152,13 @@
 						</div>
 						<div class="stopLayoutImg" v-else>
 							<div class="kuImg" v-if="stopAddData.type=='image' && stopImgShow">
-								<el-button plain size="small" @click.native="getImgMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small" @click="getImgMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="kuImg" v-if="stopAddData.type=='voice' && stopVoiceShow">
-								<el-button plain size="small" @click.native="getVoiceMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small" @click="getVoiceMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="kuImg" v-if="stopAddData.type=='video' && stopVideoShow">
-								<el-button plain size="small" @click.native="getVideoMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small" @click="getVideoMaterials('news')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="uploadImg" v-if="stopAddData.type=='image' && stopImgShow">
 								<el-form :model="stopAddData" v-loading="fLoading" style="margin-top:90px;">
@@ -178,14 +172,14 @@
 							<div class="uploadImg" v-if="stopAddData.type=='voice' && stopVoiceShow">
 								<el-form :model="stopAddData" v-loading="fLoading" style="margin-top:90px;">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请添加素材', trigger: 'blur'}">
-											<el-button plain size="small" @click.native="addVoice()"> 新建语音 <i class="el-icon-edit el-icon--right"></i> </el-button>
+										<el-button plain size="small" @click="addVoice()"> 新建语音 <i class="el-icon-edit el-icon--right"></i> </el-button>
 									</el-form-item>
 								</el-form>
 							</div>
 							<div class="uploadImg" v-if="stopAddData.type=='video' && stopVideoShow">
 								<el-form :model="stopAddData" v-loading="fLoading" style="margin-top:90px;">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请添加素材', trigger: 'blur'}">
-											<el-button plain size="small" @click.native="addVideo()"> 新建视频 <i class="el-icon-edit el-icon--right"></i> </el-button>
+										<el-button plain size="small" @click="addVideo()"> 新建视频 <i class="el-icon-edit el-icon--right"></i> </el-button>
 									</el-form-item>
 								</el-form>
 							</div>
@@ -213,7 +207,7 @@
 									<el-button size="mini" plain @click="deleteNewsReply = false">取消</el-button>
 									<el-button type="success" size="mini" @click="stopAddData.content='';modifyReply(stopAddData)">确定</el-button>
 								</div>
-								<el-button slot="reference"size="small" plain :disabled="!(stopAddData.content || !stopImgShow || !stopVoiceShow || !stopVideoShow)">删除回复</el-button>
+								<el-button slot="reference" size="small" plain :disabled="!(stopAddData.content || !stopImgShow || !stopVoiceShow || !stopVideoShow)">删除回复</el-button>
 							</el-popover>
 						</div>
 					</div>
@@ -222,20 +216,20 @@
 					<el-row :gutter="10" type="flex" align="middle" class="firstLayout">
 						<el-col :span="24">
 							<el-col :span="21">
-									<h3>自动回复</h3>
-									<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
+								<h3>自动回复</h3>
+								<p class="grayText">关闭自动回复之后，将立即对所有用户生效。</p>
 							</el-col>
 							<el-col :span="3">
-									<el-switch v-model="followValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
+								<el-switch v-model="followValue" active-color="#13ce66" inactive-color="#dfe6ec"> </el-switch>
 							</el-col>
 						</el-col>
 					</el-row>
 					<div class="form-container" v-if="followValue">
 						<div class="stopLayoutUp">
-							<el-button plain size="small" @click.native="followAddData.type='text'"> 文字 </el-button>
-							<el-button plain size="small" @click.native="followAddData.type='image'"> 图片 </el-button>
-							<el-button plain size="small" @click.native="followAddData.type='voice'"> 语音 </el-button>
-							<el-button plain size="small" @click.native="followAddData.type='video'"> 视频 </el-button>
+							<el-button plain size="small" @click="followAddData.type='text'"> 文字 </el-button>
+							<el-button plain size="small" @click="followAddData.type='image'"> 图片 </el-button>
+							<el-button plain size="small" @click="followAddData.type='voice'"> 语音 </el-button>
+							<el-button plain size="small" @click="followAddData.type='video'"> 视频 </el-button>
 						</div>
 						<div class="stopLayoutText" v-if="followAddData.type=='text'">
 							<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds">
@@ -246,13 +240,13 @@
 						</div>
 						<div class="stopLayoutImg" v-else>
 							<div class="kuImg" v-if="followAddData.type=='image' && followImgShow">
-								<el-button plain size="small" @click.native="getImgMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small" @click="getImgMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="kuImg" v-if="followAddData.type=='voice' && followVoiceShow">
-								<el-button plain size="small" @click.native="getVoiceMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small" @click="getVoiceMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="kuImg" v-if="followAddData.type=='video' && followVideoShow">
-								<el-button plain size="small"  @click.native="getVideoMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
+								<el-button plain size="small"  @click="getVideoMaterials('followed')"> 从素材库中选择 <i class="el-icon-upload el-icon--right"></i>  </el-button>
 							</div>
 							<div class="uploadImg" v-if="followAddData.type=='image' && followImgShow">
 								<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds"  style="margin-top:90px;">
@@ -266,14 +260,14 @@
 							<div class="uploadImg" v-if="followAddData.type=='voice' && followVoiceShow">
 								<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds"  style="margin-top:90px;">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请添加素材', trigger: 'blur'}">
-										<el-button plain size="small" @click.native="addVoice()"> 新建语音 <i class="el-icon-edit el-icon--right"></i> </el-button>
+										<el-button plain size="small" @click="addVoice()"> 新建语音 <i class="el-icon-edit el-icon--right"></i> </el-button>
 									</el-form-item>
 								</el-form>
 							</div>
 							<div class="uploadImg" v-if="followAddData.type=='video' && followVideoShow">
 								<el-form :model="followAddData" v-loading="fLoading" :rules="followAddRules" ref="followAddFileds"  style="margin-top:90px;">
 									<el-form-item label="" prop="content" :rules="{required: true, message: '请添加素材', trigger: 'blur'}">
-										<el-button plain size="small" @click.native="addVideo()"> 新建视频 <i class="el-icon-edit el-icon--right"></i> </el-button>
+										<el-button plain size="small" @click="addVideo()"> 新建视频 <i class="el-icon-edit el-icon--right"></i> </el-button>
 									</el-form-item>
 								</el-form>
 							</div>
@@ -301,7 +295,7 @@
 									<el-button size="mini" plain @click="deleteAttentionReply = false">取消</el-button>
 									<el-button type="success" size="mini" @click="followAddData.content='';modifyReply(followAddData)">确定</el-button>
 								</div>
-								<el-button slot="reference"size="small" plain :disabled="!(followAddData.content || !followVideoShow || !followVoiceShow || !followImgShow)">删除回复</el-button>
+								<el-button slot="reference" size="small" plain :disabled="!(followAddData.content || !followVideoShow || !followVoiceShow || !followImgShow)">删除回复</el-button>
 							</el-popover>
 						</div>
 					</div>
@@ -312,10 +306,10 @@
 </template>
 
 <script>
-/* eslint-disable */
-	export default {
-		name: 'WechatAutoReply',
-	}
+    /* eslint-disable */
+    export default {
+        name: 'WechatAutoReply',
+    }
 </script>
 
 <style scoped>

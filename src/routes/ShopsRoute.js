@@ -6,48 +6,54 @@ import Open from '../views/shops/Open';
 import Create from '../views/shops/Create';
 import Edit from '../views/shops/Edit';
 import Orders from '@/views/orders/Index';
+import SkuMerchandises from '@/views/shops/ShopSku';
 let route = new Route();
 route.group('/project/:projectId/shops', {
-	'tag': '店铺管理',
-	'component': Layout,
-	'uses': function(route) {
-		route.addRoute('', {
-			'name': 'shops',
-			'component': Index,
-			'tag': '店铺列表'
-		});
-			route.addRoute('closed', {
-			'name': 'shops-closed',
-			'component': Closed,
-			'tag': '关门店铺'
-		});
-			route.addRoute('open', {
-			'name': 'shops-open',
-			'component': Open,
-			'tag': '营业店铺'
-		});
-	}
+    'tag': '店铺管理',
+    'component': Layout,
+    'uses': function(route) {
+        route.addRoute('', {
+            'name': 'shops',
+            'component': Index,
+            'tag': '店铺列表'
+        });
+        route.addRoute('closed', {
+            'name': 'shops-closed',
+            'component': Closed,
+            'tag': '关门店铺'
+        });
+        route.addRoute('open', {
+            'name': 'shops-open',
+            'component': Open,
+            'tag': '营业店铺'
+        });
+    }
 });
 
 route.group('/project/:projectId/shop', {
-	'tag': '店铺管理',
-	'component': Layout,
-	'uses': function(route) {
-			route.addRoute('create', {
-				name: 'shop-menuForm',
-				component: Create,
-				tag: '店铺创建'
-			});
-			route.addRoute(':shopId/edit', {
-				name: 'shop-edit',
-				component: Edit,
-				tag: '店铺修改'
-			});
-			route.addRoute(':shopId/orders', {
-				name: 'shop-orders',
-				component: Orders,
-				tag: '店铺订单'
-			});
-	}
+    'tag': '店铺管理',
+    'component': Layout,
+    'uses': function(route) {
+        route.addRoute('create', {
+            name: 'shop-menuForm',
+            component: Create,
+            tag: '店铺创建'
+        });
+        route.addRoute(':shopId/edit', {
+            name: 'shop-edit',
+            component: Edit,
+            tag: '店铺修改'
+        });
+        route.addRoute(':shopId/orders', {
+            name: 'shop-orders',
+            component: Orders,
+            tag: '店铺订单'
+        });
+        route.addRoute(':shopId/merchandises', {
+            name: 'shop-sku-merchandises',
+            component: SkuMerchandises,
+            tag: '店铺商品'
+        });
+    }
 });
 export default route;
