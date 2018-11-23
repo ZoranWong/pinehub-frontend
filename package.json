@@ -61,6 +61,7 @@
       "plugin:vue/recommended"
     ],
     "rules": {
+      "no-console": "off",
       "arrow-parens": "off",
       "generator-star-spacing":  "off",
       "no-tabs":  "off",

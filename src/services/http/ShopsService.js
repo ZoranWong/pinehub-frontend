@@ -74,4 +74,9 @@ export default class ShopsService extends ApiService{
 
         return [skuMerchandises, totalNum, currentPage, totalPage];
     }
+
+    async addMerchandise (projectId, shopId, merchandise) {
+      let response = await this.header({'projectId': projectId}).httpPost(`/shop/${shopId}/merchandise`, merchandise);
+      return response.data;
+    }
 }
