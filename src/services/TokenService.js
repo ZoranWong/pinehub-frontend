@@ -23,6 +23,10 @@ export default class TokenService extends Service {
         let token = this.getRefreshToken();
         if(token) {
             token = await this.service('http.account').refreshToken(token);
+            token['value'] = token['token'];
+            delete token['token'];
+            token['ttl'] = (new Date(token['ttl']['date'])).getTime() - 3000;
+            token['refresh_ttl'] = (new Date(token['refresh_ttl']['date'])).getTime();
             if(token) {
                 this.setToken(token);
                 return token['value'];
@@ -31,7 +35,7 @@ export default class TokenService extends Service {
         return false;
     }
     setToken(token) {
-        this.service('localStorage').set('token', token['value'], token['ttl']);
-        this.service('localStorage').set('refresh_token', token['value'], token['refresh_ttl']);
+        this.service('localStorage').put('token', token['value'], token['ttl']);
+        this.service('localStorage').put('refresh_token', token['value'], token['refresh_ttl']);
     }
 }

@@ -1,16 +1,16 @@
 /* eslint-disable */
 <template>
-	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search }">
-			<shop-header :search = "search"></shop-header>
-		</template>
-		<template slot = "table" slot-scope="{ data }">
-			<shop-table :shops="data"></shop-table>
-		</template>
-	</table-list>
+    <table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
+        <template slot = "header" slot-scope="{ search, searchHandler }">
+            <shop-header v-model = "search" @search="searchHandler" />
+        </template>
+        <template slot = "table" slot-scope="{ data }">
+            <shop-table :shops="data" />
+        </template>
+    </table-list>
 </template>
 <script>
-    /* eslint-disable */
+/* eslint-disable */
     import Header from './Header';
     import ShopTable from './ShopTable';
     import TableList from '@/components/TableList';

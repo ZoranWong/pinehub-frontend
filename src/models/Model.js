@@ -44,6 +44,9 @@ export default class Model {
             },
             limit() {
                 return this.pageCount;
+            },
+            list() {
+                return _.flatten(this.list);
             }
         };
     }

@@ -1,21 +1,22 @@
 <template>
     <el-menu :default-active="$route.path" class="el-menus" :collapse="toogleMenu" :style="scrollStyle">
         <template v-for="(menu, index) in menus">
-            <el-submenu v-if="menu.title != '首页'" :index="index + ''" :key = 'index'>
+            <el-submenu v-if="menu.title != '首页'" :key = "index" :index="index + ''">
                 <template slot="title">
                     <el-tooltip effect="dark" :disabled="!toogleMenu" :content="menu.title" placement="right">
                         <div class="tipbox">
-                            <svg class="icon menu-icon" aria-hidden="true"  v-if="menu.icon">
-                                <use :xlink:href="menu.icon"></use>
+                            <svg v-if="menu.icon" class="icon menu-icon" aria-hidden="true">
+                                <use :xlink:href="menu.icon" />
                             </svg>
                             <!-- <i :class="menu.icon" v-if="menu.icon"></i> -->
                         </div>
                     </el-tooltip>
                     <span>{{ menu.title }}</span>
                 </template>
-                <el-menu-item :class="{ 'is-active': checkActive(child.id) }" v-for="(child, index) in menu.children" :index="child.id + ''" :key="index">
+                <el-menu-item v-for="(child, index) in menu.children" :key="index" :class="{ 'is-active': checkActive(child.id) }" :index="child.id + ''"
+                              @click="redirectTo({name: child.routeName, params: { projectId: projectId }, query: child.query})">
                     <router-link :to="{name: child.routeName, params: { projectId: projectId }, query: child.query}">
-                        <span style="padding:0 16px;">{{child.title}}</span>
+                        <span style="padding:0 16px;">{{ child.title }}</span>
                     </router-link>
                 </el-menu-item>
             </el-submenu>
@@ -23,36 +24,39 @@
     </el-menu>
 </template>
 <script>
-    export default {
-        name: 'MenusComponent',
-        props: {
-            toogleMenu: Boolean
-        },
-        data() {
-            return {
-                scrollStyle:''
-            }
-        },
-        computed:{
-            menus() {
-                return this.$store.state.menus.list;
-            },
-            projectId() {
-                return this.$requestInput('projectId');
-            }
-        },
-        methods: {
-            checkActive(id){
-                return this.$store.state.menus.activeMenu === id;
-            }
-        },
-        created() {
-            this.scrollStyle='height:'+(window.innerHeight-36.66)+'px';
-        },
-        mounted() {
-            console.log('menus mounted');
+export default {
+    name: 'MenusComponent',
+    props: {
+        toogleMenu: Boolean
+    },
+    data() {
+        return {
+            scrollStyle:''
         }
-    }
+    },
+    computed:{
+        menus() {
+            return this.$store.state.menus.list;
+        },
+        projectId() {
+            return this.$requestInput('projectId');
+        }
+    },
+    created() {
+        this.scrollStyle='height:'+(window.innerHeight-36.66)+'px';
+    },
+    mounted() {
+        console.log('menus mounted');
+    },
+    methods: {
+        checkActive(id){
+            return this.$store.state.menus.activeMenu === id;
+        },
+        redirectTo (route) {
+            this.$router.push(route);
+        }
+    },
+}
 </script>
 <style scoped>
     .toogle-content {

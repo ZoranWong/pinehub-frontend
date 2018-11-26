@@ -44,6 +44,7 @@ export default class RouteServiceProvider extends ServiceProvider {
             if(to.name !== null) {
                 redirectTo = to.fullPath;
             }
+
             this.router.replace({
                 name: 'sign-in',
                 query: {

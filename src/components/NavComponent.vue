@@ -1,34 +1,34 @@
 <template>
-    <div class="nav" :class="{ 'toogle-nav': toogleMenu}" v-if="show">
-        <div class="logo" >
+    <div v-if="show" class="nav" :class="{ 'toogle-nav': toogleMenu}">
+        <div class="logo">
             <router-link :to="{name: 'project-detial', params: { projectId: projectId }}">
-                <img src="../../src/assets/logo_scale.png" v-if="toogleMenu" style="width:70%;margin-top:5px"/>
-                <img src="../../src/assets/logo_white.svg" v-else/>
+                <img v-if="toogleMenu" src="../../src/assets/logo_scale.png" style="width:70%;margin-top:5px">
+                <img v-else src="../../src/assets/logo_white.svg">
             </router-link>
         </div>
-        <aside >
-            <menus :toogleMenu="toogleMenu"></menus>
+        <aside>
+            <menus :toogle-menu="toogleMenu" />
         </aside>
     </div>
 </template>
 
 <script>
-    import MenusComponent from './MenusComponent'
-    export default {
-        name: 'NavComponent',
-        components: {
-            menus: MenusComponent
-        },
-        computed: {
-            projectId() {
-                return this.$router.currentRoute.query.projectId;
-            }
-        },
-        props: {
-            show: Boolean,
-            toogleMenu: Boolean
+import MenusComponent from './MenusComponent'
+export default {
+    name: 'NavComponent',
+    components: {
+        menus: MenusComponent
+    },
+    props: {
+        show: Boolean,
+        toogleMenu: Boolean
+    },
+    computed: {
+        projectId() {
+            return this.$router.currentRoute.query.projectId;
         }
-    }
+    },
+}
 </script>
 <style scoped>
     .nav{

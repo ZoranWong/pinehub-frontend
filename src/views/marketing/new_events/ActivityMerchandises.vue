@@ -2,7 +2,7 @@
 <template>
     <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :list-command = "loadMerchandises">
         <template slot = "header" slot-scope = "{ search, searchHandler }">
-            <merchandise-header v-model = "search" @search = "searchHandler">
+            <merchandise-header v-model = "search" :need-search = "false" @search = "searchHandler">
                 <template slot = "opt-buttons">
                     <div class = "opt-buttons">
                         <el-button v-if = "!activity" size = "small" type = "primary" icon = "el-icon-plus" @click = "createActivity">新品活动</el-button>
@@ -11,7 +11,7 @@
                     </div>
                     <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
                     <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
-                    <add-merchandise :show = "showAddMerchandise" :activity = "activity" @close="closeMerchandiseForm" />
+                    <add-merchandise :id = "activity['id']" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'" :select-merchandises = "merchandises" @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
@@ -53,15 +53,20 @@
                 creating: false,
                 updating: false,
                 showAddMerchandise: false,
-                activity: {}
+                activity: {
+                    id: null
+                }
             };
         },
         computed: {
             model() {
-                return this.$store.state.merchandises;
+                return this.$store.state.activityMerchandises;
             },
             limit() {
-                return this.$store.getters['activityMerchandises/limit']
+                return this.$store.getters['activityMerchandises/limit'];
+            },
+            merchandises() {
+                return this.$store.getters['activityMerchandises/list']
             }
         },
         methods: {

@@ -1,5 +1,5 @@
 <template>
-    <search-header @search = "search">
+    <search-header :form-show = "needSearch" @search = "search">
         <template slot = "searchInput">
             <el-form-item prop = "name" label = "">
                 <el-input v-model.lazy = "shopName" size = "small" placeholder = "商品名" />
@@ -36,6 +36,10 @@ export default {
         value: {
             default: null,
             type: Object
+        },
+        needSearch: {
+            default: true,
+            type: Boolean
         }
     },
     data() {

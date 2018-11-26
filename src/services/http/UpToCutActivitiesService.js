@@ -30,12 +30,23 @@ export default class UpToCutActivitiesService extends ApiService{
         return response.data;
     }
 
-    async show(id) {
+    async update(projectId, id, activity) {
+        let response = null;
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.activity.utc.create').mock(activity);
+        } else {
+            response = await this.header({'ProjectId': projectId}).httpPut(`payment_activity`, id, activity);
+        }
+        return response.data;
+    }
+
+
+    async show(projectId, id) {
         let response = null;
         if(this.$application.needMock()) {
             response =  await this.service('mock.activity.utc.show').mock();
         } else {
-            response = await this.httpGet(`activity/utc/${id}`);
+            response = await this.header({'ProjectId': projectId}).httpGet(`payment_activity/${id}`);
         }
         return response.data;
     }

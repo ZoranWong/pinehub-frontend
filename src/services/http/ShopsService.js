@@ -74,4 +74,16 @@ export default class ShopsService extends ApiService{
 
         return [skuMerchandises, totalNum, currentPage, totalPage];
     }
+
+    async addMerchandise (projectId, shopId, merchandise) {
+        let response = null;
+
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.merchandise.create').mock(merchandise);
+        } else {
+            response = await this.header({'ProjectId': projectId}).httpPost(`/shop/${shopId}/merchandise`, merchandise);
+        }
+
+        return response.data;
+    }
 }

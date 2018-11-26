@@ -9,9 +9,10 @@ export default class SignInCommand extends Command {
         password = this.$service('md5').encrypt(password + this.$store.getters['account/publicKey']);
         try{
             let [account, token] = await this.$service('http.account').signIn(username, password);
-            this.$service('localStorage').put('token', token['value'], token['ttl']['date']);
-            this.$service('localStorage').put('refresh_token', token['value'], token['refresh_ttl']['date']);
-            this.$service('localStorage').put('account', account, token['ttl']['date']);
+            let ttl = (new Date(token['ttl']['date'])).getTime();
+            this.$service('localStorage').put('token', token['value'],  ttl - 3000);
+            this.$service('localStorage').put('refresh_token', token['value'], (new Date(token['refresh_ttl']['date'])).getTime());
+            this.$service('localStorage').put('account', account, ttl);
             this.$store.dispatch('account/setAccount', {
                 username: account['user_name'],
                 mobile: account['mobile'],

@@ -2,10 +2,21 @@
     <el-table highlight-current-row :data="merchandises">
         <el-table-column type="selection" width="55" />
         <el-table-column label="#" prop="idx" min-width="80" />
-        <el-table-column label="商品" prop="name" min-width="200" />
-        <el-table-column label="售价" min-width="200" prop="">
+        <el-table-column label="品类" min-width="100" prop="categories">
+            <template slot-scope = "scope">
+                <el-tag v-for="(category, index) in scope.row['categories']" :key = "index">{{ category['name'] }}</el-tag>
+                <span v-if="!scope.row['categories'] && (scope.row['categories'].length === 0)">--</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="商品" min-width="200" prop="" style="position: relative;">
             <template slot-scope="scope">
-                <p style="color:#f60"> ￥{{ scope.row.sellPrice }} 元</p>
+                <div class="merchandise-main-image" style="height: 64px;width: 64px;display: inline-block;">
+                    <img :src="scope.row.mainImage" style="width: 100%;height: 100%;">
+                </div>
+                <div class = "merchandise-info" style="position: absolute;left: 86px; top: 18px; display: inline-block;">
+                    <p style="color:#f60"> 商品名称：{{ scope.row.name }} </p>
+                    <p style="color:#f60"> 售价：￥{{ scope.row.sellPrice }} 元</p>
+                </div>
             </template>
         </el-table-column>
         <el-table-column label="标签" min-width="100" prop="tags">

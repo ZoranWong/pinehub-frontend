@@ -30,6 +30,7 @@ module.exports = {
     chainWebpack: config => {
         config.resolve.alias
             .set('@', resolve('src'))
+            .set('bower', resolve('bower_components'))
             .set('assets',resolve('src/assets'))
             .set('components',resolve('src/components'))
             .set('static',resolve('static'));

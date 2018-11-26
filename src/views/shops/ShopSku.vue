@@ -2,11 +2,12 @@
 <template>
     <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :list-command = "loadMerchandises">
         <template slot = "header" slot-scope = "{ search, searchHandler }">
-            <merchandise-header v-model = "search" @search = "searchHandler">
+            <merchandise-header v-model = "search" :need-search = "false" @search = "searchHandler">
                 <template slot = "opt-buttons">
                     <div class = "opt-buttons">
                         <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "addMerchandise">添加店铺商品</el-button>
                     </div>
+                    <add-merchandise :id = "shopId" :select-merchandises = "merchandises" :show = "showAddMerchandise" :http-service = "'http.shops'" @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
@@ -41,14 +42,18 @@ export default {
             current: 'shopSkuMerchandises/currentPage',
             query: {},
             showAddMerchandise: false,
+            shopId: null
         };
     },
     computed: {
         model() {
-            return this.$store.state.merchandises;
+            return this.$store.state.shopSkuMerchandises;
         },
         limit() {
             return this.$store.getters['shopSkuMerchandises/limit']
+        },
+        merchandises() {
+            return this.$store.getters['shopSkuMerchandises/list']
         }
     },
     methods: {
@@ -62,9 +67,8 @@ export default {
             console.log(id);
         },
         async loadMerchandises(event, page, search, limit) {
-            let shopId = this.$requestInput('shopId');
-            if(shopId) {
-                this.$command('LOAD_SHOP_SKU', shopId, event, page, search, limit);
+            if(this.shopId) {
+                this.$command('LOAD_SHOP_SKU', this.shopId, event, page, search, limit);
             }
         },
         closeMerchandiseForm() {
@@ -73,6 +77,7 @@ export default {
         }
     },
     created() {
+        this.shopId = this.$requestInput('shopId');
     }
 }
 </script>

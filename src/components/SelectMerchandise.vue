@@ -3,7 +3,7 @@
         <el-form ref="merchandise" :model = "merchandise">
             <el-form-item label = "商品名称：" prop = "merchandise_id" :rules = "[{required: true, message: '请选择活动商品', trigger: 'blur'}]">
                 <el-select v-model = "merchandise['merchandise_id']" filterable remote reserve-keyword :remote-method="loadMerchandises" :loading="loading" placeholder="请选择活动商品">
-                    <el-option v-for="item in merchandises" :key="item['id']" :label="item['name']" :value="item['id']" />
+                    <el-option v-for="item in merchandises" :key="item['id']" :label="item['name'] + (hasSelected(item.id) ? '(已添加)' : '')" :value="item['id']" :disabled="hasSelected(item.id)" />
                 </el-select>
             </el-form-item>
             <el-form-item label = "商品标签：" prop = "tags" :rules = "[{required: true, message: '请选择商品标签', trigger: 'blur'}]">
@@ -22,6 +22,7 @@
     </el-dialog>
 </template>
 <script>
+import _ from 'underscore';
 export default {
     name: 'CreateOrUpdate',
     props: {
@@ -29,9 +30,17 @@ export default {
             default: false,
             type: Boolean
         },
-        activity: {
+        id: {
             default: null,
-            type: Object
+            type: [Number, String]
+        },
+        httpService: {
+            default: '',
+            type: String
+        },
+        selectMerchandises: {
+            default: null,
+            type: Array
         }
     },
     data() {
@@ -60,10 +69,15 @@ export default {
         this.loadMerchandises();
     },
     methods: {
+        hasSelected(id) {
+            return _.findWhere(this.selectMerchandises, {
+                merchandiseId: id
+            }) ? true : false;
+        },
         async save () {
             let result = await this.$refs['merchandise'].validate();
             if(result) {
-                let merchandise = await this.http.activityMerchandises.create(this.$requestInput('projectId'), this.activity.id, this.merchandise);
+                let merchandise = await this[this.httpService].addMerchandise(this.$requestInput('projectId'), this.id, this.merchandise);
                 if(merchandise) {
                     this.$emit('close');
                 }

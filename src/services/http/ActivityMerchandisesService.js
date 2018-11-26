@@ -20,7 +20,7 @@ export default class ActivityMerchandisesService extends ApiService{
         return [merchandises, totalNum, currentPage,  totalPage];
     }
 
-    async create (projectId, activityId, merchandise) {
+    async addMerchandise (projectId, activityId, merchandise) {
         let response = null;
 
         if(this.$application.needMock()) {
@@ -32,7 +32,7 @@ export default class ActivityMerchandisesService extends ApiService{
         return response.data;
     }
 
-    async update (projectId, activityId, id, merchandise) {
+    async updateMerchanidse (projectId, activityId, id, merchandise) {
         let response = null;
 
         if(this.$application.needMock()) {

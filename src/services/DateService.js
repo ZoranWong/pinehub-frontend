@@ -1,4 +1,5 @@
 import Service from './Service';
+import _ from 'underscore';
 export default class  DateService extends Service {
     constructor(application) {
         super(application);
@@ -65,7 +66,13 @@ export default class  DateService extends Service {
         return date.format(format);
     }
 
-    overDate() {
-
+    overDate(time) {
+        if (_.isNumber(time)) {
+            return time < Date.now();
+        }else if (_.isString(time)) {
+            return (new Date(time)).getTime() < Date.now();
+        } else {
+            return time.getTime() < Date.now();
+        }
     }
 }

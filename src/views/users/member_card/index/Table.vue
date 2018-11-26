@@ -1,57 +1,56 @@
 <template>
     <el-col class="member-cards-list">
-        <el-col class="card-item-box" :xl="4" :lg="6" :md="8" :sm="12" :xs="24" v-for="(item, index) in cards" :key="index">
-            <el-col class="card-item"  >
+        <el-col v-for="(item, index) in cards" :key="index" class="card-item-box" :xl="4" :lg="6" :md="8" :sm="12" :xs="24">
+            <el-col class="card-item">
                 <div class="header">
                     <h3 class="pull-left">{{ item.title }}</h3>
                 </div>
                 <div class="detail js-rights-area">
-                    <div class="rights-area"><span class="rights-item points"></span></div>
+                    <div class="rights-area"><span class="rights-item points" /></div>
                 </div>
                 <div class="bottom-area">
                     <div class="operate">
-                        <el-button size="small" type="text">查看成员</el-button> -
-                        <el-button size="small" @click="edit(item.id)" type="text">编辑</el-button>
+                        <el-button size="small" type="text" :disabled="true" @click="edit(item.id)">编辑</el-button>
                     </div>
-                    <div class="state">{{item.sync}}</div>
+                    <div class="state">{{ item.sync }}</div>
                 </div>
             </el-col>
-            <el-col class="add-card" v-if="!cards || cards.length < 1">
+            <el-col v-if="!cards || cards.length < 1" class="add-card">
                 <h2>+</h2>
-                <h3><el-button size="small" @click="create()" type="text">新建会员卡</el-button></h3>
+                <h3><el-button size="small" type="text" @click="create()">新建会员卡</el-button></h3>
             </el-col>
         </el-col>
     </el-col>
 </template>
 <script>
-    export default {
-        props: {
-            cards: {
-                default: null,
-                type: Array
-            }
-        },
-        data() {
-            return {
-            };
-        },
-        methods: {
-            edit(id) {
-                this.$router.push({
-                    name: 'member-card-edit',
-                    params: {
-                        projectId: this.$requestInput('projectId'),
-                        memberCardId: id
-                    }
-                });
-            },
-            create() {
-
-            }
-        },
-        computed: {
+export default {
+    props: {
+        cards: {
+            default: null,
+            type: Array
         }
-    }
+    },
+    data() {
+        return {
+        };
+    },
+    computed: {
+    },
+    methods: {
+        edit(id) {
+            this.$router.push({
+                name: 'member-card-edit',
+                params: {
+                    projectId: this.$requestInput('projectId'),
+                    memberCardId: id
+                }
+            });
+        },
+        create() {
+
+        }
+    },
+}
 </script>
 <style scoped>
     .member-cards-list{clear: both;}

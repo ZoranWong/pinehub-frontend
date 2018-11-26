@@ -93,7 +93,9 @@ export default class ApiService extends Service{
 
     error(error) {
         let result = error.response;
-        if(this.showError && this.app.$route && this.app.$route.name !== 'sign-in')  this.$application.$error(result.data.message);
+        if(this.showError && typeof this.$application['$route'] !== 'undefined' && this.$application.$route.name !== 'sign-in')  {
+            this.$application.$error(result.data.message);
+        }
         let exception = new Error();
         exception['data'] = result.data;
         throw exception;
@@ -146,7 +148,7 @@ export default class ApiService extends Service{
             this.command('REDIRECT', {
                 name: 'sign-in',
                 query: {
-                    'from': 'sign-in'
+                    'redirectTo': this.$application.vueApp.$route.fullPath
                 }
             });
         }
