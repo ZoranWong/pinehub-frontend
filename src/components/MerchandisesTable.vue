@@ -10,7 +10,7 @@
         </el-table-column>
         <el-table-column label="商品" min-width="200" prop="" style="position: relative;">
             <template slot-scope="scope">
-                <div class="merchandise-main-image" style="height: 64px;width: 64px;display: inline-block;">
+                <div class="merchandise-main-image" :style="{height: imageHeight + 'px', width: imageWidth + 'px', display: 'inline-block'}">
                     <img :src="scope.row.mainImage" style="width: 100%;height: 100%;">
                 </div>
                 <div class = "merchandise-info" style="position: absolute;left: 86px; top: 18px; display: inline-block;">
@@ -43,6 +43,14 @@ export default {
         merchandises: {
             default: null,
             type: Array
+        },
+        imageWidth: {
+            default: 64,
+            type: Number
+        },
+        imageHeight: {
+            default: 64,
+            type: Number
         }
     },
     data() {

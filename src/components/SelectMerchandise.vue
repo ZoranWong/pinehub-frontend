@@ -6,6 +6,22 @@
                     <el-option v-for="item in merchandises" :key="item['id']" :label="item['name'] + (hasSelected(item.id) ? '(已添加)' : '')" :value="item['id']" :disabled="hasSelected(item.id)" />
                 </el-select>
             </el-form-item>
+            <el-form-item v-if = "needUploadImage" label="活动图片：" prop="main_image" :rules = "[{required: true, message: '上传活动图片', trigger: 'blur'}]">
+                <el-upload
+                    class="upload-image avatar-uploader"
+                    name="mainImage"
+                    action = " "
+                    :on-remove="removeImage"
+                    :http-request = "uploadImage"
+                    :on-success="uploadImageSuccess"
+                    :on-error="uploadImageError"
+                    :multiple = "false"
+                    :show-file-list="false">
+                    <img v-if="mainImage" :src="mainImage" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon">点击上传</i>
+                    <div slot="tip" class="el-upload__tip">上传图片建议长宽比71/33的图片，大小不超过2MB的正方形图片</div>
+                </el-upload>
+            </el-form-item>
             <el-form-item label = "商品标签：" prop = "tags" :rules = "[{required: true, message: '请选择商品标签', trigger: 'blur'}]">
                 <el-select v-model = "merchandise['tags']" multiple filterable allow-create default-first-option placeholder="请选择商品标签">
                     <el-option v-for="(tag, index) in tags" :key="index" :label="tag" :value="tag" />
@@ -41,6 +57,10 @@ export default {
         selectMerchandises: {
             default: null,
             type: Array
+        },
+        needUploadImage: {
+            default: false,
+            type: Boolean
         }
     },
     data() {
@@ -48,10 +68,12 @@ export default {
             saving: false,
             dialogShow: this.show,
             project: this.value,
+            mainImage: null,
             merchandise: {
                 merchandise_id: null,
                 stock_num: null,
-                tags: []
+                tags: [],
+                main_image: null
             },
             merchandises: [],
             loading: false,
@@ -74,25 +96,35 @@ export default {
                 merchandiseId: id
             }) ? true : false;
         },
+        removeImage() {
+
+        },
+        uploadImage({file}) {
+            this.$command('UPLOAD_FILE', file, 'mainImage', 'activityMerchandiseImage', (result) => {
+                if(result) {
+                    this.merchandise['main_image'] = this.mainImage = result.src;
+                }
+            });
+        },
+        uploadImageSuccess() {
+
+        },
+        uploadImageError() {
+        },
         async save () {
             let result = await this.$refs['merchandise'].validate();
             if(result) {
-                let merchandise = await this[this.httpService].addMerchandise(this.$requestInput('projectId'), this.id, this.merchandise);
-                if(merchandise) {
-                    this.$emit('close');
-                }
+                this.$emit('close', this.merchandise);
             }
         },
         open() {
-            if(this.$refs['merchandise']) {
-                this.$refs['merchandise'].resetFields();
-            }
+            console.log('-------- open dialog ----------');
         },
         close() {
             this.dialogShow = false;
             this.saving = false;
             this.$refs['merchandise'].resetFields();
-            this.$emit('close');
+            // this.$emit('close');
         },
         async loadMerchandises(name = null) {
             let search = name ? {name: name} : {};

@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-    <table-list :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :list-command = "loadMerchandises">
+    <table-list v-if = "show" :service = "service" :event = "event" :current = "current" :model = "model" :query = "query" :list-command = "loadMerchandises">
         <template slot = "header" slot-scope = "{ search, searchHandler }">
             <merchandise-header v-model = "search" :need-search = "false" @search = "searchHandler">
                 <template slot = "opt-buttons">
@@ -11,14 +11,15 @@
                     </div>
                     <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
                     <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
-                    <add-merchandise :id = "activity['id']" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'" :select-merchandises = "merchandises" @close="closeMerchandiseForm" />
+                    <add-merchandise :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'" :select-merchandises = "merchandises" @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
         <template slot = "table" slot-scope = "{ data }">
-            <merchandise-table :merchandises = "data">
+            <merchandise-table :merchandises = "data" :image-height = "33" :image-width = "71">
                 <template slot = "tableOpt" slot-scope = "{merchandise}">
-                    <el-button type="text" size="mini" @click="edit(merchandise.id)">编辑</el-button>
+                    <el-button type="text" size="mini" :disabled = "true" @click="edit(merchandise)">编辑</el-button>
+                    <el-button type="text" size="mini" @click="removeMerchandise(merchandise)">下架</el-button>
                 </template>
             </merchandise-table>
         </template>
@@ -53,9 +54,8 @@
                 creating: false,
                 updating: false,
                 showAddMerchandise: false,
-                activity: {
-                    id: null
-                }
+                activity: {},
+                show: true
             };
         },
         computed: {
@@ -79,8 +79,21 @@
             createActivity() {
                 this.creating  = true;
             },
-            edit(id) {
-                console.log(id);
+            edit(merchandise) {
+
+            },
+            async removeMerchandise (merchandise) {
+              let result = await this.http.marketing.removeMerchandise(this.$requestInput('projectId'), merchandise.id);
+              if (result) {
+                this.show = false;
+                this.$nextTick(() => {
+                    this.show = true
+                    console.log('re-render start')
+                    this.$nextTick(() => {
+                        console.log('re-render end')
+                    });
+                });
+              }
             },
             async loadMerchandises(event, page, search, limit) {
                 console.log('load merchandises', event, page, search, limit);
@@ -90,8 +103,17 @@
                     this.$command('LOAD_ACTIVITY_MERCHANDISES', this.activity.id, event, page, search, limit);
                 }
             },
-            closeMerchandiseForm() {
-                this.showAddMerchandise=false;
+            closeMerchandiseForm: async function (merchandise) {
+                this.showAddMerchandise = false;
+                if (merchandise['merchandise_id'] && merchandise['stock_num'] && merchandise['main_image']) {
+                    let data = {
+                        merchandise_id: merchandise['merchandise_id'],
+                        stock_num: merchandise['stock_num'],
+                        tags: merchandise['tags'],
+                        main_image: merchandise['main_image']
+                    };
+                    merchandise = await this.http.activityMerchandises.addMerchandise(this.$requestInput('projectId'), this.activity.id, data);
+                }
                 this.loadMerchandises(this.event, 1, {}, this.limit)
             },
             updateActivity() {

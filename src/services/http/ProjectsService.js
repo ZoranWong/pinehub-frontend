@@ -100,7 +100,7 @@ export default class ProjectsService extends ApiService{
     async addMpConfig(projectId, config) {
         let response = null;
         if(this.$application.needMock ()) {
-            response =  await this.service ('mock.mpConfig').mock (id);
+            response =  await this.service ('mock.mpConfig').mock ();
         }else{
             //服务器交互代码
             response =  await this.header({'ProjectId': projectId}).httpPost (`app/mp/config`, config);

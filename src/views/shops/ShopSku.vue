@@ -6,6 +6,7 @@
                 <template slot = "opt-buttons">
                     <div class = "opt-buttons">
                         <el-button size = "small" type = "primary" icon = "el-icon-plus" @click = "addMerchandise">添加店铺商品</el-button>
+                        <add-merchandise :needUploadImage = "false" :show = "showAddMerchandise" @close="closeMerchandiseForm" />
                     </div>
                     <add-merchandise :id = "shopId" :select-merchandises = "merchandises" :show = "showAddMerchandise" :http-service = "'http.shops'" @close="closeMerchandiseForm" />
                 </template>
@@ -71,8 +72,16 @@ export default {
                 this.$command('LOAD_SHOP_SKU', this.shopId, event, page, search, limit);
             }
         },
-        closeMerchandiseForm() {
+        async closeMerchandiseForm(merchandise) {
             this.showAddMerchandise=false;
+            if (merchandise['merchandise_id'] && merchandise['stock_num']) {
+                let data = {
+                  merchandise_id: merchandise['merchandise_id'],
+                  stock_num: merchandise['stock_num'],
+                  tags: merchandise['tags'],
+                };
+                merchandise = await this.http.shops.addMerchandise(this.$requestInput('projectId'), this.$requestInput('shopId'), data);
+            }
             this.loadMerchandises(this.event, 1, {}, this.limit)
         }
     },

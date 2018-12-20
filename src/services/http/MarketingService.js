@@ -18,4 +18,9 @@ export default class MarketingService extends ApiService{
         let response = await this.header({'ProjectId': projectId}).httpPut(`/new/merchandise/activity`, activityId, activity);
         return response.data;
     }
+
+    async removeMerchandise(projectId, id) {
+      let response = await this.header({'ProjectId': projectId}).httpDelete(`/new/merchandise/${id}/activity`);
+      return response.data;
+    }
 }

@@ -115,13 +115,16 @@ export default class ApiService extends Service{
 
     }
 
-    async httpDelete(route, params = {}, auth = true) {
-        let id = _.isString(params) || _.isNumber(params) ? params : this.service('json').encode(params);
+    async httpDelete(route, params = null, auth = true) {
+        let id = params ? (_.isString(params) || _.isNumber(params) ? params : this.service('json').encode(params)) : null;
         route = route.trim('/');
         route = '/' + route;
+        if(id) {
+          route = route + '/' + id
+        }
         try{
             let result = await (await this.setHttpHeader(auth, this.headers, this.axios))
-                .delete(route + '/' + id);
+                .delete(route);
             return result.data;
         }catch(error) {
             await this.tokenExpired(error.response);

@@ -56,8 +56,19 @@
                     <el-button type="success" size="mini" @click="mapDialogOpen">设置地图坐标</el-button>
                 </el-form-item>
             </el-form-item>
-            <el-form-item label="店铺描述：" prop="description">
-                <el-input v-model="shop.description" type="textarea" style="width:80%" :rows="4" />
+            <el-form-item label="营业时间：" prop="begin_at" style="display: inline-block;">
+                <el-date-picker v-model="shop['start_at']" value-format="yyyy-MM-dd HH:mm:ss" type="datetime"
+                                :picker-options="startOptions" :editable="false" placeholder="开始时间" style="" />
+            </el-form-item>
+            <el-form-item label-width="10px" prop="" style="display: inline-block;">
+                至
+            </el-form-item>
+            <el-form-item label="" prop="end_at" label-width="10px" style="display: inline-block;">
+                <el-date-picker v-model="shop['end_at']" value-format="yyyy-MM-dd HH:mm:ss" type="datetime"
+                                :picker-options="endOptions" :editable="false" placeholder="结束时间" style="" />
+            </el-form-item>
+            <el-form-item label="店铺描述："  prop="description">
+                <el-input v-model="shop.description" type="textarea" style="width:80%" :rows="4"></el-input>
             </el-form-item>
             <el-form-item label="车主姓名：" prop="manager_name" :rules="[{ required: true, message: '请输入餐主姓名', trigger: 'blur' }]">
                 <el-input v-model="shop.manager_name" style="width:30%" placeholder="输入车主姓名" />
@@ -90,6 +101,7 @@ export default {
         }
     },
     data() {
+        let $this = this;
         return {
             mapShow: false,
             position: {
@@ -108,8 +120,21 @@ export default {
                 country_id: '1',
                 province_id: '',
                 county_id: '',
-                name: ''
-            }
+                name: '',
+                start_at: null,
+                end_at: null
+            },
+            endOptions:{
+                disabledDate(time) {
+                    const d = $this.shop['start_at'] ? Date.parse($this.shop['start_at']) + 8.64e7 : 0;
+                    return time.getTime() < (d ? d : Date.now()) - 8.64e7;
+                }
+            },
+            startOptions:{
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            },
         };
     },
     computed:{
