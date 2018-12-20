@@ -11,14 +11,14 @@
                     </div>
                     <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
                     <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
-                    <add-merchandise :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'" :select-merchandises = "merchandises" @close="closeMerchandiseForm" />
+                    <merchandise-form :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'"  :select-merchandises = "merchandises"  @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
         <template slot = "table" slot-scope = "{ data }">
             <merchandise-table :merchandises = "data" :image-height = "33" :image-width = "71">
                 <template slot = "tableOpt" slot-scope = "{merchandise}">
-                    <el-button type="text" size="mini" :disabled = "true" @click="edit(merchandise)">编辑</el-button>
+                    <el-button type="text" size="mini" @click="edit(merchandise)">编辑</el-button>
                     <el-button type="text" size="mini" @click="removeMerchandise(merchandise)">下架</el-button>
                 </template>
             </merchandise-table>
@@ -42,7 +42,7 @@
             'merchandise-table': MerchandiseTable,
             'table-list': TableList,
             'activity-create': NewActivityCreate,
-            'add-merchandise': SelectMerchandise,
+            'merchandise-form': SelectMerchandise,
             'activity-update': NewActivityEditor
         },
         data() {
@@ -55,7 +55,8 @@
                 updating: false,
                 showAddMerchandise: false,
                 activity: {},
-                show: true
+                show: true,
+                editMerchandise: null
             };
         },
         computed: {
@@ -75,12 +76,14 @@
             },
             addMerchandise() {
                 this.showAddMerchandise = true;
+                this.editMerchandise = null;
             },
             createActivity() {
                 this.creating  = true;
             },
             edit(merchandise) {
-
+                this.showAddMerchandise = true;
+                this.editMerchandise = merchandise;
             },
             async removeMerchandise (merchandise) {
               let result = await this.http.marketing.removeMerchandise(this.$requestInput('projectId'), merchandise.id);

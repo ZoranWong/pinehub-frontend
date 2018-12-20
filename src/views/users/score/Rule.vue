@@ -65,7 +65,7 @@
     }
     export default {
         name: 'RuleForm',
-        data() {
+        data () {
             return {
                 rule: {
                     type: 'FOLLOW',
@@ -79,43 +79,43 @@
             };
         },
         computed: {
-            scoreRule() {
+            scoreRule () {
                 return this.$store.getters['scoreRules/scoreRule'](this.$requestInput('scoreRuleId'));
             }
         },
         methods: {
-            submit() {
-                if(this.$requestInput('scoreRuleId')) {
+            submit () {
+                if (this.$requestInput('scoreRuleId')) {
                     console.log(this.$requestInput('scoreRuleId'));
                     this.$command('UPDATE_SCORE_RULE', this.$requestInput('scoreRuleId'), this.rule);
-                }else{
+                } else {
                     this.$command('CREATE_SCORE_RULE', this.rule);
                 }
             },
-            async getScoreRule() {
-                try{
+            async getScoreRule () {
+                try {
                     let rule = this.scoreRule;
-                    if(!rule) {
+                    if (!rule) {
                         rule = await this.http.scoreRules.show(this.$requestInput('projectId'), this.$requestInput('scoreRuleId'));
                         this.rule['order_amount'] = rule['rule']['order_amount'];
                         this.rule['order_count'] = rule['rule']['order_count'];
-                    }else{
+                    } else {
                         this.rule['order_amount'] = rule['orderAmount'];
                         this.rule['order_count'] = rule['orderCount'];
                     }
                     this.rule['notice_user'] = rule['notice_user'];
                     this.rule['score'] = rule['score'];
                     this.rule['type'] = RULE_TYPE[rule['type']];
-                }catch (e) {
+                } catch (e) {
                     console.log(e);
                 }
             }
         },
-        created() {
-            if(this.$requestInput('scoreRuleId')) {
+        created () {
+            if (this.$requestInput('scoreRuleId')) {
                 this.title = '编辑积分规则';
                 this.getScoreRule();
-            }else{
+            } else {
                 this.title = '新建积分规则';
             }
         }

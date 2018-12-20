@@ -57,15 +57,13 @@
                 </el-form-item>
             </el-form-item>
             <el-form-item label="营业时间：" prop="begin_at" style="display: inline-block;">
-                <el-date-picker v-model="shop['start_at']" value-format="yyyy-MM-dd HH:mm:ss" type="datetime"
-                                :picker-options="startOptions" :editable="false" placeholder="开始时间" style="" />
+                <el-time-picker v-model="shop['start_at']" :picker-options="{start: '00:00',step: '00:05',end: '23:59' }" placeholder="开始时间"></el-time-picker>
             </el-form-item>
             <el-form-item label-width="10px" prop="" style="display: inline-block;">
                 至
             </el-form-item>
             <el-form-item label="" prop="end_at" label-width="10px" style="display: inline-block;">
-                <el-date-picker v-model="shop['end_at']" value-format="yyyy-MM-dd HH:mm:ss" type="datetime"
-                                :picker-options="endOptions" :editable="false" placeholder="结束时间" style="" />
+                <el-time-picker v-model="shop['end_at']" :picker-options="{start: '00:00',step: '00:05',end: '23:59', minTime: shop['start_at'] }" placeholder="结束时间"></el-time-picker>
             </el-form-item>
             <el-form-item label="店铺描述："  prop="description">
                 <el-input v-model="shop.description" type="textarea" style="width:80%" :rows="4"></el-input>
@@ -123,18 +121,7 @@ export default {
                 name: '',
                 start_at: null,
                 end_at: null
-            },
-            endOptions:{
-                disabledDate(time) {
-                    const d = $this.shop['start_at'] ? Date.parse($this.shop['start_at']) + 8.64e7 : 0;
-                    return time.getTime() < (d ? d : Date.now()) - 8.64e7;
-                }
-            },
-            startOptions:{
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            },
+            }
         };
     },
     computed:{
@@ -154,6 +141,7 @@ export default {
             handler: function(shop) {
                 if(shop) {
                     this.shop = shop;
+                    console.log('+++ shop info +++', this.shop);
                     this.position['lat'] = shop['lat'];
                     this.position['lng'] = shop['lng'];
                     if(this.shop['province_id']) {

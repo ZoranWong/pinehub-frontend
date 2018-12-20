@@ -2,7 +2,7 @@
     <el-dialog :visible.sync = "dialogShow" width = "45%" :close-on-click-modal = "false" @close = "close" @open = "open">
         <el-form ref="merchandise" :model = "merchandise">
             <el-form-item label = "商品名称：" prop = "merchandise_id" :rules = "[{required: true, message: '请选择活动商品', trigger: 'blur'}]">
-                <el-select v-model = "merchandise['merchandise_id']" filterable remote reserve-keyword :remote-method="loadMerchandises" :loading="loading" placeholder="请选择活动商品">
+                <el-select :disabled="!merchandiseData" v-model = "merchandise['merchandise_id']" filterable remote reserve-keyword :remote-method="loadMerchandises" :loading="loading" placeholder="请选择活动商品">
                     <el-option v-for="item in merchandises" :key="item['id']" :label="item['name'] + (hasSelected(item.id) ? '(已添加)' : '')" :value="item['id']" :disabled="hasSelected(item.id)" />
                 </el-select>
             </el-form-item>
@@ -19,10 +19,13 @@
                     :show-file-list="false">
                     <img v-if="mainImage" :src="mainImage" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon">点击上传</i>
-                    <div slot="tip" class="el-upload__tip">上传图片建议长宽比71/33的图片，大小不超过2MB的正方形图片</div>
+                    <div slot="tip" class="el-upload__tip">上传图片建议长宽比710/400的图片，大小不超过2MB的正方形图片</div>
                 </el-upload>
             </el-form-item>
             <el-form-item label = "商品标签：" prop = "tags" :rules = "[{required: true, message: '请选择商品标签', trigger: 'blur'}]">
+              <el-select v-model = "merchandise['tags']" multiple  value-key= "index"  allow-create filterable default-first-option placeholder="请选择商品标签" >
+                  <el-option v-for="(tag, index) in tags" :key="index" :label="tag" :value="tag" />
+              </el-select>
                 <el-select v-model = "merchandise['tags']" multiple filterable allow-create default-first-option placeholder="请选择商品标签">
                     <el-option v-for="(tag, index) in tags" :key="index" :label="tag" :value="tag" />
                 </el-select>
@@ -38,13 +41,17 @@
     </el-dialog>
 </template>
 <script>
-import _ from 'underscore';
+import underscore from 'underscore';
 export default {
     name: 'CreateOrUpdate',
     props: {
         show: {
             default: false,
             type: Boolean
+        },
+        merchandiseData: {
+          default: null,
+          type: [Array, Object]
         },
         id: {
             default: null,
@@ -85,6 +92,9 @@ export default {
     watch: {
         show(val) {
             this.dialogShow = val;
+        },
+        data(val) {
+          console.log('merchandise data', val);
         }
     },
     created() {
@@ -92,7 +102,7 @@ export default {
     },
     methods: {
         hasSelected(id) {
-            return _.findWhere(this.selectMerchandises, {
+            return underscore.findWhere(this.selectMerchandises, {
                 merchandiseId: id
             }) ? true : false;
         },
@@ -118,7 +128,7 @@ export default {
             }
         },
         open() {
-            console.log('-------- open dialog ----------');
+            console.log('-------- open dialog ----------', this.merchandise);
         },
         close() {
             this.dialogShow = false;

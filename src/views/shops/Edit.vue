@@ -43,6 +43,8 @@
                         country_id: this.shop['country_id'],
                         province_id: this.shop['province_id'],
                         county_id: this.shop['county_id'],
+												start_at: this.shop['start_at'],
+												end_at: this.shop['end_at']
                     };
                     this.$command('UPDATE_SHOP', this.$requestInput('projectId'), this.$requestInput('shopId'), shop);
                 }

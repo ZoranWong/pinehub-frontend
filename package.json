@@ -28,7 +28,7 @@
     "strip-ansi": "^4.0.0",
     "underscore": "^1.8.3",
     "underscore.string": "^3.3.4",
-    "vue": "^2.5.13",
+    "vue": "^2.5.17",
     "vue-axios": "^2.1.1",
     "vue-echarts-v3": "^1.0.19",
     "vue-resize": "^0.4.4",
@@ -39,11 +39,11 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "@vue/cli-plugin-babel": "^3.0.0-rc.7",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.7",
     "@vue/cli-service": "^3.0.0-rc.7",
     "babel-eslint": "^8.2.6",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "eslint": "^5.2.0",
     "eslint-plugin-vue": "^5.0.0-beta.1",
     "mockjs": "^1.0.1-beta3",
@@ -63,17 +63,28 @@
     "rules": {
       "no-console": "off",
       "arrow-parens": "off",
-      "generator-star-spacing":  "off",
-      "no-tabs":  "off",
-      "no-mixed-spaces-and-tabs":  "off",
-      "indent": ["error", 4],
-      "vue/html-indent": ["off", 4],
+      "generator-star-spacing": "off",
+      "no-tabs": "off",
+      "no-mixed-spaces-and-tabs": "off",
+      "indent": [
+        "error",
+        4
+      ],
+      "vue/html-indent": [
+        "off",
+        4
+      ],
       "vue/valid-v-model": "off",
-      "vue/script-indent": ["off", 4],
-      "no-unused-vars":  "off",
-      "no-trailing-spaces":  "off",
-      "eqeqeq":  "off",
-      "vue/max-attributes-per-line": [0, {
+      "vue/script-indent": [
+        "off",
+        4
+      ],
+      "no-unused-vars": "off",
+      "no-trailing-spaces": "off",
+      "eqeqeq": "off",
+      "vue/max-attributes-per-line": [
+        0,
+        {
           "singleline": 1,
           "multiline": {
             "allowFirstLine": false
