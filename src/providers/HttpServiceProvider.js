@@ -25,16 +25,16 @@ import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesSer
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
-    }
-    register() {
-        Object.defineProperty(this.app, 'axios', {
+        Object.defineProperty(app, '_axios', {
             get: () => {
-                return this.app.$vm.axios.create({
-                    headers: this.app.config['http']['headers'],
-                    baseURL: this.app.config['http']['apiGateway']
+                return app.$axios.create({
+                    headers: app.config['http']['headers'],
+                    baseURL: app.config['http']['apiGateway']
                 });
             }
         });
+    }
+    register() {
 
         this.app.register('uri', UriService);
 

@@ -38,7 +38,7 @@ export default class ActivityMerchandisesService extends ApiService{
         if(this.$application.needMock()) {
             response =  await this.service('mock.merchandise.create').mock(merchandise);
         } else {
-            response = await this.header({'ProjectId': projectId}).httpPut(`/new/merchandise/activity/${activityId}/merchandise`, id, merchandise);
+            response = await this.header({'ProjectId': projectId}).httpPut(`/new/merchandise/activity/${activityId}/merchandise/${id}/stock`, '', merchandise);
         }
 
         return response.data;

@@ -1,4 +1,5 @@
 import Command from './Command';
+import _ from 'underscore';
 export default class UpdateShopCommand extends Command {
     constructor(app) {
         super(app);

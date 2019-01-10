@@ -2,7 +2,7 @@
     <el-dialog :visible.sync = "dialogShow" width = "45%" :close-on-click-modal = "false" @close = "close" @open = "open">
         <el-form ref="merchandise" :model = "merchandise">
             <el-form-item label = "商品名称：" prop = "merchandise_id" :rules = "[{required: true, message: '请选择活动商品', trigger: 'blur'}]">
-                <el-select :disabled="!merchandiseData" v-model = "merchandise['merchandise_id']" filterable remote reserve-keyword :remote-method="loadMerchandises" :loading="loading" placeholder="请选择活动商品">
+                <el-select :disabled="!!merchandiseData" v-model = "merchandise['merchandise_id']" filterable remote reserve-keyword :remote-method="loadMerchandises" :loading="loading" placeholder="请选择活动商品">
                     <el-option v-for="item in merchandises" :key="item['id']" :label="item['name'] + (hasSelected(item.id) ? '(已添加)' : '')" :value="item['id']" :disabled="hasSelected(item.id)" />
                 </el-select>
             </el-form-item>
@@ -23,9 +23,6 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label = "商品标签：" prop = "tags" :rules = "[{required: true, message: '请选择商品标签', trigger: 'blur'}]">
-              <el-select v-model = "merchandise['tags']" multiple  value-key= "index"  allow-create filterable default-first-option placeholder="请选择商品标签" >
-                  <el-option v-for="(tag, index) in tags" :key="index" :label="tag" :value="tag" />
-              </el-select>
                 <el-select v-model = "merchandise['tags']" multiple filterable allow-create default-first-option placeholder="请选择商品标签">
                     <el-option v-for="(tag, index) in tags" :key="index" :label="tag" :value="tag" />
                 </el-select>
@@ -41,7 +38,7 @@
     </el-dialog>
 </template>
 <script>
-import underscore from 'underscore';
+import _ from 'underscore';
 export default {
     name: 'CreateOrUpdate',
     props: {
@@ -93,8 +90,14 @@ export default {
         show(val) {
             this.dialogShow = val;
         },
-        data(val) {
-          console.log('merchandise data', val);
+        merchandiseData(val) {
+            console.log('merchandise data', val);
+            if (val) {
+                this.merchandise['merchandise_id'] = val.merchandiseId;
+                this.merchandise['tags'] = val.tags;
+                this.mainImage = this.merchandise['main_image'] = val.mainImage;
+                this.merchandise['stock_num'] = val.stockNum
+            }
         }
     },
     created() {
@@ -102,7 +105,7 @@ export default {
     },
     methods: {
         hasSelected(id) {
-            return underscore.findWhere(this.selectMerchandises, {
+            return _.findWhere(this.selectMerchandises, {
                 merchandiseId: id
             }) ? true : false;
         },
@@ -133,8 +136,14 @@ export default {
         close() {
             this.dialogShow = false;
             this.saving = false;
+            this.$emit('close');
+            _.extend(this.merchandise, {
+                merchandise_id: null,
+                stock_num: null,
+                tags: [],
+                main_image: null
+            });
             this.$refs['merchandise'].resetFields();
-            // this.$emit('close');
         },
         async loadMerchandises(name = null) {
             let search = name ? {name: name} : {};

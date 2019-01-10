@@ -13,6 +13,7 @@
 </template>
 <script>
     import ShopForm from './ShopInfoForm';
+	import moment from "moment";
     export default {
         name: 'Edit',
         components: {
@@ -43,14 +44,18 @@
                         country_id: this.shop['country_id'],
                         province_id: this.shop['province_id'],
                         county_id: this.shop['county_id'],
-												start_at: this.shop['start_at'],
-												end_at: this.shop['end_at']
+						start_at: moment(this.shop['start_at']).format('HH:mm:ss'),
+						end_at: moment(this.shop['end_at']).format('HH:mm:ss')
                     };
                     this.$command('UPDATE_SHOP', this.$requestInput('projectId'), this.$requestInput('shopId'), shop);
                 }
             },
             async getShop() {
                 let shop = await this.http.shops.show(this.$requestInput('projectId'), this.$requestInput('shopId'));
+				let start = moment.duration(shop['start_at']);
+				shop['start_at'] =  new Date(2016, 9, 10, start.hours(), start.minutes(), start.seconds());
+				let end = moment.duration(shop['end_at']);
+				shop['end_at'] =  new Date(2016, 9, 10, end.hours(), end.minutes(), end.seconds());
                 this.shop = shop;
             }
         },

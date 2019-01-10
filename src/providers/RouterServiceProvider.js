@@ -7,7 +7,6 @@ export default class RouteServiceProvider extends ServiceProvider {
         super(app);
     }
     register() {
-        this.app.use(VueRouter);
         let routerArray = [];
         _.each(routes, function(route) {
             let r = route.getRoute();

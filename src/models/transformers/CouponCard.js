@@ -14,6 +14,7 @@ export default class CouponCard {
         this.id = coupon['id'];
         this.index=coupon['index'];
         this.title = coupon['title'];
+        this.status = coupon['status'];
         this.type = CARD_TYPES[coupon['card_type']];
         this.publish = SYNC[coupon['sync']];
         this.code = coupon['code'];

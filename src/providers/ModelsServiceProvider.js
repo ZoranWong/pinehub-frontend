@@ -1,15 +1,13 @@
 import ServiceProvider from './ServiceProvider';
-import Vuex from 'vuex';
 import Models from '@/models'
 export default class ModelServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
-        this.app.use(Vuex);
+        this.$vuex = app.$vuex;
     }
     register() {
-        this.app.register('vue-store', new Vuex.Store(new Models(this.app)));
+        this.app.register('vue-store', new this.$vuex.Store(new Models(this.app)));
     }
     boot() {
-        console.log('model boot');
     }
 }

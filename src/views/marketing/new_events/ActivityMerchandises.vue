@@ -11,12 +11,12 @@
                     </div>
                     <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
                     <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
-                    <merchandise-form :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'"  :select-merchandises = "merchandises"  @close="closeMerchandiseForm" />
+                    <merchandise-form :merchandiseData = "editMerchandise" :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'"  :select-merchandises = "merchandises"  @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
         <template slot = "table" slot-scope = "{ data }">
-            <merchandise-table :merchandises = "data" :image-height = "33" :image-width = "71">
+            <merchandise-table :merchandises = "data" :image-height = "80" :image-width = "142">
                 <template slot = "tableOpt" slot-scope = "{merchandise}">
                     <el-button type="text" size="mini" @click="edit(merchandise)">编辑</el-button>
                     <el-button type="text" size="mini" @click="removeMerchandise(merchandise)">下架</el-button>
@@ -106,18 +106,25 @@
                     this.$command('LOAD_ACTIVITY_MERCHANDISES', this.activity.id, event, page, search, limit);
                 }
             },
-            closeMerchandiseForm: async function (merchandise) {
+             async closeMerchandiseForm (merchandise) {
                 this.showAddMerchandise = false;
-                if (merchandise['merchandise_id'] && merchandise['stock_num'] && merchandise['main_image']) {
+                if (merchandise && merchandise['merchandise_id'] && merchandise['stock_num'] && merchandise['main_image']) {
                     let data = {
                         merchandise_id: merchandise['merchandise_id'],
                         stock_num: merchandise['stock_num'],
                         tags: merchandise['tags'],
                         main_image: merchandise['main_image']
                     };
-                    merchandise = await this.http.activityMerchandises.addMerchandise(this.$requestInput('projectId'), this.activity.id, data);
+                    let result = false;
+                    if (!this.editMerchandise) {
+                        result = await this.http.activityMerchandises.addMerchandise(this.$requestInput('projectId'), this.activity.id,  data);
+                    }else {
+                        result = await this.http.activityMerchandises.updateMerchanidse(this.$requestInput('projectId'), this.activity.id, this.editMerchandise.id, data);
+                    }
+                    if (result) {
+                        this.loadMerchandises(this.event, 1, {}, this.limit);
+                    }
                 }
-                this.loadMerchandises(this.event, 1, {}, this.limit)
             },
             updateActivity() {
                 this.updating = true;

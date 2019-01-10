@@ -9,13 +9,12 @@ const AUTH_TOKEN_EXPIRES = 10004;
 export default class ApiService extends Service{
     constructor(app) {
         super(app);
-        this.axios = this.$application.axios;
         Object.defineProperty(this, 'axios', {
             get: () => {
-                return this.$application.axios;
+                return app._axios;
             }
         });
-        this.gateway = this.$application.config['http']['apiGateway'];
+        this.gateway = app.config['http']['apiGateway'];
         this.middlewares = [];
         this.showError = true;
         this.headers = {};
@@ -61,7 +60,6 @@ export default class ApiService extends Service{
             _.extend(request.headers.common, headers);
             return request;
         });
-        // console.log('axios', await axios());
         return axios;
     }
     // eslint-disable-next-line
@@ -73,6 +71,7 @@ export default class ApiService extends Service{
                 .get(route + this.service().uri.query(params));
             return result.data;
         }catch(error) {
+            console.log(error);
             this.tokenExpired(error.response);
             this.error(error);
         }
@@ -82,8 +81,7 @@ export default class ApiService extends Service{
         route = route.trim('/');
         route = '/' + route;
         try{
-            let result = await (await this.setHttpHeader(auth, this.headers, this.axios))
-                .post(route, params);
+            let result = await (await this.setHttpHeader(auth, this.headers, this.axios)).post(route, params);
             return result.data;
         }catch(error) {
             this.tokenExpired(error.response);

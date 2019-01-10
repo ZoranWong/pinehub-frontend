@@ -13,8 +13,10 @@
         <el-table-column prop="usedRate" label="使用率" min-width="100" />
         <el-table-column label="操作" width="150">
             <template slot-scope="scope">
-                <el-button type="success" size="mini" :disabled="true" @click="show(scope)">查看</el-button>
-                <el-button type="primary" size="mini" :disabled="true">修改</el-button>
+                <el-button type="success" size="mini" :disabled="true" @click="show(scope.row)">查看</el-button>
+                <el-button type="primary" size="mini" :disabled="scope.row.status === 3" @click = "disabled(scope.row)">{{
+                    scope.row.status === 3 ? "已失效": "使失效"
+                }}</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -32,8 +34,15 @@ export default {
         };
     },
     methods: {
-        show(scope) {
-            console.log(scope);
+        show(row) {
+            console.log(row);
+        },
+        async disabled(row) {
+            console.log('ticket info', row);
+            let result = this.http.tickets.disabled(this.$requestInput('projectId'), row.id);
+            if(result) {
+                this.$command('DATA_LIST', 'http.tickets', 'couponCards/setList', 1);
+            }
         }
     }
 }

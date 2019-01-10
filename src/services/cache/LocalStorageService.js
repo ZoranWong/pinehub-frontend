@@ -1,6 +1,6 @@
 import Service from '@/services/Service';
 import _ from 'underscore';
-const CryptoJS = require("bower/crypto-js");
+import CryptoJS from "crypto-js";
 const AES = CryptoJS.AES;
 export default class LocalStorageService extends Service {
     constructor(application) {

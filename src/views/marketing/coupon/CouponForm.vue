@@ -5,6 +5,15 @@
             <el-form-item prop = "base_info.title" label = "优惠券名称：" :rules = "[{required: true, message: '请输入优惠券名称', trigger: 'blur'}]">
                 <el-input style="width: 360px;" v-model = "ticket['base_info']['title']" max = "16"></el-input>
             </el-form-item>
+            <el-form-item label="可领取日期：" prop="begin_at" style="display: inline-block;" :rules = "[{required: true, message: '请输入优惠券领取日期', trigger: 'blur'}]">
+                <el-date-picker v-model="start_at"  placeholder="开始时间"></el-date-picker>
+            </el-form-item>
+            <el-form-item label-width="10px" prop="" style="display: inline-block;">
+                至
+            </el-form-item>
+            <el-form-item label="" prop="end_at" label-width="10px" style="display: inline-block;" :rules = "[{required: true, message: '请输入优惠券领取日期', trigger: 'blur'}]">
+                <el-date-picker v-model="end_at"  placeholder="结束时间"></el-date-picker>
+            </el-form-item>
             <el-form-item prop = "base_info.sku.quantity" label = "发放总量：" :rules = "[{required: true, message: '请填写发放总量', trigger: 'blur'}]">
                 <el-input style = "width: 218px;" v-model.number = "ticket['base_info']['sku']['quantity']" type = "number">
                     <template slot = "append">张</template>
@@ -17,9 +26,7 @@
                         <el-input style="width: 168px;" v-model="ticket['reduce_cost']" type="number">
                             <template slot="append">元</template>
                         </el-input>
-                        <span class ="tips">
-              同步至微信卡包, 不支持金额随机
-            </span>
+                        <span class ="tips"> 同步至微信卡包, 不支持金额随机</span>
                     </el-form-item>
                     <div class = "discount">
                         <el-radio label="DISCOUNT">折扣</el-radio>
@@ -34,21 +41,24 @@
             <el-form-item prop = "is_limited" label = "使用限制" :rules = "[{required: true, message: '请选择使用限制类型', trigger: 'blur'}, {validator: limitedValidate, message: '请输入优惠券使用最低消费金额',  trigger: 'blur'}]">
                 <el-radio-group v-model = "ticket['is_limited']">
                     <el-radio :label = "false">不限制</el-radio>
-                    <span v-if = "!ticket['is_limited']" class = "tips danger">
-            请谨慎设置无门槛优惠券，避免资金损失
-          </span>
+                    <span v-if = "!ticket['is_limited']" class = "tips danger">请谨慎设置无门槛优惠券，避免资金损失</span>
                     <el-radio :label="true" :disabled = "ticket['type'] === 'DISCOUNT'">
                         满<el-input style="margin: 0 8px;width: 86px;" v-model = "ticket['least_cost']" :disabled="!ticket['is_limited']"></el-input>元可使用
                     </el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item prop = "platform" label = "优惠平台" :rules = "[{required: true, message: '请选择优惠平台', trigger: 'blur'}, {validator: dateInfoValidate, message: '请选择优惠券有效期类型，并填写有效时间', trigger: 'blur'}]">
+                <el-radio-group v-model="ticket['platform']" style="display:flex !important;">
+                    <el-radio  label = "OWERN_TICKET">自营平台</el-radio>
+                    <el-radio style="margin-left: 18px !important; margin-right: 18px;"label = "WX_TICKET">微信</el-radio>
+                    <el-radio label = "ALI_TICKET">支付宝</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item prop = "is_public" label="同步发布至：">
                 <el-checkbox v-model = "ticket['is_public']">
                     微信卡券(包)
                 </el-checkbox>
-                <span class="tips">
-          如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；
-        </span>
+                <span class="tips"> 如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</span>
             </el-form-item>
         </div>
         <div class = "ticket-info base-rules">
@@ -70,21 +80,22 @@
                         </el-form-item>
                     </div>
                     <el-radio label = "DATE_TYPE_FIX_TERM_0">
-            <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATE_TYPE_FIX_TERM_0'">
-              领到券当日开始N天内有效
-            </span>
+                        <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATE_TYPE_FIX_TERM_0'">
+                             领到券当日开始N天内有效
+                         </span>
                         <span v-else>
-              领到券当日开始<el-input v-model = "ticket['base_info']['date_info']['fixed_term']" type = "number" style = "width: 96px; margin: 0 8px"></el-input>天内有效
-            </span>
+                            领到券当日开始
+                            <el-input v-model = "ticket['base_info']['date_info']['fixed_term']" type = "number" style = "width: 96px; margin: 0 8px"></el-input>
+                            天内有效
+                        </span>
                     </el-radio>
                     <el-radio label = "DATE_TYPE_FIX_TERM_1">
-            <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATE_TYPE_FIX_TERM_1'">
-              领到券次日开始N天内有效
-            </span>
+                        <span v-if = "ticket['base_info']['date_info']['type'] !== 'DATE_TYPE_FIX_TERM_1'">
+                            领到券次日开始N天内有效
+                        </span>
                         <span v-else>
-              领到券次日开始<el-input v-model = "ticket['base_info']['date_info']['fixed_term']" type = "number" style = "width: 96px; margin: 0 8px"></el-input>天内有效
-            </span>
-
+                            领到券次日开始<el-input v-model = "ticket['base_info']['date_info']['fixed_term']" type = "number" style = "width: 96px; margin: 0 8px"></el-input>天内有效
+                        </span>
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
@@ -141,6 +152,8 @@
                     'reduce_cost': null,
                     'is_limited': true,
                     'discount': null,
+                    'start_at': null,
+                    'end_at': null,
                     'base_info': {
                         'title': null,
                         'get_limit': null,

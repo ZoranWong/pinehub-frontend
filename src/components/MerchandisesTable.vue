@@ -8,12 +8,12 @@
                 <span v-if="!scope.row['categories'] && (scope.row['categories'].length === 0)">--</span>
             </template>
         </el-table-column>
-        <el-table-column label="商品" min-width="200" prop="" style="position: relative;">
+        <el-table-column label="商品" min-width="200" prop="" style="position: relative;display: flex;">
             <template slot-scope="scope">
                 <div class="merchandise-main-image" :style="{height: imageHeight + 'px', width: imageWidth + 'px', display: 'inline-block'}">
                     <img :src="scope.row.mainImage" style="width: 100%;height: 100%;">
                 </div>
-                <div class = "merchandise-info" style="position: absolute;left: 86px; top: 18px; display: inline-block;">
+                <div class = "merchandise-info" :style = "{position: 'absolute', left: imageWidth + 18 + 'px', top: '18px', display: 'inline-block'}">
                     <p style="color:#f60"> 商品名称：{{ scope.row.name }} </p>
                     <p style="color:#f60"> 售价：￥{{ scope.row.sellPrice }} 元</p>
                 </div>

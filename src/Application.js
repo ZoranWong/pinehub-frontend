@@ -1,17 +1,12 @@
 import Vue from 'vue';
 import ServiceProviders from './providers';
 import _ from 'underscore';
-import App from './App';
-import "../static/css/font-awesome.min.css"
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-import Vuex from 'vuex';
-import ElementUI from 'element-ui';
-Vue.use(ElementUI);
-import 'element-ui/lib/theme-chalk/index.css';
+import "../static/css/font-awesome.min.css";
 import env from './env';
 export default class Application {
-    constructor() {
+    constructor($vue, axios) {
+        this.$vm = $vue;
+        this.$axios = axios;
         this.applicationBootStartTime = Date.now();
         Vue.config.productionTip = false;
         this.version = '1.0.1';
@@ -26,8 +21,8 @@ export default class Application {
     needMock() {
         return this.config.app.mock;
     }
-    use($class) {
-        this.$vm.use($class);
+    use(...$class) {
+        this.$vm.use.apply(this.$vm, $class);
     }
     mixin(methods) {
         this.mixinMethods = methods;
@@ -61,20 +56,6 @@ export default class Application {
             let serviceProvider = app.serviceProviders[key] = new value(app);
             serviceProvider.register();
         });
-    }
-
-    beforeBoot() {
-
-    }
-
-    boot() {
-        _.each(this.serviceProviders, function(serviceProvider) {
-            serviceProvider.boot();
-        });
-    }
-
-    afterBoot() {
-        this.applicationBootEndTime = Date.now();
     }
 
     registerException(name, exception) {
@@ -148,58 +129,27 @@ export default class Application {
     vueMixin() {
         _.extend(this, this.mixinMethods);
         let self = this;
-        this.$vm.mixin({
+        let extendsData = _.extend(self.instances, {config: self.config, env: self.env, commands: self.commands});
+        return {
             data(){
-                return _.extend(self.instances, {config: self.config, application: self, env: self.env, commands: self.commands});
+                return extendsData;
             },
             methods: self.mixinMethods
-        });
+        }
+    }
+    before(callback) {
+        callback.call(this);
     }
 
-    run(before = null, created = null) {
-        this.$vm = Vue;
-        Vue.use(VueAxios, axios);
-        Vue.use(Vuex);
-        Vue.use(ElementUI);
-        let self = this;
-        if(before && created && _.isFunction(before) && _.isFunction(created)) {
-            before(this);
-        }else if(!created) {
-            created = before;
-        }
-        self.registerServiceProviders();
-        let store = this.instances['vue-store'];
-        let router = this.instances['vue-router'];
-        this.vueMixin();
-        self.vueApp = new Vue({
-            router: router,
-            store: store,
-            render: h => h(App),
-            beforeCreate(){
-                self.vueApp = this;
-                self.instances['vue-router'] = this.$router;
-                self.instances['vue-store'] = this.$store;
-                _.each(self.exceptionHandlers, function(exception, key) {
-                    self.$on(key, function(message) {
-                        let handler = new exception(self, self.vueApp.$message);
-                        handler.handle(message);
-                    });
-                });
-            },
-            created(){
-                self.beforeBoot();
-            },
-            beforeMount(){
-                self.boot();
-            },
-            mounted: () => {
-                self.afterBoot();
-                console.log('application boot time', self.applicationBootEndTime - self.applicationBootStartTime, 'ms');
-            }
-        }).$mount('#app');
-
-        if(created && _.isFunction(created)) {
-            created.call(this.vueApp, self);
-        }
+    created (callback) {
+        callback.call(this.vueApp);
+    }
+    boot(callback) {
+        this.registerServiceProviders();
+        let mixin = this.vueMixin();
+        callback.call(this, mixin);
+        _.each(this.serviceProviders, function(serviceProvider) {
+            serviceProvider.boot();
+        });
     }
 }

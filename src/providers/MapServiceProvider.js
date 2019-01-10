@@ -5,7 +5,7 @@ export default class MapServiceProvider extends ServiceProvider{
         super(app);
     }
     register() {
-        this.app.register('map.tencent', TencentMapService);
+        // this.app.register('map.tencent', TencentMapService);
     }
     boot() {
 
