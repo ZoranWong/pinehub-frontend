@@ -6,13 +6,13 @@
                 <el-input style="width: 360px;" v-model = "ticket['base_info']['title']" max = "16"></el-input>
             </el-form-item>
             <el-form-item label="可领取日期：" prop="begin_at" style="display: inline-block;" :rules = "[{required: true, message: '请输入优惠券领取日期', trigger: 'blur'}]">
-                <el-date-picker v-model="start_at"  placeholder="开始时间"></el-date-picker>
+                <el-date-picker v-model="ticket['begin_at']"  placeholder="开始时间"></el-date-picker>
             </el-form-item>
             <el-form-item label-width="10px" prop="" style="display: inline-block;">
                 至
             </el-form-item>
             <el-form-item label="" prop="end_at" label-width="10px" style="display: inline-block;" :rules = "[{required: true, message: '请输入优惠券领取日期', trigger: 'blur'}]">
-                <el-date-picker v-model="end_at"  placeholder="结束时间"></el-date-picker>
+                <el-date-picker v-model="ticket['end_at']"  placeholder="结束时间"></el-date-picker>
             </el-form-item>
             <el-form-item prop = "base_info.sku.quantity" label = "发放总量：" :rules = "[{required: true, message: '请填写发放总量', trigger: 'blur'}]">
                 <el-input style = "width: 218px;" v-model.number = "ticket['base_info']['sku']['quantity']" type = "number">
@@ -47,16 +47,16 @@
                     </el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item prop = "platform" label = "优惠平台" :rules = "[{required: true, message: '请选择优惠平台', trigger: 'blur'}, {validator: dateInfoValidate, message: '请选择优惠券有效期类型，并填写有效时间', trigger: 'blur'}]">
+            <el-form-item prop = "platform" label = "优惠平台" :rules = "[{required: true, message: '请选择优惠平台', trigger: 'blur'}]">
                 <el-radio-group v-model="ticket['platform']" style="display:flex !important;">
-                    <el-radio  label = "OWERN_TICKET">自营平台</el-radio>
+                    <el-radio  label = "OWNER_TICKET">自营平台</el-radio>
                     <el-radio style="margin-left: 18px !important; margin-right: 18px;"label = "WX_TICKET">微信</el-radio>
                     <el-radio label = "ALI_TICKET">支付宝</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item prop = "is_public" label="同步发布至：">
+            <el-form-item v-if = "ticket['platform'] !== 'OWNER_TICKET'" prop = "is_public" label="同步发布至：">
                 <el-checkbox v-model = "ticket['is_public']">
-                    微信卡券(包)
+                    {{ticket['platform'] === 'WX_TICKET' ? '微信卡券(包)' : '支付宝卡券(包)'}}
                 </el-checkbox>
                 <span class="tips"> 如你的微信公众号没有开通卡券权限，将由有赞代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</span>
             </el-form-item>
@@ -146,14 +146,15 @@
             let $this = this;
             return {
                 ticket: {
-                    'is_public': true,
+                    'is_public': false,
                     'type': 'CASH',
                     'least_cost': null,
                     'reduce_cost': null,
                     'is_limited': true,
                     'discount': null,
-                    'start_at': null,
+                    'begin_at': null,
                     'end_at': null,
+                    'platform': 'OWNER_TICKET',
                     'base_info': {
                         'title': null,
                         'get_limit': null,

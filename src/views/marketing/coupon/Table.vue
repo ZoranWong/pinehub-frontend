@@ -4,7 +4,9 @@
         <el-table-column prop="code" label="优惠券编号" min-width="80" />
         <el-table-column prop="title" label="优惠券名称" min-width="100" />
         <el-table-column prop="type" label="类型" min-width="120" />
+        <el-table-column prop="content" label="优惠" min-width="120" />
         <el-table-column prop="publish" label="是否同步微信" min-width="80" />
+        <el-table-column prop="beginToEnd" label="可领取时间" min-width="80" />
         <el-table-column prop="activeTime" label="有效时间" min-width="100" />
         <el-table-column prop="issuedNum" label="总发行数" min-width="80" />
         <el-table-column prop="stockNum" label="库存" min-width="100" />

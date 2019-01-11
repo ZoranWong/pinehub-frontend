@@ -56,7 +56,7 @@
                     <el-button type="success" size="mini" @click="mapDialogOpen">设置地图坐标</el-button>
                 </el-form-item>
             </el-form-item>
-            <el-form-item label="营业时间：" prop="begin_at" style="display: inline-block;">
+            <el-form-item label="营业时间：" prop="start_at" style="display: inline-block;">
                 <el-time-picker v-model="shop['start_at']" :picker-options="{start: '00:00',step: '00:05',end: '23:59' }" placeholder="开始时间"></el-time-picker>
             </el-form-item>
             <el-form-item label-width="10px" prop="" style="display: inline-block;">

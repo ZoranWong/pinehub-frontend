@@ -55,8 +55,25 @@ export default class CreateShopCommand extends Command {
         if(!ticketInfo['base_info']['service_phone']) {
             delete ticketInfo['base_info']['service_phone'];
         }
+        if(_.isString(ticketInfo['begin_at'])) {
+            ticketInfo['begin_at'] = new Date(ticketInfo['begin_at']);
+        }
+
+        if(_.isString(ticketInfo['end_at'])) {
+            ticketInfo['end_at'] = new Date(ticketInfo['end_at']);
+        }
+
+        if(ticketInfo['begin_at'] instanceof Date) {
+            data['begin_at'] = ticketInfo['begin_at'].format('yyyy-MM-dd') + ' 00:00:00';
+        }
+
+        if(ticketInfo['end_at'] instanceof Date) {
+            data['end_at'] = ticketInfo['end_at'].format('yyyy-MM-dd') + ' 23:59:59';
+        }
         delete ticketInfo['is_public'];
         delete ticketInfo['is_limited'];
+        delete ticketInfo['begin_at'];
+        delete ticketInfo['end_at'];
         return data;
     }
 }

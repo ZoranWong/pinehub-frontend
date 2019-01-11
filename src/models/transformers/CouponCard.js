@@ -16,12 +16,14 @@ export default class CouponCard {
         this.title = coupon['title'];
         this.status = coupon['status'];
         this.type = CARD_TYPES[coupon['card_type']];
-        this.publish = SYNC[coupon['sync']];
+        this.content = coupon['card_type'] === 'CASH' ? (coupon['least_cost'] > 0 ? `满${coupon['least_cost']}元减${coupon['reduce_cost']}元` : `减${coupon['reduce_cost']}元`): `${coupon['discount']}折`;
+        this.publish = coupon['platform'] === 'WX_TICKET' ? SYNC[coupon['sync']] : '平台优惠券不需要同步';
         this.code = coupon['code'];
         this.issuedNum = coupon['issue_count'] ? coupon['issue_count'] : '无限制';
         this.stockNum = coupon['quantity'];
         this.receivedNum = coupon['user_get_count'];
         this.usedNum = coupon['used_count'];
+        this.beginToEnd = coupon['begin_at'] && coupon['end_at'] ? (coupon['begin_at'] + '-' + coupon['end_at']) : '不限时间';
         this.usedRate = (coupon['used_rate'] * 100).toFixed(2) + '%';
         let startAt = '', endAt = '';
         if(_.isObject(coupon['begin_at'])) {
