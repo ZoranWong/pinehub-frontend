@@ -1,0 +1,58 @@
+<template>
+	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
+		<template slot = "header" slot-scope="{ search, searchHandler }">
+			<order-header v-model = "search" @search = "searchHandler"></order-header>
+		</template>
+		<template slot = "table" slot-scope="{ data }">
+			<order-table :orders="data"></order-table>
+		</template>
+	</table-list>
+</template>
+
+<script>
+    import OrderTable from './OrderTable';
+    import Header from './OrderHeader';
+    import TableList from '@/components/TableList';
+    import _ from 'underscore';
+    export default {
+        name: 'Orders',
+        components:{
+            'order-table': OrderTable,
+            'order-header': Header,
+            'table-list': TableList
+        },
+        data: function () {
+            return {
+                service: 'http.orders',
+                event: 'bookingOrders/setList',
+                current: 'bookingOrders/currentPage',
+                query: {
+                    "type": [1, 2]
+                }
+            };
+        },
+        mounted() {
+
+        },
+        computed: {
+            model() {
+                return this.$store.state.bookingOrders;
+            },
+        },
+        watch: {
+
+        },
+        methods: {
+            search(data) {
+                let search = _.extend(this.query, data);
+                this.$emit('search', search);
+            }
+        },
+        created() {
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
