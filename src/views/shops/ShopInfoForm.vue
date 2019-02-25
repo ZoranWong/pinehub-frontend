@@ -80,6 +80,12 @@
             <el-form-item label="店铺地址：" prop="address" :rules="[{ required: true, message: '请输入店铺位置', trigger: 'blur'}]">
                 <el-input v-model="shop.address" style="width:80%" />
             </el-form-item>
+            <el-form-item label="店铺状态：" prop="status" :rules = "[{required: true, message: '请选择店铺状态', trigger: 'blur'}]">
+                <el-radio-group v-model = "shop['status']">
+                    <el-radio :label="1">开张</el-radio>
+                    <el-radio :label="2">打烊</el-radio>
+                </el-radio-group>
+            </el-form-item>
         </el-form>
         <map-dialog v-model="position" :show="mapShow" @close = "mapDialogClose" />
     </div>
@@ -119,6 +125,7 @@ export default {
                 province_id: '',
                 county_id: '',
                 name: '',
+                status: 1,
                 start_at: null,
                 end_at: null
             }
@@ -141,7 +148,6 @@ export default {
             handler: function(shop) {
                 if(shop) {
                     this.shop = shop;
-                    console.log('+++ shop info +++', this.shop);
                     this.position['lat'] = shop['lat'];
                     this.position['lng'] = shop['lng'];
                     if(this.shop['province_id']) {

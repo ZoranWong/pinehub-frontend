@@ -30,12 +30,12 @@
                 </template>
             </el-table-column>
             <el-table-column prop="" label="单价X数量(应付金额)" indx = "3">
-                <template slot-scope="scope" v-if = "scope.row.item">
-                    <span style="color: red;"> {{scope.row.item.sellPrice}} 元 </span> X {{scope.row.item.quality}}
-                    <p>（  <span style="color: red;"> {{scope.row.item.totalAmount}}元</span>）</p>
-                </template>
-                 <template slot-scope="scope" v-else>
-                    <span> ---- </span>
+                <template slot-scope="scope" >
+                    <div v-if = "scope.row.item">
+                        <span style="color: red;"> {{scope.row.item.sellPrice}} 元 </span> X {{scope.row.item.quality}}
+                        <p>（  <span style="color: red;"> {{scope.row.item.totalAmount}}元</span>）</p>
+                    </div>
+                    <p v-else> ---- </p>
                 </template>
             </el-table-column>
             <el-table-column prop="" label="售后" min-width="80" indx = "4">
@@ -58,7 +58,7 @@
             </el-table-column>
             <el-table-column prop="" label="卖家/活动" indx = "5" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item && scope.row.item.shop">
+                    <div v-if = "scope.row.item && scope.row.item.shop">
                         <p>店铺：{{scope.row.item.shop.name}}</p>
                     </div>
                     <div v-else-if = "scope.row['activity']">
@@ -125,7 +125,8 @@
 
             },
             spanMethod({ row, columnIndex }) {
-                if(columnIndex === 0 || columnIndex === 1 || columnIndex === 8 || columnIndex === 9 || columnIndex === 10 || columnIndex === 11){
+                if(columnIndex === 0 || columnIndex === 1 || columnIndex === 8 ||
+                     columnIndex === 9 || columnIndex === 10 || columnIndex === 11){
                     if(row.needSpan){
                         return row.span;
                     }else{
