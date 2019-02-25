@@ -11,6 +11,11 @@
         <!-- <el-table-column prop="monthSellCost" label="本月销售费用" min-width="100"></el-table-column> -->
         <el-table-column prop="lastMonthAmount" label="上月实际收入" min-width="100" />
         <el-table-column prop="balance" label="店铺余额" min-width="100" />
+        <el-table-column prop="paymentCode" label="聚合二维码" min-width="200" >
+            <template slot-scope="scope">
+                <img :src = "scope.row.paymentCode" >
+            </template>
+        </el-table-column>
         <el-table-column label="操作" width="220">
             <template slot-scope="scope">
                 <el-button type="success" size="mini" :disabled="true" @click="purchaseOrders(scope.row.id)">采购单</el-button>

@@ -16,7 +16,7 @@
             </el-table-column>
             <el-table-column prop="" label="商品" indx = "2">
                 <template slot-scope="scope">
-                    <el-row :gutter="20" type="block" align="middle" v-if="scope.row.item.merchandiseId">
+                    <el-row :gutter="20" type="block" align="middle" v-if="scope.row.item && scope.row.item.merchandiseId">
                         <el-col style="width: 64px; height: 64px;">
                             <img class="x-img" :src="scope.row.item.merchandiseImage" width="100%" alt=""/>
                         </el-col>
@@ -30,22 +30,25 @@
                 </template>
             </el-table-column>
             <el-table-column prop="" label="单价X数量(应付金额)" indx = "3">
-                <template slot-scope="scope">
+                <template slot-scope="scope" v-if = "scope.row.item">
                     <span style="color: red;"> {{scope.row.item.sellPrice}} 元 </span> X {{scope.row.item.quality}}
                     <p>（  <span style="color: red;"> {{scope.row.item.totalAmount}}元</span>）</p>
+                </template>
+                 <template slot-scope="scope" v-else>
+                    <span> ---- </span>
                 </template>
             </el-table-column>
             <el-table-column prop="" label="售后" min-width="80" indx = "4">
                 <template slot-scope="scope">
-                    <el-row style="display: flex;" v-if="scope.row.item.status === REFUNDING">
+                    <el-row style="display: flex;" v-if="scope.row.item && scope.row.item.status === REFUNDING">
                         <el-button  @click="refund(scope.row)" type="success" size="mini" style="width: 50%;" plain>同意退款</el-button>
                         <el-button  @click="refund(scope.row)" type="danger" size="mini" style="width: 50%;" plain>拒绝退款</el-button>
                     </el-row>
-                    <el-row v-else-if = "scope.row.item.status === WAITSEND">
+                    <el-row v-else-if = "scope.row.item && scope.row.item.status === WAITSEND">
                         <el-button  @click="refund(scope.row)" type="success" size="mini" plain>去发货</el-button>
                     </el-row>
 
-                    <el-row v-else-if="scope.row.item.status === REFUNDED">
+                    <el-row v-else-if="scope.row.item && scope.row.item.status === REFUNDED">
                         <el-button  @click="refund(scope.row)" type="success" size="mini" plain>查看退款</el-button>
                     </el-row>
                     <el-row v-else>
@@ -53,22 +56,22 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="卖家" indx = "5" >
+            <el-table-column prop="" label="卖家/活动" indx = "5" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item.shop">
+                    <div v-if="scope.row.item && scope.row.item.shop">
                         <p>店铺：{{scope.row.item.shop.name}}</p>
                     </div>
-                    <div v-else-if="scope.row.item.activity">
-                        <p>活动：{{scope.row.item.activity.name}}</p>
+                    <div v-else-if = "scope.row['activity']">
+                        <p>{{ scope.row.activity.title}}</p>
                     </div>
                     <div v-else>
-                        <p>匿名支付</p>
+                        <p>平台商城</p>
                     </div>
                 </template>
             </el-table-column>
             <el-table-column prop="" label="买家" indx = "6" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item.customer.nickname">
+                    <div v-if="scope.row.item && scope.row.item.customer && scope.row.item.customer.nickname">
                         <p>{{scope.row.item.customer.nickname}}</p>
                         <p>{{scope.row.item.customer.mobile}}</p>
                     </div>

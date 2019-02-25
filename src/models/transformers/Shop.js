@@ -18,5 +18,7 @@ export default class Shop {
         this.orderCount = shop['order_count'];
         this.merchandiseCount = shop['merchandise_count'];
         this.balance = shop['balance'].toFixed(2);
+        this.paymentCode = shop['payment_url'];
+        this.activity = shop['activity'] ? shop['activity'] : null;
     }
 }
