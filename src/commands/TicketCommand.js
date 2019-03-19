@@ -1,20 +1,23 @@
 import Command from './Command';
 import _ from 'underscore';
+
 export default class CreateShopCommand extends Command {
     constructor(app) {
         super(app);
     }
 
-    static buildTicketInfo( ticket) {
+    static buildTicketInfo(ticket) {
         let ticketInfo = JSON.parse(JSON.stringify(ticket));
         let data = {
             'ticket_type': ticketInfo['type'].toLowerCase(),
             'ticket_info': ticketInfo,
             'sync': ticketInfo['is_public'],
-            'issue_count': ticketInfo['base_info']['sku']['quantity']
+            'issue_count': ticketInfo['base_info']['sku']['quantity'],
+            'conditions': ticketInfo['conditions'],
         };
         delete ticketInfo['is_public'];
         delete ticketInfo['type'];
+        delete ticketInfo['conditions'];
         switch (ticketInfo['base_info']['date_info']['type']) {
             case 'DATE_TYPE_FIX_TIME_RANGE':
                 delete ticketInfo['base_info']['date_info']['fixed_term'];
@@ -36,38 +39,38 @@ export default class CreateShopCommand extends Command {
                 break;
         }
 
-        if(ticket['type'] !== 'DISCOUNT') {
+        if (ticket['type'] !== 'DISCOUNT') {
             delete ticketInfo['discount'];
             // delete ticketInfo['least_cost'];
             ticketInfo['advanced_info']['use_condition']['least_cost'] = ticket['least_cost'];
         }
 
-        if(ticket['type'] !== 'CASH') {
+        if (ticket['type'] !== 'CASH') {
             delete ticketInfo['reduce_cost'];
             delete ticketInfo['least_cost'];
-            delete ticketInfo['advanced_info']['use_condition']['least_cost'] ;
+            delete ticketInfo['advanced_info']['use_condition']['least_cost'];
         }
 
-        if(!ticketInfo['base_info']['description']) {
+        if (!ticketInfo['base_info']['description']) {
             delete ticketInfo['base_info']['description'];
         }
 
-        if(!ticketInfo['base_info']['service_phone']) {
+        if (!ticketInfo['base_info']['service_phone']) {
             delete ticketInfo['base_info']['service_phone'];
         }
-        if(_.isString(ticketInfo['begin_at'])) {
+        if (_.isString(ticketInfo['begin_at'])) {
             ticketInfo['begin_at'] = new Date(ticketInfo['begin_at']);
         }
 
-        if(_.isString(ticketInfo['end_at'])) {
+        if (_.isString(ticketInfo['end_at'])) {
             ticketInfo['end_at'] = new Date(ticketInfo['end_at']);
         }
 
-        if(ticketInfo['begin_at'] instanceof Date) {
+        if (ticketInfo['begin_at'] instanceof Date) {
             data['begin_at'] = ticketInfo['begin_at'].format('yyyy-MM-dd') + ' 00:00:00';
         }
 
-        if(ticketInfo['end_at'] instanceof Date) {
+        if (ticketInfo['end_at'] instanceof Date) {
             data['end_at'] = ticketInfo['end_at'].format('yyyy-MM-dd') + ' 23:59:59';
         }
         delete ticketInfo['is_public'];

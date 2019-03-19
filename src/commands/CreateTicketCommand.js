@@ -1,4 +1,5 @@
 import Command from './TicketCommand';
+
 export default class CreateShopCommand extends Command {
     constructor(app) {
         super(app);
@@ -14,6 +15,7 @@ export default class CreateShopCommand extends Command {
             console.log(e);
         }
     }
+
     static commandName() {
         return 'CREATE_TICKET';
     }

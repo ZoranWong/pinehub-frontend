@@ -48,7 +48,6 @@ route.group('/project/:projectId/marketing', {
 			'tag': '创建支付礼包'
 		});
 
-
 		route.addRoute('coupons', {
 			'name': 'coupons',
 			'component': Coupons,

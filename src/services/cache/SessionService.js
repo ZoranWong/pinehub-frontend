@@ -4,14 +4,15 @@ export default class SessionService extends Service {
     constructor(application) {
         super(application);
     }
+
     get(key) {
         let data = sessionStorage.getItem(key);
-        data =  this.service('json').decode(data);
-        if(!data)return null;
-        if(this.service('date').overDate(data['ttl'])) {
+        data = this.service('json').decode(data);
+        if (!data) return null;
+        if (this.service('dateService').overDate(data['ttl'])) {
             this.delete(key);
             return null;
-        }else {
+        } else {
             return data['value'];
         }
     }
