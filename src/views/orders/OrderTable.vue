@@ -56,13 +56,13 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="卖家/活动" indx = "5" >
+            <el-table-column prop="" label="卖家/提货点" indx = "5" >
                 <template slot-scope="scope">
                     <div v-if = "scope.row.item && scope.row.item.shop">
                         <p>店铺：{{scope.row.item.shop.name}}</p>
                     </div>
-                    <div v-else-if = "scope.row['activity']">
-                        <p>{{ scope.row.activity.title}}</p>
+                    <div v-else-if = "scope.row.receiveShop">
+                        <p>自提点：{{ scope.row.receiveShop.name}}</p>
                     </div>
                     <div v-else>
                         <p>平台商城</p>
@@ -76,7 +76,7 @@
                         <p>{{scope.row.item.customer.mobile}}</p>
                     </div>
                     <div v-else>
-                        <p>匿名支付</p>
+                        <p>匿名用户</p>
                     </div>
                 </template>
             </el-table-column>

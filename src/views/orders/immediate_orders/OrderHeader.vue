@@ -1,5 +1,5 @@
 <template>
-    <search-header @search ="search">
+    <search-header @search ="search" :model = "orderModel">
         <template slot = "searchInput">
             <el-form-item prop="orderCode" label="订单号" >
                 <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
@@ -46,6 +46,10 @@
         },
         props: {
             value: {
+                default: null,
+                type: Object
+            },
+            orderModel: {
                 default: null,
                 type: Object
             }

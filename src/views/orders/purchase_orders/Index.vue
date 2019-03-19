@@ -1,7 +1,7 @@
 <template>
 	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
 		<template slot = "header" slot-scope="{ search }">
-			<order-header :search = "search"></order-header>
+			<order-header :search = "search" :orderModel =   "model"></order-header>
 		</template>
 		<template slot = "table" slot-scope="{ data }">
 			<order-table :orders="data"></order-table>

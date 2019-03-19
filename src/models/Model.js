@@ -18,7 +18,8 @@ export default class Model {
             pageCount: 0,
             currentPage: 0,
             totalNum: 1,
-            totalPage: 0
+            totalPage: 0,
+            excelUrl: null
         });
         return this.dataMap;
     }
@@ -61,7 +62,7 @@ export default class Model {
             console.log(this.state);
         });
 
-        this.addEventListener('setList', function({ list, currentPage, totalNum, totalPage, pageCount }, model) {
+        this.addEventListener('setList', function({ list, currentPage, totalNum, totalPage, pageCount, excelUrl }, model) {
             if (totalNum !== null && totalNum !== 0) {
                 this.currentPage = currentPage;
             }
@@ -75,6 +76,9 @@ export default class Model {
             }
             if (pageCount !== null) {
                 this.pageCount = pageCount;
+            }
+            if (excelUrl) {
+                this.excelUrl = excelUrl;
             }
         });
     }

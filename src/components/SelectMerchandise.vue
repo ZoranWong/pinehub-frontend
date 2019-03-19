@@ -28,7 +28,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label = "商品库存：" prop = "stock_num" :rules = "[{required: true, message: '请填写库存', trigger: 'blur'}]">
-                <el-input-number v-model = "merchandise['stock_num']" :min="1" style="width: 214px;" />
+                <el-input-number v-model = "merchandise['stock_num']" :min="0" style="width: 214px;" />
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

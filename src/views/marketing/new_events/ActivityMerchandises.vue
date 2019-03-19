@@ -108,7 +108,7 @@
             },
              async closeMerchandiseForm (merchandise) {
                 this.showAddMerchandise = false;
-                if (merchandise && merchandise['merchandise_id'] && merchandise['stock_num'] && merchandise['main_image']) {
+                if (merchandise && merchandise['merchandise_id'] && merchandise['stock_num'] >= 0 && merchandise['main_image']) {
                     let data = {
                         merchandise_id: merchandise['merchandise_id'],
                         stock_num: merchandise['stock_num'],

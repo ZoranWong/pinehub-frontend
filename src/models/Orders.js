@@ -13,7 +13,6 @@ export default class Orders extends Model {
                     let orders = this.list[this.currentPage - 1];
                     let list = [];
                     _.each(orders, function(order) {
-                        console.log(order);
                         let items = order.orderItems;
                         if (items && items.length > 0) {
                             if (items.length > 0) {
@@ -42,7 +41,6 @@ export default class Orders extends Model {
                             list.push(_.extend({ span: { colspan: 0, rowspan: 0 } }, order));
                         }
                     });
-                    console.log('orders', list, this.list);
                     return list;
                 } else {
                     return null;

@@ -8,6 +8,9 @@
             <el-form-item>
                 <el-button size="small" type="primary" @click="search">查询</el-button>
             </el-form-item>
+            <el-form-item>
+                <el-button size="small" type="primary" @click="downloadExcel">EXCEL表格导出</el-button>
+            </el-form-item>
         </el-form>
         <slot name="opt" />
     </el-col>
@@ -18,6 +21,10 @@ export default {
         formShow: {
             default: true,
             type: Boolean
+        },
+        model: {
+            default: null,
+            type: Object
         }
     },
     data() {
@@ -30,6 +37,11 @@ export default {
         },
         reset() {
             this.$emit('reset');
+        },
+        downloadExcel() {
+            console.log('dasfsdf');
+            if(this.model)
+                window.open(this.model.excelUrl);
         }
     }
 }

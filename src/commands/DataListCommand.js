@@ -6,15 +6,15 @@ export default class DataListCommand extends Command {
         super(app);
     }
     async handle(service, event, page, search = null, limit = 15) {
-        try{
+        try {
             search = this.json.encode(search);
             search = encodeURIComponent(search);
             search = this.base64.encodeURI(search);
             let headers = {};
-            if(this.$requestInput('projectId')) {
-                headers = {'ProjectId': this.$requestInput('projectId')}
+            if (this.$requestInput('projectId')) {
+                headers = { 'ProjectId': this.$requestInput('projectId') }
             }
-            let [list, totalNum, currentPage,  totalPage ] = await this.$service(service)
+            let [list, totalNum, currentPage, totalPage, excelUrl] = await this.$service(service)
                 .header(headers)
                 .list(page, search, limit);
             this.$store.dispatch({
@@ -23,9 +23,10 @@ export default class DataListCommand extends Command {
                 totalNum: totalNum,
                 currentPage: currentPage,
                 totalPage: totalPage,
-                pageCount: limit
+                pageCount: limit,
+                excelUrl: excelUrl
             });
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }
