@@ -1,4 +1,5 @@
 import _ from 'underscore';
+
 export default class Model {
     constructor(application) {
         this.dataMap = {};
@@ -52,7 +53,7 @@ export default class Model {
     }
 
     listeners() {
-        this.addEventListener('nextPage', function() {
+        this.addEventListener('nextPage', function () {
             this.currentPage++;
         });
 
@@ -61,7 +62,7 @@ export default class Model {
             console.log(this.state);
         });
 
-        this.addEventListener('setList', function({ list, currentPage, totalNum, totalPage, pageCount }, model) {
+        this.addEventListener('setList', function ({list, currentPage, totalNum, totalPage, pageCount}, model) {
             if (totalNum !== null && totalNum !== 0) {
                 this.currentPage = currentPage;
             }
@@ -85,7 +86,7 @@ export default class Model {
 
     transform(data, transformer, startIndex = 1) {
         if (_.isArray(data)) {
-            return _.map(data, function(value, index) {
+            return _.map(data, function (value, index) {
                 value.index = startIndex + index;
                 return new transformer(value);
             });
@@ -95,7 +96,7 @@ export default class Model {
     }
 
     addEventListener(type, callback) {
-        this.actions[type] = ({ commit }, payload) => {
+        this.actions[type] = ({commit}, payload) => {
             commit(type, payload);
         }
 

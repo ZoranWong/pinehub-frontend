@@ -253,7 +253,7 @@
             value: {
                 deep: true,
                 handler(ticket) {
-                    // console.log(ticket);
+                    console.log(ticket);
                     if (ticket) {
                         this.ticket = ticket;
                     }
@@ -295,7 +295,7 @@
                 }
             };
             return {
-                user_tags: ['天使用户', '常购用户'],// 用户标签
+                user_tags: [],// 用户标签
                 scenarios: [
                     {index: 0, 'id': 1, 'value': '聚合支付'},
                     {index: 1, 'id': 2, 'value': '邻里优鲜'},
@@ -407,7 +407,13 @@
                 }
             };
         },
+        async mounted() {
+            await this.getUserTags();
+        },
         methods: {
+            async getUserTags() {
+                //TODO Get User Tags
+            },
             async ticketTypeValidate(rule, value, callback) {
                 if (value === 'DISCOUNT' && this.ticket['discount'] && this.ticket['discount'] > 0) {
                     return true;

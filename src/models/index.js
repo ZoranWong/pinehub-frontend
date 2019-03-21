@@ -17,6 +17,7 @@ import MemberCards from './MemberCards';
 import ScoreRules from './ScoreRules';
 import Materials from './Materials';
 import Regions from './Regions';
+import Advertisements from './Advertisement';
 
 export default class Store {
     constructor(application) {
@@ -47,7 +48,9 @@ export default class Store {
         this.addModel('material.video', Materials);
         this.addModel('material.voice', Materials);
         this.addModel('regions', Regions);
+        this.addModel('advertisements', Advertisements);
     }
+
     addModel(name, model) {
         this.modules[name] = new model(this.$application);
         this.modules[name].namespaced = true;

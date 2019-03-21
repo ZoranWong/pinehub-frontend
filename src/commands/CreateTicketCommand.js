@@ -11,7 +11,7 @@ export default class CreateShopCommand extends Command {
             console.log('ticket info', ticketInfo);
             let result = await this.http.tickets.create(projectId, ticketInfo);
             console.log(result);
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }

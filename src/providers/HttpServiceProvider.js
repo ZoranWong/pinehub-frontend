@@ -21,6 +21,7 @@ import TicketsService from '@/services/http/TicketsService';
 import PaidGiftActivitiesService from '@/services/http/PaidGiftActivitiesService';
 import MarketingService from '@/services/http/MarketingService';
 import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesService';
+import AdvertisementService from '@/services/http/AdvertisementService';
 
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -34,6 +35,7 @@ export default class HttpServiceProvider extends ServiceProvider {
             }
         });
     }
+
     register() {
 
         this.app.register('uri', UriService);
@@ -59,5 +61,6 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.paidGiftActivities', PaidGiftActivitiesService);
         this.app.register('http.marketing', MarketingService);
         this.app.register('http.activityMerchandises', ActivityMerchandisesService);
+        this.app.register('http.advertisements', AdvertisementService);
     }
 }

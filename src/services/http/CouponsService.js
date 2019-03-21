@@ -1,15 +1,17 @@
 import ApiService from './ApiService';
-export default class CouponsService extends ApiService{
+
+export default class CouponsService extends ApiService {
     constructor(application) {
         super(application);
     }
+
     async list(page = 1, search = null, limit = 10) {
         let response = null;
-        console.log(this);
-        if(this.$application.needMock()) {
-            response =  await this.service('mock.tickets').mock(page, search, limit);
-        }else{
+        if (this.$application.needMock()) {
+            response = await this.service('mock.tickets').mock(page, search, limit);
+        } else {
             //服务器交互代码
+            console.log('headers:',this.headers);
             response = await this.httpGet('tickets', {page: page, limit: limit, searchJson: search});
         }
         let shops = response.data;
