@@ -1,10 +1,12 @@
 //汇报命令
 /* eslint-disable */
 import Command from './Command';
+
 export default class DataListCommand extends Command {
     constructor(app) {
         super(app);
     }
+
     async handle(service, event, page, search = null, limit = 15) {
         try {
             search = this.json.encode(search);
@@ -30,6 +32,7 @@ export default class DataListCommand extends Command {
             console.log(e);
         }
     }
+
     static commandName() {
         return 'DATA_LIST';
     }

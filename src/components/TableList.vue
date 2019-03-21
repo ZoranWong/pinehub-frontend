@@ -2,15 +2,15 @@
     <div class="content-scroll">
         <div class="content-box">
             <!--工具条-->
-            <slot name = "header" :search="searchJson" :searchHandler="search"></slot>
+            <slot name="header" :search="searchJson" :searchHandler="search"></slot>
             <!--列表-->
             <slot name="table" :data="data"></slot>
             <!--工具条-->
             <paginator
-                    :totalNum = "totalNum"
+                    :totalNum="totalNum"
                     :service="service"
                     :event="event"
-                    :totalPage = "totalPage"
+                    :totalPage="totalPage"
                     :currentPage="currentPage"
                     :command="command"
                     :limit="pageCount"
@@ -26,12 +26,13 @@
     /* eslint-disable */
     import Paginator from '@/components/Paginator';
     import _ from 'underscore';
+
     export default {
         name: 'TableList',
         components: {
             paginator: Paginator
         },
-        props:{
+        props: {
             'service': {
                 default: '',
                 type: String
@@ -41,7 +42,9 @@
                 type: String
             },
             'model': {
-                default: function(){return {}},
+                default: function () {
+                    return {}
+                },
                 type: Object
             },
             'current': {
@@ -53,7 +56,9 @@
                 type: [String, Function]
             },
             query: {
-                default:function(){ return {};},
+                default: function () {
+                    return {};
+                },
                 type: Object
             }
         },
@@ -98,18 +103,21 @@
             this.page = parseInt(!page ? 1 : page);
             let query = this.$query();
             let q = {};
-            for(let key in query) {
+            for (let key in query) {
                 let value = this.json.decode(this.base64.decodeURI(query[key]));
-                if(_.isObject(value) || _.isArray(value)) {
+                if (_.isObject(value) || _.isArray(value)) {
                     q[key] = value;
-                }else{
+                } else {
                     q[key] = query[key];
                 }
             }
-            this.searchJson =  Object.assign({}, q, this.query);
-        }
+            this.searchJson = Object.assign({}, q, this.query);
+        },
     }
 </script>
 <style scoped>
-    #mapContainer{min-width:500px;min-height:500px;}
+    #mapContainer {
+        min-width: 500px;
+        min-height: 500px;
+    }
 </style>

@@ -1,4 +1,5 @@
 import _ from 'underscore';
+
 export default class CouponCard {
     constructor(coupon) {
         const CARD_TYPES = {
@@ -11,14 +12,23 @@ export default class CouponCard {
             '同步中',
             '同步成功'
         ];
+
+        const CARD_STATUS = {
+            'OFF': '未生效',
+            'ON': '生效中',
+            'EXPIRE': '已失效'
+        };
+
         this.id = coupon['id'];
-        this.index=coupon['index'];
+        this.index = coupon['index'];
         this.title = coupon['title'];
         this.status = coupon['status'];
+        this.statusDesc = coupon['status_desc'];
         this.type = CARD_TYPES[coupon['card_type']];
-        this.content = coupon['card_type'] === 'CASH' ? (coupon['least_cost'] > 0 ? `满${coupon['least_cost']}元减${coupon['reduce_cost']}元` : `减${coupon['reduce_cost']}元`): `${coupon['discount']}折`;
+        this.content = coupon['card_type'] === 'CASH' ? (coupon['least_cost'] > 0 ? `满${coupon['least_cost']}元减${coupon['reduce_cost']}元` : `减${coupon['reduce_cost']}元`) : `${coupon['discount']}折`;
         this.publish = coupon['platform'] === 'WX_TICKET' ? SYNC[coupon['sync']] : '平台优惠券不需要同步';
         this.code = coupon['code'];
+        this.cardId = coupon['card_id'];
         this.issuedNum = coupon['issue_count'] ? coupon['issue_count'] : '无限制';
         this.stockNum = coupon['quantity'];
         this.receivedNum = coupon['user_get_count'];
@@ -26,16 +36,16 @@ export default class CouponCard {
         this.beginToEnd = coupon['begin_at'] && coupon['end_at'] ? (coupon['begin_at'] + '-' + coupon['end_at']) : '不限时间';
         this.usedRate = (coupon['used_rate'] * 100).toFixed(2) + '%';
         let startAt = '', endAt = '';
-        if(_.isObject(coupon['begin_at'])) {
+        if (_.isObject(coupon['begin_at'])) {
             startAt = coupon['begin_at']['date'];
-        }else{
+        } else {
             startAt = coupon['begin_at'];
         }
         startAt = new Date(startAt);
 
-        if(_.isObject(coupon['end_at'])) {
+        if (_.isObject(coupon['end_at'])) {
             endAt = coupon['end_at']['date'];
-        }else{
+        } else {
             endAt = coupon['end_at'];
         }
         endAt = new Date(endAt);

@@ -1,4 +1,5 @@
 import _ from 'underscore';
+
 export default class Model {
     constructor(application) {
         this.dataMap = {};

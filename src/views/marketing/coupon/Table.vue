@@ -40,10 +40,10 @@
                 console.log(row);
             },
             async disabled(row) {
-                console.log('ticket info', row);
                 let result = this.http.tickets.disabled(this.$requestInput('projectId'), row.id);
                 if (result) {
-                    this.$command('DATA_LIST', 'http.tickets', 'couponCards/setList', 1);
+                    this.$message.success('下架成功');
+                    this.$command('DATA_LIST', 'http.couponCards', 'couponCards/setList', this.$requestInput('page'));
                 }
             }
         }

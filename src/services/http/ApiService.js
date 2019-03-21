@@ -24,6 +24,7 @@ export default class ApiService extends Service {
         this.showError = show;
         return this;
     }
+
     header(key, value = null) {
         if (key && value) {
             this.headers[key] = value;
@@ -49,6 +50,7 @@ export default class ApiService extends Service {
             }
         }
     }
+
     async setHttpHeader(auth, headers, axios) {
         let x = axios.interceptors.request.use(async (request) => {
             if (auth) {
@@ -62,6 +64,7 @@ export default class ApiService extends Service {
         });
         return axios;
     }
+
     // eslint-disable-next-line
     async httpGet(route, params = {}, auth = true) {
         route = route.trim('/');
