@@ -20,10 +20,13 @@
                 </el-upload>
             </el-form-item>
             <el-form-item label="关联优惠券：" prop="card_id">
+                <!--<el-button v-if="advertisement.card_id"></el-button>-->
                 <table-list :service="tickets.table_list.service" :event="tickets.table_list.event"
                             :current="tickets.table_list.current" :model="cardModel"
                             :query="tickets.table_list.query">
                     <template slot="header" slot-scope="{ search, searchHandler }">
+                        <el-input v-model="tickets.table_list.search" class="query-input" style="width: 200px;"
+                                  size="small" prefix-icon="el-icon-search" placeholder="请输入搜索内容"></el-input>
                         <card-header v-model="search" @search="searchHandler"></card-header>
                     </template>
                     <template slot="table" slot-scope="{data}">
@@ -91,6 +94,11 @@
                 handler() {
                     this.$emit('input', this.advertisement);
                 }
+            },
+            'tickets.table_list.search': {
+                handler() {
+                    this.tickets.table_list.query = Object.assign({}, this.tickets.table_list.query, {'card_info->base_info->title': this.tickets.table_list.search});
+                }
             }
         },
         computed: {
@@ -103,7 +111,6 @@
                 tickets: {
                     data: [],
                     page: 1,
-                    search: {},
                     limit: 15,
                     totalPage: 0,
                     totalNum: 0,
@@ -111,7 +118,8 @@
                         service: 'http.couponCards',
                         event: 'couponCards/setList',
                         current: 'couponCards/currentPage',
-                        query: {}
+                        query: {},
+                        search: '',
                     }
                 },
                 advertisement: {
@@ -143,7 +151,7 @@
             }
         },
         async mounted() {
-            await this.getTicketList();
+            // await this.getTicketList();
         },
         methods: {
             async getTicketList() {
@@ -152,9 +160,14 @@
                     headers = {'ProjectId': this.$requestInput('projectId')}
                 }
 
+                let search = this.tickets.table_list.query;
+                search = this.json.encode(search);
+                search = encodeURIComponent(search);
+                search = this.base64.encodeURI(search);
+
                 let [list, totalNum, currentPage, totalPage] = await this.$service('http.couponCards')
                     .header(headers)
-                    .list(this.tickets.page, this.tickets.search, this.tickets.limit);
+                    .list(this.tickets.page, search, this.tickets.limit);
 
                 this.tickets.data = list;
                 this.tickets.page = currentPage;
@@ -191,6 +204,14 @@
 </script>
 
 <style scoped>
+    .query-input {
+        margin: 6px 12px 6px 6px !important;
+        float: right;
+        position: absolute;
+        right: 0;
+        z-index: 1000;
+    }
+
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;

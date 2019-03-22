@@ -7,7 +7,7 @@ export default {
 		web: {
 			image: 'http://image.pinehub',
 			web: 'http://pinehub',
-			admin: 'http://admin.pinehub'
+			admin: 'http://admin.pinehub'	
 		}
 	},
 	http: {

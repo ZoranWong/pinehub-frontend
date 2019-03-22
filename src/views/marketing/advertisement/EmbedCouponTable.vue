@@ -8,7 +8,6 @@
         <el-table-column prop="issuedNum" label="总发行数" min-width="80"/>
         <el-table-column label="操作" width="200">
             <template slot-scope="scope">
-                <el-button type="success" size="mini" @click="show(scope.row)">查看</el-button>
                 <el-button type="primary" size="mini" v-if="relateCoupon !== scope.row.cardId"
                            @click="relateCouponHandler(scope.row)">关联
                 </el-button>
@@ -37,9 +36,6 @@
             return {};
         },
         methods: {
-            show(row) {
-                console.log(row);
-            },
             relateCouponHandler(ticket) {
                 this.$emit('relateCouponChange', ticket.cardId);
             },
