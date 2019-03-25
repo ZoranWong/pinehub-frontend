@@ -26,9 +26,7 @@
         watch: {
             tab(tab) {
                 let search = {};
-                if (tab !== 'all') {
-                    search['status'] = this.status[tab];
-                }
+                search['status'] = this.status[tab];
                 this.$emit('search', search);
             }
         }
