@@ -31,12 +31,13 @@
                         <div style="display: block;">
                             <img src="../../../assets/ticket-left.png" alt="" class="el-card-ticket-left">
                             <div class="el-card-div">
-                                <el-card class="el-card">
+                                <el-card class="el-card" :body-style="{ padding:'0px' }">
                                     <div style="padding: 14px;">
                                         <span></span>
                                         <div class="bottom clearfix">
                                             <span class="ticket-title">{{selectedTicket.data.title}}</span>
                                             <span class="ticket-content">{{selectedTicket.data.content}}</span>
+                                            <span class="ticket-validate">{{selectedTicket.data.activeTime}}</span>
                                         </div>
                                     </div>
                                 </el-card>
@@ -255,11 +256,20 @@
         display: block;
     }
 
+    .ticket-validate {
+        font-size: 10px;
+    }
+
     .el-card {
         border: 0px;
         border-radius: 0px;
         height: 120px;
         width: 300px;
+    }
+
+    .el-card span {
+        line-height: 0px;
+        padding-bottom: 5px;
     }
 
     .el-card-div {
@@ -278,4 +288,6 @@
         top: 0px;
         right: 0px;
     }
+
+
 </style>
