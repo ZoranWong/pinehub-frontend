@@ -149,7 +149,7 @@
                         service: 'http.couponCards',
                         event: 'couponCards/setList',
                         current: 'couponCards/currentPage',
-                        query: {},
+                        query: {status: 1},
                         search: '',
                     }
                 },
