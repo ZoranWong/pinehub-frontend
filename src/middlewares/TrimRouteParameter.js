@@ -1,13 +1,8 @@
 import Middleware from './Middleware';
-import QueryString from 'query-string';
 
 export default class TrimRouteParameter extends Middleware {
-    async handle(request, next) {
-        let url = request.url;
-        let indexOfQuery = url.indexOf('?');
-        let uri = indexOfQuery === -1 ? url : url.substring(0, indexOfQuery);
-        let queryParameter = url.substring(url.indexOf('?') + 1);
-        queryParameter = QueryString.parse(queryParameter);
+    async handle(request) {
+        let queryParameter = request.params;
         for (let key in queryParameter) {
             if (!queryParameter[key]) {
                 delete queryParameter[key];
@@ -27,6 +22,5 @@ export default class TrimRouteParameter extends Middleware {
                 queryParameter[key] = parsedSearchJson;
             }
         }
-        request.url = request.baseURL + uri + this.$application['uri'].query(queryParameter);
     }
 }

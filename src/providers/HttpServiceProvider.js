@@ -26,12 +26,16 @@ import AdvertisementService from '@/services/http/AdvertisementService';
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
+        let axios = null;
         Object.defineProperty(app, '_axios', {
             get: () => {
-                return app.$axios.create({
+                return axios = app.$axios.create({
                     headers: app.config['http']['headers'],
                     baseURL: app.config['http']['apiGateway'],
                 });
+            },
+            set:(v) => {
+                axios = v;
             }
         });
     }

@@ -11,8 +11,12 @@ export default class CouponsService extends ApiService {
             response = await this.service('mock.tickets').mock(page, search, limit);
         } else {
             //服务器交互代码
-            console.log('headers:',this.headers);
-            response = await this.httpGet('tickets', {page: page, limit: limit, searchJson: search});
+            console.log('headers:', this.headers);
+            response = await this.httpGet('tickets', {
+                page: page,
+                limit: limit,
+                searchJson: search
+            }, 'trimRouteParameter');
         }
         let shops = response.data;
         let pagination = response.meta.pagination;

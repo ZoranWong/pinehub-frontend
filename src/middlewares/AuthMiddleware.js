@@ -1,20 +1,17 @@
 import Middleware from './Middleware';
 
-class AuthMiddleware extends Middleware {
+export default class AuthMiddleware extends Middleware {
     constructor($application) {
         super($application);
-        this.except = ['sign'];
+        this.except = ["/refresh/token", "/public/key", "/login"];
     }
 
-    handle(request) {
-        let route = request['route'];
-        for (let i = 0; this.except.length > i; i++) {
-            if (this.except[i] === route) {
-                return;
-            }
+    async handle(request) {
+        if (this.checkExceptRoute(request['route'])) {
+            return;
         }
-
         //添加auth 认证
-        request.headers['token'] = 'ddddd';
+        let token = await this.$application.token.getToken();
+        request.headers['Authorization'] = `bearer ${token}`;
     }
 }

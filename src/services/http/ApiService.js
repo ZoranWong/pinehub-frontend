@@ -1,6 +1,7 @@
 import Service from '../Service';
 import _ from 'underscore';
 import Middleware from '@/middlewares/Middleware';
+import http from "../../configs/http";
 
 const AUTH_TOKEN_EXPIRES = 10004;
 
@@ -12,78 +13,81 @@ export default class ApiService extends Service {
         Object.defineProperty(this, 'axios', {
             get: () => {
                 let axios = app._axios;
-
                 let request = {
                     route: '',
                     method: '',
                     params: [],
                     request: axios.request,
-                    headers: {}
+                    headers: {},
+                    middlewares: []
                 };
                 let http = {
                     request: request,
                     axios: axios,
-                    beforeRequest: () => {
-                        return axios.interceptors.request.use;
+                    beforeRequest: (callback) => {
+                        return axios.interceptors.request.use(callback);
                     },
                     get: (route, params) => {
                         request['route'] = route;
                         request['method'] = 'GET';
                         request['params'] = params;
-                        let url = route + this.service().uri.query(params)
-                        return axios.get(url);
+                        return axios.get(route);
                     },
-                    post: () => {
-                        let args = Array.prototype.slice.call(arguments);
-                        axios.post.call(axios, args);
+                    post: (route, params) => {
+                        request['route'] = route;
+                        request['params'] = params;
+                        request['method'] = 'POST';
+                        return axios.post(route, params);
                     },
                     put: () => {
-                        let args = Array.prototype.slice.call(arguments);
-                        axios.put.call(axios, args);
                     },
                     delete: () => {
-                        let args = Array.prototype.slice.call(arguments);
-                        axios.delete.call(axios, args);
+
+                    },
+                    addMiddleware: (middlewares) => {
+                        if (!_.isArray(middlewares)) {
+                            middlewares = [middlewares];
+                        }
+                        request['middlewares'] = _.union(request['middlewares'], middlewares);
+                        return http;
                     }
                 };
-                (() => {
-                    this.beforeRequestSend(http);
-                })();
+                this.beforeRequestSend(http);
                 return http;
             }
         });
         this.gateway = app.config['http']['apiGateway'];
         this.middlewares = [];
+        this.middlewareNeedLoad = ['auth', 'projectSetting'];
         this.showError = true;
         this.headers = {};
+        this.middlewarePrefix = this.$application.config['middleware'].prefix;
     }
 
-    loadMiddlewareConfig(route, method) {
-        let middlewares = this.$application.config['middleware'];
-        let routeMiddlewares = middlewares['routes'][route];
-        let
+    loadMiddlewareConfig(request) {
+        console.log(request);
+        let routeMiddlewares = _.union(this.middlewareNeedLoad, request['middlewares']);
+        console.log(routeMiddlewares);
+        routeMiddlewares.forEach((middleware) => {
+            let m = this.$application[this.middlewarePrefix + middleware];
+            if (m) {
+                this.middlewares.push(m);
+            }
+        });
     }
 
     beforeRequestSend(http) {
         http.beforeRequest(async (request) => {
             http.request.request = request;
             http.request.headers = request.headers.common;
-            this.middlewares.forEach((middleware) => {
-                middleware.handle(http.request);
-            });
+            this.middlewares = [];
+            this.loadMiddlewareConfig(http.request);
+            for (let key in this.middlewares) {
+                await this.middlewares[key].handle(http.request);
+            }
+            if (request.method === 'get') request.url += this.service().uri.query(http.request.params);
             return request;
         });
-    }
-
-    initGlobalMiddleware() {
-        // 先全局
-        this.middlewares.push(this.$application['middleware.trimRouteParameter']);
-        // 自定义
-        this.initServiceMiddleware();
-    }
-
-    initServiceMiddleware() {
-
     }
 
     setError(show) {
@@ -129,11 +133,11 @@ export default class ApiService extends Service {
     }
 
     // eslint-disable-next-line
-    async httpGet(route, params = {}, auth = true) {
+    async httpGet(route, params = {}, ...additionalMiddleware) {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await this.axios.get(route + this.service().uri.query(params));
+            let result = await this.axios.addMiddleware(additionalMiddleware).get(route, params);
             console.log(result);
             return result.data;
         } catch (error) {
@@ -162,11 +166,12 @@ export default class ApiService extends Service {
         }
     }
 
-    async httpPost(route, params = {}, auth = true) {
+    async httpPost(route, params = {}) {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await (await this.setHttpHeader(auth, this.headers, this.axios)).post(route, params);
+            let result = await this.axios.post(route, params);
+            console.log(result);
             return result.data;
         } catch (error) {
             this.tokenExpired(error.response);

@@ -1,4 +1,5 @@
 import ApiService from './ApiService';
+
 export default class AccountService extends ApiService {
     constructor(app) {
         super(app);
@@ -6,9 +7,9 @@ export default class AccountService extends ApiService {
 
     async signIn(username, password) {
         let response = null;
-        if(this.$application.needMock()) {
-            response =  await this.service('mock.account').mock(username, password);
-        }else{
+        if (this.$application.needMock()) {
+            response = await this.service('mock.account').mock(username, password);
+        } else {
             //服务器交互代码
             response = await this.httpPost('login', {mobile: username, password: password}, false);
         }
@@ -22,9 +23,9 @@ export default class AccountService extends ApiService {
 
     async publicKey() {
         let response = null;
-        if(this.$application.needMock()) {
-            response =  await this.service('pulicKeyMock').mock();
-        }else{
+        if (this.$application.needMock()) {
+            response = await this.service('pulicKeyMock').mock();
+        } else {
             //服务器交互代码
             response = await this.httpGet('public/key', [], false);
         }
@@ -34,15 +35,16 @@ export default class AccountService extends ApiService {
     accountInfo() {
 
     }
+
     setting() {
 
     }
 
     async refreshToken(token) {
-        try{
-            let response = await this.httpGet('refresh/token', {'token': token}, false);
+        try {
+            let response = await this.httpGet('refresh/token', {'token': token});
             return response.data;
-        }catch(error) {
+        } catch (error) {
             return false;
         }
     }

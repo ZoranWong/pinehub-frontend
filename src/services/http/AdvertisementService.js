@@ -15,7 +15,11 @@ export default class AdvertisementService extends ApiService {
         if (this.$application.needMock()) {
             response = await this.service('mock.advertisement').mock(page, search, limit);
         } else {
-            response = await this.httpGet('advertisements', {page: page, limit: limit, searchJson: search});
+            response = await this.httpGet('advertisements', {
+                page: page,
+                limit: limit,
+                searchJson: search
+            }, 'trimRouteParameter');
         }
         let advertisements = response.data;
         let pagination = response.meta.pagination;
