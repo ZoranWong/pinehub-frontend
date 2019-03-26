@@ -5,6 +5,11 @@ export default class AdvertisementService extends ApiService {
         super(application);
     }
 
+    // 服务层中间件
+    initServiceMiddleware() {
+
+    }
+
     async list(page = 1, search = null, limit = 10) {
         let response = null;
         if (this.$application.needMock()) {

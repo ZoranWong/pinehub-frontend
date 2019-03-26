@@ -1,5 +1,9 @@
 export default class Middleware {
-    async handle() {
+    constructor($application) {
+        this.$application = $application;
+    }
+
+    async handle(request, next) {
 
     }
 }

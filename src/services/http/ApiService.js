@@ -18,6 +18,18 @@ export default class ApiService extends Service {
         this.middlewares = [];
         this.showError = true;
         this.headers = {};
+        this.initGlobalMiddleware();
+    }
+
+    initGlobalMiddleware() {
+        // 先全局
+        this.middlewares.push(this.$application['middleware.trimRouteParameter']);
+        // 自定义
+        this.initServiceMiddleware();
+    }
+
+    initServiceMiddleware() {
+
     }
 
     setError(show) {
@@ -39,14 +51,10 @@ export default class ApiService extends Service {
         this.middlewares.push(new middleware(this.$application));
     }
 
-    handleMiddlewares(reqeust, next) {
+    handleMiddlewares(request, next) {
         for (let key in this.middlewares) {
-            if (_.isFunction(this.middlewares[key])) {
-                if (this.middlewares[key] instanceof Middleware) {
-                    this.middlewares[key].handle(request, next);
-                } else {
-                    this.middlewares[key](request, next);
-                }
+            if (this.middlewares[key] instanceof Middleware) {
+                this.middlewares[key].handle(request, next);
             }
         }
     }
@@ -60,6 +68,7 @@ export default class ApiService extends Service {
                 delete headers['Authorization'];
             }
             _.extend(request.headers.common, headers);
+            this.handleMiddlewares(request, null);
             return request;
         });
         return axios;
@@ -156,7 +165,6 @@ export default class ApiService extends Service {
     searchBuilder(searchFields) {
         let search = {};
         search = this.buildSearchStr(searchFields);
-        console.log(this.service('base64'));
         return 'searchJson=' + this.service('base64').encode(search);
     }
 

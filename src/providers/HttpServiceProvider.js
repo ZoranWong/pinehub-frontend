@@ -30,7 +30,7 @@ export default class HttpServiceProvider extends ServiceProvider {
             get: () => {
                 return app.$axios.create({
                     headers: app.config['http']['headers'],
-                    baseURL: app.config['http']['apiGateway']
+                    baseURL: app.config['http']['apiGateway'],
                 });
             }
         });

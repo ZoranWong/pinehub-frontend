@@ -1,10 +1,12 @@
 import Service from '../Service';
 import _ from 'underscore';
+
 export default class UriService extends Service {
     constructor(application) {
         super(application);
     }
-    query(params , key = null) {
+
+    query(params, key = null) {
         let query = this.buildQuery(params, key);
         return query ? ('?' + query) : '';
     }
@@ -12,20 +14,20 @@ export default class UriService extends Service {
     buildQuery(params, key) {
         let queryStr = '';
         let self = this;
-        _.map(params, function(value, index) {
+        _.map(params, function (value, index) {
             let k = '';
-            if(key){
+            if (key) {
                 k = `${key}[${index}]`;
-            }else{
+            } else {
                 k = index;
             }
-            if(_.isArray(value) || _.isObject(value)) {
+            if (_.isArray(value) || _.isObject(value)) {
                 queryStr += self.buildQuery(value, k);
-            }else{
+            } else {
                 queryStr += `${k}=${value}&`;
             }
         });
-        if(typeof params === 'string') {
+        if (typeof params === 'string') {
             queryStr = params;
         }
 
@@ -41,8 +43,9 @@ export default class UriService extends Service {
     }
 
     encodeURIComponent(value) {
-        return  encodeURIComponent(value);
+        return encodeURIComponent(value);
     }
+
     decodeURIComponent(value) {
         return decodeURIComponent(value);
     }

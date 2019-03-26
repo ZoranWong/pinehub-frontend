@@ -93,7 +93,6 @@
             query: {
                 deep: true,
                 handler(value) {
-                    // merge query & searchJson
                     this.search(value);
                 }
             }
@@ -101,9 +100,7 @@
         methods: {
             search(data) {
                 data['page'] = 1;
-                // this.searchJson = Object.assign({}, data);
                 this.searchJson = Object.assign({}, this.searchJson, data);
-                console.log('当前search json：', this.searchJson);
             },
             changePage(page) {
                 this.page = page;
@@ -123,7 +120,6 @@
                 }
             }
             this.searchJson = Object.assign({}, q, this.query);
-
         },
     }
 </script>
