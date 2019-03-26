@@ -1,14 +1,7 @@
 import TrimRouteParameter from '@/middlewares/TrimRouteParameter';
 
 export default {
-    middleware: {},
-    routeMiddleware: {
-
-    },
-    middlewareGroups: {
-        api: [
-            TrimRouteParameter
-        ]
+    routes: {
+        'user/{id}/info': 'a,b,c'
     }
-
 }

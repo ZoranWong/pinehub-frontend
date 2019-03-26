@@ -11,14 +11,68 @@ export default class ApiService extends Service {
         super(app);
         Object.defineProperty(this, 'axios', {
             get: () => {
-                return app._axios;
+                let axios = app._axios;
+
+                let request = {
+                    route: '',
+                    method: '',
+                    params: [],
+                    request: axios.request,
+                    headers: {}
+                };
+                let http = {
+                    request: request,
+                    axios: axios,
+                    beforeRequest: () => {
+                        return axios.interceptors.request.use;
+                    },
+                    get: (route, params) => {
+                        request['route'] = route;
+                        request['method'] = 'GET';
+                        request['params'] = params;
+                        let url = route + this.service().uri.query(params)
+                        return axios.get(url);
+                    },
+                    post: () => {
+                        let args = Array.prototype.slice.call(arguments);
+                        axios.post.call(axios, args);
+                    },
+                    put: () => {
+                        let args = Array.prototype.slice.call(arguments);
+                        axios.put.call(axios, args);
+                    },
+                    delete: () => {
+                        let args = Array.prototype.slice.call(arguments);
+                        axios.delete.call(axios, args);
+                    }
+                };
+                (() => {
+                    this.beforeRequestSend(http);
+                })();
+                return http;
             }
         });
         this.gateway = app.config['http']['apiGateway'];
         this.middlewares = [];
         this.showError = true;
         this.headers = {};
-        this.initGlobalMiddleware();
+    }
+
+    loadMiddlewareConfig(route, method) {
+        let middlewares = this.$application.config['middleware'];
+        let routeMiddlewares = middlewares['routes'][route];
+        let
+    }
+
+    beforeRequestSend(http) {
+        http.beforeRequest(async (request) => {
+            http.request.request = request;
+            http.request.headers = request.headers.common;
+            this.middlewares.forEach((middleware) => {
+                middleware.handle(http.request);
+            });
+            return request;
+        });
     }
 
     initGlobalMiddleware() {
@@ -79,8 +133,7 @@ export default class ApiService extends Service {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await (await this.setHttpHeader(auth, this.headers, this.axios))
-                .get(route + this.service().uri.query(params));
+            let result = await this.axios.get(route + this.service().uri.query(params));
             console.log(result);
             return result.data;
         } catch (error) {
