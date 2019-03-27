@@ -1,6 +1,5 @@
 import Service from '../Service';
 import _ from 'underscore';
-import Middleware from '@/middlewares/Middleware';
 import http from "../../configs/http";
 
 const AUTH_TOKEN_EXPIRES = 10004;
@@ -35,14 +34,18 @@ export default class ApiService extends Service {
                     },
                     post: (route, params) => {
                         request['route'] = route;
-                        request['params'] = params;
                         request['method'] = 'POST';
                         return axios.post(route, params);
                     },
-                    put: () => {
+                    put: (route, params) => {
+                        request['route'] = route;
+                        request['method'] = 'PUT';
+                        return axios.put(route, params);
                     },
-                    delete: () => {
-
+                    delete: (route) => {
+                        request['route'] = route;
+                        request['method'] = 'DELETE';
+                        return axios.delete(route);
                     },
                     addMiddleware: (middlewares) => {
                         if (!_.isArray(middlewares)) {
@@ -105,18 +108,6 @@ export default class ApiService extends Service {
         return this;
     }
 
-    addMiddleware(middleware) {
-        this.middlewares.push(new middleware(this.$application));
-    }
-
-    handleMiddlewares(request, next) {
-        for (let key in this.middlewares) {
-            if (this.middlewares[key] instanceof Middleware) {
-                this.middlewares[key].handle(request, next);
-            }
-        }
-    }
-
     async setHttpHeader(auth, headers, axios) {
         let x = axios.interceptors.request.use(async (request) => {
             if (auth) {
@@ -133,11 +124,11 @@ export default class ApiService extends Service {
     }
 
     // eslint-disable-next-line
-    async httpGet(route, params = {}, ...additionalMiddleware) {
+    async httpGet(route, params = {}, ...additionalMiddlewares) {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await this.axios.addMiddleware(additionalMiddleware).get(route, params);
+            let result = await this.axios.addMiddleware(additionalMiddlewares).get(route, params);
             console.log(result);
             return result.data;
         } catch (error) {
@@ -152,7 +143,7 @@ export default class ApiService extends Service {
         route = '/' + route;
         let host = this.gateway.trim('/');
         try {
-            if (auth) {
+            if (true) {
                 let token = await this.service('token').getToken();
                 params['token'] = encodeURIComponent(token);
             }
@@ -166,11 +157,11 @@ export default class ApiService extends Service {
         }
     }
 
-    async httpPost(route, params = {}) {
+    async httpPost(route, params = {}, ...additionalMiddlewares) {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await this.axios.post(route, params);
+            let result = await this.axios.addMiddleware(additionalMiddlewares).post(route, params);
             console.log(result);
             return result.data;
         } catch (error) {
@@ -189,12 +180,11 @@ export default class ApiService extends Service {
         throw exception;
     }
 
-    async httpPut(route, id, params = {}, auth = true) {
+    async httpPut(route, id, params = {}, ...additionalMiddlewares) {
         route = route.trim('/');
         route = '/' + route;
         try {
-            let result = await (await this.setHttpHeader(auth, this.headers, this.axios))
-                .put(route + '/' + id, params);
+            let result = await this.axios.addMiddleware(additionalMiddlewares).put(route + '/' + id, params);
             return result.data;
         } catch (error) {
             this.tokenExpired(error.response);
@@ -203,7 +193,7 @@ export default class ApiService extends Service {
 
     }
 
-    async httpDelete(route, params = null, auth = true) {
+    async httpDelete(route, params = null, ...additionalMiddlewares) {
         let id = params ? (_.isString(params) || _.isNumber(params) ? params : this.service('json').encode(params)) : null;
         route = route.trim('/');
         route = '/' + route;
@@ -211,8 +201,7 @@ export default class ApiService extends Service {
             route = route + '/' + id
         }
         try {
-            let result = await (await this.setHttpHeader(auth, this.headers, this.axios))
-                .delete(route);
+            let result = await this.axios.addMiddleware(additionalMiddlewares).delete(route);
             return result.data;
         } catch (error) {
             await this.tokenExpired(error.response);

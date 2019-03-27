@@ -11,7 +11,7 @@ export default class AccountService extends ApiService {
             response = await this.service('mock.account').mock(username, password);
         } else {
             //服务器交互代码
-            response = await this.httpPost('login', {mobile: username, password: password}, false);
+            response = await this.httpPost('login', {mobile: username, password: password});
         }
 
         return [response.data, response.meta['token']];
@@ -27,7 +27,7 @@ export default class AccountService extends ApiService {
             response = await this.service('pulicKeyMock').mock();
         } else {
             //服务器交互代码
-            response = await this.httpGet('public/key', [], false);
+            response = await this.httpGet('public/key', []);
         }
         return response.data;
     }
