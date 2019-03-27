@@ -25,7 +25,32 @@
         data() {
             return {
                 advertisement: null,
+                isEdit: false,
             }
+        },
+        computed: {
+            entity() {
+                return this.$store.state.advertisements.entity;
+            },
+        },
+        watch: {
+            entity(value) {
+
+            },
+        },
+        mounted() {
+            this.advertisement = this.advertisement = {
+                title: this.entity.title,
+                banner_url: this.entity.bannerUrl,
+                card_id: this.entity.ticket ? this.entity.ticket.cardId : null,
+                conditions: {
+                    sex: this.entity.conditions.sex,
+                    payment_amount: this.entity.conditions.paymentAmount,
+                },
+                start_to_end: [this.entity.beginAt, this.entity.endAt],
+                ticket: this.entity.ticket
+            };
+            this.isEdit = this.$router.currentRoute.name === 'advertisement-edit';
         },
         methods: {
             async create() {

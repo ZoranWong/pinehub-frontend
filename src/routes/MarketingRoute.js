@@ -80,6 +80,12 @@ route.group('/project/:projectId/marketing', {
             'component': AdvertisementCreate,
             'tag': '新建投放广告'
         });
+
+        route.addRoute('advertisement/edit', {
+            'name': 'advertisement-edit',
+            'component': AdvertisementCreate,
+            'tag': '更新投放广告'
+        });
     }
 });
 export default route;

@@ -24,8 +24,9 @@ export default class Advertisement {
         this.statusDesc = STATUS[this.status];
         this.createdAt = advertisement['created_at'];
         this.updatedAt = advertisement['updated_at'];
+        this.sexDesc = SEX[advertisement['conditions']['sex']];
         this.conditions = {
-            sex: SEX[advertisement['conditions']['sex']],
+            sex: advertisement['conditions']['sex'],
             payment_amount: '￥' + advertisement['conditions']['payment_amount']
         };
         if (advertisement['ticket']) {

@@ -22,19 +22,23 @@
         <el-table-column label="广告图">
             <template slot-scope="scope">
                 <div :style="{height: imageHeight + 'px',width: imageWidth + 'px'}">
-                    <img :src="scope.row.bannerUrl" alt="" style="width: 100%;height: 100%;">
+                    <img :src="scope.row.bannerUrl" style="width: 100%;height: 100%;">
                 </div>
             </template>
         </el-table-column>
-        <el-table-column label="绑定优惠券">
+        <el-table-column label="关联优惠券">
             <template slot-scope="scope">
-                <el-button disabled v-if="scope.row.ticket" type="success" plain icon="el-icon-check"></el-button>
-                <el-button disabled v-else type="info" plain icon="el-icon-close"></el-button>
+                <el-button v-if="scope.row.ticket" type="success" plain size="small"
+                           @click="updateRelatedCoupon(scope.row)">
+                    更改关联优惠券
+                </el-button>
+                <el-button v-else type="primary" plain size="small" @click="updateRelatedCoupon(scope.row)">绑定优惠券
+                </el-button>
             </template>
         </el-table-column>
         <el-table-column label="投放条件">
             <template slot-scope="scope">
-                <span class="condition-item">性别：{{scope.row.conditions.sex}}</span>
+                <span class="condition-item">性别：{{scope.row.sexDesc}}</span>
                 <span class="condition-item">单笔消费>={{scope.row.conditions.payment_amount}}</span>
             </template>
         </el-table-column>
@@ -96,6 +100,15 @@
             },
             renderAdvertisementList() {
                 this.$command('DATA_LIST', 'http.advertisements', 'advertisements/setList', this.$requestInput('page'));
+            },
+            updateRelatedCoupon(advertisement) {
+                this.$command('UPDATE_ADVERTISEMENT_INIT', 'advertisements/edit', advertisement);
+                this.$router.push({
+                    name: 'advertisement-edit',
+                    params: {
+                        projectId: this.$requestInput('projectId'),
+                    }
+                });
             }
         }
     }

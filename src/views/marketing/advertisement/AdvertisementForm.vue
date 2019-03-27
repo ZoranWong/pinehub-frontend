@@ -109,11 +109,13 @@
         },
         watch: {
             value: {
-                deep: true,
                 handler(advertisement) {
-                    // console.log(advertisement);
                     if (advertisement) {
                         this.advertisement = advertisement;
+                        if (this.advertisement.hasOwnProperty('ticket') && this.advertisement.ticket) {
+                            this.selectedTicket.data = JSON.parse(JSON.stringify(advertisement.ticket));
+                        }
+                        delete this.advertisement['ticket'];
                     }
                 }
             },
@@ -127,7 +129,7 @@
                 handler() {
                     this.tickets.table_list.query = Object.assign({}, this.tickets.table_list.query, {'card_info->base_info->title': this.tickets.table_list.search});
                 }
-            }
+            },
         },
         computed: {
             cardModel() {
