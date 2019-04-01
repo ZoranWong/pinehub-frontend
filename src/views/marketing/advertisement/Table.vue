@@ -84,15 +84,15 @@
             return {};
         },
         methods: {
-            disableAdvertisementHandler(advertisement) {
-                let result = this.http.advertisements.disable(this.$requestInput('projectId'), advertisement.id);
+            async disableAdvertisementHandler(advertisement) {
+                let result = await this.http.advertisements.disable(advertisement.id);
                 if (result) {
                     this.$message.success('下架成功');
                     this.renderAdvertisementList();
                 }
             },
-            enableAdvertisementHandler(advertisement) {
-                let result = this.http.advertisements.enable(this.$requestInput('projectId'), advertisement.id);
+            async enableAdvertisementHandler(advertisement) {
+                let result = await this.http.advertisements.enable(advertisement.id);
                 if (result) {
                     this.$message.success('上架成功');
                     this.renderAdvertisementList();
@@ -102,7 +102,7 @@
                 this.$command('DATA_LIST', 'http.advertisements', 'advertisements/setList', this.$requestInput('page'));
             },
             updateRelatedCoupon(advertisement) {
-                this.$command('UPDATE_ADVERTISEMENT_INIT', 'advertisements/edit', advertisement);
+                this.$command('CREATE_UPDATE_ENTITY_INIT', 'advertisements/createEditInit', advertisement);
                 this.$router.push({
                     name: 'advertisement-edit',
                     params: {

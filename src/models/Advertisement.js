@@ -20,7 +20,7 @@ export default class Advertisement extends Model {
     listeners() {
         super.listeners();
 
-        this.addEventListener('edit', function ({entity}) {
+        this.addEventListener('createEditInit', function ({entity}) {
             this.entity = entity;
         });
     }

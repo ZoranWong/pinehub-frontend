@@ -41,6 +41,7 @@
                 this.query = _.extend(this.query, data);
             },
             createNewAdvertisement() {
+                this.$command('CREATE_UPDATE_ENTITY_INIT', 'advertisements/createEditInit', null);
                 this.$router.push({
                     name: 'advertisement-create',
                     params: {

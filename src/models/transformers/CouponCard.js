@@ -13,12 +13,6 @@ export default class CouponCard {
             '同步成功'
         ];
 
-        const CARD_STATUS = {
-            'OFF': '未生效',
-            'ON': '生效中',
-            'EXPIRE': '已失效'
-        };
-
         this.id = coupon['id'];
         this.index = coupon['index'];
         this.title = coupon['title'];
@@ -52,5 +46,7 @@ export default class CouponCard {
         this.startAt = startAt.format('yyyy-MM-dd hh:mm:ss');
         this.endAt = endAt.format('yyyy-MM-dd hh:mm:ss');
         this.activeTime = coupon['active_time'];
+        this.promoteUrl = coupon['promote_url'];
+        this.promoteMiniCodeUrl = coupon['promote_minicode_url'];
     }
 }

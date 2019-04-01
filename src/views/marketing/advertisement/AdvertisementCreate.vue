@@ -61,7 +61,7 @@
                         type: 'error'
                     });
                 } else {
-                    this.$command('CREATE_ADVERTISEMENT', this.$requestInput('projectId'), this.advertisement);
+                    this.$command('CREATE_ADVERTISEMENT', this.advertisement);
                 }
             }
         }

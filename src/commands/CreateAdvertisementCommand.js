@@ -5,11 +5,10 @@ export default class CreateAdvertisementCommand extends Command {
         super(app);
     }
 
-    async handle(projectId, advertisement) {
+    async handle(advertisement) {
         try {
             let advertisementInfo = Command.buildAdvertisementInfo(advertisement);
-            console.log('advertisement info : ', advertisementInfo);
-            let result = await this.http.advertisements.create(projectId, advertisementInfo);
+            let result = await this.http.advertisements.create(advertisementInfo);
             console.log(result);
         } catch (e) {
             console.log(e);

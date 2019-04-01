@@ -1,6 +1,6 @@
 import Command from './AdvertisementCommand';
 
-export default class UpdateEntityCommand extends Command {
+export default class CreateUpdateEntityCommand extends Command {
     constructor(app) {
         super(app);
     }
@@ -13,6 +13,6 @@ export default class UpdateEntityCommand extends Command {
     }
 
     static commandName() {
-        return 'UPDATE_ADVERTISEMENT_INIT';
+        return 'CREATE_UPDATE_ENTITY_INIT';
     }
 }

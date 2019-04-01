@@ -30,13 +30,13 @@ export default class AdvertisementService extends ApiService {
         return [advertisements, totalNum, currentPage, totalPage];
     }
 
-    async create(projectId, advertisementInfo) {
+    async create(advertisementInfo) {
         let response = null;
 
         if (this.$application.needMock()) {
             response = await this.service('mock.advertisement').mock();
         } else {
-            response = await this.header({'ProjectId': projectId}).httpPost(`advertisement`, advertisementInfo);
+            response = await this.httpPost(`advertisement`, advertisementInfo);
         }
 
         let advertisement = response.data;
@@ -44,23 +44,23 @@ export default class AdvertisementService extends ApiService {
         return advertisement;
     }
 
-    async update(projectId, advertisementId, params) {
+    async update(advertisementId, params) {
         let response = null;
 
         if (this.$application.needMock()) {
             //
         } else {
-            response = await this.header({'ProjectId': projectId}).httpPut('advertisement', advertisementId, params);
+            response = await this.httpPut('advertisement', advertisementId, params);
         }
 
         return response.data;
     }
 
-    async disable(projectId, advertisementId) {
-        return await this.update(projectId, advertisementId, {status: 3});
+    async disable(advertisementId) {
+        return await this.update(advertisementId, {status: 3});
     }
 
-    async enable(projectId, advertisementId) {
-        return await this.update(projectId, advertisementId, {status: 1});
+    async enable(advertisementId) {
+        return await this.update(advertisementId, {status: 1});
     }
 }
