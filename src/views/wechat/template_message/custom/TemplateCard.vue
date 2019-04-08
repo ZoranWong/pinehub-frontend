@@ -7,9 +7,12 @@
             <div class="tmpmsg_preview_title">{{templateMessage.title}}</div>
             <ul class="tmplmsg_preview_meta_list simple_preview_box">
                 <li class="tmplmsg_preview_meta_item simple_preview_item"
-                    v-for="(value,key) in templateMessage.items" :key="key">
+                    v-for="(value,key) in templateMessage.parent.items" :key="key">
                     <label class="simple_preview_label">{{value['key']}}</label>
-                    <p class="simple_preview_value">{{value['value']}}</p>
+                    <p class="simple_preview_value"
+                       :style="{color:templateMessage.content['keyword'+(key+1)]['color']}">
+                        {{templateMessage.content['keyword'+(key+1)]['value']}}
+                    </p>
                 </li>
             </ul>
         </div>

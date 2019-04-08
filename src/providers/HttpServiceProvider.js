@@ -22,6 +22,8 @@ import PaidGiftActivitiesService from '@/services/http/PaidGiftActivitiesService
 import MarketingService from '@/services/http/MarketingService';
 import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesService';
 import AdvertisementService from '@/services/http/AdvertisementService';
+import WxTemplateMessageService from "../services/http/WxTemplateMessageService";
+import UserTemplateMessageService from "../services/http/UserTemplateMessageService";
 
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -34,7 +36,7 @@ export default class HttpServiceProvider extends ServiceProvider {
                     baseURL: app.config['http']['apiGateway'],
                 });
             },
-            set:(v) => {
+            set: (v) => {
                 axios = v;
             }
         });
@@ -66,5 +68,7 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.marketing', MarketingService);
         this.app.register('http.activityMerchandises', ActivityMerchandisesService);
         this.app.register('http.advertisements', AdvertisementService);
+        this.app.register('http.wxTemplateMessages', WxTemplateMessageService);
+        this.app.register('http.userTemplateMessages', UserTemplateMessageService);
     }
 }

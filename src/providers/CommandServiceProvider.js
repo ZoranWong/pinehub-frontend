@@ -35,7 +35,13 @@ import ActivityMerchandisesLoadCommand from '@/commands/ActivityMerchandisesLoad
 import LoadShopSkuCommand from '@/commands/LoadShopSkuCommand';
 import UpdateUTCActivityCommand from '@/commands/UpdateUTCActivityCommand';
 import CreateAdvertisementCommand from '@/commands/CreateAdvertisementCommand';
+import UpdateAdvertisementCommand from '@/commands/UpdateAdvertisementCommand';
 import CreateUpdateEntityCommand from "../commands/CreateUpdateEntityCommand";
+import SyncWxTemplateMessagesCommand from "../commands/SyncWxTemplateMessagesCommand";
+import SyncWxTemplateMessagesStatusCheckCommand from "../commands/SyncWxTemplateMessagesStatusCheckCommand";
+import DeleteUserTemplateMessageCommand from '../commands/DeleteUserTemplateMessageCommand';
+import CreateUserTemplateMessageCommand from "../commands/CreateUserTemplateMessageCommand";
+import UpdateUserTemplateMessageCommand from "../commands/UpdateUserTemplateMessageCommand";
 
 export default class CommandServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -53,7 +59,8 @@ export default class CommandServiceProvider extends ServiceProvider {
             UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
             CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand,
             ActivityMerchandisesLoadCommand, LoadShopSkuCommand, UpdateUTCActivityCommand,
-            CreateAdvertisementCommand, CreateUpdateEntityCommand
+            CreateAdvertisementCommand, CreateUpdateEntityCommand, SyncWxTemplateMessagesCommand, SyncWxTemplateMessagesStatusCheckCommand,
+            DeleteUserTemplateMessageCommand, UpdateAdvertisementCommand, CreateUserTemplateMessageCommand, UpdateUserTemplateMessageCommand
         ];
         for (let key in commands) {
             this.app.registerCommand(commands[key].commandName(), commands[key]);

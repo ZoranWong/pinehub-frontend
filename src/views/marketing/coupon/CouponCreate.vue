@@ -30,7 +30,6 @@
                         type: 'error'
                     });
                 } else {
-                    console.log(this.ticket);
                     this.$command('CREATE_TICKET', this.$requestInput('projectId'), this.ticket);
                 }
             }

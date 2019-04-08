@@ -5,11 +5,6 @@ export default class AdvertisementService extends ApiService {
         super(application);
     }
 
-    // 服务层中间件
-    initServiceMiddleware() {
-
-    }
-
     async list(page = 1, search = null, limit = 10) {
         let response = null;
         if (this.$application.needMock()) {
@@ -39,9 +34,8 @@ export default class AdvertisementService extends ApiService {
             response = await this.httpPost(`advertisement`, advertisementInfo);
         }
 
-        let advertisement = response.data;
+        return response.data;
 
-        return advertisement;
     }
 
     async update(advertisementId, params) {

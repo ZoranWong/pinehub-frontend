@@ -33,23 +33,21 @@
                 return this.$store.state.advertisements.entity;
             },
         },
-        watch: {
-            entity(value) {
-
-            },
-        },
         mounted() {
-            this.advertisement = this.advertisement = {
-                title: this.entity.title,
-                banner_url: this.entity.bannerUrl,
-                card_id: this.entity.ticket ? this.entity.ticket.cardId : null,
-                conditions: {
-                    sex: this.entity.conditions.sex,
-                    payment_amount: this.entity.conditions.paymentAmount,
-                },
-                start_to_end: [this.entity.beginAt, this.entity.endAt],
-                ticket: this.entity.ticket
-            };
+            if (this.entity) {
+                this.advertisement = {
+                    id: this.entity.id,
+                    title: this.entity.title,
+                    banner_url: this.entity.bannerUrl,
+                    card_id: this.entity.ticket ? this.entity.ticket.cardId : null,
+                    conditions: {
+                        sex: this.entity.conditions.sex,
+                        payment_amount: this.entity.conditions.paymentAmount,
+                    },
+                    start_to_end: [this.entity.beginAt, this.entity.endAt],
+                    ticket: this.entity.ticket
+                };
+            }
             this.isEdit = this.$router.currentRoute.name === 'advertisement-edit';
         },
         methods: {
@@ -61,7 +59,11 @@
                         type: 'error'
                     });
                 } else {
-                    this.$command('CREATE_ADVERTISEMENT', this.advertisement);
+                    if (this.isEdit) {
+                        this.$command('UPDATE_ADVERTISEMENT', this.advertisement);
+                    } else {
+                        this.$command('CREATE_ADVERTISEMENT', this.advertisement);
+                    }
                 }
             }
         }

@@ -14,7 +14,7 @@ export default class DataListCommand extends Command {
             search = this.base64.encodeURI(search);
             let headers = {};
             if (this.$requestInput('projectId')) {
-                headers = { 'ProjectId': this.$requestInput('projectId') }
+                headers = {'ProjectId': this.$requestInput('projectId')}
             }
             let [list, totalNum, currentPage, totalPage, excelUrl] = await this.$service(service)
                 .header(headers)

@@ -39,6 +39,12 @@ export default class Menus extends Model {
                     //   icon: '',
                     //   routeName: 'materials'
                     // }
+                    {
+                        id: '42',
+                        title: '模板消息',
+                        icon: '',
+                        routeName: 'wechat-template-messages'
+                    }
                 ]
             }, {
                 id: '8',

@@ -138,7 +138,7 @@
                 <el-radio-group v-model="ticket['conditions']['put']['range']['type']">
                     <el-radio label="ALL">所有人</el-radio>
                     <el-radio label="TAG">指定用户标签
-                        <template v-if="ticket['conditions']['put']['range']['type'] == 'TAG'">
+                        <template v-if="ticket['conditions']['put']['range']['type'] === 'TAG'">
                             <el-select v-model="ticket['conditions']['put']['range']['selected_user_tags']" multiple
                                        collapse-tags style="margin-left: 20px;" placeholder="请选择">
                                 <el-option v-for="tag in user_tags" :key="tag" :value="tag"></el-option>
@@ -216,7 +216,7 @@
                 <el-radio-group v-model="ticket['conditions']['use']['scenarios']['type']">
                     <el-radio label="ALL">通用</el-radio>
                     <el-radio label="SCENARIOS">指定场景
-                        <template v-if="ticket['conditions']['use']['scenarios']['type'] == 'SCENARIOS'">
+                        <template v-if="ticket['conditions']['use']['scenarios']['type'] === 'SCENARIOS'">
                             <el-select v-model="ticket['conditions']['use']['scenarios']['selected_scenarios']" multiple
                                        collapse-tags style="margin-left: 20px;" placeholder="请选择">
                                 <el-option v-for="scenario in scenarios" :key="scenario['id']"
@@ -238,6 +238,10 @@
                 </el-radio-group>
             </el-form-item>
         </div>
+        <div class="ticket-info base-rules">
+            <h4>优惠券模板消息</h4>
+            <el-form-item label="过期模板消息:"></el-form-item>
+        </div>
     </el-form>
 </template>
 <script>
@@ -253,7 +257,6 @@
             value: {
                 deep: true,
                 handler(ticket) {
-                    console.log(ticket);
                     if (ticket) {
                         this.ticket = ticket;
                     }
@@ -273,21 +276,21 @@
         },
         data() {
             let $this = this;
-            var putRangeValidate = (rule, value, callback) => {
+            let putRangeValidate = (rule, value, callback) => {
                 if (value === 'TAG' && this.ticket['conditions']['put']['range']['selected_user_tags'].length === 0) {
                     callback(new Error(rule.message));
                 } else {
                     callback();
                 }
             };
-            var putScenarioValidate = (rule, value, callback) => {
+            let putScenarioValidate = (rule, value, callback) => {
                 if (value === 'SCENARIOS' && this.ticket['conditions']['put']['scenarios']['selected_scenarios'].length === 0) {
                     callback(new Error(rule.message));
                 } else {
                     callback();
                 }
             };
-            var useScenarioValidate = (rule, value, callback) => {
+            let useScenarioValidate = (rule, value, callback) => {
                 if (value === 'SCENARIOS' && this.ticket['conditions']['use']['scenarios']['selected_scenarios'].length === 0) {
                     callback(new Error(rule.message));
                 } else {
@@ -295,12 +298,16 @@
                 }
             };
             return {
-                user_tags: [],// 用户标签
+                // 用户标签
+                user_tags: [],
+                // 使用场景
                 scenarios: [
                     {index: 0, 'id': 1, 'value': '聚合支付'},
                     {index: 1, 'id': 2, 'value': '邻里优鲜'},
                     {index: 2, 'id': 3, 'value': '预定商城'},
-                ],// 使用场景
+                ],
+                // 系统模板库，非微信模板库
+                templateList: [],
                 ticket: {
                     'is_public': false,
                     'type': 'CASH',
