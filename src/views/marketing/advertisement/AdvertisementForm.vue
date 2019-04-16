@@ -75,10 +75,9 @@
             <table-list :service="tickets.table_list.service" :event="tickets.table_list.event"
                         :current="tickets.table_list.current" :model="cardModel"
                         :query="tickets.table_list.query">
-                <template slot="header" slot-scope="{ search, searchHandler }">
-                    <el-input v-model="tickets.table_list.search" class="query-input" style="width: 200px;"
+                <template v-slot:header="{ search, searchHandler }">
+                    <el-input v-model="tickets.table_list.search" class="query-input" style="width: 100%;"
                               size="small" prefix-icon="el-icon-search" placeholder="请输入搜索内容"></el-input>
-                    <!--<card-header v-model="search" @search="searchHandler"></card-header>-->
                 </template>
                 <template slot="table" slot-scope="{data}">
                     <card-table :coupons="data" :relateCoupon="advertisement.card_id"
@@ -104,7 +103,6 @@
         },
         components: {
             'table-list': TableList,
-            'card-header': CardHeader,
             'card-table': EmbedCouponTable,
         },
         watch: {

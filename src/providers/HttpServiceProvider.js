@@ -24,6 +24,8 @@ import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesSer
 import AdvertisementService from '@/services/http/AdvertisementService';
 import WxTemplateMessageService from "../services/http/WxTemplateMessageService";
 import UserTemplateMessageService from "../services/http/UserTemplateMessageService";
+import UserTemplateWithMiniprogramService from "../services/http/UserTemplateWithMiniprogramService";
+import UserTemplateWithOfficialAccountService from "../services/http/UserTemplateWithOfficialAccountService";
 
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -70,5 +72,7 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.advertisements', AdvertisementService);
         this.app.register('http.wxTemplateMessages', WxTemplateMessageService);
         this.app.register('http.userTemplateMessages', UserTemplateMessageService);
+        this.app.register('http.userTemplateWithMiniprogram', UserTemplateWithMiniprogramService);
+        this.app.register('http.userTemplateWithOfficialAccount', UserTemplateWithOfficialAccountService);
     }
 }

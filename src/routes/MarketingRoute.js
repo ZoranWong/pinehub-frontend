@@ -11,6 +11,8 @@ import CouponCreate from '@/views/marketing/coupon/CouponCreate';
 import ActivityMerchandises from '@/views/marketing/new_events/ActivityMerchandises';
 import Advertisements from '@/views/marketing/advertisement/Index';
 import AdvertisementCreate from '@/views/marketing/advertisement/AdvertisementCreate';
+import TemplateBind from "../views/marketing/coupon/TemplateBind";
+import TemplateDefaultBind from "../views/marketing/coupon/TemplateDefaultBind";
 
 let route = new Route();
 route.group('/project/:projectId/marketing', {
@@ -61,6 +63,18 @@ route.group('/project/:projectId/marketing', {
             'name': 'coupon-create',
             'component': CouponCreate,
             'tag': '新建优惠券'
+        });
+
+        route.addRoute('coupon/:ticketId/bind/template', {
+            'name': 'coupon-bind-template',
+            'component': TemplateBind,
+            'tag': '优惠券绑定模板消息'
+        });
+
+        route.addRoute('coupon/template/default', {
+            'name': 'coupon-bind-default-template',
+            'component': TemplateDefaultBind,
+            'tag': '绑定优惠券默认模板消息'
         });
 
         route.addRoute('new/merchandise/activity', {

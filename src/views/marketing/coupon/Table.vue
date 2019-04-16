@@ -26,6 +26,7 @@
                     <el-button type="primary" size="mini" v-if="scope.row.status === 1"
                                @click="promoteQrCode(scope.row)">推广
                     </el-button>
+                    <el-button type="primary" size="mini" @click="switchToTemplateSet(scope.row)">模板消息设置</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -76,6 +77,15 @@
             promoteQrCode(ticket) {
                 this.qrcodeDialogVisible = true;
                 this.ticketPromote = ticket;
+            },
+            switchToTemplateSet(ticket) {
+                this.$command('CREATE_UPDATE_ENTITY_INIT', 'couponCards/createEditInit', ticket);
+                this.$router.push({
+                    name: 'coupon-bind-template',
+                    params: {
+                        ticketId: ticket.id
+                    }
+                });
             }
         }
     }

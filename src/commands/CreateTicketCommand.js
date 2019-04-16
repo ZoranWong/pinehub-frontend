@@ -1,4 +1,5 @@
 import Command from './TicketCommand';
+import CouponCard from "../models/transformers/CouponCard";
 
 export default class CreateShopCommand extends Command {
     constructor(app) {
@@ -8,9 +9,8 @@ export default class CreateShopCommand extends Command {
     async handle(projectId, ticket) {
         try {
             let ticketInfo = Command.buildTicketInfo(ticket);
-            console.log('ticket info', ticketInfo);
             let result = await this.http.tickets.create(projectId, ticketInfo);
-            console.log(result);
+            return new CouponCard(result.data);
         } catch (e) {
             console.log(e);
         }

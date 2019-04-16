@@ -30,7 +30,8 @@
                         type: 'error'
                     });
                 } else {
-                    this.$command('CREATE_TICKET', this.$requestInput('projectId'), this.ticket);
+                    let ticket = await this.$command('CREATE_TICKET', this.$requestInput('projectId'), this.ticket);
+                    this.$message.success(`优惠券${ticket.title}创建成功`);
                 }
             }
         },

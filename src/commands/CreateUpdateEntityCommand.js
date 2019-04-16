@@ -5,11 +5,10 @@ export default class CreateUpdateEntityCommand extends Command {
         super(app);
     }
 
-    async handle(event, entity) {
-        this.$store.dispatch({
-            type: event,
-            entity: entity
-        });
+    async handle(event, entity, params) {
+        let param = Object.assign({}, {type: event, entity}, params);
+        console.log('@@@@:', param);
+        this.$store.dispatch(param);
     }
 
     static commandName() {

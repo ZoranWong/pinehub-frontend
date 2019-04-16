@@ -78,7 +78,6 @@
         data() {
             return {
                 userTemplateMessageEntity: {
-                    'type': 1,
                     'template_id': null,
                     'content': null,
                 }

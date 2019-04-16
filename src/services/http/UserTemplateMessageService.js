@@ -12,7 +12,7 @@ export default class UserTemplateMessageService extends ApiService {
         if (this.$application.needMock()) {
             response = null;
         } else {
-            response = await this.httpGet('wechat/wxopen/template/custom/' + parentTemplateId, {
+            response = await this.httpGet(`wechat/wxopen/template/custom/${parentTemplateId}`, {
                 page: page,
                 limit: limit,
                 searchJson: search,

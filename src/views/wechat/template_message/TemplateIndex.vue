@@ -2,7 +2,7 @@
     <div class="content-scroll">
         <div class="content-box">
             <table-list :service="service" :event="event" :current="current" :query="query" :model="model">
-                <template slot="header" slot-scope="{search,searchHandler}">
+                <template v-slot:header="{ search,searchHandler }">
                     <el-tooltip class="" effect="dark" placement="bottom-start">
                         <div slot="content">
                             如果您修改了小程序微信公众平台上的关联模板消息，<br><br>
@@ -13,7 +13,7 @@
                         </el-button>
                     </el-tooltip>
                 </template>
-                <template slot="table" slot-scope="{data}">
+                <template v-slot:table="{ data }">
                     <template-message-table :templateMessages="data" v-if="syncSucceed">
                     </template-message-table>
                 </template>

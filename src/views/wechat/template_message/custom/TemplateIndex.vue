@@ -2,10 +2,10 @@
     <div class="content-scroll">
         <div class="content-box">
             <table-list :service="service" :event="event" :current="current" :query="query" :model="model">
-                <template slot="header" slot-scope="{search,searchHandler}">
+                <template v-slot:header="{search,searchHandler}">
                     <el-button type="success" icon="el-icon-plus" @click="switchToTemplateCreate">新建自填充模板消息</el-button>
                 </template>
-                <template slot="table" slot-scope="{data}">
+                <template v-slot:table="{data}">
                     <template-message-table :templateMessages="data"></template-message-table>
                 </template>
             </table-list>

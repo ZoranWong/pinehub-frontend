@@ -1,10 +1,10 @@
 <template>
     <table-list :service="service" :event="event" :model="model" :current="current" :query="query">
-        <template slot="header" slot-scope="{ search, searchHandler }">
+        <template v-slot:header="{ search, searchHandler }">
             <el-button type="success" class="new-ad" @click="createNewAdvertisement">+ 创建广告</el-button>
             <advertisement-header v-model="search" @search="searchHandler"></advertisement-header>
         </template>
-        <template slot="table" slot-scope="{data}">
+        <template v-slot:table="{data}">
             <advertisement-table :advertisements="data"></advertisement-table>
         </template>
     </table-list>

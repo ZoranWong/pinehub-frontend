@@ -4,7 +4,6 @@ export default class UserTemplateMessage {
     constructor(userTemplateMessage) {
         this.id = userTemplateMessage['id'];
         this.wxAppId = userTemplateMessage['wx_app_id'];
-        this.type = userTemplateMessage['type'];
         this.content = userTemplateMessage['content'];
         this.templateId = userTemplateMessage['template_id'];
         this.parent = new WxTemplateMessage(userTemplateMessage['parent']);

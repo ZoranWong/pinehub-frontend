@@ -9,8 +9,7 @@
                             <el-button class="wx_mobile_panel_bt" size="mini" type="primary" icon="el-icon-edit" circle
                                        @click="switchToTemplateUpdate(templateMessage)"></el-button>
                             <el-button class="wx_mobile_panel_bt" type="warning" size="mini" icon="el-icon-delete"
-                                       circle
-                                       @click="deleteConfirm(templateMessage)"></el-button>
+                                       circle @click="deleteConfirm(templateMessage)"></el-button>
                         </div>
                     </template>
                 </template-card>
