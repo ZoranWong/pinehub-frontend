@@ -61,6 +61,7 @@
             syncSucceed: function (value) {
                 if (value) {
                     window.clearInterval(this.syncIntervalId);
+                    this.query = Object.assign({}, this.query);
                     this.syncLoading.close();
                 } else {
                     let that = this;
