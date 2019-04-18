@@ -39,7 +39,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="" label="售后" min-width="80" indx = "4">
-                <template slot-scope="scope">
+                <template slot-scope="scope" >
                     <el-row style="display: flex;" v-if="scope.row.item && scope.row.item.status === REFUNDING">
                         <el-button  @click="refund(scope.row)" type="success" size="mini" style="width: 50%;" plain>同意退款</el-button>
                         <el-button  @click="refund(scope.row)" type="danger" size="mini" style="width: 50%;" plain>拒绝退款</el-button>
