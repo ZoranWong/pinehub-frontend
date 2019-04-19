@@ -88,6 +88,12 @@ route.group('/project/:projectId/wechat', {
             'component': CustomTemplateMessagesForm,
             'tag': '更新自填充模板消息'
         });
+
+        route.addRoute('payment/config', {
+            'name': 'payment-config',
+            'component': WechatTemplateMessagesIndex,
+            'tag': '支付管理'
+        });
     }
 });
 export default route;

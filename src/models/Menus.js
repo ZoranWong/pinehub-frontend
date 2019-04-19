@@ -44,6 +44,11 @@ export default class Menus extends Model {
                         title: '模板消息',
                         icon: '',
                         routeName: 'wechat-template-messages'
+                    }, {
+                        id: '43',
+                        title: '支付管理',
+                        icon: '',
+                        routeName: 'payment-config'
                     }
                 ]
             }, {
