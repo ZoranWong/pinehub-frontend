@@ -118,7 +118,6 @@
             async uploadRequest({file}) {
                 let result = await this.$command('UPLOAD_FILE', file, 'logo', 'projectLogoUpload');
                 if(result) {
-                    console.log(result);
                     this.newData.logo = result.src;
                 }
             },

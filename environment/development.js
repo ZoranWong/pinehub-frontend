@@ -7,12 +7,14 @@ export default {
 		web: {
 			image: 'http://image.pinehub',
 			web: 'http://pinehub',
-			admin: 'http://admin.pinehub'	
+			admin: 'http://admin.pinehub'
 		}
 	},
 	http: {
-		headers: {
-			Accept: 'application/vnd.pinehub.v0.0.1+json'
-		}
+        headers: {
+            'Accept': 'json',
+            'Content-type': 'application/json'
+        },
+        apiGateway: window.location.protocol + '//api.backend.pinehub.cc'
 	}
 }

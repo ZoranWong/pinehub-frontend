@@ -1,11 +1,11 @@
 import ApiService from './ApiService';
 
 export default class FilesService extends ApiService {
-    constructor(application) {
+    constructor (application) {
         super(application);
     }
 
-    async upload(projectId, files, fileField, route) {
+    async upload (projectId, files, fileField, route) {
         let response = null;
         if (this.$application.needMock()) {
             response = await this.service('mock.file').mock(files);
@@ -13,24 +13,30 @@ export default class FilesService extends ApiService {
             let data = new FormData();
             data.append(fileField, files);
             data.append('file_field', fileField);
-            response = await this.header({'ProjectId': projectId}).httpPost(route, data);
+            let request = null;
+            if (typeof projectId === 'undefined' || projectId) {
+                request = this.header({});
+            } else {
+                request = this.header({'ProjectId': projectId});
+            }
+            response = await request.httpPost(route, data);
         }
         return response.data;
     }
 
-    async projectLogoUpload(projectId, files, fileField) {
+    async projectLogoUpload (projectId, files, fileField) {
         return await this.upload(projectId, files, fileField, '/app/logo/cloud');
     }
 
-    async merchandiseImage(projectId, files, fileField) {
+    async merchandiseImage (projectId, files, fileField) {
         return await this.upload(projectId, files, fileField, '/merchandise/image/cloud');
     }
 
-    async activityPosterImage(projectId, files, fileField) {
+    async activityPosterImage (projectId, files, fileField) {
         return await this.upload(projectId, files, fileField, 'new/merchandise/activity/upload/image/cloud');
     }
 
-    async activityMerchandiseImage(projectId, files, fileField) {
+    async activityMerchandiseImage (projectId, files, fileField) {
         return await this.upload(projectId, files, fileField, 'new/merchandise/activity/upload/image/cloud');
     }
 }
