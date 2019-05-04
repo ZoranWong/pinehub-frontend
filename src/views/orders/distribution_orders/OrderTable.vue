@@ -15,7 +15,7 @@
             </el-table-column>
             <el-table-column prop="" label="商品">
                 <template slot-scope="scope">
-                    <el-row :gutter="20" type="block" align="middle" v-if="scope.row.item.merchandiseId">
+                    <el-row :gutter="20" type="block" align="middle" v-if="scope.row.item && scope.row.item.merchandiseId">
                         <el-col style="width: 64px; height: 64px;">
                             <img class="x-img" :src="scope.row.item.merchandiseImage" width="100%" alt=""/>
                         </el-col>
@@ -41,17 +41,17 @@
             </el-table-column>
             <el-table-column prop="" label="卖家" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item.shop.name">
+                    <div v-if="scope.row.item && scope.row.item.shop && scope.row.item.shop.name">
                         <p>{{scope.row.item.shop.name}}</p>
                     </div>
                     <div v-else>
-                        <p>匿名支付</p>
+                        <p>平台商场</p>
                     </div>
                 </template>
             </el-table-column>
             <el-table-column prop="" label="买家" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item.customer.nickname">
+                    <div v-if="scope.row.item && scope.row.item.customer && scope.row.item.customer.nickname">
                         <p>{{scope.row.item.customer.nickname}}</p>
                         <p>{{scope.row.item.customer.mobile}}</p>
                     </div>
@@ -60,7 +60,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column prop="createdAt" label="下单时间"></el-table-column>
+            <el-table-column prop="paidAt" label="下单时间"></el-table-column>
             <el-table-column prop="" label="订单状态" >
             </el-table-column>
             <el-table-column prop="" label="优惠金额" >

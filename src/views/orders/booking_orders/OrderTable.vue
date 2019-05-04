@@ -52,16 +52,13 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="" label="卖家" >
+            <el-table-column prop="" label="自提点" >
                 <template slot-scope="scope">
-                    <div v-if="scope.row.item.shop">
-                        <p>{{scope.row.item.shop.name}}</p>
-                    </div>
-                    <div v-else-if="scope.row.item.activity">
-                        <p>活动：{{scope.row.item.activity.name}}</p>
+                    <div v-if = "scope.row.receiveShop">
+                        <p>{{ scope.row.receiveShop.name}}</p>
                     </div>
                     <div v-else>
-                        <p>匿名支付</p>
+                        <p>未选择自提点</p>
                     </div>
                 </template>
             </el-table-column>
@@ -77,7 +74,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="item.statusStr" label="订单状态" ></el-table-column>
-            <el-table-column prop="createdAt" label="下单时间"></el-table-column>
+            <el-table-column prop="paidAt" label="下单时间"></el-table-column>
             <el-table-column prop="" label="优惠金额" >
                 <template slot-scope="scope">
                     <span style="color: red;"> {{scope.row.discountAmount}} 元 </span>

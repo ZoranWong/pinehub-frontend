@@ -1,13 +1,16 @@
 <template>
-	<table-list :service ="service" :event="event" :current="current" :model="model" :query = "query">
-		<template slot = "header" slot-scope="{ search, searchHandler }">
-			<el-button type="success" class="new-coupon" @click="createTicket">创建新活动</el-button>
-			<card-header v-model = "search" @search = "searchHandler"></card-header>
-		</template>
-		<template slot = "table" slot-scope="{ data }">
-			<card-table :coupons="data"></card-table>
-		</template>
-	</table-list>
+    <table-list :service="service" :event="event" :current="current" :model="model" :query="query">
+        <template v-slot:header="{ search, searchHandler }">
+            <div class="button-panel">
+                <el-button type="primary" @click="defaultTemplateBindHandler">设置默认模板消息</el-button>
+                <el-button type="success" @click="createTicket" icon="el-icon-plus">创建优惠券</el-button>
+            </div>
+            <card-header v-model="search" @search="searchHandler"></card-header>
+        </template>
+        <template v-slot:table="{ data }">
+            <card-table :coupons="data"></card-table>
+        </template>
+    </table-list>
 </template>
 
 <script>
@@ -15,6 +18,7 @@
     import Header from './Header';
     import CouponTable from './Table';
     import TableList from '@/components/TableList';
+
     export default {
         name: 'CouponCards',
         components: {
@@ -27,8 +31,7 @@
                 service: 'http.couponCards',
                 event: 'couponCards/setList',
                 current: 'couponCards/currentPage',
-                query: {
-                }
+                query: {}
             };
         },
         computed: {
@@ -47,22 +50,30 @@
                         projectId: this.$requestInput('projectId')
                     }
                 });
+            },
+            defaultTemplateBindHandler() {
+                this.$router.push({
+                    name: 'coupon-bind-default-template',
+                    params: {
+                        projectId: this.$requestInput('projectId')
+                    }
+                });
             }
         }
     }
 </script>
 
 <style scoped>
-	.new-coupon{
-		margin: 6px 12px 6px 6px !important;
-		float: right;
-		position: absolute;
-		right: 0;
-		z-index: 1000;
-	}
+    .button-panel {
+        margin: 6px 12px 6px 6px !important;
+        float: right;
+        position: absolute;
+        right: 0;
+        z-index: 1000;
+    }
 </style>
 <style>
-	.content-box {
-		padding: 10px !important;
-	}
+    .content-box {
+        padding: 10px !important;
+    }
 </style>

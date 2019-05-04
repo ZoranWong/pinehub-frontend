@@ -15,6 +15,7 @@
 </template>
 <script>
     import Form from './CouponForm';
+
     export default {
         name: 'CouponCreate',
         components: {
@@ -23,14 +24,14 @@
         methods: {
             async create() {
                 let result = await this.$refs['ticket'].$refs['ticketForm'].validate();
-                if(!result) {
+                if (!result) {
                     this.$message({
                         message: '有必要参数未填写或者格式错误，请填写后再提交',
                         type: 'error'
                     });
                 } else {
-                    console.log(this.ticket);
-                    this.$command('CREATE_TICKET',this.$requestInput('projectId'), this.ticket);
+                    let ticket = await this.$command('CREATE_TICKET', this.$requestInput('projectId'), this.ticket);
+                    this.$message.success(`优惠券${ticket.title}创建成功`);
                 }
             }
         },
@@ -42,7 +43,7 @@
     }
 </script>
 <style scoped>
-    .submit-button{
+    .submit-button {
         margin: auto !important;
         width: 64px;
         display: block !important;

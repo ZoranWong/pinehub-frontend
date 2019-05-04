@@ -35,7 +35,7 @@
             <el-upload
                 class="upload-image avatar-uploader"
                 name="mainImage"
-                action = " "
+                action = ""
                 :on-remove="removeMainImage"
                 :http-request = "uploadMainImage"
                 :on-success="uploadMainImageSuccess"

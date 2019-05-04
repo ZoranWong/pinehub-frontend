@@ -1,4 +1,5 @@
 import _ from 'underscore';
+
 export default class Model {
     constructor(application) {
         this.dataMap = {};
@@ -14,11 +15,12 @@ export default class Model {
 
     data() {
         this.dataMap = _.extend(this.dataMap, {
-            list:[],
+            list: [],
             pageCount: 0,
             currentPage: 0,
-            totalNum:1,
-            totalPage: 0
+            totalNum: 1,
+            totalPage: 0,
+            excelUrl: null
         });
         return this.dataMap;
     }
@@ -35,10 +37,10 @@ export default class Model {
 
     computed() {
         return {
-            currentPage(){
-                if(this.currentPage) {
-                    return this.list[this.currentPage -1];
-                }else{
+            currentPage() {
+                if (this.currentPage) {
+                    return this.list[this.currentPage - 1];
+                } else {
                     return null;
                 }
             },
@@ -52,8 +54,8 @@ export default class Model {
     }
 
     listeners() {
-        this.addEventListener('nextPage', function(){
-            this.currentPage ++;
+        this.addEventListener('nextPage', function() {
+            this.currentPage++;
         });
 
         this.addEventListener('reset', () => {
@@ -61,20 +63,23 @@ export default class Model {
             console.log(this.state);
         });
 
-        this.addEventListener('setList', function({list, currentPage, totalNum, totalPage,pageCount}, model){
-            if(totalNum !== null && totalNum !== 0){
+        this.addEventListener('setList', function({ list, currentPage, totalNum, totalPage, pageCount, excelUrl }, model) {
+            if (totalNum !== null && totalNum !== 0) {
                 this.currentPage = currentPage;
             }
             let startIndex = (currentPage - 1) * pageCount + 1;
-            let pageList =  model.transform(list, model.transformer, startIndex);
+            let pageList = model.transform(list, model.transformer, startIndex);
             model.$application.$vm.set(this.list, currentPage - 1, pageList);
-            if(totalNum !== null && totalNum !== 0)
+            if (totalNum !== null && totalNum !== 0)
                 this.totalNum = totalNum;
-            if(totalPage !== null && totalNum !== 0){
+            if (totalPage !== null && totalNum !== 0) {
                 this.totalPage = totalPage;
             }
-            if(pageCount !== null) {
+            if (pageCount !== null) {
                 this.pageCount = pageCount;
+            }
+            if (excelUrl) {
+                this.excelUrl = excelUrl;
             }
         });
     }
@@ -84,18 +89,18 @@ export default class Model {
     }
 
     transform(data, transformer, startIndex = 1) {
-        if(_.isArray(data)) {
+        if (_.isArray(data)) {
             return _.map(data, function(value, index) {
                 value.index = startIndex + index;
                 return new transformer(value);
             });
-        }else{
+        } else {
             return new transformer(data);
         }
     }
 
     addEventListener(type, callback) {
-        this.actions[type] = ({commit}, payload) => {
+        this.actions[type] = ({ commit }, payload) => {
             commit(type, payload);
         }
 

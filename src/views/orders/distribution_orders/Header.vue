@@ -1,5 +1,5 @@
 <template>
-    <search-header>
+    <search-header :model = "orderModel">
         <template slot = "searchInput">
             <el-form-item prop="orderCode" label="订单号" >
                 <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
@@ -40,6 +40,13 @@
     export default {
         components: {
             'search-header': SearchHeader
+        },
+        props: {
+
+            orderModel: {
+                default: null,
+                type: Object
+            }
         },
         data() {
             return {

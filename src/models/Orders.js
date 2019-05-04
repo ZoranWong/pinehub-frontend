@@ -1,7 +1,7 @@
 import Model from './Model'
 import _ from 'underscore';
 import OrderTransformer from './transformers/Order';
-export default class Orders extends Model{
+export default class Orders extends Model {
     constructor(application) {
         super(application);
         this.transformer = OrderTransformer;
@@ -9,46 +9,40 @@ export default class Orders extends Model{
     computed() {
         return _.extend(super.computed(), {
             currentPage() {
-                if(this.currentPage) {
-                    let orders = this.list[this.currentPage -1];
+                if (this.currentPage) {
+                    let orders = this.list[this.currentPage - 1];
                     let list = [];
-                    _.each(orders, function (order){
+                    _.each(orders, function(order) {
                         let items = order.orderItems;
-                        if(items && items.length > 0) {
-                            if(items.length > 0) {
-                                order.span={
+                        if (items && items.length > 0) {
+                            if (items.length > 0) {
+                                order.span = {
                                     colspan: 1,
                                     rowspan: items.length
                                 };
-                            }else{
-                                order.span={
+                            } else {
+                                order.span = {
                                     colspan: 0,
                                     rowspan: 0
                                 };
                             }
 
                             let needSpan = false;
-                            _.each(items, function (item){
-                                if(!needSpan){
+                            _.each(items, function(item) {
+                                if (!needSpan) {
                                     needSpan = true;
-                                    list.push(_.extend({'item': item, needSpan: true}, order));
-                                }else{
-                                    list.push(_.extend({'item': item, needSpan: false}, order));
+                                    list.push(_.extend({ 'item': item, needSpan: true }, order));
+                                } else {
+                                    list.push(_.extend({ 'item': item, needSpan: false }, order));
                                 }
 
                             });
-                        }else{
-                            order.span={
-                                colspan: 0,
-                                rowspan: 0
-                            };
-                            list.push(order);
+                        } else {
+                            list.push(_.extend({ span: { colspan: 0, rowspan: 0 } }, order));
                         }
-
                     });
-                    console.log('orders', list, this.list);
                     return list;
-                }else{
+                } else {
                     return null;
                 }
             }

@@ -34,6 +34,20 @@ import UpdateScoreRuleCommand from '@/commands/UpdateScoreRuleCommand';
 import ActivityMerchandisesLoadCommand from '@/commands/ActivityMerchandisesLoadCommand';
 import LoadShopSkuCommand from '@/commands/LoadShopSkuCommand';
 import UpdateUTCActivityCommand from '@/commands/UpdateUTCActivityCommand';
+import CreateAdvertisementCommand from '@/commands/CreateAdvertisementCommand';
+import UpdateAdvertisementCommand from '@/commands/UpdateAdvertisementCommand';
+import CreateUpdateEntityCommand from "../commands/CreateUpdateEntityCommand";
+import SyncWxTemplateMessagesCommand from "../commands/SyncWxTemplateMessagesCommand";
+import SyncWxTemplateMessagesStatusCheckCommand from "../commands/SyncWxTemplateMessagesStatusCheckCommand";
+import DeleteUserTemplateMessageCommand from '../commands/DeleteUserTemplateMessageCommand';
+import CreateUserTemplateMessageCommand from "../commands/CreateUserTemplateMessageCommand";
+import UpdateUserTemplateMessageCommand from "../commands/UpdateUserTemplateMessageCommand";
+import BindCouponTemplateCommand from "../commands/BindCouponTemplateCommand";
+import GetCouponTemplatesCommand from "../commands/GetCouponTemplatesCommand";
+import GetCouponDefaultTemplatesCommand from "../commands/GetCouponDefaultTemplatesCommand";
+import BindCouponDefaultTemplateCommand from "../commands/BindCouponDefaultTemplateCommand";
+import UnBindCouponTemplateCommand from "../commands/UnBindCouponTemplateCommand";
+import UnBindCouponDefaultTemplateCommand from "../commands/UnBindCouponDefaultTemplateCommand";
 
 export default class CommandServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -50,7 +64,11 @@ export default class CommandServiceProvider extends ServiceProvider {
             ClearAccountCommand, CreateMpConfigCommand, UpdateMpConfigCommand, CreateWechatMenuCommand,
             UpdateWechatMenuCommand, CreateTicketCommand, CreateMerchandiseCommand, UpdateMerchandiseCommand,
             CreateMemberCardCommand, UpdateMemberCardCommand, CreateScoreRuleCommand, UpdateScoreRuleCommand,
-            ActivityMerchandisesLoadCommand, LoadShopSkuCommand, UpdateUTCActivityCommand
+            ActivityMerchandisesLoadCommand, LoadShopSkuCommand, UpdateUTCActivityCommand,
+            CreateAdvertisementCommand, CreateUpdateEntityCommand, SyncWxTemplateMessagesCommand, SyncWxTemplateMessagesStatusCheckCommand,
+            DeleteUserTemplateMessageCommand, UpdateAdvertisementCommand, CreateUserTemplateMessageCommand, UpdateUserTemplateMessageCommand,
+            BindCouponTemplateCommand, GetCouponTemplatesCommand, GetCouponDefaultTemplatesCommand, BindCouponDefaultTemplateCommand,
+            UnBindCouponTemplateCommand, UnBindCouponDefaultTemplateCommand
         ];
         for (let key in commands) {
             this.app.registerCommand(commands[key].commandName(), commands[key]);

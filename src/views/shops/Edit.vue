@@ -38,6 +38,7 @@
                         address: this.shop['address'],
                         lat: this.shop['lat'],
                         lng: this.shop['lng'],
+						status: this.shop['status'],
                         description: this.shop['description'],
                         manager_mobile: this.shop['manager_mobile'],
                         city_id: this.shop['city_id'],

@@ -21,19 +21,29 @@ import TicketsService from '@/services/http/TicketsService';
 import PaidGiftActivitiesService from '@/services/http/PaidGiftActivitiesService';
 import MarketingService from '@/services/http/MarketingService';
 import ActivityMerchandisesService from '@/services/http/ActivityMerchandisesService';
+import AdvertisementService from '@/services/http/AdvertisementService';
+import WxTemplateMessageService from "../services/http/WxTemplateMessageService";
+import UserTemplateMessageService from "../services/http/UserTemplateMessageService";
+import UserTemplateWithMiniprogramService from "../services/http/UserTemplateWithMiniprogramService";
+import UserTemplateWithOfficialAccountService from "../services/http/UserTemplateWithOfficialAccountService";
 
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
+        let axios = null;
         Object.defineProperty(app, '_axios', {
             get: () => {
-                return app.$axios.create({
+                return axios = app.$axios.create({
                     headers: app.config['http']['headers'],
-                    baseURL: app.config['http']['apiGateway']
+                    baseURL: app.config['http']['apiGateway'],
                 });
+            },
+            set: (v) => {
+                axios = v;
             }
         });
     }
+
     register() {
 
         this.app.register('uri', UriService);
@@ -59,5 +69,10 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.paidGiftActivities', PaidGiftActivitiesService);
         this.app.register('http.marketing', MarketingService);
         this.app.register('http.activityMerchandises', ActivityMerchandisesService);
+        this.app.register('http.advertisements', AdvertisementService);
+        this.app.register('http.wxTemplateMessages', WxTemplateMessageService);
+        this.app.register('http.userTemplateMessages', UserTemplateMessageService);
+        this.app.register('http.userTemplateWithMiniprogram', UserTemplateWithMiniprogramService);
+        this.app.register('http.userTemplateWithOfficialAccount', UserTemplateWithOfficialAccountService);
     }
 }

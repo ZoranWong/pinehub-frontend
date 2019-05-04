@@ -1,14 +1,10 @@
 <template>
     <el-col :span="24" class="toolbar">
-        <el-tabs  type = "card" v-model="tab">
-            <el-tab-pane label="所有优惠券" name="all" >
-            </el-tab-pane>
-            <el-tab-pane label="审核中"  name="applying" >
-            </el-tab-pane>
-            <el-tab-pane label="审核通过"  name="pass">
-            </el-tab-pane>
-            <el-tab-pane label="审核失败"  name="fail" >
-            </el-tab-pane>
+        <el-tabs type="card" v-model="tab">
+            <el-tab-pane label="所有优惠券" name="all"></el-tab-pane>
+            <el-tab-pane label="审核中" name="applying"></el-tab-pane>
+            <el-tab-pane label="审核通过" name="pass"></el-tab-pane>
+            <el-tab-pane label="审核失败" name="fail"></el-tab-pane>
         </el-tabs>
     </el-col>
 </template>
@@ -16,12 +12,14 @@
     export default {
         props: {
             value: {
-                default: ()=> {return {};},
+                default: () => {
+                    return {};
+                },
                 type: Object
             }
         },
         created() {
-            if(this.value) {
+            if (this.value) {
                 this.initSearchData(this.value);
             }
         },
@@ -39,18 +37,17 @@
         watch: {
             tab(tab) {
                 let search = {};
-                if(tab !== 'all')
-                    search['status'] = this.status[tab];
+                search['status'] = this.status[tab];
                 this.$emit('search', search);
             }
         },
         methods: {
             initSearchData(search) {
-                if(typeof  search['search'] === 'undefined') {
+                if (typeof search['search'] === 'undefined') {
                     search['search'] = null;
                 }
-                for(let key in this.status) {
-                    if(search['status'] === this.status[key]) {
+                for (let key in this.status) {
+                    if (search['status'] === this.status[key]) {
                         this.tab = key;
                     }
                 }
@@ -58,7 +55,7 @@
         }
     }
 </script>
-<style >
+<style>
     .el-tabs--top .el-tabs__item.is-top:last-child {
         font-size: 14px !important;
     }

@@ -4,4 +4,5 @@ export default {
         'Content-type': 'application/json'
     },
     apiGateway: 'http://api.backend.klsfood.cn'
+    // apiGateway: 'http://api.backend.pinehub-api.cc'
 }

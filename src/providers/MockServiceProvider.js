@@ -28,14 +28,17 @@ import UpToCut from '@/mocks/UpToCut';
 import Tickets from '@/mocks/Tickets';
 import MemberCard from '@/mocks/MemberCard';
 import Account from '@/mocks/Account';
+import Advertisement from '@/mocks/Advertisement';
 /* eslint-disable */
-export default class AppServiceProvider extends ServiceProvider{
+export default class AppServiceProvider extends ServiceProvider {
     constructor(app) {
         super(app);
     }
+
     register() {
-        if(this.app.needMock()) {
+        if (this.app.needMock()) {
             this.app.register('mock', require('mockjs'));
+
             this.app.register('mock.shops', Shops);
             this.app.register('mock.projects', Projects);
             this.app.register('mock.project', Project);
@@ -54,7 +57,7 @@ export default class AppServiceProvider extends ServiceProvider{
             this.app.register('mock.scoreRules', ScoreRules);
             this.app.register('mock.materials', Materials);
             this.app.register('mock.material.upload', Material);
-            this.app.register('mock.delete', Delete );
+            this.app.register('mock.delete', Delete);
             this.app.register('mock.file', File);
             this.app.register('mock.sevenDaysCount', SevenDaysCount);
             this.app.register('mock.shop.create', Shop);
@@ -66,8 +69,10 @@ export default class AppServiceProvider extends ServiceProvider{
             this.app.register('mock.payGiftActivities', PayGiftActivities);
             this.app.register('mock.memberCard', MemberCard);
             this.app.register('mock.account', Account);
+            this.app.register('mock.advertisement', Advertisement);
         }
     }
+
     boot() {
 
     }

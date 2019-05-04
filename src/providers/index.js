@@ -9,11 +9,13 @@ import ValidateServiceProvider from './ValidateServiceProvider';
 import MixinMethodsServiceProvider from './MixinMethodsServiceProvider';
 import MockServiceProvider from './MockServiceProvider';
 import MapServiceProvider from './MapServiceProvider';
+import MiddlewareServiceProvider from "./MiddlewareServiceProvider";
 
 
 export default {
     configServiceProvider: ConfigServiceProvider,
     appServiceProvider: AppServiceProvider,
+    middlewareServiceProvider: MiddlewareServiceProvider,
     httpServiceProvider: HttpServiceProvider,
     routerServiceProvider: RouterServiceProvider,
     commandServiceProvider: CommandServiceProvider,
@@ -22,5 +24,5 @@ export default {
     validateServiceProvider: ValidateServiceProvider,
     mixinMethodsServiceProvider: MixinMethodsServiceProvider,
     mockServiceProvider: MockServiceProvider,
-    mapServiceProvider: MapServiceProvider
+    mapServiceProvider: MapServiceProvider,
 };
