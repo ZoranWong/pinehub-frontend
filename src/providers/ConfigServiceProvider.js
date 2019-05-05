@@ -1,6 +1,7 @@
 import ServiceProvider from './ServiceProvider';
 import appConfig from '@/configs/app';
 import httpConfig from '@/configs/http';
+import env from '@/env';
 import middlewareConfig from '@/configs/middleware';
 
 export default class ConfigServiceProvider extends ServiceProvider {
@@ -10,7 +11,8 @@ export default class ConfigServiceProvider extends ServiceProvider {
 
     register() {
         this.app.registerConfig('app', appConfig);
-        this.app.registerConfig('http', httpConfig);
+        this.app.registerConfig('http', env['http']);
         this.app.registerConfig('middleware', middlewareConfig);
+        this.app.registerConfig('env', env);
     }
 }
