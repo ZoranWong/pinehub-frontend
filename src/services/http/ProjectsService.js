@@ -2,6 +2,7 @@ import ApiService from './ApiService';
 export default class ProjectsService extends ApiService{
     constructor(application) {
         super(application);
+        this.middlewareNeedLoad = ['auth'];
     }
     async list(page = 1, search = null, limit = 20) {
         let response = null;
@@ -32,7 +33,8 @@ export default class ProjectsService extends ApiService{
         }else{
             //服务器交互代码
             console.log('project', id);
-            response =  await this.header({'ProjectId': id}).httpGet(`app/${id}`);
+            this.middlewareNeedLoad = ['auth', 'projectSetting'];
+            response =  await this.httpGet(`app/${id}`);
         }
         return response.data;
     }
@@ -65,7 +67,8 @@ export default class ProjectsService extends ApiService{
             response =  await this.service('mock.sevenDaysCount').mock(id);
         }else{
             //服务器交互代码
-            response =  await this.header({'ProjectId': id}).httpGet(`app/statistics/seven_days`);
+            this.middlewareNeedLoad = ['auth', 'projectSetting'];
+            response =  await this.httpGet(`app/statistics/seven_days`);
         }
         return response.data;
     }
@@ -87,6 +90,7 @@ export default class ProjectsService extends ApiService{
             response =  await this.service ('mock.project').mock (id);
         }else{
             //服务器交互代码
+            this.middlewareNeedLoad = ['auth', 'projectSetting'];
             let data = {};
             if (name) data['name'] = name;
             if (logo) data['logo'] = logo;
@@ -103,6 +107,7 @@ export default class ProjectsService extends ApiService{
             response =  await this.service ('mock.mpConfig').mock ();
         }else{
             //服务器交互代码
+            this.middlewareNeedLoad = ['auth', 'projectSetting'];
             response =  await this.header({'ProjectId': projectId}).httpPost (`app/mp/config`, config);
         }
         return response.data;
@@ -114,6 +119,7 @@ export default class ProjectsService extends ApiService{
             response =  await this.service ('mock.mpConfig').mock (id);
         }else{
             //服务器交互代码
+            this.middlewareNeedLoad = ['auth', 'projectSetting'];
             response =  await this.header({'ProjectId': projectId}).httpPut (`app/mp/config`, id, config);
         }
         return response.data;
