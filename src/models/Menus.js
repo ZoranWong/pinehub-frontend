@@ -109,7 +109,14 @@ export default class Menus extends Model {
                         title: '广告投放',
                         icon: 'fa fa-ticket',
                         routeName: 'advertisements'
-                    }]
+                    },
+                    {
+                        id: '44',
+                        title: '卡种管理',
+                        icon: '',
+                        routeName: 'rechargeable-cards'
+                    }
+                ]
             }, {
                 id: '16',
                 title: '商品',

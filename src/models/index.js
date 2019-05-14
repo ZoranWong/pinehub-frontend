@@ -22,6 +22,7 @@ import WxTemplateMessage from "./WxTemplateMessage";
 import UserTemplateMessage from './UserTemplateMessage';
 import UserTemplateWithMiniprogram from "./UserTemplateWithMiniprogram";
 import UserTemplateWithOfficialAccount from "./UserTemplateWithOfficialAccount";
+import RechargeableCard from "./RechargeableCard";
 
 export default class Store {
     constructor(application) {
@@ -57,6 +58,7 @@ export default class Store {
         this.addModel('userTemplateMessages', UserTemplateMessage);
         this.addModel('userTemplateWithMiniprogram', UserTemplateWithMiniprogram);
         this.addModel('userTemplateWithOfficialAccount', UserTemplateWithOfficialAccount);
+        this.addModel('rechargeableCards', RechargeableCard);
     }
 
     addModel(name, model) {

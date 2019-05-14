@@ -13,6 +13,8 @@ import Advertisements from '@/views/marketing/advertisement/Index';
 import AdvertisementCreate from '@/views/marketing/advertisement/AdvertisementCreate';
 import TemplateBind from "../views/marketing/coupon/TemplateBind";
 import TemplateDefaultBind from "../views/marketing/coupon/TemplateDefaultBind";
+import RechargeableCards from '../views/marketing/rechargeable_card/Index';
+import RechargeableCreate from '../views/marketing/rechargeable_card/Create';
 
 let route = new Route();
 route.group('/project/:projectId/marketing', {
@@ -99,6 +101,18 @@ route.group('/project/:projectId/marketing', {
             'name': 'advertisement-edit',
             'component': AdvertisementCreate,
             'tag': '更新投放广告'
+        });
+
+        route.addRoute('rechargeable-cards', {
+            'name': 'rechargeable-cards',
+            'component': RechargeableCards,
+            'tag': '卡种管理'
+        });
+
+        route.addRoute('rechargeable-cards/create', {
+            'name': 'rechargeable-cards-create',
+            'component': RechargeableCreate,
+            'tag': '卡种新建'
         });
     }
 });
