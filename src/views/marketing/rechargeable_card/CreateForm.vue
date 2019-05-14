@@ -95,6 +95,13 @@
                     <el-radio :label="status.PREFERENTIAL">上架&立即优惠</el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item label="排序">˚
+                <el-input v-model="rechargeableCard.sort" style="width: 400px"
+                          placeholder="该字段升序排序 将作为小程序展示顺序的依据之一"></el-input>
+            </el-form-item>
+            <el-form-item label="附赠优惠券">
+                待实现
+            </el-form-item>
         </el-form>
     </div>
 </template>
