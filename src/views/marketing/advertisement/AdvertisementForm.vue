@@ -90,7 +90,6 @@
 
 <script>
     import TableList from '@/components/TableList';
-    import CardHeader from '../coupon/Header';
     import EmbedCouponTable from './EmbedCouponTable';
 
     export default {
