@@ -3,7 +3,12 @@
         <el-table highlight-current-row :data="rechargeableCards">
             <el-table-column label="#" prop="index" width="50"></el-table-column>
             <el-table-column label="名称" prop="name"></el-table-column>
-            <el-table-column label="售价(元)" prop="price"></el-table-column>
+            <el-table-column label="售价(元)" prop="price">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.price">{{scope.row.price}}</span>
+                    <span v-else>免费领取</span>
+                </template>
+            </el-table-column>
             <el-table-column label="优惠价格(元)" prop="preferentialPrice"></el-table-column>
             <el-table-column label="续费价格(元)" prop="autoRenewPrice"></el-table-column>
             <el-table-column label="享受折扣(%)" prop="discount"></el-table-column>
