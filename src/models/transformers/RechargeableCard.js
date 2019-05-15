@@ -4,7 +4,7 @@ export default class RechargeableCard {
         this.index = rechargeableCard['index'];
         this.name = rechargeableCard['name'];
         this.amount = rechargeableCard['amount'] / 100;
-        this.price = rechargeableCard['amount'] / 100;
+        this.price = rechargeableCard['price'] / 100;
         this.preferentialPrice = rechargeableCard['preferential_price'] / 100;
         this.autoRenewPrice = rechargeableCard['auto_renew_price'] / 100;
         this.onSale = rechargeableCard['on_sale'];

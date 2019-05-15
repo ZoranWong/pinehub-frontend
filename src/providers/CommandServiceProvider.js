@@ -48,6 +48,8 @@ import GetCouponDefaultTemplatesCommand from "../commands/GetCouponDefaultTempla
 import BindCouponDefaultTemplateCommand from "../commands/BindCouponDefaultTemplateCommand";
 import UnBindCouponTemplateCommand from "../commands/UnBindCouponTemplateCommand";
 import UnBindCouponDefaultTemplateCommand from "../commands/UnBindCouponDefaultTemplateCommand";
+import CreateRechargeableCardCommand from "../commands/CreateRechargeableCardCommand";
+import UpdateRechargeableCardCommand from "../commands/UpdateRechargeableCardCommand";
 
 export default class CommandServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -68,7 +70,7 @@ export default class CommandServiceProvider extends ServiceProvider {
             CreateAdvertisementCommand, CreateUpdateEntityCommand, SyncWxTemplateMessagesCommand, SyncWxTemplateMessagesStatusCheckCommand,
             DeleteUserTemplateMessageCommand, UpdateAdvertisementCommand, CreateUserTemplateMessageCommand, UpdateUserTemplateMessageCommand,
             BindCouponTemplateCommand, GetCouponTemplatesCommand, GetCouponDefaultTemplatesCommand, BindCouponDefaultTemplateCommand,
-            UnBindCouponTemplateCommand, UnBindCouponDefaultTemplateCommand
+            UnBindCouponTemplateCommand, UnBindCouponDefaultTemplateCommand, CreateRechargeableCardCommand, UpdateRechargeableCardCommand
         ];
         for (let key in commands) {
             this.app.registerCommand(commands[key].commandName(), commands[key]);

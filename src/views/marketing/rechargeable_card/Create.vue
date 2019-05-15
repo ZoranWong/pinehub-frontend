@@ -7,7 +7,7 @@
             <div class="form-container">
                 <create-form v-model="rechargeableCard" ref="rechargeableCard"></create-form>
             </div>
-            <div class="dialog-footer" style="margin-bottom: 64px">
+            <div class="dialog-footer" style="margin-bottom: 64px;text-align: center;">
                 <el-button class="submit-button" type="primary" size="small" @click="create">提交</el-button>
             </div>
         </div>
@@ -24,7 +24,7 @@
         },
         data() {
             return {
-                rechargeableCards: null
+                rechargeableCard: {}
             }
         },
         methods: {
@@ -36,8 +36,8 @@
                         type: 'error'
                     });
                 } else {
-                    // let ticket = await this.$command('CREATE_TICKET', this.$requestInput('projectId'), this.ticket);
-                    // this.$message.success(`优惠券${ticket.title}创建成功`);
+                    let rechargeableCard = await this.$command('CREATE_RECHARGEABLE_CARD', this.rechargeableCard);
+                    this.$message.success(`卡片 ${rechargeableCard.name} 创建成功`);
                 }
             }
         }
