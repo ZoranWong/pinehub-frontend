@@ -23,7 +23,7 @@ export default class CreateRechargeableCardCommand extends Command {
         switch (rechargeableCardInfo['type']) {
             case RechargeableCardModel.LIMIT_TYPE_INDEFINITE:
                 rechargeableCardInfo['count'] = 0;
-                rechargeableCardInfo['unit'] = 0;
+                rechargeableCardInfo['unit'] = '';
                 break;
             case RechargeableCardModel.LIMIT_TYPE_WEEKLY:
                 rechargeableCardInfo['count'] = 7;

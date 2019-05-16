@@ -1,8 +1,11 @@
+import Category from "../transformers/Category";
+
 export default class RechargeableCard {
     constructor(rechargeableCard) {
         this.id = rechargeableCard['id'];
         this.index = rechargeableCard['index'];
         this.name = rechargeableCard['name'];
+        this.category = new Category(rechargeableCard['category']['data']);
         this.amount = rechargeableCard['amount'] / 100;
         this.price = rechargeableCard['price'] / 100;
         this.preferentialPrice = rechargeableCard['preferential_price'] / 100;

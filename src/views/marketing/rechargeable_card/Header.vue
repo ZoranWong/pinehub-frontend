@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
     export default {
         name: "Header",
         props: {
@@ -28,15 +29,16 @@
                     'normal': 11,
                     'preferential': 12,
                     'off': 21
-                }
+                },
+                search: {}
             }
         },
         watch: {
             tab(tab) {
-                let search = {};
-                search['status'] = this.status[tab];
+                this.search['status'] = this.status[tab];
+                let search = Object.assign({}, this.search);
                 this.$emit('search', search);
-            }
+            },
         },
         created() {
             if (this.value) {

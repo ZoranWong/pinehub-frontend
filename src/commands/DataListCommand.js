@@ -9,7 +9,7 @@ export default class DataListCommand extends Command {
 
     async handle(service, event, page, search = null, limit = 15) {
         try {
-            console.log('发送前searchJson：',search);
+            // console.log('发送前searchJson：',search);
             search = this.json.encode(search);
             search = encodeURIComponent(search);
             search = this.base64.encodeURI(search);

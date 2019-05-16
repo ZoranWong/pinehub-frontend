@@ -1,24 +1,36 @@
 import ApiService from './ApiService';
-export default class CategoriesService extends ApiService{
+
+export default class CategoriesService extends ApiService {
     constructor(application) {
         super(application);
     }
 
     async list(page = 1, search = null, limit = 15) {
         let response = null;
-        if(this.$application.needMock()) {
-            response =  await this.service('mock.categories').mock(page, search, limit);
-        }else{
+        if (this.$application.needMock()) {
+            response = await this.service('mock.categories').mock(page, search, limit);
+        } else {
             //服务器交互代码
             response = await this.httpGet('categories', {page: page, limit: limit, searchJson: search});
         }
         let categories = response.data;
         let pagination = response.meta.pagination;
         let totalNum = pagination.total;
-        let totalPage=pagination['totalPage'];
+        let totalPage = pagination['totalPage'];
         let currentPage = pagination['current_page'];
         let pageCount = pagination['total_pages'];
         return [categories, totalNum, currentPage, totalPage, pageCount];
+    }
+
+    async all(search = null) {
+        let response = null;
+        if (this.$application.needMock()) {
+            response = null;
+        } else {
+            //服务器交互代码
+            response = await this.httpGet(`categories/all?include=children&searchJson=${search}`);
+        }
+        return response.data;
     }
 
     async create(projectId, category) {

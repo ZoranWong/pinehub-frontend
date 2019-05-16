@@ -1,8 +1,13 @@
 <template>
     <div class="content-scroll">
         <div class="content-box" style="padding: 20px 30px;">
-            <el-tabs active-name="create">
-                <el-tab-pane label="新建卡种" name="create"></el-tab-pane>
+            <el-tabs :active-name="cardType" @tab-click="tabClickHandler">
+                <el-tab-pane name="deposit">
+                    <span slot="label"><i class="el-icon-tickets"></i> 储蓄卡</span>
+                </el-tab-pane>
+                <el-tab-pane name="discount">
+                    <span slot="label"><i class="el-icon-tickets"></i> 折扣卡</span>
+                </el-tab-pane>
             </el-tabs>
             <div class="form-container">
                 <create-form v-model="rechargeableCard" ref="rechargeableCard"></create-form>
@@ -27,8 +32,14 @@
                 rechargeableCard: {}
             }
         },
+        computed: {
+            cardType() {
+                return this.$requestInput('cardType');
+            }
+        },
         methods: {
             async create() {
+                console.log(this.rechargeableCard);
                 let result = await this.$refs['rechargeableCard'].$refs['rechargeableCardForm'].validate();
                 if (!result) {
                     this.$message({
@@ -38,6 +49,17 @@
                 } else {
                     let rechargeableCard = await this.$command('CREATE_RECHARGEABLE_CARD', this.rechargeableCard);
                     this.$message.success(`卡片 ${rechargeableCard.name} 创建成功`);
+                }
+            },
+            tabClickHandler(tab) {
+                if (tab.name !== this.cardType) {
+                    this.$router.push({
+                        name: 'rechargeable-cards-create',
+                        params: {
+                            projectId: this.$requestInput('projectId'),
+                            cardType: tab.name
+                        }
+                    });
                 }
             }
         }

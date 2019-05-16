@@ -109,7 +109,7 @@ route.group('/project/:projectId/marketing', {
             'tag': '卡种管理'
         });
 
-        route.addRoute('rechargeable-cards/create', {
+        route.addRoute('rechargeable-cards/create/:cardType', {
             'name': 'rechargeable-cards-create',
             'component': RechargeableCreate,
             'tag': '卡种新建'

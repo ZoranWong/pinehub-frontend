@@ -3,6 +3,11 @@
         <el-table highlight-current-row :data="rechargeableCards">
             <el-table-column label="#" prop="index" width="50"></el-table-column>
             <el-table-column label="名称" prop="name"></el-table-column>
+            <el-table-column label="卡片类型" align="center" width="100">
+                <template slot-scope="scope">
+                    <el-tag size="mini">{{scope.row.category.name}}</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column label="售价(元)" prop="price">
                 <template slot-scope="scope">
                     <span v-if="scope.row.price">{{scope.row.price}}</span>
@@ -12,7 +17,7 @@
             <el-table-column label="优惠价格(元)" prop="preferentialPrice"></el-table-column>
             <el-table-column label="续费价格(元)" prop="autoRenewPrice"></el-table-column>
             <el-table-column label="享受折扣(%)" prop="discount"></el-table-column>
-            <el-table-column label="卡种类型" prop="cardTypeDesc"></el-table-column>
+            <!--            <el-table-column label="卡种类型" prop="cardTypeDesc"></el-table-column>-->
             <el-table-column label="卡内金额(元)" prop="amount"></el-table-column>
             <el-table-column label="限期类型" prop="typeDesc"></el-table-column>
             <el-table-column label="期限">

@@ -1,7 +1,14 @@
 <template>
     <div>
         <el-form :model="rechargeableCard" :rules="rules" label-width="100px" ref="rechargeableCardForm">
-            <el-form-item label="卡种名称" prop="name">
+            <el-form-item label="类别" prop="category_id">
+                <el-select class="selector" v-model="rechargeableCard.category_id" placeholder="请选择">
+                    <el-option v-for="category in categories" :key="category.id"
+                               :label="category.name" :value="category.id">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="名称" prop="name">
                 <el-input v-model="rechargeableCard.name" maxlength="20" placeholder="最多可输入20个字符" style="width: 400px;"
                           clearable size="small"></el-input>
             </el-form-item>
@@ -13,27 +20,23 @@
                 <el-input-number v-model="rechargeableCard.preferential_price" :min="0" :precision="2"
                                  :step="5" size="small"></el-input-number>
             </el-form-item>
-            <el-form-item label="续费价(元)" prop="auto_renew_price">
-                <el-input-number v-model="rechargeableCard.auto_renew_price" :min="0" :precision="2"
-                                 :step="5" size="small"></el-input-number>
-            </el-form-item>
-            <el-form-item label="卡种类型" prop="card_type">
-                <el-radio-group v-model="rechargeableCard.card_type" class="radio-group">
-                    <el-radio label="DEPOSIT">储值卡</el-radio>
-                    <el-radio label="DISCOUNT">折扣卡</el-radio>
-                    <el-alert type="info" style="width: 300px;" :closable=false show-icon
-                              title="卡种类型不同，参数不同，谨慎考虑"></el-alert>
-                </el-radio-group>
-            </el-form-item>
-            <div v-if="rechargeableCard.card_type === 'DEPOSIT'">
+            <!--            <el-form-item label="卡种类型" prop="card_type">-->
+            <!--                <el-radio-group v-model="rechargeableCard.card_type" class="radio-group">-->
+            <!--                    <el-radio label="DEPOSIT">储值卡</el-radio>-->
+            <!--                    <el-radio label="DISCOUNT">折扣卡</el-radio>-->
+            <!--                    <el-alert type="info" style="width: 300px;" :closable=false show-icon-->
+            <!--                              title="卡种类型不同，参数不同，谨慎考虑"></el-alert>-->
+            <!--                </el-radio-group>-->
+            <!--            </el-form-item>-->
+            <div v-if="rechargeableCard.card_type === cardType.DEPOSIT">
                 <el-form-item label="卡内金额(元)" prop="amount">
-                    <el-input-number v-model="rechargeableCard.amount" :min=0 :precision=2
+                    <el-input-number v-model="rechargeableCard.amount" :min=0 :precision=2 size="small"
                                      :step="5"></el-input-number>
                 </el-form-item>
             </div>
-            <div v-if="rechargeableCard.card_type === 'DISCOUNT'">
+            <div v-if="rechargeableCard.card_type === cardType.DISCOUNT">
                 <el-form-item label="享有折扣(%)" prop="discount">
-                    <el-input-number v-model="rechargeableCard.discount" :precision=0 :step=10 :min=1
+                    <el-input-number v-model="rechargeableCard.discount" :precision=0 :step=10 :min=1 size="small"
                                      :max=100></el-input-number>
                 </el-form-item>
                 <el-form-item label="适用场景" prop="usage_scenarios">
@@ -49,16 +52,23 @@
             </div>
             <el-form-item label="限期类型" prop="type">
                 <el-radio-group v-model="rechargeableCard.type" class="radio-group">
-                    <el-radio :label="limitType.INFINITE">无限期</el-radio>
-                    <el-radio :label="limitType.WEEKLY">周卡</el-radio>
-                    <el-radio :label="limitType.MONTHLY">月卡</el-radio>
-                    <el-radio :label="limitType.SEASON">季卡</el-radio>
-                    <el-radio :label="limitType.YEAR">年卡</el-radio>
-                    <el-radio :label="limitType.CUSTOM">自定义</el-radio>
-                    <el-radio :label="limitType.TIME_SPECIFIED">特定时段/天</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_INDEFINITE"
+                              v-if="rechargeableCard.card_type === cardType.DEPOSIT">
+                        无限期(储值到实际余额)
+                    </el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_WEEKLY">周卡</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_MONTHLY">月卡</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_SEASON">季卡</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_YEAR">年卡</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_CUSTOM">自定义</el-radio>
+                    <el-radio :label="RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED">特定时段/天</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <div v-if="rechargeableCard.type === limitType.CUSTOM || rechargeableCard.type === limitType.TIME_SPECIFIED">
+            <el-form-item label="续费价(元)" prop="auto_renew_price" v-if="rechargeableCard.type > limitType.INFINITE">
+                <el-input-number v-model="rechargeableCard.auto_renew_price" :min="0" :precision="2"
+                                 :step="5" size="small"></el-input-number>
+            </el-form-item>
+            <div v-if="rechargeableCard.type === RechargeableCard.LIMIT_TYPE_CUSTOM || rechargeableCard.type === RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED">
                 <el-form-item>
                     <el-alert title="期限从领取/购买卡时开始计算" type="warning" show-icon style="width: 475px"
                               close-text="知道了"></el-alert>
@@ -74,7 +84,7 @@
                         </el-select>
                     </el-input>
                 </el-form-item>
-                <template v-if="rechargeableCard.type === limitType.TIME_SPECIFIED">
+                <template v-if="rechargeableCard.type === RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED">
                     <el-form-item>
                         <el-alert title="尽量不要在时间单位为'小时'时，选择时间段，避免形成'无效卡'" type="warning" show-icon
                                   style="width: 475px" close-text="知道了"></el-alert>
@@ -102,9 +112,7 @@
             </el-form-item>
             <el-form-item label="状态" prop="status">
                 <el-radio-group v-model="rechargeableCard.status" class="radio-group">
-                    <el-radio :label="status.DEFINED_ONLY">仅制卡</el-radio>
-                    <el-radio :label="status.ON">仅上架</el-radio>
-                    <el-radio :label="status.PREFERENTIAL">上架&立即优惠</el-radio>
+                    <el-radio v-for="(item,key,index) in status" :key="index" :label="key">{{item}}</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="排序" prop="sort">
@@ -120,6 +128,8 @@
 
 <script>
     import Scenarios from '../../../models/Scenarios';
+    import Categories from '../../../models/Categories';
+    import RechargeableCard from "../../../models/RechargeableCard";
 
     export default {
         name: "CreateForm",
@@ -129,7 +139,23 @@
                 type: Object
             }
         },
+        computed: {
+            currentCardType() {
+                let cardType = this.$requestInput('cardType').toUpperCase();
+                this.rechargeableCard.card_type = cardType;
+                if (cardType === this.cardType.DEPOSIT) {
+                    this.rechargeableCard.type = RechargeableCard.LIMIT_TYPE_INDEFINITE;
+                }
+                return cardType;
+            }
+        },
         watch: {
+            currentCardType(type) {
+                this.rechargeableCard.card_type = type;
+                if (type === this.cardType.DEPOSIT) {
+                    this.rechargeableCard.type = RechargeableCard.LIMIT_TYPE_INDEFINITE;
+                }
+            },
             value: {
                 deep: true,
                 handler(rechargeableCard) {
@@ -159,7 +185,7 @@
                 callback();
             };
             let timeLimitValidator = (rule, value, callback) => {
-                if (this.rechargeableCard.type === this.limitType.CUSTOM || this.rechargeableCard.type === this.limitType.TIME_SPECIFIED) {
+                if (this.rechargeableCard.type === RechargeableCard.LIMIT_TYPE_CUSTOM || this.rechargeableCard.type === RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED) {
                     if (!this.rechargeableCard.count) {
                         return callback(new Error('自定义期限：时间长度需要明确'));
                     }
@@ -170,7 +196,7 @@
                 callback();
             };
             let timePeriodValidator = (rule, value, callback) => {
-                if (this.rechargeableCard.type === this.limitType.TIME_SPECIFIED) {
+                if (this.rechargeableCard.type === RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED) {
                     if (!this.rechargeableCard.specified_start) {
                         return callback(new Error('时间段：起始时间需要明确'));
                     }
@@ -186,7 +212,14 @@
                 }
                 callback();
             };
+            let autoRenewPriceValidator = (rule, value, callback) => {
+                if (this.rechargeableCard.type > RechargeableCard.LIMIT_TYPE_TIME_SPECIFIED && value === undefined) {
+                    return callback(new Error('有限期规定的卡需要填写续费价格，包括 0.00 元'));
+                }
+                callback();
+            };
             return {
+                categories: [],
                 isUsageScenariosIndeterminate: true,
                 checkAll: false,
                 scenarios: {
@@ -197,21 +230,10 @@
                     DISCOUNT: 'DISCOUNT',
                     DEPOSIT: 'DEPOSIT'
                 },
-                limitType: {
-                    INFINITE: 101,
-                    WEEKLY: 201,
-                    MONTHLY: 202,
-                    SEASON: 203,
-                    YEAR: 204,
-                    CUSTOM: 205,
-                    TIME_SPECIFIED: 206
-                },
-                status: {
-                    DEFINED_ONLY: 0,
-                    ON: 11,
-                    PREFERENTIAL: 12,
-                },
+                limitType: RechargeableCard.limitTypes(),
+                status: RechargeableCard.createStatusEnum(),
                 rechargeableCard: {
+                    category_id: null,
                     name: '',
                     amount: 0,
                     price: 0,
@@ -220,7 +242,7 @@
                     on_sale: false,
                     is_recommend: false,
                     discount: 100,
-                    card_type: null,
+                    card_type: this.currentCardType,
                     type: null,
                     unit: null,
                     count: 0,
@@ -231,6 +253,7 @@
                     status: 0,
                     sort: 0,
                 },
+                RechargeableCard: RechargeableCard,
                 rules: {
                     name: [
                         {type: 'string', required: true, max: 20, message: '名称必填'}
@@ -252,13 +275,16 @@
                         {type: 'integer', max: 100, min: 1, validator: discountValidator}
                     ],
                     price: [
-                        {type: 'number', required: true}
+                        {type: 'number', required: true, message: '必填'}
                     ],
                     preferential_price: [
-                        {type: 'number', required: true}
+                        {type: 'number', required: true, message: '必填'}
                     ],
                     auto_renew_price: [
-                        {type: 'number', required: true,}
+                        {type: 'number', validator: autoRenewPriceValidator}
+                    ],
+                    category_id: [
+                        {type: 'number', required: true, message: '请选择合适的类别'}
                     ],
                     timeLimit: [
                         {validator: timeLimitValidator}
@@ -271,6 +297,9 @@
                     ]
                 }
             }
+        },
+        async mounted() {
+            await this.renderVirtualCardCategories();
         },
         methods: {
             checkAllUsageScenariosHandler(val) {
@@ -292,13 +321,23 @@
                 this.rechargeableCard.usage_scenarios = this.checkAll ? [0] : value;
                 console.log(this.rechargeableCard.usage_scenarios);
                 this.isUsageScenariosIndeterminate = checkedCount > 0 && checkedCount < this.scenarios.options.length;
+            },
+            // 获取分类
+            async renderVirtualCardCategories() {
+                let search = {key: Categories[`KEY_${this.currentCardType}_CARD`]};
+                search = this.json.encode(search);
+                search = encodeURIComponent(search);
+                search = this.base64.encodeURI(search);
+                this.categories = (await this.http.categories.all(search))[0]['children']['data'];
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .el-select {
+        width: 240px !important;
+    }
 </style>
 
 <style>
@@ -314,5 +353,9 @@
 
     .el-select .el-input {
         width: 100px;
+    }
+
+    .el-select.selector .el-input {
+        width: 400px;
     }
 </style>
