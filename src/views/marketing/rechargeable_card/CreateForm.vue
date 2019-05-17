@@ -9,7 +9,9 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="名称" prop="name">
-                <el-input v-model="rechargeableCard.name" maxlength="20" placeholder="最多可输入20个字符" style="width: 400px;"
+                <el-input v-model.trim="rechargeableCard.name" maxlength="20" placeholder="最多可输入20个字符"
+                          style="width: 400px;" type="text"
+                          show-word-limit
                           clearable size="small"></el-input>
             </el-form-item>
             <el-form-item label="售价(元)" prop="price">
