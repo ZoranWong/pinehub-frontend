@@ -1,12 +1,13 @@
 export default {
 	gateways: {
 		api:{
-			auth: 'http://api.auth.kingdomcloud.cn',
-			admin: 'http://api.backend.kingdomcloud.cn'
+            auth: 'http://api.auth.pinehub',
+            admin: 'http://api.admin.pinehub'
 		},
 		web: {
-			image: 'http://image.kingdomcloud.cn',
-			admin: 'http://admin.kingdomcloud.com'
+            image: 'http://image.pinehub',
+            web: 'http://pinehub',
+            admin: 'http://admin.pinehub'
 		}
 	},
 	http: {
@@ -14,6 +15,6 @@ export default {
             'Accept': 'json',
             'Content-type': 'application/json'
         },
-        apiGateway: window.location.protocol +'//api.backend.kingdomcloud.cn'
+        apiGateway: window.location.protocol + '//api.backend.pinehub.cc'
 	}
 }

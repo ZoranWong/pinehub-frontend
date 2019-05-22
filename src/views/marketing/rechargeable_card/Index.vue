@@ -1,21 +1,10 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <table-list :service="service" :event="event" :model="model" :current="current" :query="query">
-            <!--            <template v-slot:header="{search,searchHandler}">-->
-            <!--                <div class="button-panel">-->
-
-            <!--                    <el-button size="small" type="success" @click="switchToCreate('deposit')" icon="el-icon-plus">储值卡-->
-            <!--                    </el-button>-->
-            <!--                    <el-button size="small" type="success" @click="switchToCreate('discount')" icon="el-icon-plus">折扣卡-->
-            <!--                    </el-button>-->
-            <!--                </div>-->
-            <!--                <rechargeable-card-header v-model="search" @search="searchHandler"></rechargeable-card-header>-->
-            <!--            </template>-->
             <template v-slot:table="{data}">
                 <div class="query-panel">
                     <el-form :inline="true">
                         <el-form-item label="卡片类型:">
-                            {{searchFields.category_index}}
                             <el-select v-model="searchFields.category_index" size="mini">
                                 <el-option value="">不限类型</el-option>
                                 <el-option v-for="(category,index) in categories" :key="index"
@@ -97,6 +86,7 @@
                         </template>
                         <el-form-item>
                             <el-button size="mini" type="primary" @click="conditionQueryHandler">查询</el-button>
+                            <el-button size="mini" type="success">数据统计</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -115,7 +105,6 @@
 
 <script>
     import TableList from '@/components/TableList';
-    import Header from './Header';
     import RechargeableCardTable from './Table';
     import _ from 'underscore';
     import Categories from "../../../models/Categories";
@@ -126,7 +115,6 @@
         name: "Index",
         components: {
             'rechargeable-card-table': RechargeableCardTable,
-            'rechargeable-card-header': Header,
             'table-list': TableList
         },
         data() {
