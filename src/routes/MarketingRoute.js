@@ -15,6 +15,7 @@ import TemplateBind from "../views/marketing/coupon/TemplateBind";
 import TemplateDefaultBind from "../views/marketing/coupon/TemplateDefaultBind";
 import RechargeableCards from '../views/marketing/rechargeable_card/Index';
 import RechargeableCreate from '../views/marketing/rechargeable_card/Create';
+import Statistic from "../views/marketing/rechargeable_card/Statistics";
 
 let route = new Route();
 route.group('/project/:projectId/marketing', {
@@ -106,13 +107,19 @@ route.group('/project/:projectId/marketing', {
         route.addRoute('rechargeable-cards', {
             'name': 'rechargeable-cards',
             'component': RechargeableCards,
-            'tag': '卡种管理'
+            'tag': '卡片管理'
         });
 
         route.addRoute('rechargeable-cards/create/:cardType', {
             'name': 'rechargeable-cards-create',
             'component': RechargeableCreate,
-            'tag': '卡种新建'
+            'tag': '卡片新建'
+        });
+
+        route.addRoute('rechargeable-cards/statistics', {
+            'name': 'rechargeable-cards-statistics',
+            'component': Statistic,
+            'tag': '卡片数据统计'
         });
     }
 });

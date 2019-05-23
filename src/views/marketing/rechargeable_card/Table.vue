@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-table highlight-current-row :data="rechargeableCards">
-            <el-table-column label="#" prop="index" width="50"></el-table-column>
-            <el-table-column label="名称" prop="name"></el-table-column>
+        <el-table :height="height" highlight-current-row :data="rechargeableCards">
+            <el-table-column label="#" prop="index" width="50" fixed="left"></el-table-column>
+            <el-table-column label="名称" prop="name" width="100" align="center" fixed="left"></el-table-column>
             <el-table-column label="卡片类型" align="center" width="100">
                 <template slot-scope="scope">
                     <el-tag size="mini">{{scope.row.category.name}}</el-tag>
@@ -23,7 +23,7 @@
             <el-table-column label="期限">
                 <template slot-scope="scope">{{scope.row.count}}{{scope.row.timeUnit}}</template>
             </el-table-column>
-            <el-table-column label="使用场景">
+            <el-table-column label="使用场景" width="90" align="center">
                 <template slot-scope="scope">
                     <el-tag size="mini" v-for="(scenario,index) in scope.row.usageScenariosDesc" :key="index">
                         {{scenario}}
@@ -35,7 +35,14 @@
                     {{scope.row.specifiedStart}}-{{scope.row.specifiedEnd}}
                 </template>
             </el-table-column>
-            <el-table-column label="状态" prop="statusDesc"></el-table-column>
+            <el-table-column label="状态" prop="statusDesc" width="90" align="center">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.status === status.DEFINED_ONLY" class="status-defined_only">{{scope.row.statusDesc}}</span>
+                    <span v-else-if="scope.row.status === status.ON" class="status-on">{{scope.row.statusDesc}}</span>
+                    <span v-else-if="scope.row.status === status.PREFERENTIAL" class="status-preferential">{{scope.row.statusDesc}}</span>
+                    <span v-if="scope.row.status === status.OFF" class="status-off">{{scope.row.statusDesc}}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="排序" prop="sort"></el-table-column>
             <el-table-column label="是否优惠" prop="onSale">
                 <template slot-scope="scope">
@@ -48,7 +55,7 @@
                                @change="recommendStatusChangeHandler(scope.row)"></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="200" align="center">
+            <el-table-column label="操作" width="140" align="center" fixed="right">
                 <template slot-scope="scope">
                     <el-button v-if="scope.row.status < 20" size="mini" type="primary" icon="el-icon-edit"
                                @click="showUpdateDialog(scope.row)"></el-button>
@@ -96,8 +103,18 @@
         name: "Table",
         props: {
             rechargeableCards: {
-                default: [],
+                default: function () {
+                    return []
+                },
                 type: Array
+            },
+            fixHeight: {
+                default: false,
+                type: Boolean
+            },
+            height: {
+                default: 600,
+                type: Number
             }
         },
         data() {
@@ -212,4 +229,26 @@
         display: flex !important;
     }
 
+    .status-defined_only {
+        color: #a3d4b2;
+    }
+
+    .status-on {
+        color: #50cc73;
+    }
+
+    .status-preferential {
+        color: #288ad6;
+    }
+
+    .status-off {
+        color: #9599dc;
+    }
+
+</style>
+
+<style>
+    .content-box {
+        min-height: auto !important;
+    }
 </style>

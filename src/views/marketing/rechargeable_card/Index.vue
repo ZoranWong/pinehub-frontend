@@ -86,7 +86,7 @@
                         </template>
                         <el-form-item>
                             <el-button size="mini" type="primary" @click="conditionQueryHandler">查询</el-button>
-                            <el-button size="mini" type="success">数据统计</el-button>
+                            <el-button size="mini" type="success" @click="switchToStatistics">数据统计</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -97,7 +97,8 @@
                     <el-button size="mini" type="success" @click="switchToCreate('discount')" icon="el-icon-plus">折扣卡
                     </el-button>
                 </div>
-                <rechargeable-card-table :rechargeableCards="data"></rechargeable-card-table>
+                <rechargeable-card-table :rechargeableCards="data">
+                </rechargeable-card-table>
             </template>
         </table-list>
     </div>
@@ -110,12 +111,14 @@
     import Categories from "../../../models/Categories";
     import RechargeableCard from "../../../models/RechargeableCard";
     import CategoryTransformer from "../../../models/transformers/Category";
+    import Statistics from "./Statistics";
 
     export default {
         name: "Index",
         components: {
             'rechargeable-card-table': RechargeableCardTable,
-            'table-list': TableList
+            'table-list': TableList,
+            'statistics': Statistics
         },
         data() {
             return {
@@ -216,20 +219,18 @@
                     return false;
                 }
 
-                if (data === null || data === undefined) {
-                    return false;
-                }
-
-                return true;
+                return !(data === null || data === undefined);
             },
             // 条件搜索
             async conditionQueryHandler() {
                 let search = {};
                 let query = Object.assign({}, this.query);
                 for (let key in this.searchFields) {
-                    let value = this.searchFields[key];
-                    if (this.checkQueryValidation(value) || query.hasOwnProperty(key)) {
-                        search[key] = value;
+                    if (this.searchFields.hasOwnProperty(key)) {
+                        let value = this.searchFields[key];
+                        if (this.checkQueryValidation(value) || query.hasOwnProperty(key)) {
+                            search[key] = value;
+                        }
                     }
                 }
                 if (search.hasOwnProperty('price')) {
@@ -237,12 +238,20 @@
                         parseFloat(search['price'][0]) * 100,
                         parseFloat(search['price'][1]) * 100
                     ];
-                    if (search.price[0] == 0 && search.price[1] == 0) {
+                    if (search.price[0] === 0 && search.price[1] === 0) {
                         search.price = [null, null];
                     }
                 }
                 this.query = Object.assign({}, query, search);
                 console.log(this.query);
+            },
+            switchToStatistics() {
+                this.$router.push({
+                    name: 'rechargeable-cards-statistics',
+                    params: {
+                        projectId: this.$requestInput('projectId')
+                    }
+                });
             }
         }
     }
