@@ -27,6 +27,7 @@ import UserTemplateMessageService from "../services/http/UserTemplateMessageServ
 import UserTemplateWithMiniprogramService from "../services/http/UserTemplateWithMiniprogramService";
 import UserTemplateWithOfficialAccountService from "../services/http/UserTemplateWithOfficialAccountService";
 import RechargeableCardService from "../services/http/RechargeableCardService";
+import UserRechargeableCardConsumeRecordService from "../services/http/UserRechargeableCardConsumeRecordService";
 
 export default class HttpServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -76,5 +77,6 @@ export default class HttpServiceProvider extends ServiceProvider {
         this.app.register('http.userTemplateWithMiniprogram', UserTemplateWithMiniprogramService);
         this.app.register('http.userTemplateWithOfficialAccount', UserTemplateWithOfficialAccountService);
         this.app.register('http.rechargeableCards', RechargeableCardService);
+        this.app.register('http.userRechargeableCardConsumeRecords', UserRechargeableCardConsumeRecordService);
     }
 }

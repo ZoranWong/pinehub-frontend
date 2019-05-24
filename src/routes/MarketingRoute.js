@@ -15,7 +15,7 @@ import TemplateBind from "../views/marketing/coupon/TemplateBind";
 import TemplateDefaultBind from "../views/marketing/coupon/TemplateDefaultBind";
 import RechargeableCards from '../views/marketing/rechargeable_card/Index';
 import RechargeableCreate from '../views/marketing/rechargeable_card/Create';
-import Statistic from "../views/marketing/rechargeable_card/Statistics";
+import Statistic from "../views/marketing/rechargeable_card/record/Statistics";
 
 let route = new Route();
 route.group('/project/:projectId/marketing', {

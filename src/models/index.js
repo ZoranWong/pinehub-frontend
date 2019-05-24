@@ -23,6 +23,7 @@ import UserTemplateMessage from './UserTemplateMessage';
 import UserTemplateWithMiniprogram from "./UserTemplateWithMiniprogram";
 import UserTemplateWithOfficialAccount from "./UserTemplateWithOfficialAccount";
 import RechargeableCard from "./RechargeableCard";
+import UserRechargeableCardConsumeRecord from "./UserRechargeableCardConsumeRecord";
 
 export default class Store {
     constructor(application) {
@@ -59,6 +60,7 @@ export default class Store {
         this.addModel('userTemplateWithMiniprogram', UserTemplateWithMiniprogram);
         this.addModel('userTemplateWithOfficialAccount', UserTemplateWithOfficialAccount);
         this.addModel('rechargeableCards', RechargeableCard);
+        this.addModel('userRechargeableCardConsumeRecords', UserRechargeableCardConsumeRecord);
     }
 
     addModel(name, model) {

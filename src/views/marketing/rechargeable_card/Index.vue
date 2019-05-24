@@ -111,7 +111,7 @@
     import Categories from "../../../models/Categories";
     import RechargeableCard from "../../../models/RechargeableCard";
     import CategoryTransformer from "../../../models/transformers/Category";
-    import Statistics from "./Statistics";
+    import Statistics from "./record/Statistics";
 
     export default {
         name: "Index",
