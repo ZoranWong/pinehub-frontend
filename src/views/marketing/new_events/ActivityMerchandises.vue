@@ -5,13 +5,13 @@
             <merchandise-header v-model = "search" :need-search = "false" @search = "searchHandler">
                 <template slot = "opt-buttons">
                     <div class = "opt-buttons">
-                        <el-button v-if = "!activity" size = "small" type = "primary" icon = "el-icon-plus" @click = "createActivity">新品活动</el-button>
+                        <el-button v-if = "!activity.id" size = "small" type = "primary" icon = "el-icon-plus" @click = "createActivity">新品活动</el-button>
                         <el-button v-else size = "small" type = "primary" icon = "el-icon-plus" @click = "updateActivity">更新活动</el-button>
-                        <el-button size = "small" type = "primary" icon = "el-icon-plus" :disabled="!activity" @click = "addMerchandise">添加活动商品</el-button>
+                        <el-button size = "small" type = "primary" icon = "el-icon-plus" :disabled="!activity.id" @click = "addMerchandise">添加活动商品</el-button>
                     </div>
-                    <activity-create v-if = "!activity" :show = "creating" @close="creating=false;" />
-                    <activity-update v-else :data = "activity" :show = "updating" @close="updating=false;" />
-                    <merchandise-form :merchandiseData = "editMerchandise" :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'"  :select-merchandises = "merchandises"  @close="closeMerchandiseForm" />
+                    <activity-create v-if = "!activity.id" :show = "creating" @close="creating=false;" />
+                    <activity-update v-else :activityData = "activity" :show = "updating" @close="updating=false;" />
+                    <merchandise-form :id = "activity.id" :merchandiseData = "editMerchandise" :need-upload-image = "true" :show = "showAddMerchandise" :http-service = "'http.activityMerchandises'"  :select-merchandises = "merchandises"  @close="closeMerchandiseForm" />
                 </template>
             </merchandise-header>
         </template>
@@ -54,7 +54,9 @@
                 creating: false,
                 updating: false,
                 showAddMerchandise: false,
-                activity: {},
+                activity: {
+                    id: null
+                },
                 show: true,
                 editMerchandise: null
             };
@@ -102,7 +104,7 @@
                 console.log('load merchandises', event, page, search, limit);
                 let activity = await this.http.marketing.merchandiseActivity(this.$requestInput('projectId'));
                 this.$set(this, 'activity', activity);
-                if(this.activity) {
+                if(this.activity.id) {
                     this.$command('LOAD_ACTIVITY_MERCHANDISES', this.activity.id, event, page, search, limit);
                 }
             },
@@ -116,9 +118,9 @@
                         main_image: merchandise['main_image']
                     };
                     let result = false;
-                    if (!this.editMerchandise) {
+                    if (!this.editMerchandise && this.activity.id) {
                         result = await this.http.activityMerchandises.addMerchandise(this.$requestInput('projectId'), this.activity.id,  data);
-                    }else {
+                    }else if(this.activity.id){
                         result = await this.http.activityMerchandises.updateMerchanidse(this.$requestInput('projectId'), this.activity.id, this.editMerchandise.id, data);
                     }
                     if (result) {

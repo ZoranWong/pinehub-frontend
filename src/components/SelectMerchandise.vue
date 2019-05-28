@@ -91,7 +91,6 @@ export default {
             this.dialogShow = val;
         },
         merchandiseData(val) {
-            console.log('merchandise data', val);
             if (val) {
                 this.merchandise['merchandise_id'] = val.merchandiseId;
                 this.merchandise['tags'] = val.tags;

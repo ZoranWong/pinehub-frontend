@@ -22,7 +22,7 @@ export default {
             default: false,
             type: Boolean
         },
-        data: {
+        activityData: {
             default: null,
             type: Object
         }
@@ -42,7 +42,7 @@ export default {
         show(val) {
             this.dialogShow = val;
         },
-        data: {
+        activityData: {
             deep: true,
             handler(value) {
                 if(value) {
@@ -54,9 +54,6 @@ export default {
                 }
             }
         }
-    },
-    created() {
-
     },
     methods: {
         async save () {
@@ -74,7 +71,7 @@ export default {
             }
         },
         open() {
-
+            this.$set(this, 'activity', this.activityData);
         },
         close() {
             this.dialogShow = false;

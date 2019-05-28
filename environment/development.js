@@ -15,6 +15,6 @@ export default {
             'Accept': 'json',
             'Content-type': 'application/json'
         },
-        apiGateway: window.location.protocol + '//api.backend.pinehub.cc'
+        apiGateway: window.location.protocol + '//api.backend.klsfood.cn'
 	}
 }

@@ -1,20 +1,25 @@
 //汇报命令
 /* eslint-disable */
 import Command from './Command';
+
 export default class UpLoadCommand extends Command {
-    constructor(app) {
+    constructor (app) {
         super(app);
     }
-    async handle (files, fileField, method, callback) {
-        try{
+
+    async handle (files, fileField, method, callback = null) {
+        try {
             let result = await this.$service('http.files')[method](this.$requestInput('projectId'), files, fileField);
-            // callback(result);
+            if (callback) {
+                callback(result);
+            }
             return result;
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }
-    static commandName() {
+
+    static commandName () {
         return 'UPLOAD_FILE';
     }
 }
