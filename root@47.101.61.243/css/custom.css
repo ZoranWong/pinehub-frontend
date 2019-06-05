@@ -1,0 +1,252 @@
+body {
+	background:#f3f4f5;
+   /*background: -webkit-linear-gradient(45deg, rgba(43,67,140,1) 0%, rgba(111,222,232,1) 100%);
+   background: -moz-linear-gradient(45deg, rgba(43,67,140,1) 0%, rgba(111,222,232,1) 100%);
+   background: -o-linear-gradient(45deg, rgba(43,67,140,1) 0%, rgba(111,222,232,1) 100%);
+   background: linear-gradient(45deg, rgba(43,67,140,1) 0%, rgba(111,222,232,1) 100%);
+   	height:100vh;*/
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+	font-size: 14px;
+	-webkit-font-smoothing: antialiased;
+	overflow-y: hidden;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-style: normal;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #48576a;
+	transition: color .15s linear;
+}
+
+a:hover {
+	color: #20a0ff;
+}
+
+hr {
+	margin: 10px 0;
+	border: none;
+	border-top: 1px solid #D1DBE5;
+}
+
+
+/*分页*/
+
+.el-pagination__editor {
+	width: 40px !important;
+}
+
+
+/*列表*/
+
+.el-table__body {
+	font-size: 13px;
+}
+
+.el-table .cell,
+.el-table th>div {
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.el-row {
+	clear: both;
+}
+
+.table-row {
+	cursor: pointer;
+}
+
+.selected-row>td {
+	background-color: #edf7ff !important;
+}
+
+.selected-row>td:hover {
+	background-color: #edf7ff !important;
+}
+
+
+/*按钮*/
+
+.el-button {
+	margin-left: 5px !important;
+}
+
+/*弹框*/
+
+.el-dialog {
+	margin-bottom: 0 !important;
+}
+
+.el-dialog__body {
+	padding: 10px 20px !important;
+}
+
+.el-dialog--large {
+	width: 70% !important;
+}
+
+.el-dialog__wrapper {
+	position: absolute !important;
+	background-color: rgba(0, 0, 0, .6);
+}
+
+.el-dialog__close {
+	font-size: 16px;
+}
+
+/*自定义*/
+
+.x-img {
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+
+/*详情表格*/
+
+.info-table {
+	/*border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;*/
+	width: 70%;
+}
+
+.info-table td {
+	padding: 10px;
+}
+
+.info-table .table-label {
+	width: 150px;
+	text-align: right;
+}
+.info-table pre {
+	max-width: 50vw;
+	overflow: auto;
+}
+
+.info-table td {
+	/*border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;*/
+}
+
+.appendix {
+	color: #20a0ff;
+	padding: 0 5px;
+}
+
+.appendix:hover {
+	color: orange;
+}
+
+.el-tag {
+	margin: 5px;
+}
+
+.form-container {
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 0 60px 0 30px;
+	/*min-height: 400px;*/
+}
+
+.content-box {
+	padding: 0 10px;
+	position: relative;
+	min-height: 800px;
+}
+
+.content-scroll {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+}
+
+.toolbar {
+	background: #fff;
+	padding: 10px;
+}
+
+.form-box {
+	width: 70%;
+}
+
+.form-footer {
+	text-align: right;
+	padding: 20px 10px;
+	width: 70%;
+}
+
+.form-footer-left {
+	text-align: left;
+	padding: 20px;
+	padding-left: 130px;
+	width: 70%;
+}
+
+.toolbar .el-input__inner,
+.toolbar .el-date-editor.el-input {
+	/*width: 180px;*/
+}
+
+.el-form-item {
+	margin-bottom: 22px;
+}
+
+.inlineB {
+	display: inline-block;
+}
+
+.clearfix {
+	clear: both;
+}
+
+.clearfix:after {
+	position: static;
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both
+}
+
+.fr {
+	float: right;
+	display: inline;
+}
+
+.fl {
+	float: left;
+	display: inline;
+}
+
+.noBd {
+	border: none !important;
+}
+
+.topInsertBtn {
+	position: absolute;
+	right: 5px;
+	top: 8px;
+}
+.el-table {
+    border: 1px solid #dfe6ec;
+    border-bottom:none;
+    }
+    .el-table thead{
+    	color:#161616;
+   background: #ddd !important;
+    }
+    .el-table th{
+    	background-color: #eef1f6;
+    }
+.el-tabs--bottom .el-tabs__item.is-bottom:last-child, .el-tabs--bottom .el-tabs__item.is-top:last-child, .el-tabs--top .el-tabs__item.is-bottom:last-child, .el-tabs--top .el-tabs__item.is-top:last-child{
+	font-size: 16px;
+}
+.el-input__inner{
+	height:32px;line-height: 32px;
+}
