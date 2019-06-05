@@ -1,20 +1,20 @@
 export default {
-	gateways: {
-		api:{
-			auth: 'http://api.auth.pinehub',
-			admin: 'http://api.admin.pinehub'
-		},
-		web: {
-			image: 'http://image.pinehub',
-			web: 'http://pinehub',
-			admin: 'http://admin.pinehub'
-		}
-	},
-	http: {
+    gateways: {
+        api: {
+            auth: 'http://api.auth.klsfood.cn',
+            admin: 'http://api.admin.klsfood.cn'
+        },
+        web: {
+            image: 'http://image.klsfood.cn',
+            web: 'http://klsfood.cn',
+            admin: 'http://admin.klsfood.cn'
+        }
+    },
+    http: {
         headers: {
             'Accept': 'json',
             'Content-type': 'application/json'
         },
-        apiGateway: window.location.protocol + '//api.backend.pinehub.cc'
-	}
+        apiGateway: window.location.protocol + '//api.backend.klsfood.cn'
+    }
 }
