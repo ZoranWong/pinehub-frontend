@@ -4,17 +4,18 @@
                        @current-change="changePage" background
                        :total="total"
                        :page-size="pageSize"
-                       :current-page = "currPage"
-                       :page-count ="pageCount"
+                       :current-page="currPage"
+                       :page-count="pageCount"
                        ref="paginator">
         </el-pagination>
     </div>
 </template>
 <script>
     import _ from 'underscore';
+
     export default {
         name: 'Paginator',
-        props:{
+        props: {
             currentPage: {
                 default: 0,
                 type: Number
@@ -27,8 +28,10 @@
                 default: '',
                 type: [String, Function]
             },
-            search:{
-                default: function(){return {}},
+            search: {
+                default: function () {
+                    return {}
+                },
                 type: Object
             },
             limit: {
@@ -49,39 +52,39 @@
             },
         },
         watch: {
-            currentPage:{
+            currentPage: {
                 immediate: true,
-                handler (value) {
+                handler(value) {
                     this.currPage = value;
                 }
             },
             search: {
                 immediate: true,
                 deep: true,
-                handler (value) {
+                handler(value) {
                     this.changePage(this.search['page'], value);
                 }
             },
             totalNum: {
                 immediate: true,
-                handler (value) {
+                handler(value) {
                     this.total = value;
                 }
             },
             limit: {
                 immediate: true,
-                handler (value) {
+                handler(value) {
                     this.pageSize = value;
                 }
             },
             totalPage: {
                 immediate: true,
-                handler (value) {
+                handler(value) {
                     this.pageCount = value;
                 }
             }
         },
-        data () {
+        data() {
             return {
                 currPage: this.currentPage,
                 total: this.totalNum,
@@ -90,12 +93,12 @@
             };
         },
         methods: {
-            changePage (page, search = null) {
+            changePage(page, search = null) {
                 this.$emit('change-page', page);
                 let query = search ? search : this.search;
                 let q = {};
-                for(let key in query) {
-                    q[key] = this.base64.encodeURI(_.isArray(query[key]) || _.isObject(query[key]) ?  this.json.encode(query[key]) : query[key]);
+                for (let key in query) {
+                    q[key] = this.base64.encodeURI(_.isArray(query[key]) || _.isObject(query[key]) ? this.json.encode(query[key]) : query[key]);
                 }
                 query = q;
                 let params = {};
@@ -104,13 +107,14 @@
                 this.$router.push({name: this.$currentRouteName(), params: params, query: query});
                 this.updateList(page);
             },
-            updateList (page = null) {
+            updateList(page = null) {
                 page = page ? page : 1;
                 let search = this.search;
+                console.log('搜索条件：', search);
                 delete search['page'];
-                if(_.isFunction(this.command)) {
+                if (_.isFunction(this.command)) {
                     this.command(this.event, page, search, this.limit);
-                }else{
+                } else {
                     this.$command(this.command, this.service, this.event, page, search, this.limit);
                 }
             }

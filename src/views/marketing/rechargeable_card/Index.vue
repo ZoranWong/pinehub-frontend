@@ -97,8 +97,7 @@
                     <el-button size="mini" type="success" @click="switchToCreate('discount')" icon="el-icon-plus">折扣卡
                     </el-button>
                 </div>
-                <rechargeable-card-table :rechargeableCards="data">
-                </rechargeable-card-table>
+                <rechargeable-card-table :rechargeableCards="data"></rechargeable-card-table>
             </template>
         </table-list>
     </div>
@@ -111,14 +110,12 @@
     import Categories from "../../../models/Categories";
     import RechargeableCard from "../../../models/RechargeableCard";
     import CategoryTransformer from "../../../models/transformers/Category";
-    import Statistics from "./record/Statistics";
 
     export default {
         name: "Index",
         components: {
             'rechargeable-card-table': RechargeableCardTable,
             'table-list': TableList,
-            'statistics': Statistics
         },
         data() {
             return {
@@ -203,7 +200,6 @@
                     categories.push(new CategoryTransformer(collection[i]));
                 }
                 this.categories = categories;
-                console.log(this.categories);
             },
             checkQueryValidation(data) {
                 if (data instanceof Object) {
@@ -243,7 +239,7 @@
                     }
                 }
                 this.query = Object.assign({}, query, search);
-                console.log(this.query);
+                console.log('搜索条件：', this.query);
             },
             switchToStatistics() {
                 this.$router.push({

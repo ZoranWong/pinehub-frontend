@@ -1,23 +1,25 @@
 <template>
-    <search-header :model = "orderModel">
-        <template slot = "searchInput">
-            <el-form-item prop="orderCode" label="订单号" >
+    <search-header :model="orderModel">
+        <template slot="searchInput">
+            <el-form-item prop="orderCode" label="订单号">
                 <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
             </el-form-item>
-            <el-form-item prop="receiverName" label="收货人姓名" >
+            <el-form-item prop="receiverName" label="收货人姓名">
                 <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
             </el-form-item>
-            <el-form-item prop="receiverMobile" label="收货人手机号" >
+            <el-form-item prop="receiverMobile" label="收货人手机号">
                 <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
             </el-form-item>
             <el-form-item prop="beginAt" label="下单时间">
-                <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
+                <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"
+                                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item label="" label-width="0px">
                 至
             </el-form-item>
-            <el-form-item prop="endAt" label="" >
-                <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"></el-date-picker>
+            <el-form-item prop="endAt" label="">
+                <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"
+                                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item prop="merchandiseName" label="商品名称">
                 <el-input size="small" v-model="merchandiseName" placeholder="商品名称"></el-input>
@@ -37,6 +39,7 @@
 </template>
 <script>
     import SearchHeader from '@/components/SearchHeader';
+
     export default {
         components: {
             'search-header': SearchHeader

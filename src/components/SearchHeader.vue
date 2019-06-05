@@ -39,7 +39,6 @@ export default {
             this.$emit('reset');
         },
         downloadExcel() {
-            console.log('dasfsdf');
             if(this.model)
                 window.open(this.model.excelUrl);
         }

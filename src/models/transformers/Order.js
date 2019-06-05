@@ -1,13 +1,14 @@
 import _ from 'underscore';
+
 export default class Order {
     constructor(order) {
         //订单状态：0-订单取消 100-等待提交支付订单 200-提交支付订单 300-支付完成 400-已发货 500-订单完成 600-支付失败
         const ORDER_STATUS = ["已取消", "未提交", "未支付", "待发货", "待签收", "已完成", "支付失败", "退款中", "拒绝退款", "退款成功"];
 
-        //订单类型：0-线下扫码 1-预定自提 2-商城订单 3-今日下单自提 4-今日下单送到手
-        const ORDER_TYPE = ['扫码付', '店铺预定自提', '店铺预定订单', '今日自提订单', '今日及时送订单'];
+        // 订单类型：0-线下扫码 1-商城订单 2-站点用户订单  3-商家进货订单 4 -充值
+        const ORDER_TYPE = ['扫码付', '商城订单', '站点用户订单', '商家进货订单', '充值'];
 
-        const PAYMENT_TYPE = ['其他支付方式', '支付宝支付', '微信支付'];
+        const PAYMENT_TYPE = ['其他支付方式', '支付宝支付', '微信支付', '余额支付'];
 
         this.typeStr = ORDER_TYPE[order['type']];
 
@@ -24,7 +25,7 @@ export default class Order {
 
         let self = this;
 
-        _.each(order['order_items'], function(item) {
+        _.each(order['order_items'], function (item) {
             let orderItem = {};
 
             orderItem.merchandiseName = item['merchandise_name'];

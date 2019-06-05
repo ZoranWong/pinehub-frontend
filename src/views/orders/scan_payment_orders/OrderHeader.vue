@@ -1,23 +1,25 @@
 <template>
-    <search-header @search = "search" :model = "orderModel">
-        <template slot = "searchInput">
-            <el-form-item prop="orderCode" label="订单号" >
+    <search-header @search="search" :model="orderModel">
+        <template slot="searchInput">
+            <el-form-item prop="orderCode" label="订单号">
                 <el-input size="small" v-model="orderCode" placeholder="订单号"></el-input>
             </el-form-item>
-            <el-form-item prop="receiverName" label="客户姓名" >
+            <el-form-item prop="receiverName" label="客户姓名">
                 <el-input size="small" v-model="receiverName" placeholder="收货人姓名"></el-input>
             </el-form-item>
-            <el-form-item prop="receiverMobile" label="客户手机号" >
+            <el-form-item prop="receiverMobile" label="客户手机号">
                 <el-input size="small" v-model="receiverMobile" placeholder="收货人手机号"></el-input>
             </el-form-item>
             <el-form-item prop="beginAt" label="下单时间">
-                <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"></el-date-picker>
+                <el-date-picker v-model="beginAt" type="date" :editable="false" placeholder="开始时间"
+                                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item label="" label-width="0px">
                 至
             </el-form-item>
-            <el-form-item prop="endAt" label="" >
-                <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"></el-date-picker>
+            <el-form-item prop="endAt" label="">
+                <el-date-picker v-model="endAt" type="date" :editable="false" placeholder="结束时间"
+                                value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
             <el-form-item prop="orderStatus" label="订单状态">
                 <el-select size="small" v-model="orderStatus" placeholder="订单状态">
@@ -37,6 +39,7 @@
     import ORDER_STATUS from '../OrderStatus';
     import PAYMENT_TYPES from '../Payment';
     import _ from 'underscore';
+
     export default {
         components: {
             'search-header': SearchHeader
@@ -64,7 +67,8 @@
                     "ALL": '全部',
                     "UNKNOWN": '未知支付',
                     "ALI_PAY": '支付宝',
-                    "WECHAT_PAY": '微信支付'
+                    "WECHAT_PAY": '微信支付',
+                    "BALANCE_PAY": '余额支付',
                 },
                 statusDict: {
                     "ALL": "全部",
@@ -82,35 +86,35 @@
             value: {
                 deep: true,
                 handler(search) {
-                    if(search) {
+                    if (search) {
                         this.initSearchData(search);
                     }
                 }
             }
         },
         created() {
-            if(this.value && !_.isEmpty(this.value)) {
+            if (this.value && !_.isEmpty(this.value)) {
                 this.initSearchData(this.value);
             }
         },
         methods: {
-            search () {
+            search() {
                 let search = this.buildSearchData();
                 this.$emit('search', search);
             },
             initSearchData(search) {
                 console.log('search ', search);
-                this.receiverName  =  search['receiver_name'] ;
-                this.receiverMobile  =  search['receiver_mobile'] ;
-                this.orderCode   =   search['code'];
-                this.beginAt =  search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][0]['value'] : null;
+                this.receiverName = search['receiver_name'];
+                this.receiverMobile = search['receiver_mobile'];
+                this.orderCode = search['code'];
+                this.beginAt = search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][0]['value'] : null;
                 this.endAt = search['paid_at'] && search['paid_at'][1] && search['paid_at'][1]['value'] ? search['paid_at'][1]['value'] : null;
 
-                for(let index in ORDER_STATUS) {
+                for (let index in ORDER_STATUS) {
                     let value = ORDER_STATUS[index];
-                    if(value == search['status']) {
+                    if (value == search['status']) {
                         this.orderStatus = index;
-                        if(index === 'WAIT_SEND' || index === 'PAID') {
+                        if (index === 'WAIT_SEND' || index === 'PAID') {
                             this.orderStatus = 'PAID';
                         }
                     }
@@ -118,7 +122,7 @@
 
                 for (let index in PAYMENT_TYPES) {
                     let value = PAYMENT_TYPES[index];
-                    if(value == search['pay_type']) {
+                    if (value == search['pay_type']) {
                         this.payType = index;
                     }
                 }
@@ -136,20 +140,20 @@
                     ],
                     "type": 0
                 };
-                if(this.receiverName)
+                if (this.receiverName)
                     search['receiver_name'] = this.receiverName;
-                if(this.receiverMobile)
+                if (this.receiverMobile)
                     search['receiver_mobile'] = this.receiverMobile;
-                if(this.orderCode)
+                if (this.orderCode)
                     search['code'] = this.orderCode;
-                if(this.beginAt) {
+                if (this.beginAt) {
                     search['paid_at'][0]['value'] = this.beginAt;
                 }
-                if(this.endAt)
-                    search['paid_at'][1]['value'] =  this.endAt;
-                if(this.orderStatus && ORDER_STATUS[this.orderStatus])
+                if (this.endAt)
+                    search['paid_at'][1]['value'] = this.endAt;
+                if (this.orderStatus && ORDER_STATUS[this.orderStatus])
                     search['status'] = ORDER_STATUS[this.orderStatus];
-                if(this.payType && PAYMENT_TYPES[this.payType])
+                if (this.payType && PAYMENT_TYPES[this.payType])
                     search['pay_type'] = PAYMENT_TYPES[this.payType];
                 return search;
             }
