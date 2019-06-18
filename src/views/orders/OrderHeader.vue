@@ -57,7 +57,7 @@
                 type: Object
             }
         },
-        data() {
+        data () {
             return {
                 receiverName: null,
                 orderCode: null,
@@ -90,24 +90,24 @@
         watch: {
             value: {
                 deep: true,
-                handler(search) {
+                handler (search) {
                     if (search) {
                         this.initSearchData(search);
                     }
                 }
             }
         },
-        created() {
+        created () {
             if (this.value && !_.isEmpty(this.value)) {
                 this.initSearchData(this.value);
             }
         },
         methods: {
-            search() {
+            search () {
                 let search = this.buildSearchData();
                 this.$emit('search', search);
             },
-            initSearchData(search) {
+            initSearchData (search) {
                 this.receiverName = search['receiver_name'];
                 this.receiverMobile = search['receiver_mobile'];
                 this.orderCode = search['code'];
@@ -131,7 +131,7 @@
                     }
                 }
             },
-            buildSearchData() {
+            buildSearchData () {
                 let search = {
                     "paid_at": [
                         {
@@ -145,12 +145,24 @@
                 };
                 if (this.receiverName)
                     search['receiver_name'] = this.receiverName;
+                else
+                    delete search['receiver_name'];
+
                 if (this.receiverMobile)
                     search['receiver_mobile'] = this.receiverMobile;
+                else
+                    delete search['receiver_mobile'];
+
                 if (this.orderCode)
                     search['code'] = this.orderCode;
+                else
+                    delete search['code'];
+
                 if (this.merchandiseName)
                     search['orderItems.name'] = this.merchandiseName;
+                else
+                    delete search['orderItems.name'];
+
                 if (this.beginAt) {
                     search['paid_at'][0]['value'] = this.beginAt;
                 }
@@ -162,9 +174,14 @@
                 //     search['pay_type'] = PAYMENT_TYPES[this.payType];
                 if (this.orderStatus) {
                     search['status'] = ORDER_STATUS[this.orderStatus];
+                } else {
+                    delete search['status'];
                 }
+
                 if (this.payType) {
                     search['pay_type'] = PAYMENT_TYPES[this.payType];
+                } else {
+                    delete search['status'];
                 }
                 return search;
             }

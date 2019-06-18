@@ -176,7 +176,6 @@
             async conditionQueryHandler() {
                 let query = this.itegrateQueryCondition();
                 this.query = Object.assign({}, query);
-                console.log('搜索条件：', query);
             },
             async exportHandler() {
                 let query = this.itegrateQueryCondition();
