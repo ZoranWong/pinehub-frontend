@@ -30,6 +30,7 @@ export default class ApiService extends Service {
                         request['route'] = route;
                         request['method'] = 'GET';
                         request['params'] = params;
+                        console.log('---------------', params['searchJson']);
                         return axios.get(route);
                     },
                     post: (route, params) => {
@@ -68,7 +69,7 @@ export default class ApiService extends Service {
     }
 
     loadMiddlewareConfig(request) {
-        console.log(request);
+        console.log('---------------', request.params['searchJson']);
         let routeMiddlewares = _.union(this.middlewareNeedLoad, request['middlewares']);
         console.log(routeMiddlewares);
         routeMiddlewares.forEach((middleware) => {
@@ -125,11 +126,12 @@ export default class ApiService extends Service {
 
     // eslint-disable-next-line
     async httpGet(route, params = {}, ...additionalMiddlewares) {
+        console.log('---------------', params['searchJson']);
         route = route.trim('/');
         route = '/' + route;
         try {
             let result = await this.axios.addMiddleware(additionalMiddlewares).get(route, params);
-            console.log(result);
+            console.log('---------------', params['searchJson']);
             return result.data;
         } catch (error) {
             console.log(error);
@@ -148,9 +150,7 @@ export default class ApiService extends Service {
                 params['token'] = encodeURIComponent(token);
             }
             params['ProjectId'] = this.headers['ProjectId'];
-            let url = host + route + this.service().uri.query(params);
-            console.log('download_url: ', url);
-            return url;
+            return host + route + this.service().uri.query(params);
         } catch (error) {
             console.log(error);
             this.tokenExpired(error.response);

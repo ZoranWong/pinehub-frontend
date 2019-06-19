@@ -101,6 +101,11 @@
             search(data) {
                 data['page'] = 1;
                 this.searchJson = Object.assign({}, this.searchJson, data);
+                for (let key in this.searchJson) {
+                    if (!this.searchJson[key]) {
+                        delete this.searchJson[key];
+                    }
+                }
             },
             changePage(page) {
                 this.page = page;

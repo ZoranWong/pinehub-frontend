@@ -7,6 +7,7 @@ export default class OrdersService extends ApiService {
 
     async list(page = 1, search = null, limit = 15) {
         let response = null;
+        let excelUrl = await this.excelDownload(search);
         if (this.$application.needMock()) {
             response = await this.service('mock.orders').mock(page, search, limit);
         } else {
@@ -22,7 +23,6 @@ export default class OrdersService extends ApiService {
         let totalNum = pagination.total;
         let currentPage = pagination['current_page'];
         let totalPage = pagination['total_pages'];
-        let excelUrl = await this.excelDownload(search);
         return [orders, totalNum, currentPage, totalPage, excelUrl];
     }
 
@@ -34,7 +34,6 @@ export default class OrdersService extends ApiService {
             //服务器交互代码
             response = await this.download('/download/orders/xls', {searchJson: search});
         }
-        console.log(response);
         return response;
     }
 }

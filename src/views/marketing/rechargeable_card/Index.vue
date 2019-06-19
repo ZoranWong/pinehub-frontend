@@ -239,7 +239,6 @@
                     }
                 }
                 this.query = Object.assign({}, query, search);
-                console.log('搜索条件：', this.query);
             },
             switchToStatistics() {
                 this.$router.push({
