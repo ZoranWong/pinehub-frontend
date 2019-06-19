@@ -9,6 +9,7 @@ export default class ExcelService extends ApiService {
         this.header('ProjectId', projectId);
         query['key'] = key;
         query['searchJson'] = search;
+        console.log('@@@ ', query);
         return await this.download(`/export`, query);
     }
 }

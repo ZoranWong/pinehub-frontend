@@ -148,9 +148,9 @@ export default class ApiService extends Service {
                 params['token'] = encodeURIComponent(token);
             }
             params['ProjectId'] = this.headers['ProjectId'];
-            console.log(this.headers);
-            console.log(host + route + this.service().uri.query(params));
-            return host + route + this.service().uri.query(params);
+            let url = host + route + this.service().uri.query(params);
+            console.log('download_url: ', url);
+            return url;
         } catch (error) {
             console.log(error);
             this.tokenExpired(error.response);

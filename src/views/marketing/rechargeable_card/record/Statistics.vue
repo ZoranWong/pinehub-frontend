@@ -158,7 +158,7 @@
 
                 return !(data === null || data === undefined);
             },
-            itegrateQueryCondition() {
+            integrateQueryCondition() {
                 let search = {};
                 let query = Object.assign({}, this.query);
                 for (let key in this.searchFields) {
@@ -174,12 +174,12 @@
             },
             // 条件搜索
             async conditionQueryHandler() {
-                let query = this.itegrateQueryCondition();
+                let query = this.integrateQueryCondition();
                 this.query = Object.assign({}, query);
                 console.log('搜索条件：', query);
             },
             async exportHandler() {
-                let query = this.itegrateQueryCondition();
+                let query = this.integrateQueryCondition();
                 query = Object.assign({}, query);
                 let downloadUrl = await this.$command('EXCEL_EXPORT', this.$requestInput('projectId'), 'deposit_records', query);
                 window.open(downloadUrl);

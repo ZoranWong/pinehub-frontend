@@ -1,20 +1,19 @@
 export default {
-    gateways: {
-        api: {
-            auth: 'http://api.auth.klsfood.cn',
-            admin: 'http://api.admin.klsfood.cn'
-        },
-        web: {
-            image: 'http://image.klsfood.cn',
-            web: 'http://klsfood.cn',
-            admin: 'http://admin.klsfood.cn'
-        }
-    },
-    http: {
+	gateways: {
+		api: {
+			auth: 'http://api.auth.kingdomcloud.cn',
+			admin: 'http://api.backend.kingdomcloud.cn'
+		},
+		web: {
+			image: 'http://image.kingdomcloud.cn',
+			admin: 'http://admin.kingdomcloud.com'
+		}
+	},
+	http: {
         headers: {
             'Accept': 'json',
             'Content-type': 'application/json'
         },
-        apiGateway: window.location.protocol + '//api.backend.klsfood.cn'
-    }
+		apiGateway: window.location.protocol + '//api.backend.kingdomcloud.cn'
+	}
 }
