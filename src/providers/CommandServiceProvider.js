@@ -51,6 +51,7 @@ import UnBindCouponDefaultTemplateCommand from "../commands/UnBindCouponDefaultT
 import CreateRechargeableCardCommand from "../commands/CreateRechargeableCardCommand";
 import UpdateRechargeableCardCommand from "../commands/UpdateRechargeableCardCommand";
 import ExcelExportCommand from "../commands/ExcelExportCommand";
+import DelShopCommand from "../commands/DelShopCommand";
 
 export default class CommandServiceProvider extends ServiceProvider {
     constructor(app) {
@@ -71,7 +72,8 @@ export default class CommandServiceProvider extends ServiceProvider {
             CreateAdvertisementCommand, CreateUpdateEntityCommand, SyncWxTemplateMessagesCommand, SyncWxTemplateMessagesStatusCheckCommand,
             DeleteUserTemplateMessageCommand, UpdateAdvertisementCommand, CreateUserTemplateMessageCommand, UpdateUserTemplateMessageCommand,
             BindCouponTemplateCommand, GetCouponTemplatesCommand, GetCouponDefaultTemplatesCommand, BindCouponDefaultTemplateCommand,
-            UnBindCouponTemplateCommand, UnBindCouponDefaultTemplateCommand, CreateRechargeableCardCommand, UpdateRechargeableCardCommand, ExcelExportCommand
+            UnBindCouponTemplateCommand, UnBindCouponDefaultTemplateCommand, CreateRechargeableCardCommand, UpdateRechargeableCardCommand,
+            ExcelExportCommand, DelShopCommand
         ];
         for (let key in commands) {
             this.app.registerCommand(commands[key].commandName(), commands[key]);

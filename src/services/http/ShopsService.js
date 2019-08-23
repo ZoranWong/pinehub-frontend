@@ -59,6 +59,16 @@ export default class ShopsService extends ApiService{
         return response.data;
     }
 
+    async del (projectId, shopId) {
+        let response = null;
+        if(this.$application.needMock()) {
+            response =  await this.service('mock.shop.delete').mock(shopId);
+        } else {
+            response = await this.header({'ProjectId': projectId}).httpDelete(`shop/${shopId}`);
+        }
+        return response.data;
+    }
+
     async skuMerchandises (shopId, page = 1, search = null, limit = 15) {
         let  response = await this.httpGet(`shop/${shopId}/merchandises`, {page: page, limit: limit, searchJson: search});
 

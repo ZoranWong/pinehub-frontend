@@ -80,7 +80,7 @@
                 <el-input v-model="shop.manager_name" style="width:30%" placeholder="输入车主姓名"/>
             </el-form-item>
             <el-form-item label="车主电话：" prop="manager_mobile" :rules="[{ required: true, message: '请输入联系方式', trigger: 'blur' },
-                                                                       {pattern: /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/, message: '手机号码非法格式', trigger: 'blur'}]">
+                {pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[5-7]|17[01345678]|18[0-9]|19[189])\d{8}$/, message: '手机号码非法格式', trigger: 'blur'}]">
                 <el-input v-model.number="shop.manager_mobile" style="width:30%" placeholder="输入手机号码">
                     <template slot="prepend">+86</template>
                 </el-input>

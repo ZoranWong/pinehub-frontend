@@ -20,7 +20,7 @@
 					</el-form-item>
 					<el-form-item label="联系电话：" prop="contactPhoneNum" :rules = "[
 						{ required: true, message: '请输入项目联系人手机', trigger: 'blur'},
-						{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/, message: '手机号码格式错误', trigger: 'blur'},
+						{ pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[5-7]|17[01345678]|18[0-9]|19[189])\d{8}$/, message: '手机号码格式错误', trigger: 'blur'},
 						{ min: 11, max: 11, message: '长度11数字', trigger: 'blur'}
 					]">
 						<el-input v-model="newData.contactPhoneNum"></el-input>
